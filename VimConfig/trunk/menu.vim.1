@@ -1,0 +1,316 @@
+" Vim support file to define the default menus
+" You can also use this as a start for your own set of menus.
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last Change:	2009 Feb 26
+
+" Note that ":an" (short for ":anoremenu") is often used to make a menu work
+" in all modes and avoid side effects from mappings defined by the user.
+
+" Make sure the '<' and 'C' flags are not included in 'cpoptions', otherwise
+" <CR> would not be recognized.  See ":help 'cpoptions'".
+let s:cpo_save = &cpo
+set cpo&vim
+
+" Avoid installing the menus twice
+if !exists("did_install_default_menus")
+let did_install_default_menus = 1
+
+
+if exists("v:lang") || &langmenu != ""
+  " Try to find a menu translation file for the current language.
+  if &langmenu != ""
+    if &langmenu =~ "none"
+      let s:lang = ""
+    else
+      let s:lang = &langmenu
+    endif
+  else
+    let s:lang = v:lang
+  endif
+  " A language name must be at least two characters, don't accept "C"
+  if strlen(s:lang) > 1
+    " When the language does not include the charset add 'encoding'
+    if s:lang =~ '^\a\a$\|^\a\a_\a\a$'
+      let s:lang = s:lang . '.' . &enc
+    endif
+
+    " We always use a lowercase name.
+    " Change "iso-8859" to "iso_8859" and "iso8859" to "iso_8859", some
+    " systems appear to use this.
+    " Change spaces to underscores.
+    let s:lang = substitute(tolower(s:lang), '\.iso-', ".iso_", "")
+    let s:lang = substitute(s:lang, '\.iso8859', ".iso_8859", "")
+    let s:lang = substitute(s:lang, " ", "_", "g")
+    " Remove "@euro", otherwise "LC_ALL=de_DE@euro gvim" will show English menus
+    let s:lang = substitute(s:lang, "@euro", "", "")
+    " Change "iso_8859-1" and "iso_8859-15" to "latin1", we always use the
+    " same menu file for them.
+    let s:lang = substitute(s:lang, 'iso_8859-15\=$', "latin1", "")
+    menutrans clear
+    exe "runtime! lang/menu_" . s:lang . ".vim"
+
+    if !exists("did_menu_trans")
+      " There is no exact match, try matching with a wildcard added
+      " (e.g. find menu_de_de.iso_8859-1.vim if s:lang == de_DE).
+      let s:lang = substitute(s:lang, '\.[^.]*', "", "")
+      exe "runtime! lang/menu_" . s:lang . "[^a-z]*vim"
+
+      if !exists("did_menu_trans") && strlen($LANG) > 1 && s:lang !~ '^en_us'
+	" On windows locale names are complicated, try using $LANG, it might
+	" have been set by set_init_1().  But don't do this for "en" or "en_us".
+	" But don't match "slovak" when $LANG is "sl".
+	exe "runtime! lang/menu_" . tolower($LANG) . "[^a-z]*vim"
+      endif
+    endif
+  endif
+endif
+
+
+
+" The popup menu
+an 1.10 PopUp.&Undo			u
+an 1.15 PopUp.-SEP1-			<Nop>
+vnoremenu 1.20 PopUp.Cu&t		"+x
+vnoremenu 1.30 PopUp.&Copy		"+y
+cnoremenu 1.30 PopUp.&Copy		<C-Y>
+nnoremenu 1.40 PopUp.&Paste		"+gP
+cnoremenu 1.40 PopUp.&Paste		<C-R>+
+exe 'vnoremenu <script> 1.40 PopUp.&Paste	' . paste#paste_cmd['v']
+exe 'inoremenu <script> 1.40 PopUp.&Paste	' . paste#paste_cmd['i']
+vnoremenu 1.50 PopUp.&Delete		x
+an 1.55 PopUp.-SEP2-			<Nop>
+vnoremenu 1.60 PopUp.Select\ Blockwise	<C-V>
+
+nnoremenu 1.70 PopUp.Select\ &Word	vaw
+onoremenu 1.70 PopUp.Select\ &Word	aw
+vnoremenu 1.70 PopUp.Select\ &Word	<C-C>vaw
+inoremenu 1.70 PopUp.Select\ &Word	<C-O>vaw
+cnoremenu 1.70 PopUp.Select\ &Word	<C-C>vaw
+
+nnoremenu 1.73 PopUp.Select\ &Sentence	vas
+onoremenu 1.73 PopUp.Select\ &Sentence	as
+vnoremenu 1.73 PopUp.Select\ &Sentence	<C-C>vas
+inoremenu 1.73 PopUp.Select\ &Sentence	<C-O>vas
+cnoremenu 1.73 PopUp.Select\ &Sentence	<C-C>vas
+
+nnoremenu 1.77 PopUp.Select\ Pa&ragraph	vap
+onoremenu 1.77 PopUp.Select\ Pa&ragraph	ap
+vnoremenu 1.77 PopUp.Select\ Pa&ragraph	<C-C>vap
+inoremenu 1.77 PopUp.Select\ Pa&ragraph	<C-O>vap
+cnoremenu 1.77 PopUp.Select\ Pa&ragraph	<C-C>vap
+
+nnoremenu 1.80 PopUp.Select\ &Line	V
+onoremenu 1.80 PopUp.Select\ &Line	<C-C>V
+vnoremenu 1.80 PopUp.Select\ &Line	<C-C>V
+inoremenu 1.80 PopUp.Select\ &Line	<C-O>V
+cnoremenu 1.80 PopUp.Select\ &Line	<C-C>V
+
+nnoremenu 1.90 PopUp.Select\ &Block	<C-V>
+onoremenu 1.90 PopUp.Select\ &Block	<C-C><C-V>
+vnoremenu 1.90 PopUp.Select\ &Block	<C-C><C-V>
+inoremenu 1.90 PopUp.Select\ &Block	<C-O><C-V>
+cnoremenu 1.90 PopUp.Select\ &Block	<C-C><C-V>
+
+noremenu  <script> <silent> 1.100 PopUp.Select\ &All	:<C-U>call <SID>SelectAll()<CR>
+inoremenu <script> <silent> 1.100 PopUp.Select\ &All	<C-O>:call <SID>SelectAll()<CR>
+cnoremenu <script> <silent> 1.100 PopUp.Select\ &All	<C-U>call <SID>SelectAll()<CR>
+
+if has("spell")
+  " Spell suggestions in the popup menu.  Note that this will slow down the
+  " appearance of the menu!
+  func! <SID>SpellPopup()
+    if exists("s:changeitem") && s:changeitem != ''
+      call <SID>SpellDel()
+    endif
+
+    " Return quickly if spell checking is not enabled.
+    if !&spell || &spelllang == ''
+      return
+    endif
+
+    let curcol = col('.')
+    let [w, a] = spellbadword()
+    if col('.') > curcol		" don't use word after the cursor
+      let w = ''
+    endif
+    if w != ''
+      if a == 'caps'
+	let s:suglist = [substitute(w, '.*', '\u&', '')]
+      else
+	let s:suglist = spellsuggest(w, 10)
+      endif
+      if len(s:suglist) > 0
+	let s:changeitem = 'change\ "' . escape(w, ' .'). '"\ to'
+	let s:fromword = w
+	let pri = 1
+	" set 'cpo' to include the <CR>
+	let cpo_save = &cpo
+	set cpo&vim
+	for sug in s:suglist
+	  exe 'anoremenu 1.5.' . pri . ' PopUp.' . s:changeitem . '.' . escape(sug, ' .')
+		\ . ' :call <SID>SpellReplace(' . pri . ')<CR>'
+	  let pri += 1
+	endfor
+
+	let s:additem = 'add\ "' . escape(w, ' .') . '"\ to\ word\ list'
+	exe 'anoremenu 1.6 PopUp.' . s:additem . ' :spellgood ' . w . '<CR>'
+
+	let s:ignoreitem = 'ignore\ "' . escape(w, ' .') . '"'
+	exe 'anoremenu 1.7 PopUp.' . s:ignoreitem . ' :spellgood! ' . w . '<CR>'
+
+	anoremenu 1.8 PopUp.-SpellSep- :
+	let &cpo = cpo_save
+      endif
+    endif
+    call cursor(0, curcol)	" put the cursor back where it was
+  endfunc
+
+  func! <SID>SpellReplace(n)
+    let l = getline('.')
+    " Move the cursor to the start of the word.
+    call spellbadword()
+    call setline('.', strpart(l, 0, col('.') - 1) . s:suglist[a:n - 1]
+	  \ . strpart(l, col('.') + len(s:fromword) - 1))
+  endfunc
+
+  func! <SID>SpellDel()
+    exe "aunmenu PopUp." . s:changeitem
+    exe "aunmenu PopUp." . s:additem
+    exe "aunmenu PopUp." . s:ignoreitem
+    aunmenu PopUp.-SpellSep-
+    let s:changeitem = ''
+  endfun
+
+  augroup SpellPopupMenu
+    au! MenuPopup * call <SID>SpellPopup()
+  augroup END
+endif
+
+" The GUI toolbar (for MS-Windows and GTK)
+if has("toolbar")
+  an 1.10 ToolBar.Open			:browse confirm e<CR>
+  an <silent> 1.20 ToolBar.Save		:if expand("%") == ""<Bar>browse confirm w<Bar>else<Bar>confirm w<Bar>endif<CR>
+  an 1.30 ToolBar.SaveAll		:browse confirm wa<CR>
+
+"  if has("printer")
+"    an 1.40   ToolBar.Print		:hardcopy<CR>
+"    vunmenu   ToolBar.Print
+"    vnoremenu ToolBar.Print		:hardcopy<CR>
+"  elseif has("unix")
+"    an 1.40   ToolBar.Print		:w !lpr<CR>
+"    vunmenu   ToolBar.Print
+"    vnoremenu ToolBar.Print		:w !lpr<CR>
+"  endif
+
+  an <silent> icon=close 1.41 ToolBar.TBClose :if winheight(2)<0<Bar>confirm enew<Bar> else<Bar>confirm close<Bar>endif<CR>
+
+  an 1.65 ToolBar.-sep2-		<Nop>
+  vnoremenu 1.70 ToolBar.Cut		"+x
+  vnoremenu 1.80 ToolBar.Copy		"+y
+  cnoremenu 1.80 ToolBar.Copy		<C-Y>
+  nnoremenu 1.90 ToolBar.Paste		"+gP
+  cnoremenu	 ToolBar.Paste		<C-R>+
+  exe 'vnoremenu <script>	 ToolBar.Paste	' . paste#paste_cmd['v']
+  exe 'inoremenu <script>	 ToolBar.Paste	' . paste#paste_cmd['i']
+
+  an 1.91 ToolBar.-sep1-		<Nop>
+  an 1.92 ToolBar.Undo			u
+  an 1.93 ToolBar.Redo			<C-R>
+  an icon=backward 1.94 ToolBar.Backward		<C-o>
+  an icon=forward 1.95 ToolBar.Forward		<C-i>
+  an 1.96 ToolBar.TagJump		<C-]>
+
+  an 1.100   ToolBar.-sep3-		<Nop>
+  amenu icon=bookmark 1.101 ToolBar.Bookmark mm
+  amenu icon=go-up 1.102 ToolBar.GoUp <S-F2>
+  amenu icon=go-down 1.103 ToolBar.GoDown <F2>
+
+  if !has("gui_athena")
+"    an 1.100   ToolBar.-sep3-		<Nop>
+    an 1.105  ToolBar.Replace		:promptrepl<CR>
+    vunmenu   ToolBar.Replace
+    vnoremenu ToolBar.Replace		y:promptrepl <C-R>=<SID>FixFText()<CR><CR>
+"    an 1.110  ToolBar.FindPrev		N
+"    an 1.120  ToolBar.FindNext		n
+  endif
+
+  an 1.215 ToolBar.-sep5-		<Nop>
+  an <silent> 1.220 ToolBar.LoadSesn	:call <SID>LoadVimSesn()<CR>
+  an <silent> 1.230 ToolBar.SaveSesn	:call <SID>SaveVimSesn()<CR>
+"  an 1.240 ToolBar.RunScript		:browse so<CR>
+
+"  an 1.245 ToolBar.-sep6-		<Nop>
+"  an 1.250 ToolBar.Make			:make<CR>
+"  an 1.270 ToolBar.RunCtags		:exe "!" . g:ctags_command<CR>
+
+  an 1.295 ToolBar.-sep7-		<Nop>
+"  an 1.300 ToolBar.Help			:help<CR>
+"  an <silent> 1.310 ToolBar.FindHelp	:call <SID>Helpfind()<CR>
+
+" Only set the tooltips here if not done in a language menu file
+if exists("*Do_toolbar_tmenu")
+  call Do_toolbar_tmenu()
+else
+  let did_toolbar_tmenu = 1
+  tmenu ToolBar.Open		Open file
+  tmenu ToolBar.Save		Save current file
+  tmenu ToolBar.SaveAll		Save all files
+  tmenu ToolBar.Print		Print
+  tmenu ToolBar.Undo		Undo
+  tmenu ToolBar.Redo		Redo
+  tmenu ToolBar.Cut		Cut to clipboard
+  tmenu ToolBar.Copy		Copy to clipboard
+  tmenu ToolBar.Paste		Paste from Clipboard
+  if !has("gui_athena")
+    tmenu ToolBar.Replace	Find / Replace...
+    tmenu ToolBar.FindNext	Find Next
+    tmenu ToolBar.FindPrev	Find Previous
+  endif
+  tmenu ToolBar.LoadSesn	Choose a session to load
+  tmenu ToolBar.SaveSesn	Save current session
+  tmenu ToolBar.RunScript	Choose a Vim Script to run
+  tmenu ToolBar.Make		Make current project (:make)
+  tmenu ToolBar.RunCtags	Build tags in current directory tree (!ctags -R .)
+  tmenu ToolBar.TagJump		Jump to tag under cursor
+  tmenu ToolBar.Help		Vim Help
+  tmenu ToolBar.FindHelp	Search Vim Help
+endif
+
+
+func! s:FnameEscape(fname)
+  if exists('*fnameescape')
+    return fnameescape(a:fname)
+  endif
+  return escape(a:fname, " \t\n*?[{`$\\%#'\"|!<")
+endfunc
+
+" Select a session to load; default to current session name if present
+fun! s:LoadVimSesn()
+  if strlen(v:this_session) > 0
+    let name = s:FnameEscape(v:this_session)
+  else
+    let name = "Session.vim"
+  endif
+  execute "browse so " . name
+endfun
+
+" Select a session to save; default to current session name if present
+fun! s:SaveVimSesn()
+  if strlen(v:this_session) == 0
+    let v:this_session = "Session.vim"
+  endif
+  execute "browse mksession! " . s:FnameEscape(v:this_session)
+endfun
+
+endif " TooBar
+
+
+endif " !exists("did_install_default_menus")
+
+
+" Restore the previous value of 'cpoptions'.
+let &cpo = s:cpo_save
+unlet s:cpo_save
+
+" vim: set sw=2 :

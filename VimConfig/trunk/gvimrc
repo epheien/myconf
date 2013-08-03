@@ -1,0 +1,39 @@
+" 字体设置
+if has("win32") || has("win64")
+    set guifont=Consolas:h10:cDEFAULT
+else
+    set guifont=monospace\ 9
+endif
+
+" 切换菜单栏与工具栏显示快捷键
+"set guioptions-=m
+"set guioptions-=T
+map <silent> <F10> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <bar>
+    \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+    \endif<CR>
+
+" 窗口大小
+set columns=90 lines=44
+"autocmd syntax c,cpp set columns=125 lines=40
+"autocmd syntax c,cpp WMToggle
+
+" 启动时窗口的位置
+"winpos 230 230
+
+" 禁用闪屏
+"set vb t_vb=
+
+" 显示行号
+set number
+
+" 输入法打开时改变高亮
+"if has('multi_byte_ime')
+    "highlight Cursor guibg=Green guifg=NONE
+    "highlight CursorIM guibg=Purple guifg=NONE
+"endif
+
+" vi:set et sts=4:

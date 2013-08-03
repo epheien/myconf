@@ -1,0 +1,1172 @@
+"===============================================================================
+" 基本设定
+"===============================================================================
+
+" 关闭 Vi 兼容模式，否则无法使用 Vim 的大部分扩展功能
+set nocompatible
+
+" 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
+"set guioptions+=M
+runtime menu.vim
+"set guioptions-=m
+set guioptions-=t
+set winaltkeys=no
+
+" 自动缩进设置
+" 使新行缩进与前一行一样
+set autoindent
+" 主要是实现自动对齐大括号的缩进
+set smartindent
+" 打开 cindent，主要体现为函数参数过长时，换行自动缩进
+set cindent
+set cinoptions+=(0,W8
+
+" 总在 vim 窗口的右下角显示当前光标位置。
+"set ruler
+" 用 statusline 模拟
+"set statusline=%<%f\ %h%m%r%=%-13.(%l,%c%V%)\ %P
+set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fileencoding}]%)
+            \%{GetFmt()}%=%(%l/%L,%c%V%)\ %P
+set laststatus=2
+function! GetFmt() "{{{
+    let l:fmt = getftime(expand("%:p"))
+    if l:fmt != -1
+        return "[". strftime("%Y-%m-%d %H:%M:%S", l:fmt) . "]"
+    else
+        return ""
+    endif
+endf "}}}
+
+" 在 vim 窗口右下角，标尺的右边显示未完成的命令。
+set showcmd
+
+" 左下角显示当前模式
+set showmode
+
+" 语法高亮
+syntax on
+" 禁用 vim 文件类型的错误
+let g:vimsyn_noerror = 1
+
+" 文件类型的检测
+"filetype on
+" 为特定的文件类型允许插件文件的载入
+"filetype plugin on
+" 为特定的文件类型载入缩进文件
+"filetype indent on
+" 可以直接用下面一行完成
+filetype plugin indent on
+
+
+" 禁用响铃
+"set noerrorbells
+" 禁用闪屏
+"set vb t_vb=
+
+" 显示行号
+"set number
+
+" 设定文件编码类型，彻底解决中文编码问题
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk,gb18030,ucs-bom,cp936
+
+" 设置搜索结果高亮显示
+set hlsearch
+" 搜索时忽略大小写
+set ignorecase
+set smartcase
+" 在搜索模式时输入时即时显示相应的匹配点。
+set incsearch
+
+" 设置不自动备份
+set nobackup
+" 保留原始文件
+"set patchmode=.orig
+
+" 启动对鼠标的支持
+set mouse=a
+
+" 第一行设置tab键为4个空格，第二行设置当行之间交错时使用4个空格
+"set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
+" 长行不能完全显示时显示当前屏幕能显示的部分，长行不能完全显示时显示 @
+set display=lastline
+
+" 上下为跨屏幕一行
+noremap <silent> k gk
+noremap <silent> j gj
+
+" 自动绕行显示
+set wrap
+" 按词绕行
+"set linebreak
+" 回绕行的前导符号
+"set showbreak=<-->
+
+" 设置鼠标和选择的行为
+set selectmode=key
+set mousemodel=popup
+set keymodel=startsel,stopsel
+set selection=inclusive
+if has("win32") || has("win64")
+    " nop
+else
+    " 修正鼠标右键菜单行为
+    noremap <RightMouse> <Nop>
+    noremap <RightRelease> <RightMouse>
+    noremap! <RightMouse> <Nop>
+    noremap! <RightRelease> <RightMouse>
+    " 没用的 3、4 连击
+    noremap <3-LeftMouse> <Nop>
+    noremap! <3-LeftMouse> <Nop>
+    noremap <4-LeftMouse> <Nop>
+    noremap! <4-LeftMouse> <Nop>
+endif
+
+" 全能补全禁止预览
+"set completeopt=longest,menu
+"set completeopt=menuone,preview
+set completeopt=menuone
+
+" 显示水平滚动条
+"set guioptions+=b
+
+" 修改<Leader>键
+"let mapleader = "\\"
+let mapleader = "\<F12>"
+
+" 代码自动折叠设置。
+set foldenable     " 打开代码折叠
+"set nofoldenable   " 关闭代码折叠
+" 代码折叠，根据语法
+set foldmethod=syntax
+" 代码折叠，手动
+"set foldmethod=manual
+" 显示折叠列
+if has('gui_running')
+    autocmd syntax vim setlocal foldcolumn=1
+    autocmd syntax c,cpp setlocal foldcolumn=1
+endif
+" 设置折叠级别: 高于此级别的折叠会被关闭
+set foldlevel=9999
+
+" 允许光标移动到刚刚超过行尾字符之后的位置
+set virtualedit=onemore,block
+
+" 窗口大小，更适合放到 .gvimrc
+"set columns=100 lines=40
+
+" 标签页显示。0:1:2 = 总是不显示：超过一个才显示：总是显示
+"set showtabline=2
+
+" 自动完成扫描的文件
+" 缺省 ".,w,b,u,t,i"
+" 当前缓冲区，其他窗口的buf，其他载入的buf，卸载的buf，标签，头文件
+"set complete=.,w,b,u,t,i
+"set complete=.,t,i
+set complete=.,t,w,b,k
+
+" 注意: 打开次选项会使得某些插件无法工作。
+"set autochdir
+
+" 切换时隐藏缓冲而不是提示已修改未保存
+set hidden
+
+" 显示 80 字符右边距的实现，需要 7.3 以上版本
+if version >= 703 && has("gui_running")
+    set cc=81
+endif
+
+" 设置 session 文件保存的信息
+" (缺省: "blank,buffers,curdir,folds,help,options,tabpages,winsize")
+set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winsize,resize
+
+" 普通模式和插入模式的光标设置
+let color_normal = 'grey'
+let color_insert = 'magenta'
+let color_exit = 'grey'
+if &term == "linux" || &term == "fbterm" "{{{
+    " console fbterm 通用
+    let g:loaded_vimcdoc = 0
+    set t_ve+=[?6c
+    autocmd! InsertEnter * set t_ve-=[?6c
+    autocmd! InsertLeave * set t_ve+=[?6c
+    autocmd! VimLeave * set t_ve-=[?6c
+"elseif &term == "xterm"
+    " konsole
+    "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+elseif &term == "xterm-256color"
+    " gnome-terminal xterm 通用
+    let &t_EI = "\<Esc>]12;" . color_normal . "\x7" " 普通模式的光标颜色
+    let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
+elseif &term =~ "screen"
+    set ttymouse=xterm2
+    if exists('$TMUX')
+        " tmux
+        exec 'silent !echo -ne "\033Ptmux;\033\e]12;"'
+                    \ . shellescape(color_normal, 1) . '"\007\033\\"'
+        let &t_SI="\033Ptmux;\033\e]12;" . color_insert . "\007\033\\"
+        let &t_EI="\033Ptmux;\033\e]12;" . color_normal . "\007\033\\"
+        exec 'autocmd VimLeave * :silent !echo -ne "\033Ptmux;\033\e]12;"'
+                    \ . shellescape(color_exit, 1) . '"\007\033\\"'
+    else
+        " screen
+        exec 'silent !echo -ne "\033P\e]12;"'
+                    \ . shellescape(color_normal, 1) . '"\007\033\\"'
+        let &t_SI="\033P\e]12;" . color_insert . "\007\033\\"
+        let &t_EI="\033P\e]12;" . color_normal . "\007\033\\"
+        exec 'autocmd VimLeave * :silent !echo -ne "\033P\e]12;"'
+                    \ . shellescape(color_exit, 1) . '"\007\033\\"'
+    endif
+elseif &term =~ 'xterm.\+'
+    " xterm
+    " 0 or 1 -> blinking block
+    " 2 -> solid block
+    " 3 -> blinking underscore
+    " 4 -> solid underscore
+    let &t_EI = "\<Esc>[0 q"
+    let &t_SI = "\<Esc>[3 q"
+endif
+unlet color_normal
+unlet color_insert
+unlet color_exit
+"}}}
+" 设置 gnome-terminal 的光标
+"if &term == "xterm" && !has("gui_running") "{{{
+    "silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+    "autocmd! InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+    "autocmd! InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+    "autocmd! VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape underline"
+"endif
+"}}}
+" 编辑 po 文件时与中文输入法的配合
+autocmd! syntax po set imactivatekey=C-space
+
+" fcitx 输入法调整，离开插入模式时自动关闭输入法
+" NOTE: 使用插件来实现，不在这里实现了
+"if executable("fcitx-remote") && exists("$DISPLAY")
+    "autocmd InsertLeave * call system("fcitx-remote -c")
+"endif
+
+" 颜色方案
+if has('gui_running')   " gui 的情况下
+    colorscheme desertEx
+elseif &t_Co == 256     " 支持 256 色的话
+    colorscheme desertEx256
+elseif $TERM ==# "xterm"
+    colorscheme default
+else
+    colorscheme default
+endif
+
+" 增强的命令行补全
+set wildmenu
+
+" 执行宏、寄存器和其它不通过输入的命令时屏幕不会重画
+"set lazyredraw
+
+" 设置键码延时, 避免终端下 <ESC> 的等待
+set ttimeoutlen=50
+
+" 用空格来显示制表并同时把光标放在空白开始位置
+set list listchars=tab:\ \ 
+
+" 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
+let $LANGUAGE=''
+
+"===============================================================================
+" 额外的文件格式支持
+"===============================================================================
+
+" ========== 特殊文件格式 ==========
+" txt2tags 格式文件高亮
+autocmd! BufNewFile,BufRead *.t2t set ft=txt2tags
+"asciidoc 格式文件高亮
+autocmd! BufNewFile,BufRead *.adc set ft=asciidoc
+" vimhelp(自定义) 格式文件高亮
+"autocmd! BufNewFile,BufRead *.vhp set tw=78 ts=4 ft=help norl
+" Org-Mode
+"autocmd BufEnter *.org call org#SetOrgFileType()
+autocmd! BufNewFile,BufRead *.org set ft=org
+" NetWide Assembly
+autocmd! BufNewFile,BufRead *.nasm setf nasm
+" rfc
+autocmd! BufNewFile,BufRead *.txt
+    \ if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
+
+"===============================================================================
+" 常规键盘映射
+"===============================================================================
+
+"=======================================
+" 普通模式
+"=======================================
+function! s:n_BuffterDelete() "{{{
+    let curb = bufnr('%')
+"   if bufexists(0)     " 检查是否存在轮换缓冲
+    bNext
+    exec "bd " . curb
+    if exists("*BufExplorer_Fix")
+        call BufExplorer_Fix()
+    endif
+endf
+"}}}
+nnoremap <silent> \- :set columns-=30<CR>
+nnoremap <silent> \= :set columns+=30<CR>
+nnoremap <silent> \l :%s/\r//g<CR>
+nnoremap <silent> \d :call <SID>n_BuffterDelete()<CR>
+nnoremap \h :cd %:p:h <Bar> pwd<CR>
+nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
+nnoremap <Space> 3<C-e>
+nnoremap <S-Space> 3<C-y>
+nnoremap , 3<C-y>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap ; :
+"nnoremap <C-a> ggVG
+nnoremap <C-Tab> :bnext<CR>
+nnoremap <S-Tab> :bNext<CR>
+nnoremap <C-s> :update<CR>
+"nnoremap <CR> <C-w>}
+nnoremap <C-p> <C-w>z
+nnoremap T :tag<CR>
+"nnoremap <C-z> u
+if exists('$DISPLAY')
+    nnoremap <C-v> "+gP
+endif
+
+" 交换 ' 和 `，因为 ` 比 ' 常用但太远
+nnoremap ' `
+nnoremap ` '
+
+"=======================================
+" 命令行模式，包括搜索时
+"=======================================
+cnoremap <C-h> <Left>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-l> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-BS> <C-w>
+cnoremap <C-d> <Del>
+if exists('$DISPLAY')
+    cnoremap <C-v> <C-r>+
+endif
+
+"cnoremap <A-m> <Esc>
+"cnoremap qq q!
+"cnoremap cc close
+"cnoremap ccc close!<CR>
+
+"=======================================
+" 可视和选择模式
+"=======================================
+if exists('$DISPLAY')
+    vnoremap <C-x> "+x
+    vnoremap <C-c> "+y
+    vnoremap <C-v> "+gP
+endif
+vnoremap <C-s> <C-c>:update<CR>
+"vnoremap y "+y
+"vnoremap x "+x
+
+"=======================================
+" 可视模式
+"=======================================
+function! MacroComment() "{{{
+    let l:firstline = line("'<")
+    let l:lastline = line("'>")
+    let l:curline = line(".")
+    exec l:firstline . "put! ='#if 0'"
+    exec l:lastline + 1 . "put ='#endif'"
+    exec l:curline + 1
+endf
+"}}}
+xnoremap <Space> 3j
+xnoremap , 3k
+xnoremap ( di()<ESC>Pl
+xnoremap [ di[]<ESC>Pl
+xnoremap ' di''<ESC>Pl
+xnoremap " di""<ESC>Pl
+
+" 选择后立即搜索
+xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
+    \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
+" C 文件的 #if 0 段落注释
+xnoremap 0 <C-c>:call MacroComment()<CR>
+
+
+"=======================================
+" 插入模式下
+"=======================================
+function! s:ToggleCase() "{{{
+    let sLine = getline('.')
+    let nEndIdx = col('.') - 2
+    let sWord = matchstr(sLine[: nEndIdx], '\zs\k*\ze$')
+    if sWord ==# ''
+        return ''
+    endif
+
+    if sWord =~# '[a-z]'
+        call setline(line('.'), substitute(sLine[: nEndIdx], '\zs\k*\ze$', 
+                    \   toupper(sWord), '') . sLine[nEndIdx+1 :])
+    else
+        call setline(line('.'), substitute(sLine[: nEndIdx], '\zs\k*\ze$', 
+                    \   tolower(sWord), '') . sLine[nEndIdx+1 :])
+    endif
+
+    return ''
+endf
+"}}}
+"inoremap <silent> <C-s> <C-o>:update<CR>
+inoremap <silent> <C-s> <ESC>:update<CR>
+inoremap <C-CR> <ESC>o
+inoremap <S-CR> <ESC>O
+inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<END>"
+inoremap <C-a> <Home>
+inoremap <C-BS> <C-w>
+inoremap <C-d> <Del>
+if exists('$DISPLAY')
+    inoremap <C-v> <C-r>+
+endif
+
+inoremap <C-z> <C-o>u
+inoremap <C-r> <C-o><C-r>
+" 写 C 时麻烦的宏定义大写问题，解决！
+inoremap <silent> <expr> <C-y>
+    \ pumvisible()?"\<C-y>":"\<C-r>=<SID>ToggleCase()\<CR>"
+
+imap <C-h> <Left>
+imap <C-j> <Down>
+imap <C-k> <Up>
+imap <C-l> <Right>
+inoremap <A-h> <C-Left>
+inoremap <A-l> <C-Right>
+
+
+"===============================================================================
+" 插件设置
+"===============================================================================
+" ========== taglist ==========
+"{{{
+" 打开/关闭命令:":TlistToggle"
+" 不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Show_One_File = 1
+" 如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Exit_OnlyWindow = 1
+" 单击标签即达
+let Tlist_Use_SingleClick=1
+" 文件非编辑时自动关闭侧栏
+"let Tlist_File_Fold_Auto_Close=1
+" 不显示折叠页边
+let g:Tlist_Enable_Fold_Column = 0
+" 在右边打开窗口
+let Tlist_Use_Right_Window = 1
+" 打开时不增加窗口宽度
+let Tlist_Inc_Winwidth = 0
+" 默认排序方式
+let Tlist_Sort_Type = "name"
+" ctags.exe
+if has("win32") || has("win64")
+    let Tlist_Ctags_Cmd = $VIM . '\vimfiles\bin\ctags.exe'
+endif
+"
+"highlight MyTagListTagName guifg=cyan guibg=grey40 ctermfg=white ctermbg=green
+highlight link MyTagListTagName Search
+highlight MyTagListFileName guifg=lightgoldenrod2 ctermfg=white
+"}}}
+" ========== tagbar ==========
+"{{{
+let g:tagbar_compact = 1
+let g:tagbar_width = 30
+"let g:tagbar_expand = 1
+if has("win32") || has("win64")
+    let g:tagbar_ctags_bin = $VIM . '\vimfiles\bin\ctags.exe'
+endif
+
+let g:tagbar_type_rfc = {
+    \ 'ctagstype' : 'rfc',
+    \ 'kinds'     : [
+        \ 'c:chapters',
+    \ ],
+    \ 'sort'    : 0,
+    \ 'deffile' : expand('~/.vim/ctags/rfc.cnf'),
+\ }
+
+nnoremap <Leader>t :TagbarToggle<CR>
+
+hi TagbarAccessProtected guifg=Magenta ctermfg=Magenta
+hi link TagbarSignature Normal
+hi link TagbarKind Constant
+"}}}
+" ========== NERDTree ==========
+"{{{
+" 设置不显示的文件，效果为仅显示 .c,.cpp,.h 文件，无后缀名文件暂时无法解决
+"let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
+let NERDTreeIgnore = []
+hi link treeDir Statement
+hi link treeCWD Type
+"}}}
+" ========== Vimwiki ==========
+"{{{
+let g:vimwiki_camel_case = 0
+" 令预格式化文本支持语法高亮，同时可以强制刷新预格式化文本
+let wiki = {}
+let wiki.path = '~/my_wiki/'
+let wiki.path_html = '~/my_html/'
+let wiki.nested_syntaxes = {'c++': 'cpp', 'python': 'python'}
+let g:vimwiki_list = [wiki]
+let g:vimwiki_hl_cb_checked = 1
+let g:vimwiki_CJK_length = 1
+let g:vimwiki_browsers=['/usr/bin/firefox']
+let g:vimwiki_html_header_numbering = 2
+let g:vimwiki_menu = ''
+" 禁用插入模式的表格快捷键，以防占用 <Cr> 和 <Tab>
+let g:vimwiki_table_mappings = 0
+
+" 定制一下语法高亮
+hi link VimwikiPre Ignore
+
+" 一些特定的设置
+autocmd! FileType vimwiki call <SID>VimwikiSetup()
+function! s:VimwikiSetup()
+    " 这个动作默认按键是 <C-Space>，太搓了，而 <C-n> 又被 NERD commenter 占用
+    nmap <buffer> <C-n> <Plug>VimwikiToggleListItem
+    setlocal sts=4 ts=4 sw=4 et
+endfunction
+"}}}
+" ========== NERD commenter ==========
+"{{{
+let NERDMenuMode = 0
+"let NERDSpaceDelims = 1
+nmap <C-n> <Leader>c<space><Down>
+xmap <C-n> <Leader>c<space>
+"}}}
+" ========== pydiction ==========
+"{{{
+let g:pydiction_location = '~/.vim/dict/complete-dict'
+"let g:pydiction_menu_height = 20
+"}}}
+" ========== VLOmniCpp ==========
+"{{{
+" 显示私有成员
+let g:VLOmniCpp_DisplayMode = 1
+" 自定义选项
+let g:VLOmniCpp_ItemSelectionMode = 10
+" 暂时没有用到
+"let g:VimTagsManager_SrcDir = '~/.vimlite/VimLite'
+" 基于 VLWorkspace 的源/头文件切换
+nnoremap <silent> <C-\>a :VLWSwapSourceHeader<CR>
+" 弹出 GUI 菜单的快捷键
+let g:VLWPopupMenuKey = '<RightRelease>'
+"}}}
+" ========== VimLite ==========
+"{{{
+"let g:VLWorkspaceUseVIMCCC = 1
+let g:VLWorkspaceSaveAllBeforeBuild = 1
+let g:VLWorkspaceParseFileAfterSave = 1
+let g:VLCalltips_IndicateArgument = 0
+let g:VLCalltips_EnableSyntaxTest = 0
+let g:VLWDbgSaveBreakpointsInfo = 1
+let g:VLOmniCpp_UseLibCxxParser = 1
+let g:VLWDisableUnneededTools = 0
+let g:VLWorkspaceLinkToEidtor = 0
+if has("win32") || has("win64")
+    let g:VLOmniCpp_LibCxxParserPath = expand($VIM.'/vimlite/lib/libCxxParser.dll')
+endif
+
+" 修正 clang++ 的头文件搜索路径的问题
+command! -nargs=0 VIMCCCFixup VIMCCCAppendArgs
+        \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include
+        \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include-fixed 
+
+let g:VLWorkspaceSymbolDatabase = 'cscope'
+let g:VimTagsManager_InclAllCondCmplBrch = 1
+" pyclewn 的终端窗口高度，暂时这样设置
+set previewheight=8
+"}}}
+" ========== VIMCCC ==========
+"{{{
+let g:VIMCCC_Enable = 0
+"let g:VIMCCC_ItemSelectionMode = 10
+let g:VIMCCC_ItemSelectionMode = 2
+"let g:VIMCCC_PythonModulePath = ''
+let g:VIMCCC_ClangLibraryPath = ''
+let g:VIMCCC_CompleteMacros = 1
+"}}}
+" ========== clang complete ==========
+"{{{
+let g:clang_use_library = 1
+let g:clang_auto_select = 1
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=0
+let g:clang_complete_copen = 1
+let g:clang_hl_errors = 0
+let g:clang_periodic_quickfix = 0
+let g:clang_snippets = 0
+"let g:clang_library_path = '/usr/lib/libclang.so'
+let g:clang_disable = 1
+"let g:clic_filename = '/home/eph/clang_indexer.db'
+"}}}
+" ========== pathogen ==========
+"{{{
+call pathogen#infect()
+"}}}
+" ========== xptemplate ==========
+"{{{
+" 选择模式下取消 j, k 原始的行为
+snoremap j <C-g>cj
+snoremap k <C-g>ck
+
+if has('gui_running')
+    "let g:xptemplate_nav_next = '<C-CR>'
+    "let g:xptemplate_nav_prev = '<S-CR>'
+    let g:xptemplate_nav_next = '<C-o>'
+    let g:xptemplate_nav_prev = '<S-Tab>'
+else
+    let g:xptemplate_nav_next = '<C-o>'
+    let g:xptemplate_nav_prev = '<S-Tab>'
+endif
+let g:xptemplate_nav_cancel = '<C-c>'
+let g:xptemplate_key = '<C-\>'
+inoremap <silent> <expr> <C-p> pumvisible() ? "\<C-p>" :
+            \"\<C-r>=XPTemplateStart(0,{'k':'<C-p++'})\<CR>"
+"}}}
+" ========== mark ==========
+"{{{
+function! s:MouseMark() "{{{2
+    if &ft == "help"
+        execute "normal! \<C-]>"
+        return
+    endif
+    let l:C = getline('.')[col('.')-1]
+    if l:C == '(' || l:C == ')'
+                \|| l:C == '[' || l:C == ']'
+                \|| l:C == '{' || l:C == '}'
+                \|| &buftype ==# 'quickfix'
+        execute "normal! \<2-LeftMouse>"
+        return
+    endif
+    let l:bak = &ignorecase
+        normal \\
+    let &ignorecase = l:bak
+endf
+"}}}2
+let g:mwIgnoreCase = 0
+nmap <silent> \\ <Plug>MarkSet
+xmap <silent> \\ <Plug>MarkSet
+nmap <silent> \c :noh<CR><Plug>MarkAllClear
+nmap <silent> * <Plug>MarkSearchCurrentNext
+nmap <silent> # <Plug>MarkSearchCurrentPrev
+nmap <silent> <Leader>* <Plug>MarkSearchNext
+nmap <silent> <Leader># <Plug>MarkSearchPrev
+nnoremap <silent> <2-LeftMouse> :call <SID>MouseMark()<CR>
+"}}}
+" ========== vim-signature ==========
+" yz 留给 xptemplate 用，暂时没办法
+let g:SignatureIncludeMarks =
+            \ 'abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ'
+"{{{
+"}}}
+
+"===============================================================================
+" IDE 设置
+"===============================================================================
+"set tags+=~/.vim/systags
+let g:c_kernel_mode = 1
+
+command -nargs=0 CKernelMode setlocal ts=8 sts=0 sw=8 noet
+command -nargs=0 CSpaceMode setlocal ts=8 sts=4 sw=4 et
+
+" ### Mark.vim 快速高亮单词。
+" 自定义高亮，默认有 6 组
+highlight HiWord1 gui=bold guifg=yellow guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=yellow
+highlight HiWord2 gui=bold guifg=white guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=white
+highlight HiWord3 gui=bold guifg=orange guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=Magenta
+highlight HiWord4 gui=bold guifg=green guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=green
+highlight HiWord5 gui=bold guifg=cyan guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=cyan
+highlight HiWord6 gui=bold guifg=salmon guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=red
+highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599 
+            \cterm=NONE ctermfg=black ctermbg=blue
+
+" 括号自动补全. 为了性能, 直接禁用闭合检查
+inoremap ( ()<Left>
+"inoremap ) <C-r>=ClosePair(')')<CR>
+inoremap [ []<Left>
+"inoremap ] <C-r>=ClosePair(']')<CR>
+"inoremap <expr> { (&filetype != "vimwiki")?"{}\<Left>":"{"
+"inoremap } <C-r>=ClosePair('}')<CR>
+"inoremap < <><Left>
+"inoremap > <c-r>=ClosePair('>')<CR>
+"inoremap ' ''<Left>
+inoremap <expr> " (&filetype == "vim")?"\"":"\"\"\<Left>"
+
+inoremap <expr> <BS> <SID>i_BS_plus()
+inoremap <expr> ; <SID>i_Semicolon_plus()
+inoremap <C-g> <C-r>=<SID>i_InsertHGuard()<CR>
+
+" 补全模式下的映射
+inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
+"inoremap <expr> <ESC> pumvisible()?"\<C-e>":"\<ESC>"
+
+" C 的结构成员自动提示
+"inoremap <silent> . .<C-r>=<SID>i_PopupMember()<CR>
+"inoremap <silent> > ><C-r>=<SID>i_PopupMember()<CR>
+
+function! s:i_PopupMember() "{{{
+    if &filetype != "c" && &filetype != "cpp"
+        return ''
+    endif
+    let preChar = getline('.')[col('.') - 2]
+    if ((getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.') && getline('.')[0] != '#'
+        return "\<C-x>\<C-o>"
+    else
+        return ''
+    endif
+endf
+"}}}
+function! s:i_InsertHGuard() "{{{
+    let gudname = "__".substitute(toupper(expand("%:t")), "\\.", "_", "g")."__"
+    return "#ifndef ".gudname."\<CR>"."#define ".gudname."\<CR>\<CR>\<CR>\<CR>\<CR>\<CR>"."#endif /* ".gudname." */\<Up>\<Up>\<Up>"
+endf
+"}}}
+function! s:i_Tab_plus_old() "{{{
+    if (&filetype == "c" || &filetype == "cpp") && !pumvisible()
+        return "\<Tab>"
+    elseif !pumvisible()
+        return "\<C-x>\<C-n>"
+    elseif pumvisible()
+        return "\<C-n>"
+    endif
+endf
+"}}}
+function! ClosePair(char) "{{{
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endf
+"}}}
+function! s:i_Semicolon_plus() "{{{
+    let sLine = getline('.')
+    if sLine !~# '^\s*for\>' && sLine[col('.') - 1] ==# ')'
+        return "\<Right>;"
+    else
+        return ";"
+    endif
+endf
+"}}}
+function! IfPair(char1,char2) "{{{
+    if getline('.')[col('.') - 2] == a:char1 && getline('.')[col('.') - 1] == a:char2
+        return 1
+    else
+        return 0
+    endif
+endf
+"}}}
+function! s:i_BS_plus() "{{{
+    if IfPair('(',')') || IfPair('[',']')
+        return "\<DEL>\<BS>"
+    else
+        return "\<BS>"
+    endif
+endf
+"}}}
+
+" ========== cscope 设置 ==========
+"{{{
+if has("cscope")
+    if has("win32") || has("win64")
+        let &csprg = $VIM . '\vimfiles\bin\cscope.exe'
+    else
+        set csprg=cscope
+    endif
+    set csto=0
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    elseif filereadable("GTAGS") " 使用 gtags
+        set csprg=gtags-cscope
+        cs add GTAGS
+    endif
+    set csverb
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+endif
+
+"set nocsverb
+"if has("cscope") && filereadable("../cscope.out")
+    "cs add ../cscope.out ../
+"endif
+"set csverb
+
+function! s:Addcs(name)
+    let prePath = fnamemodify(a:name, ':p:h')
+    execute "cs add " . a:name . " " . prePath
+endf
+command! -complete=file -nargs=1 Addcs :call <SID>Addcs("<args>")
+
+nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+"nnoremap <silent> <C-\>a :call <SID>AlterSource()<CR>
+
+function! s:AlterSource() "{{{
+    let l:file = expand("%:t:r")
+    let l:ext = expand("%:t:e")
+    if l:ext == "c" || l:ext == "cpp"
+        try
+            exec 'cs find f \<' . l:file . ".h$"
+        catch
+            try
+                exec 'cs find f \<' . l:file . ".hpp$"
+            catch
+                return
+            endtry
+            return
+        endtry
+    elseif l:ext == "h" || l:ext == "hpp"
+        try
+            exec 'cs find f \<' . l:file . ".c$"
+        catch
+            try
+                exec 'cs find f \<' . l:file . ".cpp$"
+            catch
+                return
+            endtry
+            return
+        endtry
+    endif
+endf
+"}}}
+"}}}
+
+"===========================================================
+" 自己的简易插件
+"===========================================================
+" ========== SimpleSuperTab ==========
+"{{{
+" 需要把 completeopt 设置为 menuone
+inoremap <C-Tab> <Tab>
+inoremap <silent> <Tab> <C-r>=<SID>i_Tab_plus()<CR>
+inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<C-d>"
+
+function! s:i_Tab_plus() "{{{2
+    let preChar = getline('.')[col('.') - 2]
+    if pumvisible()
+        return "\<C-n>"
+    elseif preChar == '' || preChar =~ '\s'
+        return "\<Tab>"
+    elseif (getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.'
+        return "\<C-x>\<C-o>"
+    elseif &ft ==# 'c' || &ft ==# 'cpp'
+        return "\<C-n>"
+    else
+        return "\<C-x>\<C-n>"
+    endif
+endf
+"}}}2
+function! I_OnPopupPost() "{{{2
+    return pumvisible()?"\<C-p>\<Down>":""
+endf
+"}}}2
+"}}}
+" ========== 递归查找当前目录下的文件并打开 ==========
+"{{{
+function! s:findn(name, flag)
+    if a:flag == "c"
+    let l:list=system("find . -path '*.svn' -prune -o -iname '*" . a:name . "*' -type f \\( -iname '*.c' -o -iname '*.h' -o -iname '*.cpp' \\) -print | awk '{print NR\"\t\"$0}'")
+    else
+    let l:list=system("find . -path '*.svn' -prune -o -iname '*" . a:name . "*' -type f -print | awk '{print NR\"\t\"$0}'")
+    endif
+
+    let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
+    if l:num < 1
+        echo "'" . a:name . "' not found"
+        return
+    endif
+    if l:num != 1
+        echo l:list
+        let l:input=input("Type number and <Enter> (empty cancels): ")
+
+        if strlen(l:input)==0
+            return
+        endif
+
+        if strlen(substitute(l:input, "[0-9]", "", "g"))>0
+            echo "Not a number"
+            return
+        endif
+
+        if l:input<1 || l:input>l:num
+            echo "Out of range"
+            return
+        endif
+        let l:line=matchstr("\n".l:list, "\n".l:input."\t[^\n]*")
+    else
+        let l:line=l:list
+    endif
+
+    let l:line=substitute(l:line, "^[^\t]*\t./", "", "")
+    execute ":e " . l:line
+endf
+" 查找所有文件
+command! -nargs=1 Findn :call <SID>findn("<args>", "")
+" 查找 c 文件
+command! -nargs=1 Findc :call <SID>findn("<args>", "c")
+"}}}
+" ========== 在预览窗口显示标签内容 ==========
+"{{{
+nnoremap <silent> <CR> :call PreviewWord()<CR>
+function! PreviewWord() "{{{2
+    if &ft ==# 'qf'
+        exec "normal! \<CR>"
+        return
+    endif
+
+    if &previewwindow
+        let flag = 1
+    else
+        let flag = 0
+    endif
+
+    let orgbuf = bufnr('%')
+    let w = expand("<cword>")       " 在当前光标位置抓词
+    if w =~ '\a'                    " 如果该单词包括一个字母
+        let l:bak_shm = &shm
+        let l:bak_ei = &ei
+        set eventignore+=BufEnter,WinEnter,BufWinEnter "TODO: 需要更好的方案
+        set shortmess+=A
+
+        if &filetype == "help"
+            exec "normal! \<C-w>}"
+        else
+            try
+                exec "ptag " . w
+            catch
+                let &shm = l:bak_shm
+                let &ei = l:bak_ei
+                return
+            endtry
+        endif
+
+        let &shm = l:bak_shm
+        let &ei = l:bak_ei
+
+        let orgWinnr = winnr()
+
+        " 跳转至预览窗口
+        try
+            noautocmd wincmd P
+        catch /.*/
+            return
+        endtry
+        if &previewwindow           " 如果确实转到了预览窗口……
+
+"           if !buflisted(orgbuf)   " 如果需要打开的预览缓冲没有在可用缓冲列表
+"               setlocal buftype=nowrite
+"               setlocal bufhidden=delete
+"               setlocal noswapfile
+"               setlocal nobuflisted
+"               setlocal noma
+"           endif
+
+            if has("folding")
+                silent! .foldopen   " 展开折叠的行
+            endif
+
+"           call search("$", "b")   " 到前一行的行尾
+            let w = substitute(w, '\\', '\\\\', "")
+"           call search('\<\V' . w . '\>')      " 定位光标在匹配的单词上
+            call search('\<\V' . w . '\>', "c") " 定位光标在匹配的单词上
+            " 给在此位置的单词加上匹配高亮
+            "hi PreviewWord guifg=cyan guibg=grey40 term=bold ctermbg=green
+            hi link PreviewWord Search
+            exec 'match PreviewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+            normal! zz
+
+            if flag == 0
+                " 返回原来的窗口
+                exec 'noautocmd' orgWinnr 'wincmd w'
+            endif
+        endif
+    endif
+endf
+"}}}2
+"}}}
+" ========== 修正 MiniBufExplorer 窗口 ==========
+"{{{
+"nnoremap \j :call <SID>FixMiniBuf()<CR>
+function! s:FixMiniBuf() "{{{2
+    let l:orgWinnr = winnr()
+    NERDTree
+    Tlist
+    let l:orgWinnr += 2
+
+    let l:MBEWinnr = bufwinnr("-MiniBufExplorer-")
+
+    if l:MBEWinnr != -1
+        exec l:MBEWinnr . " wincmd w"
+        normal! l
+    endif
+
+    if bufname('%') == '-MiniBufExplorer-'
+        let l:MBEWinhei = winheight(0)
+        exec "to " . l:MBEWinhei . " sp"
+"       exec l:MBEWinnr . " wincmd w"
+        wincmd p
+        close
+    endif
+
+    exec l:orgWinnr . " wincmd w"
+endf
+"}}}2
+"}}}
+" ========== 快速切换“全装备”模式 ==========
+"{{{
+"nnoremap \t :call <SID>ToggleTlistAndNERDTree(90)<CR>
+function! s:ToggleTlistAndNERDTree(width) "{{{2
+    let l:TL = "__Tag_List__"
+    let l:NT = "NERD_tree_1"
+    let l:BE = "__BufExplorer__"
+    let l:ifTL = bufwinnr(l:TL)
+    let l:ifNT = bufwinnr(l:NT)
+    let l:orgWinnr = winnr()
+
+    "任何一个打开，都先全关了
+    if l:ifNT != -1 || l:ifTL != -1 || bufwinnr(l:BE) != -1
+        if bufwinnr(l:BE) != -1
+            execute bufwinnr(l:BE) . "wincmd w"
+            close
+            let l:orgWinnr -= 1
+            execute l:orgWinnr . "wincmd w"
+        endif
+        if l:ifNT != -1
+            NERDTreeToggle
+        endif
+        if l:ifTL != -1
+            TlistClose
+        endif
+        execute "set columns=" . a:width
+    else
+        NERDTreeToggle
+        vertical resize 30
+        wincmd p
+        TlistOpen
+        wincmd p
+        if &columns <= a:width
+            set columns+=60
+        endif
+
+        let l:orgWinnr = winnr()
+        execute bufwinnr(l:NT) . "wincmd w"
+        normal! zz
+        BufExplorerHorizontalSplit
+        if winnr() <= l:orgWinnr
+            let l:orgWinnr += 1
+        endif
+        execute l:orgWinnr . "wincmd w"
+        call BufExplorer_Fix()
+    endif
+endf
+"}}}2
+"}}}
+" ========== 快速切换“轻装备”模式 ==========
+"{{{
+"nnoremap \m :call <SID>ToggleNERDTreeAndBE(90)<CR>
+function! s:ToggleNERDTreeAndBE(width) "{{{2
+    let l:NT = "NERD_tree_1"
+    let l:BE = "__BufExplorer__"
+    let l:ifNT = bufwinnr(l:NT)
+    let l:orgWinnr = winnr()
+
+    " 任何一个打开，都先全关了
+    if l:ifNT != -1 || bufwinnr(l:BE) != -1
+        if bufwinnr(l:BE) != -1
+            execute bufwinnr(l:BE) . "wincmd w"
+            close
+            let l:orgWinnr -= 1
+            execute l:orgWinnr . "wincmd w"
+        endif
+
+        if l:ifNT != -1
+            NERDTreeToggle
+        endif
+
+"       execute "set columns=" . a:width
+        set columns-=30
+    else
+        NERDTreeToggle
+        vertical resize 30
+        wincmd p
+        set columns+=30
+
+        let l:orgWinnr = winnr()
+        execute bufwinnr(l:NT) . "wincmd w"
+        normal! zz
+        BufExplorerHorizontalSplit
+        if winnr() <= l:orgWinnr
+            let l:orgWinnr += 1
+        endif
+        execute l:orgWinnr . "wincmd w"
+        call BufExplorer_Fix()
+    endif
+endf
+"}}}2
+"}}}
+" ========== 取色器，配合 colorsel 使用 ==========
+"{{{
+"nnoremap <Leader>c :execute "ColorSel " . <SID>PickColor2Colorsel()<CR>
+function! s:PickColor2Colorsel() "{{{2
+    if !exists("$DISPLAY") || !executable("colorpicker")
+        return ""
+    endif
+    let l:color = substitute(system("colorpicker"), '\n', '', '')
+    return l:color
+endf
+"}}}2
+"}}}
+" ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
+"{{{
+autocmd BufReadPost * nested call <SID>FixDosFmt()
+function! s:FixDosFmt() "{{{2
+    if &ff == 'unix'
+        " 搜索 ^M
+        let nStopLine = 0
+        let nTimeOut = 100
+        let nRet = search('\r$', 'nc', nStopLine, nTimeOut)
+        if nRet > 0
+            e ++ff=dos
+            "redraw
+            "echo 'File format has been set to UNIX.'
+        endif
+    endif
+endfunction
+"}}}2
+"}}}
+
+"-------------------------------------------------------------------------------
+" vim: fdm=marker fen fdl=0 expandtab softtabstop=4

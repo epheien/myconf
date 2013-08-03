@@ -1,0 +1,753 @@
+! $XConsortium: rgb.txt,v 10.41 94/02/20 18:39:36 rws Exp $
+255 250 250 #FFFAFA		snow
+248 248 255 #F8F8FF		ghost white
+248 248 255 #F8F8FF		GhostWhite
+245 245 245 #F5F5F5		white smoke
+245 245 245 #F5F5F5		WhiteSmoke
+220 220 220 #DCDCDC		gainsboro
+255 250 240 #FFFAF0		floral white
+255 250 240 #FFFAF0		FloralWhite
+253 245 230 #FDF5E6		old lace
+253 245 230 #FDF5E6		OldLace
+250 240 230 #FAF0E6		linen
+250 235 215 #FAEBD7		antique white
+250 235 215 #FAEBD7		AntiqueWhite
+255 239 213 #FFEFD5		papaya whip
+255 239 213 #FFEFD5		PapayaWhip
+255 235 205 #FFEBCD		blanched almond
+255 235 205 #FFEBCD		BlanchedAlmond
+255 228 196 #FFE4C4		bisque
+255 218 185 #FFDAB9		peach puff
+255 218 185 #FFDAB9		PeachPuff
+255 222 173 #FFDEAD		navajo white
+255 222 173 #FFDEAD		NavajoWhite
+255 228 181 #FFE4B5		moccasin
+255 248 220 #FFF8DC		cornsilk
+255 255 240 #FFFFF0		ivory
+255 250 205 #FFFACD		lemon chiffon
+255 250 205 #FFFACD		LemonChiffon
+255 245 238 #FFF5EE		seashell
+240 255 240 #F0FFF0		honeydew
+245 255 250 #F5FFFA		mint cream
+245 255 250 #F5FFFA		MintCream
+240 255 255 #F0FFFF		azure
+240 248 255 #F0F8FF		alice blue
+240 248 255 #F0F8FF		AliceBlue
+230 230 250 #E6E6FA		lavender
+255 240 245 #FFF0F5		lavender blush
+255 240 245 #FFF0F5		LavenderBlush
+255 228 225 #FFE4E1		misty rose
+255 228 225 #FFE4E1		MistyRose
+255 255 255 #FFFFFF		white
+  0   0   0 #000000		black
+ 47  79  79 #2F4F4F		dark slate gray
+ 47  79  79 #2F4F4F		DarkSlateGray
+ 47  79  79 #2F4F4F		dark slate grey
+ 47  79  79 #2F4F4F		DarkSlateGrey
+105 105 105 #696969		dim gray
+105 105 105 #696969		DimGray
+105 105 105 #696969		dim grey
+105 105 105 #696969		DimGrey
+112 128 144 #708090		slate gray
+112 128 144 #708090		SlateGray
+112 128 144 #708090		slate grey
+112 128 144 #708090		SlateGrey
+119 136 153 #778899		light slate gray
+119 136 153 #778899		LightSlateGray
+119 136 153 #778899		light slate grey
+119 136 153 #778899		LightSlateGrey
+190 190 190 #BEBEBE		gray
+190 190 190 #BEBEBE		grey
+211 211 211 #D3D3D3		light grey
+211 211 211 #D3D3D3		LightGrey
+211 211 211 #D3D3D3		light gray
+211 211 211 #D3D3D3		LightGray
+ 25  25 112 #191970		midnight blue
+ 25  25 112 #191970		MidnightBlue
+  0   0 128 #000080		navy
+  0   0 128 #000080		navy blue
+  0   0 128 #000080		NavyBlue
+100 149 237 #6495ED		cornflower blue
+100 149 237 #6495ED		CornflowerBlue
+ 72  61 139 #483D8B		dark slate blue
+ 72  61 139 #483D8B		DarkSlateBlue
+106  90 205 #6A5ACD		slate blue
+106  90 205 #6A5ACD		SlateBlue
+123 104 238 #7B68EE		medium slate blue
+123 104 238 #7B68EE		MediumSlateBlue
+132 112 255 #8470FF		light slate blue
+132 112 255 #8470FF		LightSlateBlue
+  0   0 205 #0000CD		medium blue
+  0   0 205 #0000CD		MediumBlue
+ 65 105 225 #4169E1		royal blue
+ 65 105 225 #4169E1		RoyalBlue
+  0   0 255 #0000FF		blue
+ 30 144 255 #1E90FF		dodger blue
+ 30 144 255 #1E90FF		DodgerBlue
+  0 191 255 #00BFFF		deep sky blue
+  0 191 255 #00BFFF		DeepSkyBlue
+135 206 235 #87CEEB		sky blue
+135 206 235 #87CEEB		SkyBlue
+135 206 250 #87CEFA		light sky blue
+135 206 250 #87CEFA		LightSkyBlue
+ 70 130 180 #4682B4		steel blue
+ 70 130 180 #4682B4		SteelBlue
+176 196 222 #B0C4DE		light steel blue
+176 196 222 #B0C4DE		LightSteelBlue
+173 216 230 #ADD8E6		light blue
+173 216 230 #ADD8E6		LightBlue
+176 224 230 #B0E0E6		powder blue
+176 224 230 #B0E0E6		PowderBlue
+175 238 238 #AFEEEE		pale turquoise
+175 238 238 #AFEEEE		PaleTurquoise
+  0 206 209 #00CED1		dark turquoise
+  0 206 209 #00CED1		DarkTurquoise
+ 72 209 204 #48D1CC		medium turquoise
+ 72 209 204 #48D1CC		MediumTurquoise
+ 64 224 208 #40E0D0		turquoise
+  0 255 255 #00FFFF		cyan
+224 255 255 #E0FFFF		light cyan
+224 255 255 #E0FFFF		LightCyan
+ 95 158 160 #5F9EA0		cadet blue
+ 95 158 160 #5F9EA0		CadetBlue
+102 205 170 #66CDAA		medium aquamarine
+102 205 170 #66CDAA		MediumAquamarine
+127 255 212 #7FFFD4		aquamarine
+  0 100   0 #006400		dark green
+  0 100   0 #006400		DarkGreen
+ 85 107  47 #556B2F		dark olive green
+ 85 107  47 #556B2F		DarkOliveGreen
+143 188 143 #8FBC8F		dark sea green
+143 188 143 #8FBC8F		DarkSeaGreen
+ 46 139  87 #2E8B57		sea green
+ 46 139  87 #2E8B57		SeaGreen
+ 60 179 113 #3CB371		medium sea green
+ 60 179 113 #3CB371		MediumSeaGreen
+ 32 178 170 #20B2AA		light sea green
+ 32 178 170 #20B2AA		LightSeaGreen
+152 251 152 #98FB98		pale green
+152 251 152 #98FB98		PaleGreen
+  0 255 127 #00FF7F		spring green
+  0 255 127 #00FF7F		SpringGreen
+124 252   0 #7CFC00		lawn green
+124 252   0 #7CFC00		LawnGreen
+  0 255   0 #00FF00		green
+127 255   0 #7FFF00		chartreuse
+  0 250 154 #00FA9A		medium spring green
+  0 250 154 #00FA9A		MediumSpringGreen
+173 255  47 #ADFF2F		green yellow
+173 255  47 #ADFF2F		GreenYellow
+ 50 205  50 #32CD32		lime green
+ 50 205  50 #32CD32		LimeGreen
+154 205  50 #9ACD32		yellow green
+154 205  50 #9ACD32		YellowGreen
+ 34 139  34 #228B22		forest green
+ 34 139  34 #228B22		ForestGreen
+107 142  35 #6B8E23		olive drab
+107 142  35 #6B8E23		OliveDrab
+189 183 107 #BDB76B		dark khaki
+189 183 107 #BDB76B		DarkKhaki
+240 230 140 #F0E68C		khaki
+238 232 170 #EEE8AA		pale goldenrod
+238 232 170 #EEE8AA		PaleGoldenrod
+250 250 210 #FAFAD2		light goldenrod yellow
+250 250 210 #FAFAD2		LightGoldenrodYellow
+255 255 224 #FFFFE0		light yellow
+255 255 224 #FFFFE0		LightYellow
+255 255   0 #FFFF00		yellow
+255 215   0 #FFD700		gold
+238 221 130 #EEDD82		light goldenrod
+238 221 130 #EEDD82		LightGoldenrod
+218 165  32 #DAA520		goldenrod
+184 134  11 #B8860B		dark goldenrod
+184 134  11 #B8860B		DarkGoldenrod
+188 143 143 #BC8F8F		rosy brown
+188 143 143 #BC8F8F		RosyBrown
+205  92  92 #CD5C5C		indian red
+205  92  92 #CD5C5C		IndianRed
+139  69  19 #8B4513		saddle brown
+139  69  19 #8B4513		SaddleBrown
+160  82  45 #A0522D		sienna
+205 133  63 #CD853F		peru
+222 184 135 #DEB887		burlywood
+245 245 220 #F5F5DC		beige
+245 222 179 #F5DEB3		wheat
+244 164  96 #F4A460		sandy brown
+244 164  96 #F4A460		SandyBrown
+210 180 140 #D2B48C		tan
+210 105  30 #D2691E		chocolate
+178  34  34 #B22222		firebrick
+165  42  42 #A52A2A		brown
+233 150 122 #E9967A		dark salmon
+233 150 122 #E9967A		DarkSalmon
+250 128 114 #FA8072		salmon
+255 160 122 #FFA07A		light salmon
+255 160 122 #FFA07A		LightSalmon
+255 165   0 #FFA500		orange
+255 140   0 #FF8C00		dark orange
+255 140   0 #FF8C00		DarkOrange
+255 127  80 #FF7F50		coral
+240 128 128 #F08080		light coral
+240 128 128 #F08080		LightCoral
+255  99  71 #FF6347		tomato
+255  69   0 #FF4500		orange red
+255  69   0 #FF4500		OrangeRed
+255   0   0 #FF0000		red
+255 105 180 #FF69B4		hot pink
+255 105 180 #FF69B4		HotPink
+255  20 147 #FF1493		deep pink
+255  20 147 #FF1493		DeepPink
+255 192 203 #FFC0CB		pink
+255 182 193 #FFB6C1		light pink
+255 182 193 #FFB6C1		LightPink
+219 112 147 #DB7093		pale violet red
+219 112 147 #DB7093		PaleVioletRed
+176  48  96 #B03060		maroon
+199  21 133 #C71585		medium violet red
+199  21 133 #C71585		MediumVioletRed
+208  32 144 #D02090		violet red
+208  32 144 #D02090		VioletRed
+255   0 255 #FF00FF		magenta
+238 130 238 #EE82EE		violet
+221 160 221 #DDA0DD		plum
+218 112 214 #DA70D6		orchid
+186  85 211 #BA55D3		medium orchid
+186  85 211 #BA55D3		MediumOrchid
+153  50 204 #9932CC		dark orchid
+153  50 204 #9932CC		DarkOrchid
+148   0 211 #9400D3		dark violet
+148   0 211 #9400D3		DarkViolet
+138  43 226 #8A2BE2		blue violet
+138  43 226 #8A2BE2		BlueViolet
+160  32 240 #A020F0		purple
+147 112 219 #9370DB		medium purple
+147 112 219 #9370DB		MediumPurple
+216 191 216 #D8BFD8		thistle
+255 250 250 #FFFAFA		snow1
+238 233 233 #EEE9E9		snow2
+205 201 201 #CDC9C9		snow3
+139 137 137 #8B8989		snow4
+255 245 238 #FFF5EE		seashell1
+238 229 222 #EEE5DE		seashell2
+205 197 191 #CDC5BF		seashell3
+139 134 130 #8B8682		seashell4
+255 239 219 #FFEFDB		AntiqueWhite1
+238 223 204 #EEDFCC		AntiqueWhite2
+205 192 176 #CDC0B0		AntiqueWhite3
+139 131 120 #8B8378		AntiqueWhite4
+255 228 196 #FFE4C4		bisque1
+238 213 183 #EED5B7		bisque2
+205 183 158 #CDB79E		bisque3
+139 125 107 #8B7D6B		bisque4
+255 218 185 #FFDAB9		PeachPuff1
+238 203 173 #EECBAD		PeachPuff2
+205 175 149 #CDAF95		PeachPuff3
+139 119 101 #8B7765		PeachPuff4
+255 222 173 #FFDEAD		NavajoWhite1
+238 207 161 #EECFA1		NavajoWhite2
+205 179 139 #CDB38B		NavajoWhite3
+139 121  94 #8B795E		NavajoWhite4
+255 250 205 #FFFACD		LemonChiffon1
+238 233 191 #EEE9BF		LemonChiffon2
+205 201 165 #CDC9A5		LemonChiffon3
+139 137 112 #8B8970		LemonChiffon4
+255 248 220 #FFF8DC		cornsilk1
+238 232 205 #EEE8CD		cornsilk2
+205 200 177 #CDC8B1		cornsilk3
+139 136 120 #8B8878		cornsilk4
+255 255 240 #FFFFF0		ivory1
+238 238 224 #EEEEE0		ivory2
+205 205 193 #CDCDC1		ivory3
+139 139 131 #8B8B83		ivory4
+240 255 240 #F0FFF0		honeydew1
+224 238 224 #E0EEE0		honeydew2
+193 205 193 #C1CDC1		honeydew3
+131 139 131 #838B83		honeydew4
+255 240 245 #FFF0F5		LavenderBlush1
+238 224 229 #EEE0E5		LavenderBlush2
+205 193 197 #CDC1C5		LavenderBlush3
+139 131 134 #8B8386		LavenderBlush4
+255 228 225 #FFE4E1		MistyRose1
+238 213 210 #EED5D2		MistyRose2
+205 183 181 #CDB7B5		MistyRose3
+139 125 123 #8B7D7B		MistyRose4
+240 255 255 #F0FFFF		azure1
+224 238 238 #E0EEEE		azure2
+193 205 205 #C1CDCD		azure3
+131 139 139 #838B8B		azure4
+131 111 255 #836FFF		SlateBlue1
+122 103 238 #7A67EE		SlateBlue2
+105  89 205 #6959CD		SlateBlue3
+ 71  60 139 #473C8B		SlateBlue4
+ 72 118 255 #4876FF		RoyalBlue1
+ 67 110 238 #436EEE		RoyalBlue2
+ 58  95 205 #3A5FCD		RoyalBlue3
+ 39  64 139 #27408B		RoyalBlue4
+  0   0 255 #0000FF		blue1
+  0   0 238 #0000EE		blue2
+  0   0 205 #0000CD		blue3
+  0   0 139 #00008B		blue4
+ 30 144 255 #1E90FF		DodgerBlue1
+ 28 134 238 #1C86EE		DodgerBlue2
+ 24 116 205 #1874CD		DodgerBlue3
+ 16  78 139 #104E8B		DodgerBlue4
+ 99 184 255 #63B8FF		SteelBlue1
+ 92 172 238 #5CACEE		SteelBlue2
+ 79 148 205 #4F94CD		SteelBlue3
+ 54 100 139 #36648B		SteelBlue4
+  0 191 255 #00BFFF		DeepSkyBlue1
+  0 178 238 #00B2EE		DeepSkyBlue2
+  0 154 205 #009ACD		DeepSkyBlue3
+  0 104 139 #00688B		DeepSkyBlue4
+135 206 255 #87CEFF		SkyBlue1
+126 192 238 #7EC0EE		SkyBlue2
+108 166 205 #6CA6CD		SkyBlue3
+ 74 112 139 #4A708B		SkyBlue4
+176 226 255 #B0E2FF		LightSkyBlue1
+164 211 238 #A4D3EE		LightSkyBlue2
+141 182 205 #8DB6CD		LightSkyBlue3
+ 96 123 139 #607B8B		LightSkyBlue4
+198 226 255 #C6E2FF		SlateGray1
+185 211 238 #B9D3EE		SlateGray2
+159 182 205 #9FB6CD		SlateGray3
+108 123 139 #6C7B8B		SlateGray4
+202 225 255 #CAE1FF		LightSteelBlue1
+188 210 238 #BCD2EE		LightSteelBlue2
+162 181 205 #A2B5CD		LightSteelBlue3
+110 123 139 #6E7B8B		LightSteelBlue4
+191 239 255 #BFEFFF		LightBlue1
+178 223 238 #B2DFEE		LightBlue2
+154 192 205 #9AC0CD		LightBlue3
+104 131 139 #68838B		LightBlue4
+224 255 255 #E0FFFF		LightCyan1
+209 238 238 #D1EEEE		LightCyan2
+180 205 205 #B4CDCD		LightCyan3
+122 139 139 #7A8B8B		LightCyan4
+187 255 255 #BBFFFF		PaleTurquoise1
+174 238 238 #AEEEEE		PaleTurquoise2
+150 205 205 #96CDCD		PaleTurquoise3
+102 139 139 #668B8B		PaleTurquoise4
+152 245 255 #98F5FF		CadetBlue1
+142 229 238 #8EE5EE		CadetBlue2
+122 197 205 #7AC5CD		CadetBlue3
+ 83 134 139 #53868B		CadetBlue4
+  0 245 255 #00F5FF		turquoise1
+  0 229 238 #00E5EE		turquoise2
+  0 197 205 #00C5CD		turquoise3
+  0 134 139 #00868B		turquoise4
+  0 255 255 #00FFFF		cyan1
+  0 238 238 #00EEEE		cyan2
+  0 205 205 #00CDCD		cyan3
+  0 139 139 #008B8B		cyan4
+151 255 255 #97FFFF		DarkSlateGray1
+141 238 238 #8DEEEE		DarkSlateGray2
+121 205 205 #79CDCD		DarkSlateGray3
+ 82 139 139 #528B8B		DarkSlateGray4
+127 255 212 #7FFFD4		aquamarine1
+118 238 198 #76EEC6		aquamarine2
+102 205 170 #66CDAA		aquamarine3
+ 69 139 116 #458B74		aquamarine4
+193 255 193 #C1FFC1		DarkSeaGreen1
+180 238 180 #B4EEB4		DarkSeaGreen2
+155 205 155 #9BCD9B		DarkSeaGreen3
+105 139 105 #698B69		DarkSeaGreen4
+ 84 255 159 #54FF9F		SeaGreen1
+ 78 238 148 #4EEE94		SeaGreen2
+ 67 205 128 #43CD80		SeaGreen3
+ 46 139  87 #2E8B57		SeaGreen4
+154 255 154 #9AFF9A		PaleGreen1
+144 238 144 #90EE90		PaleGreen2
+124 205 124 #7CCD7C		PaleGreen3
+ 84 139  84 #548B54		PaleGreen4
+  0 255 127 #00FF7F		SpringGreen1
+  0 238 118 #00EE76		SpringGreen2
+  0 205 102 #00CD66		SpringGreen3
+  0 139  69 #008B45		SpringGreen4
+  0 255   0 #00FF00		green1
+  0 238   0 #00EE00		green2
+  0 205   0 #00CD00		green3
+  0 139   0 #008B00		green4
+127 255   0 #7FFF00		chartreuse1
+118 238   0 #76EE00		chartreuse2
+102 205   0 #66CD00		chartreuse3
+ 69 139   0 #458B00		chartreuse4
+192 255  62 #C0FF3E		OliveDrab1
+179 238  58 #B3EE3A		OliveDrab2
+154 205  50 #9ACD32		OliveDrab3
+105 139  34 #698B22		OliveDrab4
+202 255 112 #CAFF70		DarkOliveGreen1
+188 238 104 #BCEE68		DarkOliveGreen2
+162 205  90 #A2CD5A		DarkOliveGreen3
+110 139  61 #6E8B3D		DarkOliveGreen4
+255 246 143 #FFF68F		khaki1
+238 230 133 #EEE685		khaki2
+205 198 115 #CDC673		khaki3
+139 134  78 #8B864E		khaki4
+255 236 139 #FFEC8B		LightGoldenrod1
+238 220 130 #EEDC82		LightGoldenrod2
+205 190 112 #CDBE70		LightGoldenrod3
+139 129  76 #8B814C		LightGoldenrod4
+255 255 224 #FFFFE0		LightYellow1
+238 238 209 #EEEED1		LightYellow2
+205 205 180 #CDCDB4		LightYellow3
+139 139 122 #8B8B7A		LightYellow4
+255 255   0 #FFFF00		yellow1
+238 238   0 #EEEE00		yellow2
+205 205   0 #CDCD00		yellow3
+139 139   0 #8B8B00		yellow4
+255 215   0 #FFD700		gold1
+238 201   0 #EEC900		gold2
+205 173   0 #CDAD00		gold3
+139 117   0 #8B7500		gold4
+255 193  37 #FFC125		goldenrod1
+238 180  34 #EEB422		goldenrod2
+205 155  29 #CD9B1D		goldenrod3
+139 105  20 #8B6914		goldenrod4
+255 185  15 #FFB90F		DarkGoldenrod1
+238 173  14 #EEAD0E		DarkGoldenrod2
+205 149  12 #CD950C		DarkGoldenrod3
+139 101   8 #8B6508		DarkGoldenrod4
+255 193 193 #FFC1C1		RosyBrown1
+238 180 180 #EEB4B4		RosyBrown2
+205 155 155 #CD9B9B		RosyBrown3
+139 105 105 #8B6969		RosyBrown4
+255 106 106 #FF6A6A		IndianRed1
+238  99  99 #EE6363		IndianRed2
+205  85  85 #CD5555		IndianRed3
+139  58  58 #8B3A3A		IndianRed4
+255 130  71 #FF8247		sienna1
+238 121  66 #EE7942		sienna2
+205 104  57 #CD6839		sienna3
+139  71  38 #8B4726		sienna4
+255 211 155 #FFD39B		burlywood1
+238 197 145 #EEC591		burlywood2
+205 170 125 #CDAA7D		burlywood3
+139 115  85 #8B7355		burlywood4
+255 231 186 #FFE7BA		wheat1
+238 216 174 #EED8AE		wheat2
+205 186 150 #CDBA96		wheat3
+139 126 102 #8B7E66		wheat4
+255 165  79 #FFA54F		tan1
+238 154  73 #EE9A49		tan2
+205 133  63 #CD853F		tan3
+139  90  43 #8B5A2B		tan4
+255 127  36 #FF7F24		chocolate1
+238 118  33 #EE7621		chocolate2
+205 102  29 #CD661D		chocolate3
+139  69  19 #8B4513		chocolate4
+255  48  48 #FF3030		firebrick1
+238  44  44 #EE2C2C		firebrick2
+205  38  38 #CD2626		firebrick3
+139  26  26 #8B1A1A		firebrick4
+255  64  64 #FF4040		brown1
+238  59  59 #EE3B3B		brown2
+205  51  51 #CD3333		brown3
+139  35  35 #8B2323		brown4
+255 140 105 #FF8C69		salmon1
+238 130  98 #EE8262		salmon2
+205 112  84 #CD7054		salmon3
+139  76  57 #8B4C39		salmon4
+255 160 122 #FFA07A		LightSalmon1
+238 149 114 #EE9572		LightSalmon2
+205 129  98 #CD8162		LightSalmon3
+139  87  66 #8B5742		LightSalmon4
+255 165   0 #FFA500		orange1
+238 154   0 #EE9A00		orange2
+205 133   0 #CD8500		orange3
+139  90   0 #8B5A00		orange4
+255 127   0 #FF7F00		DarkOrange1
+238 118   0 #EE7600		DarkOrange2
+205 102   0 #CD6600		DarkOrange3
+139  69   0 #8B4500		DarkOrange4
+255 114  86 #FF7256		coral1
+238 106  80 #EE6A50		coral2
+205  91  69 #CD5B45		coral3
+139  62  47 #8B3E2F		coral4
+255  99  71 #FF6347		tomato1
+238  92  66 #EE5C42		tomato2
+205  79  57 #CD4F39		tomato3
+139  54  38 #8B3626		tomato4
+255  69   0 #FF4500		OrangeRed1
+238  64   0 #EE4000		OrangeRed2
+205  55   0 #CD3700		OrangeRed3
+139  37   0 #8B2500		OrangeRed4
+255   0   0 #FF0000		red1
+238   0   0 #EE0000		red2
+205   0   0 #CD0000		red3
+139   0   0 #8B0000		red4
+255  20 147 #FF1493		DeepPink1
+238  18 137 #EE1289		DeepPink2
+205  16 118 #CD1076		DeepPink3
+139  10  80 #8B0A50		DeepPink4
+255 110 180 #FF6EB4		HotPink1
+238 106 167 #EE6AA7		HotPink2
+205  96 144 #CD6090		HotPink3
+139  58  98 #8B3A62		HotPink4
+255 181 197 #FFB5C5		pink1
+238 169 184 #EEA9B8		pink2
+205 145 158 #CD919E		pink3
+139  99 108 #8B636C		pink4
+255 174 185 #FFAEB9		LightPink1
+238 162 173 #EEA2AD		LightPink2
+205 140 149 #CD8C95		LightPink3
+139  95 101 #8B5F65		LightPink4
+255 130 171 #FF82AB		PaleVioletRed1
+238 121 159 #EE799F		PaleVioletRed2
+205 104 137 #CD6889		PaleVioletRed3
+139  71  93 #8B475D		PaleVioletRed4
+255  52 179 #FF34B3		maroon1
+238  48 167 #EE30A7		maroon2
+205  41 144 #CD2990		maroon3
+139  28  98 #8B1C62		maroon4
+255  62 150 #FF3E96		VioletRed1
+238  58 140 #EE3A8C		VioletRed2
+205  50 120 #CD3278		VioletRed3
+139  34  82 #8B2252		VioletRed4
+255   0 255 #FF00FF		magenta1
+238   0 238 #EE00EE		magenta2
+205   0 205 #CD00CD		magenta3
+139   0 139 #8B008B		magenta4
+255 131 250 #FF83FA		orchid1
+238 122 233 #EE7AE9		orchid2
+205 105 201 #CD69C9		orchid3
+139  71 137 #8B4789		orchid4
+255 187 255 #FFBBFF		plum1
+238 174 238 #EEAEEE		plum2
+205 150 205 #CD96CD		plum3
+139 102 139 #8B668B		plum4
+224 102 255 #E066FF		MediumOrchid1
+209  95 238 #D15FEE		MediumOrchid2
+180  82 205 #B452CD		MediumOrchid3
+122  55 139 #7A378B		MediumOrchid4
+191  62 255 #BF3EFF		DarkOrchid1
+178  58 238 #B23AEE		DarkOrchid2
+154  50 205 #9A32CD		DarkOrchid3
+104  34 139 #68228B		DarkOrchid4
+155  48 255 #9B30FF		purple1
+145  44 238 #912CEE		purple2
+125  38 205 #7D26CD		purple3
+ 85  26 139 #551A8B		purple4
+171 130 255 #AB82FF		MediumPurple1
+159 121 238 #9F79EE		MediumPurple2
+137 104 205 #8968CD		MediumPurple3
+ 93  71 139 #5D478B		MediumPurple4
+255 225 255 #FFE1FF		thistle1
+238 210 238 #EED2EE		thistle2
+205 181 205 #CDB5CD		thistle3
+139 123 139 #8B7B8B		thistle4
+  0   0   0 #000000		gray0
+  0   0   0 #000000		grey0
+  3   3   3 #030303		gray1
+  3   3   3 #030303		grey1
+  5   5   5 #050505		gray2
+  5   5   5 #050505		grey2
+  8   8   8 #080808		gray3
+  8   8   8 #080808		grey3
+ 10  10  10 #0A0A0A		gray4
+ 10  10  10 #0A0A0A		grey4
+ 13  13  13 #0D0D0D		gray5
+ 13  13  13 #0D0D0D		grey5
+ 15  15  15 #0F0F0F		gray6
+ 15  15  15 #0F0F0F		grey6
+ 18  18  18 #121212		gray7
+ 18  18  18 #121212		grey7
+ 20  20  20 #141414		gray8
+ 20  20  20 #141414		grey8
+ 23  23  23 #171717		gray9
+ 23  23  23 #171717		grey9
+ 26  26  26 #1A1A1A		gray10
+ 26  26  26 #1A1A1A		grey10
+ 28  28  28 #1C1C1C		gray11
+ 28  28  28 #1C1C1C		grey11
+ 31  31  31 #1F1F1F		gray12
+ 31  31  31 #1F1F1F		grey12
+ 33  33  33 #212121		gray13
+ 33  33  33 #212121		grey13
+ 36  36  36 #242424		gray14
+ 36  36  36 #242424		grey14
+ 38  38  38 #262626		gray15
+ 38  38  38 #262626		grey15
+ 41  41  41 #292929		gray16
+ 41  41  41 #292929		grey16
+ 43  43  43 #2B2B2B		gray17
+ 43  43  43 #2B2B2B		grey17
+ 46  46  46 #2E2E2E		gray18
+ 46  46  46 #2E2E2E		grey18
+ 48  48  48 #303030		gray19
+ 48  48  48 #303030		grey19
+ 51  51  51 #333333		gray20
+ 51  51  51 #333333		grey20
+ 54  54  54 #363636		gray21
+ 54  54  54 #363636		grey21
+ 56  56  56 #383838		gray22
+ 56  56  56 #383838		grey22
+ 59  59  59 #3B3B3B		gray23
+ 59  59  59 #3B3B3B		grey23
+ 61  61  61 #3D3D3D		gray24
+ 61  61  61 #3D3D3D		grey24
+ 64  64  64 #404040		gray25
+ 64  64  64 #404040		grey25
+ 66  66  66 #424242		gray26
+ 66  66  66 #424242		grey26
+ 69  69  69 #454545		gray27
+ 69  69  69 #454545		grey27
+ 71  71  71 #474747		gray28
+ 71  71  71 #474747		grey28
+ 74  74  74 #4A4A4A		gray29
+ 74  74  74 #4A4A4A		grey29
+ 77  77  77 #4D4D4D		gray30
+ 77  77  77 #4D4D4D		grey30
+ 79  79  79 #4F4F4F		gray31
+ 79  79  79 #4F4F4F		grey31
+ 82  82  82 #525252		gray32
+ 82  82  82 #525252		grey32
+ 84  84  84 #545454		gray33
+ 84  84  84 #545454		grey33
+ 87  87  87 #575757		gray34
+ 87  87  87 #575757		grey34
+ 89  89  89 #595959		gray35
+ 89  89  89 #595959		grey35
+ 92  92  92 #5C5C5C		gray36
+ 92  92  92 #5C5C5C		grey36
+ 94  94  94 #5E5E5E		gray37
+ 94  94  94 #5E5E5E		grey37
+ 97  97  97 #616161		gray38
+ 97  97  97 #616161		grey38
+ 99  99  99 #636363		gray39
+ 99  99  99 #636363		grey39
+102 102 102 #666666		gray40
+102 102 102 #666666		grey40
+105 105 105 #696969		gray41
+105 105 105 #696969		grey41
+107 107 107 #6B6B6B		gray42
+107 107 107 #6B6B6B		grey42
+110 110 110 #6E6E6E		gray43
+110 110 110 #6E6E6E		grey43
+112 112 112 #707070		gray44
+112 112 112 #707070		grey44
+115 115 115 #737373		gray45
+115 115 115 #737373		grey45
+117 117 117 #757575		gray46
+117 117 117 #757575		grey46
+120 120 120 #787878		gray47
+120 120 120 #787878		grey47
+122 122 122 #7A7A7A		gray48
+122 122 122 #7A7A7A		grey48
+125 125 125 #7D7D7D		gray49
+125 125 125 #7D7D7D		grey49
+127 127 127 #7F7F7F		gray50
+127 127 127 #7F7F7F		grey50
+130 130 130 #828282		gray51
+130 130 130 #828282		grey51
+133 133 133 #858585		gray52
+133 133 133 #858585		grey52
+135 135 135 #878787		gray53
+135 135 135 #878787		grey53
+138 138 138 #8A8A8A		gray54
+138 138 138 #8A8A8A		grey54
+140 140 140 #8C8C8C		gray55
+140 140 140 #8C8C8C		grey55
+143 143 143 #8F8F8F		gray56
+143 143 143 #8F8F8F		grey56
+145 145 145 #919191		gray57
+145 145 145 #919191		grey57
+148 148 148 #949494		gray58
+148 148 148 #949494		grey58
+150 150 150 #969696		gray59
+150 150 150 #969696		grey59
+153 153 153 #999999		gray60
+153 153 153 #999999		grey60
+156 156 156 #9C9C9C		gray61
+156 156 156 #9C9C9C		grey61
+158 158 158 #9E9E9E		gray62
+158 158 158 #9E9E9E		grey62
+161 161 161 #A1A1A1		gray63
+161 161 161 #A1A1A1		grey63
+163 163 163 #A3A3A3		gray64
+163 163 163 #A3A3A3		grey64
+166 166 166 #A6A6A6		gray65
+166 166 166 #A6A6A6		grey65
+168 168 168 #A8A8A8		gray66
+168 168 168 #A8A8A8		grey66
+171 171 171 #ABABAB		gray67
+171 171 171 #ABABAB		grey67
+173 173 173 #ADADAD		gray68
+173 173 173 #ADADAD		grey68
+176 176 176 #B0B0B0		gray69
+176 176 176 #B0B0B0		grey69
+179 179 179 #B3B3B3		gray70
+179 179 179 #B3B3B3		grey70
+181 181 181 #B5B5B5		gray71
+181 181 181 #B5B5B5		grey71
+184 184 184 #B8B8B8		gray72
+184 184 184 #B8B8B8		grey72
+186 186 186 #BABABA		gray73
+186 186 186 #BABABA		grey73
+189 189 189 #BDBDBD		gray74
+189 189 189 #BDBDBD		grey74
+191 191 191 #BFBFBF		gray75
+191 191 191 #BFBFBF		grey75
+194 194 194 #C2C2C2		gray76
+194 194 194 #C2C2C2		grey76
+196 196 196 #C4C4C4		gray77
+196 196 196 #C4C4C4		grey77
+199 199 199 #C7C7C7		gray78
+199 199 199 #C7C7C7		grey78
+201 201 201 #C9C9C9		gray79
+201 201 201 #C9C9C9		grey79
+204 204 204 #CCCCCC		gray80
+204 204 204 #CCCCCC		grey80
+207 207 207 #CFCFCF		gray81
+207 207 207 #CFCFCF		grey81
+209 209 209 #D1D1D1		gray82
+209 209 209 #D1D1D1		grey82
+212 212 212 #D4D4D4		gray83
+212 212 212 #D4D4D4		grey83
+214 214 214 #D6D6D6		gray84
+214 214 214 #D6D6D6		grey84
+217 217 217 #D9D9D9		gray85
+217 217 217 #D9D9D9		grey85
+219 219 219 #DBDBDB		gray86
+219 219 219 #DBDBDB		grey86
+222 222 222 #DEDEDE		gray87
+222 222 222 #DEDEDE		grey87
+224 224 224 #E0E0E0		gray88
+224 224 224 #E0E0E0		grey88
+227 227 227 #E3E3E3		gray89
+227 227 227 #E3E3E3		grey89
+229 229 229 #E5E5E5		gray90
+229 229 229 #E5E5E5		grey90
+232 232 232 #E8E8E8		gray91
+232 232 232 #E8E8E8		grey91
+235 235 235 #EBEBEB		gray92
+235 235 235 #EBEBEB		grey92
+237 237 237 #EDEDED		gray93
+237 237 237 #EDEDED		grey93
+240 240 240 #F0F0F0		gray94
+240 240 240 #F0F0F0		grey94
+242 242 242 #F2F2F2		gray95
+242 242 242 #F2F2F2		grey95
+245 245 245 #F5F5F5		gray96
+245 245 245 #F5F5F5		grey96
+247 247 247 #F7F7F7		gray97
+247 247 247 #F7F7F7		grey97
+250 250 250 #FAFAFA		gray98
+250 250 250 #FAFAFA		grey98
+252 252 252 #FCFCFC		gray99
+252 252 252 #FCFCFC		grey99
+255 255 255 #FFFFFF		gray100
+255 255 255 #FFFFFF		grey100
+169 169 169 #A9A9A9		dark grey
+169 169 169 #A9A9A9		DarkGrey
+169 169 169 #A9A9A9		dark gray
+169 169 169 #A9A9A9		DarkGray
+  0   0 139 #00008B		dark blue
+  0   0 139 #00008B		DarkBlue
+  0 139 139 #008B8B		dark cyan
+  0 139 139 #008B8B		DarkCyan
+139   0 139 #8B008B		dark magenta
+139   0 139 #8B008B		DarkMagenta
+139   0   0 #8B0000		dark red
+139   0   0 #8B0000		DarkRed
+144 238 144 #90EE90		light green
+144 238 144 #90EE90		LightGreen
