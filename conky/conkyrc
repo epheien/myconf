@@ -26,7 +26,7 @@ text_buffer_size 2048
 #############################
 own_window_class Conky
 own_window yes
-own_window_type override
+own_window_type normal
 own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
@@ -49,13 +49,13 @@ color0 FFFFFF
 color1 FFFFFF
 color2 3399FF
 
-TEXT
 ###############
 # -   DATE  - #
 ###############
+TEXT
 ${color #C70036}${font OpenLogos:style=Bold:pixelsize=80}J${font}${voffset -58}${goto 60}${color #FFFFFF}${font DejaVu Sans LanTingHei:size=20}${time %Y}${font}${voffset -17}${goto 135}${color #FFFFFF}${font DejaVu Sans LanTingHei:size=32}${time %e}${font}${goto 60}${color #FFFFFF}${font DejaVu Sans LanTingHei:size=17}${time %B}${font}${color #3399FF}${hr}
 ${color1}${voffset 23}${offset 10}${font DejaVu Sans LanTingHei:style=Bold:size=10}${time %p}${voffset -23}${alignc 46}${font DejaVu Sans LanTingHei:style=Bold:size=30}${time %I:%M}${font}${color}
-${voffset 5}${color #3399FF}${font Monospace:size=11}${execpi 300 DJS=`date +%_d`; LANG=en_US.UTF-8; cal | sed '1d' | sed '/./!d' | sed 's/$/                     /' | fold -w 21 | sed -n '/^.\{21\}/p' | sed 's/^/${alignc} /' | sed /" $DJS "/s/" $DJS "/" "'${font Monospace:style=Bold:size=11}${color #FFFFFF}'"$DJS"'${font Monospace:size=11}${color #8F8F8F}'" "/}${font}
+${voffset 5}${color #3399FF}${font Monospace:size=11}${execpi 300 DJS=`date +%_d`; LANG=en_US.UTF-8; cal -h | sed '1d' | sed '/^ \+$/d' | sed 's/$/                     /' | cut -c 1-21 | sed -n '/^.\{21\}/p' | sed 's/^/${alignc} /' | sed /" $DJS "/s/" $DJS "/" "'${font Monospace:style=Bold:size=11}${color #FFFFFF}'"$DJS"'${font Monospace:size=11}${color #8F8F8F}'" "/}${font}
 #${color #3399FF}$stippled_hr${color}${font}
 ##############
 # - SYSTEM - #
