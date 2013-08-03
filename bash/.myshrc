@@ -1,0 +1,87 @@
+# custom shell config
+
+stty -ixon
+
+##############################  Custom Env Var  ##############################
+# JAVA 程序字体渲染设置
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+
+# 256
+if [ -n "$TMUX" ]; then
+    export TERM=screen-256color
+else
+    export TERM=xterm-256color
+fi
+
+##############################  Custom Alias    ##############################
+
+alias rm="rm -I"
+alias checkinstallun='checkinstall --install=no'
+#alias zhong="zhcon --utf8 --drv=vga"
+alias cao="sudo arpspoof -i eth0 -t 192.168.1.101 192.168.1.1"
+alias eng="export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
+alias zhong="export LANG=zh_CN.UTF-8"
+alias gvim="gvim -f"
+
+alias killall9="killall -KILL"
+complete -F _killall killall9
+
+alias ctags-cpp="ctags --c++-kinds=+p --fields=+iaS --extra=+q --languages=c++"
+alias myctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --languages=c,c++"
+alias sysctags='ctags -f ~/.vim/systags --c++-kinds=+p --fields=+iaS --extra=+q --languages=c,c++ -I "__nonnull __dead2 __pure2 __unused __packed __aligned __section __always_inline __wur __THROW __attribute_pure__ __attribute__ __asm G_GNUC_PURE G_GNUC_MALLOC G_GNUC_NULL_TERMINTED G_GNUC_ALLOC_SIZE G_GNUC_ALLOC_SIZE2 G_GNUC_PRINTF G_GNUC_SCANF G_GNUC_FORMAT G_GNUC_NORETURN G_GNUC_CONST G_GNUC_UNUSED G_GNUC_NO_INSTRUMENT" /usr/include/stdio.h /usr/include/stdlib.h /usr/include/string.h /usr/include/unistd.h /usr/include/sys'
+alias myvlctags="CTAGS_REPLACEMENTS=ctagsrepl vlctags --excmd=pattern --sort=no --fields=aKmSsnit --c-kinds=+px --C++-kinds=+px"
+alias myvlctags2="CTAGS_GLOBAL_MACROS_FILES=global.h,global.hpp vlctags2 --excmd=pattern --sort=no --fields=aKmSsnit --c-kinds=+px --C++-kinds=+px"
+
+complete -o filenames -F _apt_get apt-axel-get
+
+##############################  xmms2 Alias ##############################
+alias xmms2-repeat_one_switch='[[ `xmms2 config_list | grep "repeat_one"` == "playlist.repeat_one = 0" ]] && xmms2 config playlist.repeat_one 1 || xmms2 config playlist.repeat_one 0'
+alias xmms2-shuffle='xmms2 jump +"$((RANDOM%100))"'
+
+##############################  Custom Func ##############################
+
+findn ()
+{
+    find . -iname "*$1*"
+}
+
+httpproxy ()
+{
+    export http_proxy="http://$1"
+}
+
+bakfile ()
+{
+local n=0
+local fname
+
+    for i in "$@"; do
+        fname="$i.bak"
+        
+        if [[ -e "$fname" ]]; then
+            n=1
+            while [[ -e "$fname.$n" ]]; do
+                let n++
+            done
+            fname="$fname.$n"
+        fi
+        
+        cp "$i" "$fname"
+    done
+}
+
+# Use VIm as man pager
+vman () {
+    export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+                     vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+                     -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+                     -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
+    # invoke man page
+    man $1
+
+    # we muse unset the PAGER, so regular man pager is used afterwards
+    unset PAGER
+}
+
+# vi:set et sts=4:
