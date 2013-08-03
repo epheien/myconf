@@ -1,0 +1,91 @@
+######################
+# - Conky settings - #
+######################
+background yes
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+format_human_readable
+
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont DejaVu Sans LanTingHei:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+
+#############################
+# - Window specifications - #
+#############################
+own_window_class Conky
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment top_right
+gap_x 25
+gap_y 40
+minimum_size 200 420
+maximum_width 200
+
+default_bar_size 60 8
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+
+default_color D6D6D6
+
+color0 FFFFFF
+color1 FFFFFF
+color2 3399FF
+
+TEXT
+###############
+# -   DATE  - #
+###############
+${color #C70036}${font OpenLogos:style=Bold:pixelsize=80}J${font}${voffset -58}${goto 60}${color #FFFFFF}${font DejaVu Sans LanTingHei:size=20}${time %Y}${font}${voffset -17}${goto 135}${color #FFFFFF}${font DejaVu Sans LanTingHei:size=32}${time %e}${font}${goto 60}${color #FFFFFF}${font DejaVu Sans LanTingHei:size=17}${time %B}${font}${color #3399FF}${hr}
+${color1}${voffset 23}${offset 10}${font DejaVu Sans LanTingHei:style=Bold:size=10}${time %p}${voffset -23}${alignc 46}${font DejaVu Sans LanTingHei:style=Bold:size=30}${time %I:%M}${font}${color}
+${voffset 5}${color #3399FF}${font Monospace:size=11}${execpi 300 DJS=`date +%_d`; LANG=en_US.UTF-8; cal | sed '1d' | sed '/./!d' | sed 's/$/                     /' | fold -w 21 | sed -n '/^.\{21\}/p' | sed 's/^/${alignc} /' | sed /" $DJS "/s/" $DJS "/" "'${font Monospace:style=Bold:size=11}${color #FFFFFF}'"$DJS"'${font Monospace:size=11}${color #8F8F8F}'" "/}${font}
+#${color #3399FF}$stippled_hr${color}${font}
+##############
+# - SYSTEM - #
+##############
+${voffset 5}${color #D6D6D6}${font DejaVu Sans LanTingHei:style=Bold:size=8}SYSTEM $stippled_hr${font}
+# |--CPU
+${offset 0}${color0}${font Illustrate IT:size=14}F${font}${goto 6}${voffset 9}${cpubar cpu0 4,18}${color}${voffset -16}${goto 32}CPU: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${cpu cpu0}%${font}${voffset 13}${goto 32}${color #D6D6D6}TEM: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${acpitemp}℃${font}${color1}${voffset -13}${goto 100}${cpugraph cpu1 8,50 DD4814 DD4814}${alignr}${goto 155}${cpugraph cpu2 8,50 DD4814 DD4814}${voffset 13}${goto 100}${cpugraph cpu3 8,50 DD4814 DD4814}${goto 155}${cpugraph cpu4 8,50 DD4814 DD4814}${color}
+# |--MEM
+${color0}${font Poky:size=16}M${font}${color}${goto 32}${voffset -7}RAM: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}$memperc%${color}${font}
+${offset 1}${voffset 2}${color0}${membar 4,18}${color}${goto 32}${voffset -2}U: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}${mem}${color}${font} F: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}${memeasyfree}${color}${font}
+# |--SWAP
+# Has swap
+#${voffset 2}${color0}${font Poky:size=14}s${font}${color}${voffset -8}${goto 32}SWAP: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${swapperc}%${color}${font}
+# No swap
+${voffset 2}${color0}${font Poky:size=14}s${font}${color}${voffset -8}${goto 32}SWAP: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${swapperc}${color}${font}
+${voffset 4}${offset 1}${color0}${swapbar 4,18}${color}${voffset -4}${goto 32}U: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}$swap${color}${font} F: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}$swapmax${color}${font}
+###############
+# - NETWORK - #
+###############
+${voffset 5}${font DejaVu Sans LanTingHei:style=Bold:size=8}NETWORK $stippled_hr${font}
+# |--WLAN0
+${if_up wlan0}
+${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${upspeed wlan0}${color}${font} ${alignr}${color1}${upspeedgraph wlan0 8,60 DD4814 DD4814}${color}
+${goto 32}Total: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}${totalup wlan0}${color}${font}
+${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -6}下载: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${downspeed wlan0}${color}${font} ${alignr}${color1}${downspeedgraph wlan0 8,60 DD4814 DD4814}${color}
+${goto 32}Total: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}${totaldown wlan0}${color}${font}
+# |--ETH0
+${else}${if_up eth0}
+${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${upspeed eth0}${color}${font} ${alignr}${color1}${upspeedgraph eth0 8,60 DD4814 DD4814}${color}
+${goto 32}Total: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}${totalup eth0}${color}${font}
+${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -6}下载: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color1}${downspeed eth0}${color}${font} ${alignr}${color1}${downspeedgraph eth0 8,60 DD4814 DD4814}${color}
+${goto 32}Total: ${font DejaVu Sans LanTingHei:style=Bold:size=8}${color2}${totaldown eth0}${color}${font}
+${endif}${endif}
