@@ -17,7 +17,7 @@ map <silent> <F10> :if &guioptions =~# 'T' <Bar>
     \endif<CR>
 
 " 窗口大小
-set columns=90 lines=44
+set columns=100 lines=44
 "autocmd syntax c,cpp set columns=125 lines=40
 "autocmd syntax c,cpp WMToggle
 
