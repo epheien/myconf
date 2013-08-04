@@ -991,9 +991,9 @@ if has("toolbar")
   an 1.91 ToolBar.-sep1-		<Nop>
   an 1.92 ToolBar.Undo			u
   an 1.93 ToolBar.Redo			<C-R>
-  an icon=backward 1.94 ToolBar.Backward		<C-o>
+  an icon=backward 1.94 ToolBar.Backward	<C-o>
   an icon=forward 1.95 ToolBar.Forward		<C-i>
-  an 1.96 ToolBar.TagJump		<C-]>
+  amenu 1.96 ToolBar.TagJump			<C-]>
 
   an 1.100   ToolBar.-sep3-		<Nop>
   amenu icon=bookmark 1.101 ToolBar.Bookmark mm
