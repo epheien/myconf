@@ -23,6 +23,23 @@
 "
 "   g:tags_updater_ctags_program    string (default 'ctags')
 "       The ctags program.
+"
+" LIMITATION:
+"   If g:tags_updater_update_exist is 0, the file under directory of tags will
+"   be updated. For example, case 1 will not be updated and case 2 will be.
+"
+"   case 1:
+"       dir
+"       |-- a
+"       |   `-- tags
+"       `-- file
+"
+"   case 2:
+"       dir
+"       |-- a
+"       |   `-- file
+"       `-- tags
+"
 
 if exists("g:loaded_tags_updater")
     finish
@@ -103,8 +120,9 @@ function s:AutoUpdateTags(filename) "{{{2
     let filename = a:filename
     let result = 0
 
-    let filepath = resolve(fnamemodify(filename, ':p'))
-    let filedir = resolve(fnamemodify(filename, ':p:h'))
+    "let filepath = resolve(fnamemodify(filename, ':p'))
+    let filepath = fnamemodify(filename, ':p')
+    let filedir = fnamemodify(filename, ':p:h')
 
     for tagfile in tagfiles()
         " 貌似 tagfiles() 返回的结果是可信的
@@ -112,7 +130,8 @@ function s:AutoUpdateTags(filename) "{{{2
             continue
         endif
 
-        let tagfile = resolve(fnamemodify(tagfile, ':p'))
+        "let tagfile = resolve(fnamemodify(tagfile, ':p'))
+        let tagfile = fnamemodify(tagfile, ':p')
         let workdir = fnamemodify(tagfile, ':h')
         " 求出相对路径
         let tags_filename = s:relpath(filepath, workdir)
@@ -128,7 +147,7 @@ function s:AutoUpdateTags(filename) "{{{2
             endif
         else
             " filename 必须在 tagfile 所在目录或之下
-            let tagdir = resolve(fnamemodify(tagfile, ':p:h'))
+            let tagdir = fnamemodify(tagfile, ':p:h')
             if s:IsWindowsOS()
                 let tagdir .= '\'
             else
