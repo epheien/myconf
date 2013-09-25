@@ -1,6 +1,15 @@
-"===============================================================================
+" ============================================================================
 " 基本设定
-"===============================================================================
+" ============================================================================
+
+function s:IsWindowsOS() "{{{
+    return has("win32") || has("win64")
+endfunction
+"}}}
+function s:IsUnixOS() "{{{
+    return has('unix')
+endfunction
+"}}}
 
 " 关闭 Vi 兼容模式，否则无法使用 Vim 的大部分扩展功能
 set nocompatible
@@ -35,7 +44,8 @@ function! GetFmt() "{{{
     else
         return ""
     endif
-endf "}}}
+endf
+"}}}
 
 " 在 vim 窗口右下角，标尺的右边显示未完成的命令。
 set showcmd
@@ -49,12 +59,8 @@ syntax on
 let g:vimsyn_noerror = 1
 
 " 文件类型的检测
-"filetype on
 " 为特定的文件类型允许插件文件的载入
-"filetype plugin on
 " 为特定的文件类型载入缩进文件
-"filetype indent on
-" 可以直接用下面一行完成
 filetype plugin indent on
 
 
@@ -111,9 +117,7 @@ set selectmode=key
 set mousemodel=popup
 set keymodel=startsel,stopsel
 set selection=inclusive
-if has("win32") || has("win64")
-    " nop
-else
+if s:IsUnixOS()
     " 修正鼠标右键菜单行为
     noremap <RightMouse> <Nop>
     noremap <RightRelease> <RightMouse>
@@ -156,9 +160,6 @@ set foldlevel=9999
 " 允许光标移动到刚刚超过行尾字符之后的位置
 set virtualedit=onemore,block
 
-" 窗口大小，更适合放到 .gvimrc
-"set columns=100 lines=40
-
 " 标签页显示。0:1:2 = 总是不显示：超过一个才显示：总是显示
 "set showtabline=2
 
@@ -176,7 +177,7 @@ set complete=.,t,w,b,k
 set hidden
 
 " 显示 80 字符右边距的实现，需要 7.3 以上版本
-if version >= 703 && has("gui_running")
+if version >= 703
     set cc=81
 endif
 
@@ -235,14 +236,6 @@ unlet color_normal
 unlet color_insert
 unlet color_exit
 "}}}
-" 设置 gnome-terminal 的光标
-"if &term == "xterm" && !has("gui_running") "{{{
-    "silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-    "autocmd! InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
-    "autocmd! InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-    "autocmd! VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape underline"
-"endif
-"}}}
 " 编辑 po 文件时与中文输入法的配合
 autocmd! syntax po set imactivatekey=C-space
 
@@ -278,9 +271,9 @@ set list listchars=tab:\ \
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 let $LANGUAGE=''
 
-"===============================================================================
+" ============================================================================
 " 额外的文件格式支持
-"===============================================================================
+" ============================================================================
 
 " ========== 特殊文件格式 ==========
 " txt2tags 格式文件高亮
@@ -296,15 +289,15 @@ autocmd! BufNewFile,BufRead *.org set ft=org
 autocmd! BufNewFile,BufRead *.nasm setf nasm
 " rfc
 autocmd! BufNewFile,BufRead *.txt
-    \ if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
+        \ if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
 
-"===============================================================================
+" ============================================================================
 " 常规键盘映射
-"===============================================================================
+" ============================================================================
 
-"=======================================
+" ======================================
 " 普通模式
-"=======================================
+" ======================================
 function! s:n_BuffterDelete() "{{{
     let curb = bufnr('%')
 "   if bufexists(0)     " 检查是否存在轮换缓冲
@@ -337,7 +330,7 @@ nnoremap <C-s> :update<CR>
 nnoremap <C-p> <C-w>z
 nnoremap T :tag<CR>
 "nnoremap <C-z> u
-if exists('$DISPLAY')
+if s:IsWindowsOS() || exists('$DISPLAY')
     nnoremap <C-v> "+gP
 endif
 
@@ -355,19 +348,14 @@ cnoremap <C-l> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-BS> <C-w>
 cnoremap <C-d> <Del>
-if exists('$DISPLAY')
+if s:IsWindowsOS() || exists('$DISPLAY')
     cnoremap <C-v> <C-r>+
 endif
-
-"cnoremap <A-m> <Esc>
-"cnoremap qq q!
-"cnoremap cc close
-"cnoremap ccc close!<CR>
 
 "=======================================
 " 可视和选择模式
 "=======================================
-if exists('$DISPLAY')
+if s:IsWindowsOS() || exists('$DISPLAY')
     vnoremap <C-x> "+x
     vnoremap <C-c> "+y
     vnoremap <C-v> "+gP
@@ -379,7 +367,7 @@ vnoremap <C-s> <C-c>:update<CR>
 "=======================================
 " 可视模式
 "=======================================
-function! MacroComment() "{{{
+function! s:IF0Comment() "{{{
     let l:firstline = line("'<")
     let l:lastline = line("'>")
     let l:curline = line(".")
@@ -399,12 +387,12 @@ xnoremap " di""<ESC>Pl
 xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
     \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
 " C 文件的 #if 0 段落注释
-xnoremap 0 <C-c>:call MacroComment()<CR>
+xnoremap 0 <C-c>:call <SID>IF0Comment()<CR>
 
 
-"=======================================
+" ======================================
 " 插入模式下
-"=======================================
+" ======================================
 function! s:ToggleCase() "{{{
     let sLine = getline('.')
     let nEndIdx = col('.') - 2
@@ -432,7 +420,7 @@ inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<END>"
 inoremap <C-a> <Home>
 inoremap <C-BS> <C-w>
 inoremap <C-d> <Del>
-if exists('$DISPLAY')
+if s:IsWindowsOS() || exists('$DISPLAY')
     inoremap <C-v> <C-r>+
 endif
 
@@ -440,7 +428,7 @@ inoremap <C-z> <C-o>u
 inoremap <C-r> <C-o><C-r>
 " 写 C 时麻烦的宏定义大写问题，解决！
 inoremap <silent> <expr> <C-y>
-    \ pumvisible()?"\<C-y>":"\<C-r>=<SID>ToggleCase()\<CR>"
+        \ pumvisible()?"\<C-y>":"\<C-r>=<SID>ToggleCase()\<CR>"
 
 imap <C-h> <Left>
 imap <C-j> <Down>
@@ -450,9 +438,9 @@ inoremap <A-h> <C-Left>
 inoremap <A-l> <C-Right>
 
 
-"===============================================================================
+" ============================================================================
 " 插件设置
-"===============================================================================
+" ============================================================================
 " ========== matchparen ==========
 "{{{
 let matchparen_noinsert = 1
@@ -661,9 +649,9 @@ let g:SignatureIncludeMarks =
 "{{{
 "}}}
 
-"===============================================================================
+" ============================================================================
 " IDE 设置
-"===============================================================================
+" ============================================================================
 "set tags+=~/.vim/systags
 let g:c_kernel_mode = 1
 
@@ -690,14 +678,7 @@ highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599
 
 " 括号自动补全. 为了性能, 直接禁用闭合检查
 inoremap ( ()<Left>
-"inoremap ) <C-r>=ClosePair(')')<CR>
 inoremap [ []<Left>
-"inoremap ] <C-r>=ClosePair(']')<CR>
-"inoremap <expr> { (&filetype != "vimwiki")?"{}\<Left>":"{"
-"inoremap } <C-r>=ClosePair('}')<CR>
-"inoremap < <><Left>
-"inoremap > <c-r>=ClosePair('>')<CR>
-"inoremap ' ''<Left>
 inoremap <expr> " (&filetype == "vim")?"\"":"\"\"\<Left>"
 
 inoremap <expr> <BS> <SID>i_BS_plus()
@@ -708,22 +689,6 @@ inoremap <C-g> <C-r>=<SID>i_InsertHGuard()<CR>
 inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
 "inoremap <expr> <ESC> pumvisible()?"\<C-e>":"\<ESC>"
 
-" C 的结构成员自动提示
-"inoremap <silent> . .<C-r>=<SID>i_PopupMember()<CR>
-"inoremap <silent> > ><C-r>=<SID>i_PopupMember()<CR>
-
-function! s:i_PopupMember() "{{{
-    if &filetype != "c" && &filetype != "cpp"
-        return ''
-    endif
-    let preChar = getline('.')[col('.') - 2]
-    if ((getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.') && getline('.')[0] != '#'
-        return "\<C-x>\<C-o>"
-    else
-        return ''
-    endif
-endf
-"}}}
 function! s:i_InsertHGuard() "{{{
     let gudname = "__".substitute(toupper(expand("%:t")), "\\.", "_", "g")."__"
     return "#ifndef ".gudname."\<CR>"."#define ".gudname."\<CR>\<CR>\<CR>\<CR>\<CR>\<CR>"."#endif /* ".gudname." */\<Up>\<Up>\<Up>"
@@ -736,14 +701,6 @@ function! s:i_Tab_plus_old() "{{{
         return "\<C-x>\<C-n>"
     elseif pumvisible()
         return "\<C-n>"
-    endif
-endf
-"}}}
-function! ClosePair(char) "{{{
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
     endif
 endf
 "}}}
@@ -851,9 +808,9 @@ endf
 "}}}
 "}}}
 
-"===========================================================
+" ==========================================================
 " 自己的简易插件
-"===========================================================
+" ==========================================================
 " ========== SimpleSuperTab ==========
 "{{{
 " 需要把 completeopt 设置为 menuone
@@ -1155,5 +1112,5 @@ endfunction
 "}}}2
 "}}}
 
-"-------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
