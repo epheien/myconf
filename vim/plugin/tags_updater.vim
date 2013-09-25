@@ -10,7 +10,7 @@
 "   * grep
 "
 " INSTALLATION:
-"   put this file to ~/.vim/plugin
+"   Put this file to ~/.vim/plugin
 "
 " USAGE:
 "   $ ctags -R
