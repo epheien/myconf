@@ -37,6 +37,22 @@ if !exists('g:tags_updater_ctags_program')
     let g:tags_updater_ctags_program = 'ctags'
 endif
 
+if !executable('grep')
+    echomsg '[tags_updater] grep: command not found'
+    finish
+endif
+
+if !executable('sed')
+    echomsg '[tags_updater] sed: command not found'
+    finish
+endif
+
+if !executable(g:tags_updater_ctags_program)
+    echomsg printf('[tags_updater] %s: command not found',
+            \       g:tags_updater_ctags_program)
+    finish
+endif
+
 autocmd! BufWritePost * call s:AutoUpdateTags(expand("%"))
 
 " ============================================================================
