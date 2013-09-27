@@ -2,15 +2,19 @@
 " Author:   fanhe <fanhed@163.com>
 " License:  GPLv2
 " Create:   2013-09-25
-" Change:   2013-09-25
+" Change:   2013-09-28
 
+" VERSION:
+"   1.2
+"
 " DEPENDING:
 "   * ctags
 "   * sed
 "   * grep
 "
 " INSTALLATION:
-"   Put this file to ~/.vim/plugin
+"   Put this file to ~/.vim/plugin on Linux, or corresponding directory on
+"   Windows
 "
 " USAGE:
 "   $ ctags -R
@@ -39,6 +43,10 @@
 "       |-- a
 "       |   `-- file
 "       `-- tags
+"
+" CHANGELOG:
+"   1.2 - Support Windows
+"   1.0 - Init version
 "
 
 if exists("g:loaded_tags_updater")
