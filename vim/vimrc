@@ -298,11 +298,10 @@ autocmd! BufNewFile,BufRead *.txt
 " ======================================
 " 普通模式
 " ======================================
-function! s:n_BuffterDelete() "{{{
+function! s:n_BufferDelete() "{{{
     let curb = bufnr('%')
-"   if bufexists(0)     " 检查是否存在轮换缓冲
     bNext
-    exec "bd " . curb
+    exec 'confirm bdelete' curb
     if exists("*BufExplorer_Fix")
         call BufExplorer_Fix()
     endif
@@ -311,7 +310,7 @@ endf
 nnoremap <silent> \- :set columns-=30<CR>
 nnoremap <silent> \= :set columns+=30<CR>
 nnoremap <silent> \l :%s/\r//g<CR>
-nnoremap <silent> \d :call <SID>n_BuffterDelete()<CR>
+nnoremap <silent> \d :call <SID>n_BufferDelete()<CR>
 nnoremap \h :cd %:p:h <Bar> pwd<CR>
 nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
 nnoremap <Space> 3<C-e>
@@ -416,6 +415,7 @@ endf
 inoremap <silent> <C-s> <ESC>:update<CR>
 inoremap <C-CR> <ESC>o
 inoremap <S-CR> <ESC>O
+inoremap <C-o> <END><CR>
 inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<END>"
 inoremap <C-a> <Home>
 inoremap <C-BS> <C-w>
