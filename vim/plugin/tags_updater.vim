@@ -103,11 +103,19 @@ function s:UpdateTags(tagfile, filename, ...) "{{{2
     let tagfile = a:tagfile
     let filename = a:filename
     let ctagsprog = g:tags_updater_ctags_program
-    let cmd = printf('cd %s; sed -i ''/^[^\t]\+\t%s\t/d'' %s && %s -a -f %s %s &',
-            \        shellescape(workdir),
-            \        escape(filename, '/\[]'), shellescape(tagfile),
-            \        shellescape(ctagsprog),
-            \        shellescape(tagfile), shellescape(filename))
+    if s:IsWindowsOS()
+        let cmd = printf('cd %s; sed -i "/^[^\t]\+\t%s\t/d" %s && %s -a -f %s %s &',
+                \        shellescape(workdir),
+                \        escape(filename, '/\[]'), shellescape(tagfile),
+                \        shellescape(ctagsprog),
+                \        shellescape(tagfile), shellescape(filename))
+    else
+        let cmd = printf('cd %s; sed -i ''/^[^\t]\+\t%s\t/d'' %s && %s -a -f %s %s &',
+                \        shellescape(workdir),
+                \        escape(filename, '/\[]'), shellescape(tagfile),
+                \        shellescape(ctagsprog),
+                \        shellescape(tagfile), shellescape(filename))
+    endif
     let output = system(cmd)
     " NOTE: 由于使用了后台进程，所以 v:shell_error 会恒为 0
     if v:shell_error != 0
@@ -138,9 +146,15 @@ function s:AutoUpdateTags(filename) "{{{2
 
         if g:tags_updater_update_exist
             " 从 tags 文件搜索
-            let cmd = printf('grep -q -P ''^[^\t]+\t%s\t'' %s',
-                    \         escape(tags_filename, '\[]()'),
-                    \         shellescape(tagfile))
+            if s:IsWindowsOS()
+                let cmd = printf('grep -q -m 1 -P "^[^\t]+\t%s\t" %s',
+                        \         escape(tags_filename, '\[]()'),
+                        \         shellescape(tagfile))
+            else
+                let cmd = printf('grep -q -m 1 -P ''^[^\t]+\t%s\t'' %s',
+                        \         escape(tags_filename, '\[]()'),
+                        \         shellescape(tagfile))
+            endif
             call system(cmd)
             if v:shell_error != 0
                 continue
