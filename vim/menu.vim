@@ -977,7 +977,10 @@ if has("toolbar")
 "    vnoremenu ToolBar.Print		:w !lpr<CR>
 "  endif
 
-  an <silent> icon=close 1.41 ToolBar.TBClose :if winheight(2)<0<Bar>confirm enew<Bar> else<Bar>confirm close<Bar>endif<CR>
+  an <silent> icon=close 1.41 ToolBar.TBClose
+      \ :if winheight(2)<0<Bar>confirm enew<Bar> else<Bar>confirm close<Bar>endif<CR>
+
+  tmenu ToolBar.TBClose Close current window
 
   an 1.65 ToolBar.-sep2-		<Nop>
   vnoremenu 1.70 ToolBar.Cut		"+x
@@ -995,10 +998,13 @@ if has("toolbar")
   an icon=forward 1.95 ToolBar.Forward		<C-i>
   amenu 1.96 ToolBar.TagJump			<C-]>
 
+  tmenu ToolBar.Backward Backward
+  tmenu ToolBar.Forward Forward
+
   an 1.100   ToolBar.-sep3-		<Nop>
-  amenu icon=bookmark 1.101 ToolBar.Bookmark mm
-  amenu icon=go-up 1.102 ToolBar.GoUp <S-F2>
-  amenu icon=go-down 1.103 ToolBar.GoDown <F2>
+  "amenu icon=bookmark 1.101 ToolBar.Bookmark m,
+  "amenu icon=go-up 1.102 ToolBar.GoUp <S-F2>
+  "amenu icon=go-down 1.103 ToolBar.GoDown <F2>
 
   if !has("gui_athena")
 "    an 1.100   ToolBar.-sep3-		<Nop>
