@@ -104,13 +104,13 @@ function s:UpdateTags(tagfile, filename, ...) "{{{2
     let filename = a:filename
     let ctagsprog = g:tags_updater_ctags_program
     if s:IsWindowsOS()
-        let cmd = printf('cd %s; sed -i "/^[^\t]\+\t%s\t/d" %s && %s -a -f %s %s &',
+        let cmd = printf('cd %s && sed -i "/^[^\t]\+\t%s\t/d" %s && %s -a -f %s %s &',
                 \        shellescape(workdir),
                 \        escape(filename, '/\[]'), shellescape(tagfile),
                 \        shellescape(ctagsprog),
                 \        shellescape(tagfile), shellescape(filename))
     else
-        let cmd = printf('cd %s; sed -i ''/^[^\t]\+\t%s\t/d'' %s && %s -a -f %s %s &',
+        let cmd = printf('cd %s && sed -i ''/^[^\t]\+\t%s\t/d'' %s && %s -a -f %s %s &',
                 \        shellescape(workdir),
                 \        escape(filename, '/\[]'), shellescape(tagfile),
                 \        shellescape(ctagsprog),
