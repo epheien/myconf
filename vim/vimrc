@@ -441,6 +441,10 @@ inoremap <A-l> <C-Right>
 " ============================================================================
 " 插件设置
 " ============================================================================
+" ========== pathogen ==========
+"{{{
+call pathogen#infect()
+"}}}
 " ========== matchparen ==========
 "{{{
 let matchparen_noinsert = 1
@@ -586,10 +590,6 @@ let g:clang_snippets = 0
 "let g:clang_library_path = '/usr/lib/libclang.so'
 let g:clang_disable = 1
 "let g:clic_filename = '/home/eph/clang_indexer.db'
-"}}}
-" ========== pathogen ==========
-"{{{
-call pathogen#infect()
 "}}}
 " ========== xptemplate ==========
 "{{{
