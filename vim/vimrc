@@ -543,10 +543,6 @@ let g:VLWDbgSaveBreakpointsInfo = 1
 let g:VLOmniCpp_UseLibCxxParser = 1
 let g:VLWDisableUnneededTools = 0
 let g:VLWorkspaceLinkToEidtor = 0
-if has("win32") || has("win64")
-    let g:VLOmniCpp_LibCxxParserPath = 
-            \expand($VIM.'/vimlite/lib/libCxxParser.dll')
-endif
 
 " 修正 clang++ 的头文件搜索路径的问题
 command! -nargs=0 VIMCCCFixup VIMCCCAppendArgs
