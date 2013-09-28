@@ -534,7 +534,9 @@ let g:VLWPopupMenuKey = '<RightRelease>'
 "}}}
 " ========== videm ==========
 "{{{
-let g:VLWorkspaceUseVIMCCC = 1
+if s:IsUnixOS()
+    let g:VLWorkspaceUseVIMCCC = 1
+endif
 let g:VLWorkspaceSaveAllBeforeBuild = 1
 let g:VLWorkspaceParseFileAfterSave = 1
 let g:VLCalltips_IndicateArgument = 0
@@ -556,6 +558,7 @@ set previewheight=8
 try
     call videm#settings#Set('.videm.wsp.ShowBriefHelp', 0)
 catch
+    echomsg "Failed to call videm#settings#Set()"
 endtry
 "}}}
 " ========== VIMCCC ==========
