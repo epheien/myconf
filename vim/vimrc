@@ -752,6 +752,7 @@ if has("cscope")
         "set csprg=gtags-cscope
         "call s:CscopeAdd('GTAGS')
     endif
+    set cscopeverbose
     set cscopetagorder=0
     set cscopetag
     set cscopequickfix=s-,c-,d-,i-,t-,e-
