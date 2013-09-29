@@ -1,0 +1,27 @@
+! look and feel
+xterm.termName: xterm-256color
+xterm.geometry: 80x24
+xterm*scrollBar: false
+xterm*rightScrollBar: true
+xterm*loginshell: true
+xterm*cursorBlink: true
+xterm*background: black
+xterm*foreground: gray
+xterm.borderLess: true
+xterm.cursorBlink: true
+xterm*colorUL: yellow
+xterm*colorBD: white
+
+! fix alt key input
+xterm*eightBitInput: false
+xterm*altSendsEscape: true
+
+! font and locale
+xterm*locale: true
+xterm.utf8: true
+xterm*utf8Title: true
+xterm*fontMenu*fontdefault*Label: Default
+xterm*faceName: Consolas:pixelsize=13.5:antialias=True
+xterm*faceNameDoublesize: DejaVe Sans LanTingHei Mono:pixelsize=12:antialias=True
+xterm*xftAntialias: true
+
