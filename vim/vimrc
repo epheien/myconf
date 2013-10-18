@@ -70,7 +70,7 @@ filetype plugin indent on
 "set vb t_vb=
 
 " 显示行号
-"set number
+set number
 
 " 设定文件编码类型，彻底解决中文编码问题
 let &termencoding=&encoding
@@ -556,11 +556,10 @@ let g:VLWorkspaceSymbolDatabase = 'gtags'
 let g:VimTagsManager_InclAllCondCmplBrch = 1
 " pyclewn 的终端窗口高度，暂时这样设置
 set previewheight=8
-try
-    call videm#settings#Set('.videm.wsp.ShowBriefHelp', 0)
-catch
-    echomsg "Failed to call videm#settings#Set()"
-endtry
+let g:videm_user_options = {
+    \ '.videm.wsp.ShowBriefHelp'    : 0,
+    \ '.videm.wsp.AutoSession'      : 0,
+\ }
 "}}}
 " ========== VIMCCC ==========
 "{{{
