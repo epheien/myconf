@@ -523,43 +523,40 @@ xmap <C-n> <Leader>c<space>
 let g:pydiction_location = '~/.vim/dict/complete-dict'
 "let g:pydiction_menu_height = 20
 "}}}
-" ========== VLOmniCpp ==========
-"{{{
-" 自定义选项
-let g:VLOmniCpp_ItemSelectionMode = 10
-" 暂时没有用到
-"let g:VimTagsManager_SrcDir = '~/.vimlite/VimLite'
-"}}}
 " ========== videm ==========
 "{{{
-if s:IsUnixOS()
-    let g:VLWorkspaceUseVIMCCC = 1
-endif
-let g:VLWorkspaceSaveAllBeforeBuild = 1
-let g:VLCalltips_IndicateArgument = 0
-let g:VLCalltips_EnableSyntaxTest = 0
-let g:VLWDbgSaveBreakpointsInfo = 1
-let g:VLOmniCpp_UseLibCxxParser = 1
-let g:VLWDisableUnneededTools = 0
-let g:VLWorkspaceLinkToEidtor = 0
 " 基于 VLWorkspace 的源/头文件切换
 nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
-" 弹出 GUI 菜单的快捷键
-let g:VLWPopupMenuKey = '<RightRelease>'
 
 " 修正 clang++ 的头文件搜索路径的问题
 command! -nargs=0 VIMCCCFixup VIMCCCAppendArgs
         \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include
-        \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include-fixed 
+        \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include-fixed
 
-let g:VLWorkspaceSymbolDatabase = 'gtags'
-let g:VimTagsManager_InclAllCondCmplBrch = 1
 " pyclewn 的终端窗口高度，暂时这样设置
 set previewheight=8
+
 let g:videm_user_options = {
-    \ '.videm.wsp.ShowBriefHelp'    : 0,
-    \ '.videm.wsp.AutoSession'      : 0,
+    \ '.videm.wsp.ShowBriefHelp'            : 0,
+    \ '.videm.wsp.keybind.PopupMenu'        : '<RightRelease>',
+    \ '.videm.wsp.LinkToEditor'             : 0,
+    \ '.videm.wsp.SaveBeforeBuild'          : 1,
+    \
+    \ '.videm.common.calltips.IndicateArgument' : 0,
+    \ '.videm.common.calltips.EnableSyntaxTest' : 0,
+    \
+    \ '.videm.cc.omnicpp.UseLibCxxParser'       : 1,
+    \ '.videm.cc.omnicpp.InclAllCondCmplBrch'   : 1,
+    \
+    \ '.videm.dbg.pyclewn.DisableNeedlessTools' : 0,
+    \ '.videm.dbg.pyclewn.SaveBpInfo'           : 1,
 \ }
+"let g:videm_user_options['.videm.wsp.AutoSession'] = 1
+let g:videm_user_options['.videm.cc.omnicpp.ItemSelectMode'] = 10
+let g:videm_user_options['.videm.wsp.SymbolDatabase'] = "gtags"
+if s:IsUnixOS()
+    let g:videm_user_options['.videm.wsp.CodeCompleteEngine'] = "vimccc"
+endif
 "}}}
 " ========== VIMCCC ==========
 "{{{
