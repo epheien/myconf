@@ -11,15 +11,24 @@ function s:IsUnixOS() "{{{
 endfunction
 "}}}
 
+function s:IsLinuxOS() "{{{
+    return !s:IsWindowsOS()
+endfunction
+"}}}
+
 " 关闭 Vi 兼容模式，否则无法使用 Vim 的大部分扩展功能
 set nocompatible
 
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions+=M
+" 替换了工具栏的 menu.vim
 runtime menu.vim
 "set guioptions-=m
 set guioptions-=t
 set winaltkeys=no
+
+" 交换文件不放到跟编辑的文件同一个目录
+set directory-=.
 
 " 自动缩进设置
 " 使新行缩进与前一行一样
@@ -35,7 +44,7 @@ set cinoptions+=(0,W8
 " 用 statusline 模拟
 "set statusline=%<%f\ %h%m%r%=%-13.(%l,%c%V%)\ %P
 set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fileencoding}]%)
-            \%{GetFmt()}%=%(%l/%L,%c%V%)\ %P
+        \%{GetFmt()}%=%(%l/%L,%c%V%)\ %P
 set laststatus=2
 function! GetFmt() "{{{
     let l:fmt = getftime(expand("%:p"))
@@ -44,7 +53,7 @@ function! GetFmt() "{{{
     else
         return ""
     endif
-endf
+endfunction
 "}}}
 
 " 在 vim 窗口右下角，标尺的右边显示未完成的命令。
@@ -111,13 +120,15 @@ set wrap
 "set linebreak
 " 回绕行的前导符号
 "set showbreak=<-->
+" 光标上下需要保留的行数，滚动时用
+set scrolloff=3
 
 " 设置鼠标和选择的行为
 set selectmode=key
 set mousemodel=popup
 set keymodel=startsel,stopsel
 set selection=inclusive
-if s:IsUnixOS()
+if s:IsLinuxOS()
     " 修正鼠标右键菜单行为
     noremap <RightMouse> <Nop>
     noremap <RightRelease> <RightMouse>
@@ -134,6 +145,8 @@ endif
 "set completeopt=longest,menu
 "set completeopt=menuone,preview
 set completeopt=menuone
+" 补全窗口不用太大, 限制之
+set pumheight=5
 
 " 显示水平滚动条
 "set guioptions+=b
@@ -142,7 +155,7 @@ set completeopt=menuone
 "let mapleader = "\\"
 let mapleader = "\<F12>"
 
-" 代码自动折叠设置。
+" 代码自动折叠设置
 set foldenable     " 打开代码折叠
 "set nofoldenable   " 关闭代码折叠
 " 代码折叠，根据语法
@@ -160,7 +173,7 @@ set foldlevel=9999
 " 允许光标移动到刚刚超过行尾字符之后的位置
 set virtualedit=onemore,block
 
-" 标签页显示。0:1:2 = 总是不显示：超过一个才显示：总是显示
+" 标签页显示。0:1:2 = 总是不显示:超过一个才显示:总是显示
 "set showtabline=2
 
 " 自动完成扫描的文件
@@ -236,8 +249,9 @@ unlet color_normal
 unlet color_insert
 unlet color_exit
 "}}}
+
 " 编辑 po 文件时与中文输入法的配合
-autocmd! syntax po set imactivatekey=C-space
+"autocmd! syntax po set imactivatekey=C-space
 
 " fcitx 输入法调整，离开插入模式时自动关闭输入法
 " NOTE: 使用插件来实现，不在这里实现了
@@ -271,7 +285,20 @@ set list listchars=tab:\ \
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 let $LANGUAGE=''
 
-" ============================================================================
+" 摘录自vimrc sample by Bram
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+" Also don't do it when the mark is in the first line, that is the default
+" position when opening a file.
+augroup Epheien
+autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \     exe "normal! g`\"" |
+    \ endif
+augroup End
+
+"=============================================================================
 " 额外的文件格式支持
 " ============================================================================
 
@@ -301,11 +328,11 @@ autocmd! BufNewFile,BufRead *.txt
 function! s:n_BufferDelete() "{{{
     let curb = bufnr('%')
     bNext
-    exec 'confirm bdelete' curb
+    exec "bd " . curb
     if exists("*BufExplorer_Fix")
         call BufExplorer_Fix()
     endif
-endf
+endfunction
 "}}}
 nnoremap <silent> \- :set columns-=30<CR>
 nnoremap <silent> \= :set columns+=30<CR>
@@ -366,14 +393,14 @@ vnoremap <C-s> <C-c>:update<CR>
 "=======================================
 " 可视模式
 "=======================================
-function! s:IF0Comment() "{{{
+function! MacroComment() "{{{
     let l:firstline = line("'<")
     let l:lastline = line("'>")
     let l:curline = line(".")
     exec l:firstline . "put! ='#if 0'"
     exec l:lastline + 1 . "put ='#endif'"
     exec l:curline + 1
-endf
+endfunction
 "}}}
 xnoremap <Space> 3j
 xnoremap , 3k
@@ -386,7 +413,7 @@ xnoremap " di""<ESC>Pl
 xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
     \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
 " C 文件的 #if 0 段落注释
-xnoremap 0 <C-c>:call <SID>IF0Comment()<CR>
+xnoremap 0 <C-c>:call MacroComment()<CR>
 
 
 " ======================================
@@ -409,14 +436,14 @@ function! s:ToggleCase() "{{{
     endif
 
     return ''
-endf
+endfunction
 "}}}
 "inoremap <silent> <C-s> <C-o>:update<CR>
 inoremap <silent> <C-s> <ESC>:update<CR>
 inoremap <C-CR> <ESC>o
+inoremap <C-o> <End><CR>
 inoremap <S-CR> <ESC>O
-inoremap <C-o> <END><CR>
-inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<END>"
+inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<End>"
 inoremap <C-a> <Home>
 inoremap <C-BS> <C-w>
 inoremap <C-d> <Del>
@@ -424,8 +451,8 @@ if s:IsWindowsOS() || exists('$DISPLAY')
     inoremap <C-v> <C-r>+
 endif
 
-inoremap <C-z> <C-o>u
-inoremap <C-r> <C-o><C-r>
+"inoremap <C-z> <C-o>u
+"inoremap <C-r> <C-o><C-r>
 " 写 C 时麻烦的宏定义大写问题，解决！
 inoremap <silent> <expr> <C-y>
         \ pumvisible()?"\<C-y>":"\<C-r>=<SID>ToggleCase()\<CR>"
@@ -467,6 +494,39 @@ let g:tagbar_type_rfc = {
     \ 'deffile' : expand('~/.vim/ctags/rfc.cnf'),
 \ }
 
+let g:tagbar_type_cpp = {
+    \ 'ctagstype' : 'c++',
+    \ 'kinds'     : [
+        \ 'd:macros:0',
+        \ 'p:prototypes:1',
+        \ 'g:enums',
+        \ 'e:enumerators',
+        \ 't:typedefs',
+        \ 'n:namespaces',
+        \ 'c:classes',
+        \ 's:structs',
+        \ 'u:unions',
+        \ 'f:functions',
+        \ 'm:members',
+        \ 'v:variables'
+    \ ],
+    \ 'sro'        : '::',
+    \ 'kind2scope' : {
+        \ 'g' : 'enum',
+        \ 'n' : 'namespace',
+        \ 'c' : 'class',
+        \ 's' : 'struct',
+        \ 'u' : 'union'
+    \ },
+    \ 'scope2kind' : {
+        \ 'enum'      : 'g',
+        \ 'namespace' : 'n',
+        \ 'class'     : 'c',
+        \ 'struct'    : 's',
+        \ 'union'     : 'u'
+    \ }
+\ }
+
 nnoremap <Leader>t :TagbarToggle<CR>
 
 hi TagbarAccessProtected guifg=Magenta ctermfg=Magenta
@@ -488,7 +548,7 @@ let g:vimwiki_camel_case = 0
 let wiki = {}
 let wiki.path = '~/my_wiki/'
 let wiki.path_html = '~/my_html/'
-let wiki.nested_syntaxes = {'c++': 'cpp', 'python': 'python'}
+let wiki.nested_syntaxes = {'c++': 'cpp', 'python': 'python', 'sh': 'sh'}
 let g:vimwiki_list = [wiki]
 let g:vimwiki_hl_cb_checked = 1
 let g:vimwiki_CJK_length = 1
@@ -504,11 +564,16 @@ hi link VimwikiPre Ignore
 
 " 一些特定的设置
 autocmd! FileType vimwiki call <SID>VimwikiSetup()
+"autocmd! BufWritePre * call <SID>VimwikiPost()
 function! s:VimwikiSetup()
     " 这个动作默认按键是 <C-Space>，太搓了，而 <C-n> 又被 NERD commenter 占用
     nmap <buffer> <C-n> <Plug>VimwikiToggleListItem
     setlocal sts=4 ts=4 sw=4 et
+    " 解决不删除空白行缩进的问题
     setlocal nocindent
+endfunction
+function! s:VimwikiPost()
+    %s/^\s\+$//
 endfunction
 "}}}
 " ========== NERD commenter ==========
@@ -529,14 +594,22 @@ let g:pydiction_location = '~/.vim/dict/complete-dict'
 nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
 
 " 修正 clang++ 的头文件搜索路径的问题
-command! -nargs=0 VIMCCCFixup VIMCCCAppendArgs
-        \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include
-        \ -I/usr/lib/gcc/i486-linux-gnu/4.4.3/include-fixed
+command! -nargs=0 VIMCCCFixup call s:VIMCCCFixup()
+function! s:VIMCCCFixup() "{{{2
+    let output = system("echo '' | gcc -v -x c++ -fsyntax-only - |& sed -n '/^#include /,/^End of/p' | grep '^ ' | cut -c 2-")
+    let li = split(output, '\n')
+    call map(li, '"-I" . v:val')
+    let args = join(li, ' ')
+    echo 'VIMCCCAppendArgs' args
+    exec 'VIMCCCAppendArgs' args
+endfunction
+"}}}
 
 " pyclewn 的终端窗口高度，暂时这样设置
 set previewheight=8
 
 let g:videm_user_options = {
+    \ '.videm.Compatible'                   : 0,
     \ '.videm.wsp.ShowBriefHelp'            : 0,
     \ '.videm.wsp.keybind.PopupMenu'        : '<RightRelease>',
     \ '.videm.wsp.LinkToEditor'             : 0,
@@ -552,10 +625,10 @@ let g:videm_user_options = {
     \ '.videm.dbg.pyclewn.SaveBpInfo'           : 1,
 \ }
 "let g:videm_user_options['.videm.wsp.AutoSession'] = 1
-let g:videm_user_options['.videm.cc.omnicpp.ItemSelectMode'] = 10
-let g:videm_user_options['.videm.wsp.SymbolDatabase'] = "gtags"
+let g:videm_user_options['.videm.cc.omnicpp.ItemSelectMode'] = 2
+let g:videm_user_options['.videm.symdb.Current'] = "gtags"
 if s:IsUnixOS()
-    let g:videm_user_options['.videm.wsp.CodeCompleteEngine'] = "vimccc"
+    let g:videm_user_options['.videm.cc.Current'] = "vimccc"
 endif
 "}}}
 " ========== VIMCCC ==========
@@ -567,6 +640,8 @@ let g:VIMCCC_ItemSelectionMode = 2
 " for debian 7 x86_64
 if filereadable('/usr/lib/libclang.so.1')
     let g:VIMCCC_ClangLibraryPath = '/usr/lib/libclang.so.1'
+else
+    let g:VIMCCC_ClangLibraryPath = expand('~/lib/libclang.so')
 endif
 let g:VIMCCC_CompleteMacros = 1
 "}}}
@@ -622,7 +697,7 @@ function! s:MouseMark() "{{{2
     let l:bak = &ignorecase
         normal \\
     let &ignorecase = l:bak
-endf
+endfunction
 "}}}2
 let g:mwIgnoreCase = 0
 nmap <silent> \\ <Plug>MarkSet
@@ -634,6 +709,20 @@ nmap <silent> <Leader>* <Plug>MarkSearchNext
 nmap <silent> <Leader># <Plug>MarkSearchPrev
 nnoremap <silent> <2-LeftMouse> :call <SID>MouseMark()<CR>
 "}}}
+" ========== neocomplcache ==========
+"{{{
+let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_insert_char_pre = 1
+"autocmd FileType * call <SID>NeoComplCacheStart()
+function! s:NeoComplCacheStart() "{{{2
+    if &ft !=# 'c' && &ft !=# 'cpp'
+        "autocmd CursorHold,CursorMovedI <buffer> call neocomplcache#init#lazy()
+        "echomsg printf("NeoComplCacheEnable, &ft=%s", &ft)
+        NeoComplCacheEnable
+    endif
+endfunction
+"}}}2
+"}}}
 " ========== vim-signature ==========
 " yz 留给 xptemplate 用，暂时没办法
 let g:SignatureIncludeMarks =
@@ -644,29 +733,29 @@ let g:SignatureIncludeMarks =
 " ============================================================================
 " IDE 设置
 " ============================================================================
-"set tags+=~/.vim/systags
 let g:c_kernel_mode = 1
 
 command -nargs=0 CKernelMode setlocal ts=8 sts=0 sw=8 noet
 command -nargs=0 CSpaceMode setlocal ts=8 sts=4 sw=4 et
+command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 command -nargs=0 CSangforMode setlocal ts=4 sts=4 sw=4 noet
 
 " ### Mark.vim 快速高亮单词。
 " 自定义高亮，默认有 6 组
-highlight HiWord1 gui=bold guifg=yellow guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=yellow
-highlight HiWord2 gui=bold guifg=white guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=white
-highlight HiWord3 gui=bold guifg=orange guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=Magenta
-highlight HiWord4 gui=bold guifg=green guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=green
-highlight HiWord5 gui=bold guifg=cyan guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=cyan
-highlight HiWord6 gui=bold guifg=salmon guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=red
-highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599 
-            \cterm=NONE ctermfg=black ctermbg=blue
+highlight HiWord1 gui=bold guifg=yellow guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=yellow
+highlight HiWord2 gui=bold guifg=white guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=white
+highlight HiWord3 gui=bold guifg=orange guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=Magenta
+highlight HiWord4 gui=bold guifg=green guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=green
+highlight HiWord5 gui=bold guifg=cyan guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=cyan
+highlight HiWord6 gui=bold guifg=salmon guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=red
+highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599
+        \ cterm=NONE ctermfg=black ctermbg=blue
 
 " 括号自动补全. 为了性能, 直接禁用闭合检查
 inoremap ( ()<Left>
@@ -684,7 +773,7 @@ inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
 function! s:i_InsertHGuard() "{{{
     let gudname = "__".substitute(toupper(expand("%:t")), "\\.", "_", "g")."__"
     return "#ifndef ".gudname."\<CR>"."#define ".gudname."\<CR>\<CR>\<CR>\<CR>\<CR>\<CR>"."#endif /* ".gudname." */\<Up>\<Up>\<Up>"
-endf
+endfunction
 "}}}
 function! s:i_Tab_plus_old() "{{{
     if (&filetype == "c" || &filetype == "cpp") && !pumvisible()
@@ -694,7 +783,7 @@ function! s:i_Tab_plus_old() "{{{
     elseif pumvisible()
         return "\<C-n>"
     endif
-endf
+endfunction
 "}}}
 function! s:i_Semicolon_plus() "{{{
     let sLine = getline('.')
@@ -703,7 +792,7 @@ function! s:i_Semicolon_plus() "{{{
     else
         return ";"
     endif
-endf
+endfunction
 "}}}
 function! IfPair(char1,char2) "{{{
     if getline('.')[col('.') - 2] == a:char1 && getline('.')[col('.') - 1] == a:char2
@@ -711,15 +800,15 @@ function! IfPair(char1,char2) "{{{
     else
         return 0
     endif
-endf
+endfunction
 "}}}
 function! s:i_BS_plus() "{{{
-    if IfPair('(',')') || IfPair('[',']')
+    if IfPair('(',')') || IfPair('[',']') || IfPair('{', '}')
         return "\<DEL>\<BS>"
     else
         return "\<BS>"
     endif
-endf
+endfunction
 "}}}
 
 " ========== cscope 设置 ==========
@@ -790,7 +879,7 @@ function! s:AlterSource() "{{{
             return
         endtry
     endif
-endf
+endfunction
 "}}}
 "}}}
 
@@ -817,11 +906,11 @@ function! s:i_Tab_plus() "{{{2
     else
         return "\<C-x>\<C-n>"
     endif
-endf
+endfunction
 "}}}2
 function! I_OnPopupPost() "{{{2
     return pumvisible()?"\<C-p>\<Down>":""
-endf
+endfunction
 "}}}2
 "}}}
 " ========== 递归查找当前目录下的文件并打开 ==========
@@ -862,7 +951,7 @@ function! s:findn(name, flag)
 
     let l:line=substitute(l:line, "^[^\t]*\t./", "", "")
     execute ":e " . l:line
-endf
+endfunction
 " 查找所有文件
 command! -nargs=1 Findn :call <SID>findn("<args>", "")
 " 查找 c 文件
@@ -944,7 +1033,7 @@ function! PreviewWord() "{{{2
             endif
         endif
     endif
-endf
+endfunction
 "}}}2
 "}}}
 " ========== 修正 MiniBufExplorer 窗口 ==========
@@ -972,7 +1061,7 @@ function! s:FixMiniBuf() "{{{2
     endif
 
     exec l:orgWinnr . " wincmd w"
-endf
+endfunction
 "}}}2
 "}}}
 " ========== 快速切换“全装备”模式 ==========
@@ -1021,7 +1110,7 @@ function! s:ToggleTlistAndNERDTree(width) "{{{2
         execute l:orgWinnr . "wincmd w"
         call BufExplorer_Fix()
     endif
-endf
+endfunction
 "}}}2
 "}}}
 " ========== 快速切换“轻装备”模式 ==========
@@ -1064,7 +1153,7 @@ function! s:ToggleNERDTreeAndBE(width) "{{{2
         execute l:orgWinnr . "wincmd w"
         call BufExplorer_Fix()
     endif
-endf
+endfunction
 "}}}2
 "}}}
 " ========== 取色器，配合 colorsel 使用 ==========
@@ -1076,7 +1165,7 @@ function! s:PickColor2Colorsel() "{{{2
     endif
     let l:color = substitute(system("colorpicker"), '\n', '', '')
     return l:color
-endf
+endfunction
 "}}}2
 "}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
