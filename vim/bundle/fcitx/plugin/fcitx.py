@@ -35,6 +35,8 @@ def fcitxtalk(command=None):
   finally:
     sock.close()
 
+REMEMBER_STATE = False
+
 def fcitx2en():
   if fcitxtalk() == 2:
     vim.command('let b:inputtoggle = 1')
@@ -43,7 +45,8 @@ def fcitx2en():
 def fcitx2zh():
   if vim.eval('exists("b:inputtoggle")') == '1':
     if vim.eval('b:inputtoggle') == '1':
-      fcitxtalk('o')
+      if REMEMBER_STATE:
+          fcitxtalk('o')
       vim.command('let b:inputtoggle = 0')
   else:
     vim.command('let b:inputtoggle = 0')
