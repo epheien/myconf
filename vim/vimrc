@@ -961,7 +961,8 @@ command! -nargs=1 Findc :call <SID>findn("<args>", "c")
 "{{{
 nnoremap <silent> <CR> :call PreviewWord()<CR>
 function! PreviewWord() "{{{2
-    if &ft ==# 'qf'
+    if &ft ==# 'qf' ||
+            \ (bufname('%') ==# '[Command Line]' && &buftype ==# 'nofile')
         exec "normal! \<CR>"
         return
     endif
