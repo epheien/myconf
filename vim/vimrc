@@ -961,6 +961,7 @@ command! -nargs=1 Findc :call <SID>findn("<args>", "c")
 "{{{
 nnoremap <silent> <CR> :call PreviewWord()<CR>
 function! PreviewWord() "{{{2
+    " quickfix窗口和命令窗口不映射
     if &ft ==# 'qf' ||
             \ (bufname('%') ==# '[Command Line]' && &buftype ==# 'nofile')
         exec "normal! \<CR>"
