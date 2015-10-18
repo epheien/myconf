@@ -6,18 +6,29 @@ else
 endif
 
 " 切换菜单栏与工具栏显示快捷键
-"set guioptions-=m
+set guioptions-=m
 "set guioptions-=T
-map <silent> <F10> :if &guioptions =~# 'T' <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=m <bar>
-    \else <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=m <Bar>
-    \endif<CR>
+map <silent> <F10> :call <SID>SwitchGuiOpt()<CR>
+function! s:SwitchGuiOpt()
+    " 'mT' -> 'T' -> '' -> 'mT'
+    if &guioptions =~# 'T' && &guioptions =~# 'm'
+        " 菜单栏和工具栏都有
+        set guioptions-=m
+    elseif &guioptions =~# 'T'
+        " 只有工具栏
+        set guioptions-=T
+    elseif &guioptions =~# 'm'
+        " 只有菜单栏
+        set guioptions-=m
+    else
+        " 菜单栏和工具栏都没有
+        set guioptions+=T
+        set guioptions+=m
+    endif
+endfunction
 
 " 窗口大小
-set columns=100 lines=44
+set columns=90 lines=50
 "autocmd syntax c,cpp set columns=125 lines=40
 "autocmd syntax c,cpp WMToggle
 
