@@ -16,8 +16,10 @@ function s:IsLinuxOS() "{{{
 endfunction
 "}}}
 
-" 关闭 Vi 兼容模式，否则无法使用 Vim 的大部分扩展功能
+" 关闭 vi 兼容模式，否则无法使用 vim 的大部分扩展功能
 set nocompatible
+" 让退格键以现代化的方式工作
+set backspace=2
 
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions+=M
@@ -56,7 +58,7 @@ function! GetFmt() "{{{
 endfunction
 "}}}
 
-" 在 vim 窗口右下角，标尺的右边显示未完成的命令。
+" 在 vim 窗口右下角，标尺的右边显示未完成的命令
 set showcmd
 
 " 左下角显示当前模式
@@ -298,7 +300,7 @@ autocmd BufReadPost *
     \ endif
 augroup End
 
-"=============================================================================
+" ============================================================================
 " 额外的文件格式支持
 " ============================================================================
 
@@ -351,7 +353,7 @@ nnoremap ; :
 "nnoremap <C-a> ggVG
 nnoremap <C-Tab> :bnext<CR>
 nnoremap <S-Tab> :bNext<CR>
-nnoremap <C-s> :update<CR>
+nnoremap <silent> <C-s> :update<CR>
 "nnoremap <CR> <C-w>}
 nnoremap <C-p> <C-w>z
 nnoremap T :tag<CR>
@@ -386,7 +388,7 @@ if s:IsWindowsOS() || exists('$DISPLAY')
     vnoremap <C-c> "+y
     vnoremap <C-v> "+gP
 endif
-vnoremap <C-s> <C-c>:update<CR>
+vnoremap <silent> <C-s> <C-c>:update<CR>
 "vnoremap y "+y
 "vnoremap x "+x
 
@@ -627,9 +629,10 @@ let g:videm_user_options = {
 "let g:videm_user_options['.videm.wsp.AutoSession'] = 1
 let g:videm_user_options['.videm.cc.omnicpp.ItemSelectMode'] = 2
 let g:videm_user_options['.videm.symdb.Current'] = "gtags"
-if s:IsUnixOS()
-    let g:videm_user_options['.videm.cc.Current'] = "vimccc"
-endif
+let g:videm_user_options['.videm.cc.Current'] = ""
+"if s:IsUnixOS()
+    "let g:videm_user_options['.videm.cc.Current'] = "vimccc"
+"endif
 "}}}
 " ========== VIMCCC ==========
 "{{{
@@ -700,6 +703,8 @@ function! s:MouseMark() "{{{2
 endfunction
 "}}}2
 let g:mwIgnoreCase = 0
+let g:mwHistAdd = ''
+let g:mwDefaultHighlightingPalette = 'extended'
 nmap <silent> \\ <Plug>MarkSet
 xmap <silent> \\ <Plug>MarkSet
 nmap <silent> \c :noh<CR><Plug>MarkAllClear
@@ -725,11 +730,8 @@ endfunction
 "}}}
 " ========== vim-signature ==========
 " yz 留给 xptemplate 用，暂时没办法
-let g:SignatureIncludeMarks =
-            \ 'abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ'
-"{{{
-"}}}
-
+"let g:SignatureIncludeMarks =
+            "\ 'abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ'
 " ============================================================================
 " IDE 设置
 " ============================================================================
