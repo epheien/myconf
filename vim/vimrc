@@ -689,17 +689,13 @@ function! s:MouseMark() "{{{2
         execute "normal! \<C-]>"
         return
     endif
-    let l:C = getline('.')[col('.')-1]
-    if l:C == '(' || l:C == ')'
-                \|| l:C == '[' || l:C == ']'
-                \|| l:C == '{' || l:C == '}'
-                \|| &buftype ==# 'quickfix'
+    let c = getline('.')[col('.')-1]
+    if c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}'
+            \   || &buftype ==# 'quickfix'
         execute "normal! \<2-LeftMouse>"
         return
     endif
-    let l:bak = &ignorecase
-        normal \\
-    let &ignorecase = l:bak
+    exec "normal \<Plug>MarkSet"
 endfunction
 "}}}2
 let g:mwIgnoreCase = 0
@@ -817,7 +813,20 @@ endfunction
 "{{{
 function! s:CscopeAdd(name) "{{{
     let prepath = fnamemodify(a:name, ':p:h')
-    exec printf('cs add %s %s', fnameescape(a:name), fnameescape(prepath))
+    if a:name ==# 'GTAGS' && &cscopeprg !~# '\<gtags-cscope\>'
+        silent cscope kill -1
+        set cscopeprg=gtags-cscope
+        redraw
+    elseif a:name =~? 'cscope' && &cscopeprg =~# 'gtags'
+        silent cscope kill -1
+        if executable('cscope')
+            set cscopeprg=cscope
+        elseif s:IsWindowsOS()
+            let &cscopeprg = $VIM . '\vimfiles\bin\cscope.exe'
+        endif
+        redraw
+    endif
+    exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
 endf
 "}}}
 command! -complete=file -nargs=1 CsAdd :call <SID>CscopeAdd("<args>")
@@ -845,14 +854,14 @@ if has("cscope")
     set cscopequickfix=s-,c-,d-,i-,t-,e-
 endif
 
-nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <C-\>t :cs find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <C-\>e :cs find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <C-\>f :cs find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
+nnoremap <C-\>i :cs find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
+nnoremap <C-\>d :cs find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
 
 "nnoremap <silent> <C-\>a :call <SID>AlterSource()<CR>
 function! s:AlterSource() "{{{
