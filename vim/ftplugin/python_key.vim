@@ -1,6 +1,7 @@
+" 缩进设置
 setlocal expandtab
 setlocal smarttab
-setlocal tabstop=4
+setlocal softtabstop=4
 setlocal shiftwidth=4
 
 " 运行 python 程序的快捷键
@@ -10,11 +11,13 @@ else
     nnoremap <silent> <buffer> <F11> :update<CR>:!python %<CR>
 endif
 
-imap <F11> <Esc><F11>
-inoremap <silent> <buffer> . .<C-x><C-o><C-p><Down>
-inoremap <silent> <buffer> ' ''<Left>
+function s:PyComplTrigger()
+    if pumvisible()
+        call feedkeys("\<C-p>\<Down>")
+    endif
+    return ''
+endfunction
 
-inoremap <silent> <buffer> : <C-r>=<SID>i_Colon_plus()<CR>
 function! s:i_Colon_plus() "{{{
     if getline('.')[col('.') - 1] == ')'
         return "\<Right>:"
@@ -22,3 +25,8 @@ function! s:i_Colon_plus() "{{{
         return ":"
     endif
 endfunction
+
+imap <F11> <Esc><F11>
+inoremap <silent> <buffer> . .<C-x><C-o><C-r>=<SID>PyComplTrigger()<CR>
+inoremap <silent> <buffer> ' ''<Left>
+inoremap <silent> <buffer> : <C-r>=<SID>i_Colon_plus()<CR>
