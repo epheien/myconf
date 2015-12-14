@@ -45,6 +45,7 @@ syntax match TagbarSignature '(.*)'
 syntax match TagbarPseudoID  '\*\ze :'
 
 syntax match TagbarFunction '\~\?[a-zA-Z_]\w*\ze('
+syntax match TagbarOperFunc 'operator \(()\|[^()]\+\)\ze('
 
 highlight default link TagbarComment   Comment
 highlight default link TagbarKind      Identifier
@@ -56,6 +57,7 @@ highlight default link TagbarFoldIcon  Statement
 highlight default link TagbarHighlight Search
 
 highlight default link TagbarFunction  Function
+highlight default link TagbarOperFunc  Operator
 
 highlight default TagbarAccessPublic    guifg=Green ctermfg=Green
 highlight default TagbarAccessProtected guifg=Blue  ctermfg=Blue
