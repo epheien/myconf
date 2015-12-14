@@ -1,3 +1,5 @@
+" NOTE: 这是以原版为基础而定制的版本，主要定制了工具栏
+
 " Vim support file to define the default menus
 " You can also use this as a start for your own set of menus.
 "
@@ -978,9 +980,9 @@ if has("toolbar")
 "  endif
 
   an <silent> icon=close 1.41 ToolBar.TBClose
-      \ :if winheight(2)<0<Bar>confirm enew<Bar> else<Bar>confirm close<Bar>endif<CR>
+        \ :if winheight(2)<0<Bar>confirm enew<Bar> else<Bar>confirm close<Bar>endif<CR>
 
-  tmenu ToolBar.TBClose Close current window
+  tmenu ToolBar.TBClose Close Current Window
 
   an 1.65 ToolBar.-sep2-		<Nop>
   vnoremenu 1.70 ToolBar.Cut		"+x
@@ -998,8 +1000,9 @@ if has("toolbar")
   an icon=forward 1.95 ToolBar.Forward		<C-i>
   amenu 1.96 ToolBar.TagJump			<C-]>
 
-  tmenu ToolBar.Backward Backward
-  tmenu ToolBar.Forward Forward
+  " 提示
+  tmenu ToolBar.Backward        Backward
+  tmenu ToolBar.Forward         Forward
 
   an 1.100   ToolBar.-sep3-		<Nop>
   "amenu icon=bookmark 1.101 ToolBar.Bookmark m,
