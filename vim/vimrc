@@ -700,7 +700,8 @@ endfunction
 "}}}2
 let g:mwIgnoreCase = 0
 let g:mwHistAdd = ''
-let g:mwDefaultHighlightingPalette = 'extended'
+" 'extended' 的话, 颜色不是太好看
+"let g:mwDefaultHighlightingPalette = 'extended'
 nmap <silent> \\ <Plug>MarkSet
 xmap <silent> \\ <Plug>MarkSet
 nmap <silent> \c :noh<CR><Plug>MarkAllClear
