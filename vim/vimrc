@@ -142,6 +142,15 @@ if s:IsLinuxOS()
     noremap <4-LeftMouse> <Nop>
     noremap! <4-LeftMouse> <Nop>
 endif
+" 我的鼠标的中键坏了，禁用掉这个功能，以免改错文件
+noremap <MiddleMouse> <Nop>
+noremap <2-MiddleMouse> <Nop>
+noremap <3-MiddleMouse> <Nop>
+noremap <4-MiddleMouse> <Nop>
+inoremap <MiddleMouse> <Nop>
+inoremap <2-MiddleMouse> <Nop>
+inoremap <3-MiddleMouse> <Nop>
+inoremap <4-MiddleMouse> <Nop>
 
 " 全能补全禁止预览
 "set completeopt=longest,menu
