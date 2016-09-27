@@ -728,9 +728,18 @@ endfunction
 "}}}2
 "}}}
 " ========== vim-signature ==========
+"{{{
 " yz 留给 xptemplate 用，暂时没办法
 "let g:SignatureIncludeMarks =
             "\ 'abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ'
+let g:SignatureMap = {
+  \ 'PlaceNextMark'      :  "m,",
+  \ 'PurgeMarks'         :  "m<Space>",
+  \ 'GotoNextLineByPos'  :  "<F2>",
+  \ 'GotoPrevLineByPos'  :  "<S-F2>",
+  \ 'ListBufferMarks'    :  "m/",
+  \ }
+"}}}
 " ============================================================================
 " IDE 设置
 " ============================================================================
