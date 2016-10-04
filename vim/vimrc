@@ -749,6 +749,12 @@ let g:SignatureMap = {
   \ 'ListBufferMarks'    :  "m/",
   \ }
 "}}}
+" ========== ex-gsearch ==========
+"{{{
+highlight link exConfirmLine IncSearch
+highlight link exTargetLine IncSearch
+nnoremap <C-\>w :GSW <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+"}}}
 " ============================================================================
 " IDE 设置
 " ============================================================================
