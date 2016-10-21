@@ -16,6 +16,13 @@ function s:IsLinuxOS() "{{{
 endfunction
 "}}}
 
+" 用户配置文件所在的目录
+if s:IsWindowsOS()
+    let s:USERRUNTIME = $HOME . '\vimfiles'
+else
+    let s:USERRUNTIME = $HOME . '/.vim'
+endif
+
 " 关闭 vi 兼容模式，否则无法使用 vim 的大部分扩展功能
 set nocompatible
 " 让退格键以现代化的方式工作
@@ -504,7 +511,16 @@ let g:tagbar_type_rfc = {
         \ 'c:chapters',
     \ ],
     \ 'sort'    : 0,
-    \ 'deffile' : expand('~/.vim/ctags/rfc.cnf'),
+    \ 'deffile' : s:USERRUNTIME . '/ctags/rfc.cnf',
+\ }
+
+let g:tagbar_type_autoit = {
+    \ 'ctagstype' : 'autoit',
+    \ 'kinds'     : [
+        \ 'f:functions',
+    \ ],
+    \ 'sort'    : 0,
+    \ 'deffile' : s:USERRUNTIME . '/ctags/autoit.cnf',
 \ }
 
 let g:tagbar_type_cpp = {
@@ -598,7 +614,7 @@ xmap <C-n> <Leader>c<space>
 "}}}
 " ========== pydiction ==========
 "{{{
-let g:pydiction_location = '~/.vim/dict/complete-dict'
+let g:pydiction_location = s:USERRUNTIME . '/dict/complete-dict'
 "let g:pydiction_menu_height = 20
 "}}}
 " ========== videm ==========
