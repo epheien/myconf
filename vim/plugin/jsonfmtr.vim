@@ -21,8 +21,11 @@ function s:InitPyif()
     endif
 python << PYTHON_EOF
 import sys
-import json
 import vim
+try:
+    import json5 as json
+except ImportError:
+    import json
 
 def JsonFmtr():
     mswindows = (sys.platform == "win32")
@@ -34,7 +37,8 @@ def JsonFmtr():
             obj = json.loads('\n'.join(buff).decode('utf-8'))
     except ValueError, e:
         raise e
-    output = json.dumps(obj, sort_keys=True, indent=4, ensure_ascii=False)
+    output = json.dumps(obj, sort_keys=True, indent=4, ensure_ascii=False,
+                        separators=[',', ': '])
     if mswindows:
         buff[:] = output.splitlines()
     else:

@@ -28,7 +28,7 @@ function! s:SwitchGuiOpt()
 endfunction
 
 " 窗口大小
-set columns=90 lines=50
+set columns=90 lines=45
 "autocmd syntax c,cpp set columns=125 lines=40
 "autocmd syntax c,cpp WMToggle
 

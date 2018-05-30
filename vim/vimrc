@@ -92,7 +92,7 @@ set number
 
 " 设定文件编码类型，彻底解决中文编码问题
 let &termencoding=&encoding
-set fileencodings=utf-8,gbk,gb18030,ucs-bom,cp936
+set fileencodings=utf-8,gbk,gb18030,utf-16,ucs-bom,cp936
 
 " 设置搜索结果高亮显示
 set hlsearch
@@ -651,7 +651,7 @@ let g:videm_user_options = {
     \ '.videm.cc.omnicpp.InclAllCondCmplBrch'   : 1,
     \
     \ '.videm.dbg.pyclewn.DisableNeedlessTools' : 0,
-    \ '.videm.dbg.pyclewn.SaveBpInfo'           : 1,
+    \ '.videm.dbg.pyclewn.SaveBpInfo'           : 0,
 \ }
 "let g:videm_user_options['.videm.wsp.AutoSession'] = 1
 let g:videm_user_options['.videm.cc.omnicpp.ItemSelectMode'] = 2
