@@ -1250,5 +1250,7 @@ endfunction
 "}}}2
 "}}}
 
+let g:deoplete#enable_at_startup = 1
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
