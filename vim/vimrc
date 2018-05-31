@@ -365,10 +365,17 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+if exists(':tmap')
+    tnoremap <C-h> <C-w>h
+    tnoremap <C-j> <C-w>j
+    tnoremap <C-k> <C-w>k
+    tnoremap <C-l> <C-w>l
+endif
 nnoremap ; :
 "nnoremap <C-a> ggVG
 nnoremap <C-Tab> :bnext<CR>
 nnoremap <S-Tab> :bNext<CR>
+" stty -ixon
 nnoremap <silent> <C-s> :update<CR>
 "nnoremap <CR> <C-w>}
 nnoremap <C-p> <C-w>z
