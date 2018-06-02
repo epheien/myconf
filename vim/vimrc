@@ -27,6 +27,10 @@ endif
 set nocompatible
 " 让退格键以现代化的方式工作
 set backspace=2
+" 设置 Vim 内部使用的字符编码
+if s:IsWindowsOS()
+    set encoding=utf-8
+endif
 
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions+=M
@@ -163,6 +167,11 @@ inoremap <4-MiddleMouse> <Nop>
 "set completeopt=longest,menu
 "set completeopt=menuone,preview
 set completeopt=menuone
+try
+    " 暂时不知道具体到什么版本才支持这个选项
+    set completeopt+=noinsert
+catch /.*/
+endtry
 " 补全窗口不用太大, 限制之
 set pumheight=5
 
@@ -177,9 +186,9 @@ let mapleader = "\<F12>"
 set foldenable     " 打开代码折叠
 "set nofoldenable   " 关闭代码折叠
 " 代码折叠，根据语法
-set foldmethod=syntax
+"set foldmethod=syntax
 " 代码折叠，手动
-"set foldmethod=manual
+set foldmethod=manual
 " 显示折叠列
 if has('gui_running')
     autocmd syntax vim setlocal foldcolumn=1
@@ -1252,6 +1261,11 @@ endfunction
 " ========== deoplete ==========
 "{{{
 let g:deoplete#enable_at_startup = 1
+"}}}
+" ========== nvim-complete-manager ==========
+"{{{
+"let g:cm_smart_enable = 0
+let g:cm_completeopt = 'menu,menuone,noinsert'
 "}}}
 
 " ----------------------------------------------------------------------------
