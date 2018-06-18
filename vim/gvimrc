@@ -1,6 +1,8 @@
 " 字体设置
 if has("win32") || has("win64")
     set guifont=Consolas:h10:cDEFAULT
+elseif has("osx")
+    set guifont=Monaco:h12
 else
     set guifont=monospace\ 9
 endif
