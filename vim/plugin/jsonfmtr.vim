@@ -9,8 +9,8 @@ if exists('g:loaded_jsonfmtr')
 endif
 let g:loaded_jsonfmtr = 1
 
-if !has('python3')
-    echoerr "Error: Required vim compiled with +python3"
+if !has('python') && !has('python3')
+    echoerr "Error: Required vim compiled with +python or +python3"
     finish
 endif
 
@@ -19,7 +19,7 @@ function s:InitPyif()
     if s:initpyif
         return
     endif
-python3 << PYTHON_EOF
+pythonx << PYTHON_EOF
 import sys
 import vim
 try:
@@ -31,7 +31,11 @@ def JsonFmtr():
     mswindows = (sys.platform == "win32")
     buff = vim.current.buffer
     try:
-        obj = json.loads('\n'.join(buff))
+        # set encoding=utf-8 可以避免 Windows 的编码问题
+        s = '\n'.join(buff)
+        if not s:
+            return
+        obj = json.loads(s)
     except ValueError as e:
         raise e
     output = json.dumps(obj, sort_keys=True, indent=4, ensure_ascii=False,
@@ -43,7 +47,7 @@ endfunction
 
 function! s:JsonFmtr()
     call s:InitPyif()
-    py3 JsonFmtr()
+    pyx JsonFmtr()
 endfunction
 
 command! -nargs=0 JsonFmtr call <SID>JsonFmtr()
