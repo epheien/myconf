@@ -9,7 +9,7 @@ if exists('g:loaded_jsonfmtr')
 endif
 let g:loaded_jsonfmtr = 1
 
-if !has('python') && !has('python3')
+if !has('python3') && !has('python')
     echoerr "Error: Required vim compiled with +python or +python3"
     finish
 endif
