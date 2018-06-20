@@ -24,6 +24,10 @@ if !exists("g:smartim_disable")
   let g:smartim_disable = 0
 endif
 
+if !exists("g:smartim_saved")
+  let g:smartim_saved = 1
+endif
+
 if !exists("g:smartim_debug")
   let g:smartim_debug = 0
 endif
@@ -79,7 +83,11 @@ function! Smartim_SelectSaved()
   endif
 
   if exists("b:saved_im")
-    silent call system(s:imselect_path . b:saved_im)
+    if g:smartim_saved
+      silent call system(s:imselect_path . b:saved_im)
+    else
+      silent call system(s:imselect_path . g:smartim_default)
+    endif
     call Smartim_debug_print('b:saved_im = ' . b:saved_im)
     call Smartim_debug_print('<<< Smartim_SelectSaved returned ' . v:shell_error)
   else

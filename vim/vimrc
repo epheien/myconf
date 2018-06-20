@@ -1269,6 +1269,11 @@ endif
 "let g:cm_smart_enable = 0
 let g:cm_completeopt = 'menu,menuone,noinsert'
 "}}}
+" ========== smartim ==========
+"{{{
+let g:smartim_default = "com.apple.keylayout.ABC"
+let g:smartim_saved = 0
+"}}}
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
