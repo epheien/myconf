@@ -12,6 +12,10 @@ if exists('g:smartim_loaded') || &cp
 endif
 let g:smartim_loaded = 1
 
+if !has('osx')
+  finish
+endif
+
 if !exists("g:smartim_default")
   let g:smartim_default = "com.apple.keylayout.US"
 endif
