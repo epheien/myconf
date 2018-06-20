@@ -97,8 +97,10 @@ endfunction
 
 augroup smartim
   autocmd!
+  autocmd VimEnter    * call Smartim_SelectDefault()
   autocmd VimLeavePre * call Smartim_SelectDefault()
   autocmd InsertLeave * call Smartim_SelectDefault()
+  autocmd FocusGained * call Smartim_SelectDefault()
   autocmd InsertEnter * call Smartim_SelectSaved()
 augroup end
 
