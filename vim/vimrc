@@ -1260,7 +1260,7 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
-if !s:IsWindowsOS() && !has('python')
+if !s:IsWindowsOS()
     let g:deoplete#enable_at_startup = 1
 endif
 "}}}
