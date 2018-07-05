@@ -22,12 +22,12 @@ function s:InitPyif()
 pythonx << PYTHON_EOF
 import sys
 import vim
-try:
-    import json5 as json
-except ImportError:
-    import json
 
 def JsonFmtr():
+    try:
+        import json5 as json
+    except ImportError:
+        import json
     mswindows = (sys.platform == "win32")
     buff = vim.current.buffer
     try:
