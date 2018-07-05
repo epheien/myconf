@@ -375,10 +375,16 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 if exists(':tmap')
+    function s:tbs()
+        call term_sendkeys(bufnr('%'), "\<C-w>")
+    endfunction
     tnoremap <C-h> <C-w>h
     tnoremap <C-j> <C-w>j
     tnoremap <C-k> <C-w>k
     tnoremap <C-l> <C-w>l
+    tnoremap <C-v> <C-w>"+
+    tnoremap <silent> <C-BS> <C-w>:call <SID>tbs()<CR>
+    tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
 endif
 nnoremap ; :
 "nnoremap <C-a> ggVG
@@ -886,7 +892,7 @@ function! s:CscopeAdd(name) "{{{
         redraw
     endif
     exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
-endf
+endfunction
 "}}}
 command! -complete=file -nargs=1 CsAdd :call <SID>CscopeAdd("<args>")
 
