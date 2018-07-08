@@ -782,8 +782,8 @@ endfunction
 let g:SignatureMap = {
   \ 'PlaceNextMark'      :  "m,",
   \ 'PurgeMarks'         :  "m<Space>",
-  \ 'GotoNextLineByPos'  :  "<F2>",
-  \ 'GotoPrevLineByPos'  :  "<S-F2>",
+  \ 'GotoNextSpotByPos'  :  "<F2>",
+  \ 'GotoPrevSpotByPos'  :  "<S-F2>",
   \ 'ListBufferMarks'    :  "m/",
   \ }
 "}}}
