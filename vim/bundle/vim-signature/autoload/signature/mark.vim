@@ -61,7 +61,7 @@ function! signature#mark#Remove(mark)                                           
   " Description: Remove 'mark' and its associated sign. If called without an argument, obtain it from the user
   " Arguments:   mark = [a-z,A-Z]
 
-  if (b:SignatureIncludeMarks !~# a:mark)
+  if !signature#utils#IsValidMark(a:mark)
     return
   endif
 
@@ -111,7 +111,7 @@ function! signature#mark#Purge(mode)                                            
    \ )
     let l:msg = 'Are you sure you want to delete all marks' . (a:mode ==? 'line' ? ' from the current line' : '') . '?'
     let l:ans = confirm(l:msg . ' This cannot be undone.', "&Yes\n&No", 1)
-    if (l:ans == 2) | return | endif
+    if (l:ans != 1) | return | endif
   endif
 
   for i in l:used_marks
@@ -182,7 +182,7 @@ function! s:GotoByPos(dir)                                                      
   let l:targ = (empty(l:mark_lnums) ? (b:SignatureWrapJumps ? l:targ : "") : l:mark_lnums[0])
   if empty(l:targ) | return "" | endif
 
-  let l:mark = strpart(b:sig_marks[l:targ], 0, 1)
+  let l:mark = signature#utils#GetChar(b:sig_marks[l:targ], 0)
   return l:mark
 endfunction
 
@@ -290,16 +290,14 @@ function! signature#mark#GetList(mode, scope, ...)                              
   let l:buf_curr = bufnr('%')
   let l:type     = (a:0 ? a:1 : "")
 
-  " Add local marks first
-  if (l:type !=? "global")
-    for i in filter(split(b:SignatureIncludeMarks, '\zs'), 'v:val =~# "[a-z]"')
+  " Respect order specified in g:SignatureIncludeMarks
+  for i in split(b:SignatureIncludeMarks, '\zs')
+    if (i =~# "[A-Z]")
+      let [ l:buf, l:line, l:col, l:off ] = getpos( "'" . i )
+      let l:marks_list = add(l:marks_list, [i, l:line, l:buf])
+    elseif (l:type !=? "global")
       let l:marks_list = add(l:marks_list, [i, line("'" .i), l:buf_curr])
-    endfor
-  endif
-  " Add global (uppercase) marks to list
-  for i in filter( split( b:SignatureIncludeMarks, '\zs' ), 'v:val =~# "[A-Z]"' )
-    let [ l:buf, l:line, l:col, l:off ] = getpos( "'" . i )
-    let l:marks_list = add(l:marks_list, [i, l:line, l:buf])
+    endif
   endfor
 
   if (a:mode ==? 'used')
@@ -322,7 +320,7 @@ endfunction
 
 
 function! s:ForceGlobalRemoval(mark)                                                                              " {{{1
-  " Description: Edit .viminfo file to forcibly delete Global mark since vim's handling is iffy
+  " Description: Edit viminfo/shada file to forcibly delete Global mark since vim's handling is iffy
   " Arguments:   mark - The mark to delete
 
   if (  (a:mark !~# '[A-Z]')
@@ -331,29 +329,11 @@ function! s:ForceGlobalRemoval(mark)                                            
     return
   endif
 
-  " See if custom .viminfo location is specified. If not, try to piece it together
-  if (&viminfo =~ ',n')
-    let l:filename = expand(substitute(&viminfo, '^.*,n', '', ''))
+  if has('nvim')
+    wshada!
   else
-    let l:filename = expand($HOME . '/' . (has('unix') ? '.' : '_') . 'viminfo')
+    wviminfo!
   endif
-
-  if (!filewritable(l:filename))
-    echohl WarningMsg
-    echomsg "Signature: Unable to read/write .viminfo ('" . l:filename . "')"
-    echohl None
-    return
-  endif
-
-  let l:lines = readfile(l:filename, 'b')
-  call filter(l:lines, 'v:val !~ "^''' . a:mark. '"')
-  if has('win32')
-    " for some reason writefile(_viminfo) only works after editing directly
-    execute "noautocmd split " . l:filename
-    noautocmd write
-    noautocmd bdelete
-  endif
-  call writefile(l:lines, l:filename, 'b')
 endfunction
 
 

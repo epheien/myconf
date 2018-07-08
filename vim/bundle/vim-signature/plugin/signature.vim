@@ -36,7 +36,7 @@ call signature#utils#Set('g:SignatureEnabledAtStartup',        1                
 call signature#utils#Set('g:SignatureDeferPlacement',          1                                                     )
 call signature#utils#Set('g:SignatureRecycleMarks',            0                                                     )
 call signature#utils#Set('g:SignatureErrorIfNoAvailableMarks', 1                                                     )
-call signature#utils#Set('g:SignatureForceRemoveGlobal',       1                                                     )
+call signature#utils#Set('g:SignatureForceRemoveGlobal',       0                                                     )
 call signature#utils#Set('g:SignatureForceMarkPlacement',      0                                                     )
 call signature#utils#Set('g:SignatureForceMarkerPlacement',    0                                                     )
 call signature#utils#Set('g:SignatureMap',                     {}                                                    )
@@ -51,8 +51,9 @@ if has('autocmd')
   augroup sig_autocmds
     autocmd!
 
-    " This needs to be called last once all the colorscheme etc. has been loaded
-    autocmd VimEnter * call signature#utils#SetupHighlightGroups()
+    " This needs to be called upon loading a colorscheme
+    " VimEnter is kind of a backup if no colorscheme is explicitly loaded and the default is used
+    autocmd VimEnter,ColorScheme * call signature#utils#SetupHighlightGroups()
 
     " This is required to remove signs for global marks that were removed when in another window
     autocmd BufEnter,CmdwinEnter * call signature#sign#Refresh()
