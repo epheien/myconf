@@ -610,9 +610,6 @@ let g:vimwiki_table_auto_fmt = 0
 " 禁用插入模式的表格快捷键，以防占用 <Cr> 和 <Tab>
 let g:vimwiki_table_mappings = 0
 
-" 定制一下语法高亮
-hi link VimwikiPre Ignore
-
 " 一些特定的设置
 autocmd! FileType vimwiki call <SID>VimwikiSetup()
 "autocmd! BufWritePre * call <SID>VimwikiPost()
