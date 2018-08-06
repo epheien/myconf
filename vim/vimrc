@@ -81,6 +81,8 @@ set showmode
 syntax on
 " 禁用 vim 文件类型的错误
 let g:vimsyn_noerror = 1
+" 使用增强的 python 语法高亮的所有功能
+let g:python_highlight_all = 1
 
 " 文件类型的检测
 " 为特定的文件类型允许插件文件的载入
@@ -505,7 +507,6 @@ imap <C-k> <Up>
 imap <C-l> <Right>
 inoremap <A-h> <C-Left>
 inoremap <A-l> <C-Right>
-
 
 " ============================================================================
 " 插件设置
