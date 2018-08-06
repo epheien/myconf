@@ -63,7 +63,7 @@ hi SignColumn   guibg=grey17
 "hi Comment      guifg=PaleGreen3     gui=italic
 hi Comment      guifg=PaleGreen3     gui=none
 hi Constant     guifg=salmon         gui=none
-hi Identifier   guifg=Skyblue        gui=none
+hi Identifier   guifg=mediumpurple1  gui=none
 hi Function     guifg=Skyblue        gui=none
 hi Statement    guifg=lightgoldenrod2 gui=none
 hi PreProc      guifg=PaleVioletRed2 gui=none
