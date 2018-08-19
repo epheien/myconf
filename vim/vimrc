@@ -83,6 +83,8 @@ syntax on
 let g:vimsyn_noerror = 1
 " 使用增强的 python 语法高亮的所有功能
 let g:python_highlight_all = 1
+" 禁用很慢的语法
+let g:python_slow_sync = 0
 
 " 文件类型的检测
 " 为特定的文件类型允许插件文件的载入
@@ -523,6 +525,7 @@ let matchparen_noinsert = 1
 "{{{
 let g:tagbar_compact = 1
 let g:tagbar_width = 30
+let g:tagbar_sort = 0
 "let g:tagbar_expand = 1
 if has("win32") || has("win64")
     if !executable('ctags')
