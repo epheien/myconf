@@ -22,12 +22,9 @@ function s:InitPyif()
 pythonx << PYTHON_EOF
 import sys
 import vim
+import json
 
 def JsonFmtr():
-    try:
-        import json5 as json
-    except ImportError:
-        import json
     mswindows = (sys.platform == "win32")
     buff = vim.current.buffer
     try:
@@ -35,9 +32,13 @@ def JsonFmtr():
         s = '\n'.join(buff)
         if not s:
             return
-        obj = json.loads(s)
-    except ValueError as e:
-        raise e
+        import json5
+        obj = json5.loads(s)
+    except (ImportError, ValueError) as e:
+        try:
+            obj = json.loads(s)
+        except ValueError as e:
+            raise e
     output = json.dumps(obj, sort_keys=True, indent=4, ensure_ascii=False,
                         separators=[',', ': '])
     buff[:] = output.splitlines()
