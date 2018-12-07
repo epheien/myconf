@@ -763,20 +763,6 @@ nmap <silent> <Leader>* <Plug>MarkSearchNext
 nmap <silent> <Leader># <Plug>MarkSearchPrev
 nnoremap <silent> <2-LeftMouse> :call <SID>MouseMark()<CR>
 "}}}
-" ========== neocomplcache ==========
-"{{{
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_insert_char_pre = 1
-"autocmd FileType * call <SID>NeoComplCacheStart()
-function! s:NeoComplCacheStart() "{{{2
-    if &ft !=# 'c' && &ft !=# 'cpp'
-        "autocmd CursorHold,CursorMovedI <buffer> call neocomplcache#init#lazy()
-        "echomsg printf("NeoComplCacheEnable, &ft=%s", &ft)
-        NeoComplCacheEnable
-    endif
-endfunction
-"}}}2
-"}}}
 " ========== vim-signature ==========
 "{{{
 " yz 留给 xptemplate 用，暂时没办法
@@ -833,7 +819,7 @@ inoremap <expr> ; <SID>i_Semicolon_plus()
 inoremap <C-g> <C-r>=<SID>i_InsertHGuard()<CR>
 
 " 补全模式下的映射
-inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
+"inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
 "inoremap <expr> <ESC> pumvisible()?"\<C-e>":"\<ESC>"
 
 function! s:i_InsertHGuard() "{{{
@@ -961,6 +947,30 @@ function! s:AlterSource() "{{{
 endfunction
 "}}}
 "}}}
+
+" ## vim-plug
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/vim-plug'
+
+" deoplete (pip3 install -U neovim)
+"Plug 'Shougo/deoplete.nvim', {'tag': '4.1'}
+" NOTE: 实测，这个版本补全菜单弹出速度比较快
+Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101'}
+Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
+Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d5ba06'}
+
+" 增强的 js 语法高亮
+Plug 'othree/yajs.vim'
+
+Plug 'posva/vim-vue'
+
+Plug 'asins/vim-dict'
+
+call plug#end()
+" ####
+
+let g:deoplete#sources#ternjs#tern_bin = expand('~/.nvm/versions/node/v10.13.0/bin/tern')
 
 " ==========================================================
 " 自己的简易插件
@@ -1269,8 +1279,62 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
+" 摘录自 neocomplcache
+function! s:_indent_current_line() abort
+    let pos = getpos('.')
+    let len = len(getline('.'))
+    let equalprg = &l:equalprg
+    try
+        setlocal equalprg=
+        silent normal! ==
+    finally
+        let &l:equalprg = equalprg
+        let pos[2] += len(getline('.')) - len
+        call setpos('.', pos)
+    endtry
+    return ''
+endfunction
+
+function! s:indent_current_line() abort
+    if &ft != 'html'
+        return ''
+    endif
+    " indent line matched by indentkeys
+    for word in filter(map(split(&l:indentkeys, ','),
+            \ "v:val =~ '^<.*>$' ? matchstr(v:val, '^<\\zs.*\\ze>$')
+            \                  : matchstr(v:val, ':\\|e\\|=\\zs.*')"),
+            \ "v:val != ''")
+
+        if word ==# 'e'
+            let word = 'else'
+        endif
+
+        call s:_indent_current_line()
+        break
+    endfor
+    return ''
+endfunction
+
+function! s:my_cr_function()
+    if pumvisible()
+        return "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>"
+    else
+        return "\<CR>"
+    endif
+endfunction
+
+" NOTE: 修正 html 补全后不能自动缩进的问题
+inoremap <silent> <expr> <CR> pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
+
 if !s:IsWindowsOS() && has('python3')
     let g:deoplete#enable_at_startup = 1
+    "let g:deoplete#on_insert_enter = v:false
+    call deoplete#custom#option({
+    \   'on_insert_enter': v:false,
+    \ })
+    " Q: I don't want to see the typed word in the completion menu.
+    "call deoplete#custom#source('_', 'matchers',
+    "\   ['matcher_fuzzy', 'matcher_length'])
 endif
 "}}}
 " ========== nvim-complete-manager ==========
