@@ -417,6 +417,8 @@ cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-BS> <C-w>
 cnoremap <C-d> <Del>
