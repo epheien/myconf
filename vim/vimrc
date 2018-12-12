@@ -969,6 +969,8 @@ Plug 'posva/vim-vue'
 
 Plug 'asins/vim-dict'
 
+Plug 'tpope/vim-surround'
+
 call plug#end()
 " ####
 
