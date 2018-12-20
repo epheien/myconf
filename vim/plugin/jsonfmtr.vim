@@ -24,7 +24,7 @@ import sys
 import vim
 import json
 
-def JsonFmtr():
+def JsonFmtr(**kwargs):
     mswindows = (sys.platform == "win32")
     buff = vim.current.buffer
     try:
@@ -39,18 +39,33 @@ def JsonFmtr():
             obj = json.loads(s)
         except ValueError as e:
             raise e
-    output = json.dumps(obj, sort_keys=True, indent=4, ensure_ascii=False,
-                        separators=[',', ': '])
+    k = {
+        'indent': 4,
+        'sort_keys': 1,
+        'ensure_ascii': 0,
+        'separators': [',', ': '],
+    }
+    for key, val in k.items():
+        k[key] = type(val)(kwargs.get(key, val))
+    if k['indent'] == 0:
+        k['indent'] = None
+        k['separators'] = [',', ':']
+    output = json.dumps(obj, **k)
     buff[:] = output.splitlines()
 PYTHON_EOF
     let s:initpyif = 1
 endfunction
 
-function! s:JsonFmtr()
+" indent, sort_keys, ensure_ascii
+function! s:JsonFmtr(...)
+    let d = {}
+    let d['indent'] = get(a:000, 0, 4)
+    let d['sort_keys'] = get(a:000, 1, 1)
+    let d['ensure_ascii'] = get(a:000, 1, 0)
     call s:InitPyif()
-    pyx JsonFmtr()
+    pyx JsonFmtr(**vim.eval('d'))
 endfunction
 
-command! -nargs=0 JsonFmtr call <SID>JsonFmtr()
+command! -nargs=* JsonFmtr call <SID>JsonFmtr(<f-args>)
 
 " vim:fdm=marker:fen:et:sts=4:fdl=1:
