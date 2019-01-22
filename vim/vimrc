@@ -940,7 +940,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-plug'
 
-" deoplete (pip3 install -U neovim)
+" deoplete (pip3 install -U neovim/pynvim)
 "Plug 'Shougo/deoplete.nvim', {'tag': '4.1'}
 " NOTE: 实测，这个版本补全菜单弹出速度比较快
 Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101'}
