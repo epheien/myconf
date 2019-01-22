@@ -286,12 +286,6 @@ unlet color_exit
 " 编辑 po 文件时与中文输入法的配合
 "autocmd! syntax po set imactivatekey=C-space
 
-" fcitx 输入法调整，离开插入模式时自动关闭输入法
-" NOTE: 使用插件来实现，不在这里实现了
-"if executable("fcitx-remote") && exists("$DISPLAY")
-    "autocmd InsertLeave * call system("fcitx-remote -c")
-"endif
-
 " 颜色方案
 if has('gui_running')   " gui 的情况下
     colorscheme desertEx
@@ -325,10 +319,10 @@ let $LANGUAGE=''
 " Also don't do it when the mark is in the first line, that is the default
 " position when opening a file.
 augroup Epheien
-autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \     exe "normal! g`\"" |
-    \ endif
+    autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \     exe "normal! g`\"" |
+        \ endif
 augroup End
 
 " ============================================================================
@@ -695,34 +689,6 @@ let g:videm_user_options['.videm.cc.Current'] = ""
     "let g:videm_user_options['.videm.cc.Current'] = "vimccc"
 "endif
 "}}}
-" ========== VIMCCC ==========
-"{{{
-let g:VIMCCC_Enable = 0
-"let g:VIMCCC_ItemSelectionMode = 10
-let g:VIMCCC_ItemSelectionMode = 2
-"let g:VIMCCC_PythonModulePath = ''
-" for debian 7 x86_64
-if filereadable('/usr/lib/libclang.so.1')
-    let g:VIMCCC_ClangLibraryPath = '/usr/lib/libclang.so.1'
-else
-    let g:VIMCCC_ClangLibraryPath = expand('~/lib/libclang.so')
-endif
-let g:VIMCCC_CompleteMacros = 1
-"}}}
-" ========== clang complete ==========
-"{{{
-let g:clang_use_library = 1
-let g:clang_auto_select = 1
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=0
-let g:clang_complete_copen = 1
-let g:clang_hl_errors = 0
-let g:clang_periodic_quickfix = 0
-let g:clang_snippets = 0
-"let g:clang_library_path = '/usr/lib/libclang.so'
-let g:clang_disable = 1
-"let g:clic_filename = '/home/eph/clang_indexer.db'
-"}}}
 " ========== xptemplate ==========
 "{{{
 " 选择模式下取消 j, k 原始的行为
@@ -1027,50 +993,6 @@ function! I_OnPopupPost() "{{{2
 endfunction
 "}}}2
 "}}}
-" ========== 递归查找当前目录下的文件并打开 ==========
-"{{{
-function! s:findn(name, flag)
-    if a:flag == "c"
-    let l:list=system("find . -path '*.svn' -prune -o -iname '*" . a:name . "*' -type f \\( -iname '*.c' -o -iname '*.h' -o -iname '*.cpp' \\) -print | awk '{print NR\"\t\"$0}'")
-    else
-    let l:list=system("find . -path '*.svn' -prune -o -iname '*" . a:name . "*' -type f -print | awk '{print NR\"\t\"$0}'")
-    endif
-
-    let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
-    if l:num < 1
-        echo "'" . a:name . "' not found"
-        return
-    endif
-    if l:num != 1
-        echo l:list
-        let l:input=input("Type number and <Enter> (empty cancels): ")
-
-        if strlen(l:input)==0
-            return
-        endif
-
-        if strlen(substitute(l:input, "[0-9]", "", "g"))>0
-            echo "Not a number"
-            return
-        endif
-
-        if l:input<1 || l:input>l:num
-            echo "Out of range"
-            return
-        endif
-        let l:line=matchstr("\n".l:list, "\n".l:input."\t[^\n]*")
-    else
-        let l:line=l:list
-    endif
-
-    let l:line=substitute(l:line, "^[^\t]*\t./", "", "")
-    execute ":e " . l:line
-endfunction
-" 查找所有文件
-command! -nargs=1 Findn :call <SID>findn("<args>", "")
-" 查找 c 文件
-command! -nargs=1 Findc :call <SID>findn("<args>", "c")
-"}}}
 " ========== 在预览窗口显示标签内容 ==========
 "{{{
 nnoremap <silent> <CR> :call PreviewWord()<CR>
@@ -1148,126 +1070,6 @@ function! PreviewWord() "{{{2
                 exec 'noautocmd' orgWinnr 'wincmd w'
             endif
         endif
-    endif
-endfunction
-"}}}2
-"}}}
-" ========== 修正 MiniBufExplorer 窗口 ==========
-"{{{
-"nnoremap \j :call <SID>FixMiniBuf()<CR>
-function! s:FixMiniBuf() "{{{2
-    let l:orgWinnr = winnr()
-    NERDTree
-    Tlist
-    let l:orgWinnr += 2
-
-    let l:MBEWinnr = bufwinnr("-MiniBufExplorer-")
-
-    if l:MBEWinnr != -1
-        exec l:MBEWinnr . " wincmd w"
-        normal! l
-    endif
-
-    if bufname('%') == '-MiniBufExplorer-'
-        let l:MBEWinhei = winheight(0)
-        exec "to " . l:MBEWinhei . " sp"
-"       exec l:MBEWinnr . " wincmd w"
-        wincmd p
-        close
-    endif
-
-    exec l:orgWinnr . " wincmd w"
-endfunction
-"}}}2
-"}}}
-" ========== 快速切换“全装备”模式 ==========
-"{{{
-"nnoremap \t :call <SID>ToggleTlistAndNERDTree(90)<CR>
-function! s:ToggleTlistAndNERDTree(width) "{{{2
-    let l:TL = "__Tag_List__"
-    let l:NT = "NERD_tree_1"
-    let l:BE = "__BufExplorer__"
-    let l:ifTL = bufwinnr(l:TL)
-    let l:ifNT = bufwinnr(l:NT)
-    let l:orgWinnr = winnr()
-
-    "任何一个打开，都先全关了
-    if l:ifNT != -1 || l:ifTL != -1 || bufwinnr(l:BE) != -1
-        if bufwinnr(l:BE) != -1
-            execute bufwinnr(l:BE) . "wincmd w"
-            close
-            let l:orgWinnr -= 1
-            execute l:orgWinnr . "wincmd w"
-        endif
-        if l:ifNT != -1
-            NERDTreeToggle
-        endif
-        if l:ifTL != -1
-            TlistClose
-        endif
-        execute "set columns=" . a:width
-    else
-        NERDTreeToggle
-        vertical resize 30
-        wincmd p
-        TlistOpen
-        wincmd p
-        if &columns <= a:width
-            set columns+=60
-        endif
-
-        let l:orgWinnr = winnr()
-        execute bufwinnr(l:NT) . "wincmd w"
-        normal! zz
-        BufExplorerHorizontalSplit
-        if winnr() <= l:orgWinnr
-            let l:orgWinnr += 1
-        endif
-        execute l:orgWinnr . "wincmd w"
-        call BufExplorer_Fix()
-    endif
-endfunction
-"}}}2
-"}}}
-" ========== 快速切换“轻装备”模式 ==========
-"{{{
-"nnoremap \m :call <SID>ToggleNERDTreeAndBE(90)<CR>
-function! s:ToggleNERDTreeAndBE(width) "{{{2
-    let l:NT = "NERD_tree_1"
-    let l:BE = "__BufExplorer__"
-    let l:ifNT = bufwinnr(l:NT)
-    let l:orgWinnr = winnr()
-
-    " 任何一个打开，都先全关了
-    if l:ifNT != -1 || bufwinnr(l:BE) != -1
-        if bufwinnr(l:BE) != -1
-            execute bufwinnr(l:BE) . "wincmd w"
-            close
-            let l:orgWinnr -= 1
-            execute l:orgWinnr . "wincmd w"
-        endif
-
-        if l:ifNT != -1
-            NERDTreeToggle
-        endif
-
-"       execute "set columns=" . a:width
-        set columns-=30
-    else
-        NERDTreeToggle
-        vertical resize 30
-        wincmd p
-        set columns+=30
-
-        let l:orgWinnr = winnr()
-        execute bufwinnr(l:NT) . "wincmd w"
-        normal! zz
-        BufExplorerHorizontalSplit
-        if winnr() <= l:orgWinnr
-            let l:orgWinnr += 1
-        endif
-        execute l:orgWinnr . "wincmd w"
-        call BufExplorer_Fix()
     endif
 endfunction
 "}}}2
