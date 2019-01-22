@@ -335,6 +335,9 @@ augroup End
 " 额外的文件格式支持
 " ============================================================================
 
+" shell 文件格式语法类型默认为 bash
+let g:is_bash = 1
+
 " ========== 特殊文件格式 ==========
 " txt2tags 格式文件高亮
 autocmd! BufNewFile,BufRead *.t2t set ft=txt2tags
@@ -509,6 +512,10 @@ imap <C-h> <Left>
 imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-l> <Right>
+imap <C-b> <Left>
+imap <C-f> <Right>
+imap <C-p> <Up>
+imap <C-n> <Down>
 inoremap <A-h> <C-Left>
 inoremap <A-l> <C-Right>
 
@@ -733,8 +740,8 @@ else
 endif
 let g:xptemplate_nav_cancel = '<C-c>'
 let g:xptemplate_key = '<C-\>'
-inoremap <silent> <expr> <C-p> pumvisible() ? "\<C-p>" :
-            \"\<C-r>=XPTemplateStart(0,{'k':'<C-p++'})\<CR>"
+"inoremap <silent> <expr> <C-p> pumvisible() ? "\<C-p>" :
+            "\"\<C-r>=XPTemplateStart(0,{'k':'<C-p++'})\<CR>"
 "}}}
 " ========== mark ==========
 "{{{
@@ -883,9 +890,21 @@ function! s:CscopeAdd(name) "{{{
         redraw
     endif
     exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
+    autocmd! BufWritePost * call <SID>UpdateGtags(expand('%:p'))
 endfunction
 "}}}
 command! -complete=file -nargs=1 CsAdd :call <SID>CscopeAdd("<args>")
+
+function! s:UpdateGtags(filename) "{{{
+    if !cscope_connection(1, 'GTAGS')
+        return
+    endif
+    " "cd %s && %s -f %s --single-update %s"
+    let prg = exepath(substitute(&cscopeprg, '-cscope\>', '', ''))
+    let cmd = [prg, '--single-update', a:filename]
+    let job = job_start(cmd)
+endfunction
+"}}}
 
 if has("cscope")
     if executable('cscope')
@@ -970,6 +989,8 @@ Plug 'posva/vim-vue'
 Plug 'asins/vim-dict'
 
 Plug 'tpope/vim-surround'
+
+Plug 'Yggdroot/LeaderF'
 
 call plug#end()
 " ####
