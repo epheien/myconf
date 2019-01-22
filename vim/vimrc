@@ -1288,7 +1288,7 @@ endfunction
 "{{{
 autocmd BufReadPost * nested call <SID>FixDosFmt()
 function! s:FixDosFmt() "{{{2
-    if &ff == 'unix'
+    if &ff == 'unix' && !&bin
         " 搜索 ^M
         let nStopLine = 0
         let nTimeOut = 100
