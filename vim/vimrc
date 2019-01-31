@@ -766,6 +766,8 @@ command -nargs=0 CKernelMode setlocal ts=8 sts=0 sw=8 noet
 command -nargs=0 CSpaceMode setlocal ts=8 sts=4 sw=4 et
 command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 command -nargs=0 CSangforMode setlocal ts=4 sts=4 sw=4 noet
+" 清理后置的多余的空白
+command -nargs=0 CleanSpaces silent! %s/\s\+$//g | normal! ``
 
 " ### Mark.vim 快速高亮单词。
 " 自定义高亮，默认有 6 组
@@ -957,6 +959,8 @@ Plug 'asins/vim-dict'
 Plug 'tpope/vim-surround'
 
 Plug 'Yggdroot/LeaderF'
+
+Plug 'mbbill/undotree'
 
 call plug#end()
 " ####
