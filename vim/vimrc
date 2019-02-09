@@ -789,7 +789,8 @@ highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599
 " 括号自动补全. 为了性能, 直接禁用闭合检查
 inoremap ( ()<Left>
 inoremap [ []<Left>
-inoremap <expr> " (&filetype == "vim")?"\"":"\"\"\<Left>"
+inoremap <expr> " (&filetype == "vim") ? "\"" : "\"\"\<Left>"
+inoremap <expr> ' (&filetype != "python") ? "'" : "''\<Left>"
 
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
