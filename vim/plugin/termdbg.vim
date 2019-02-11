@@ -1,3 +1,6 @@
+"
+" NOTE:
+"   - 只留一个窗口显示 WinBar，如果此窗口被关闭，则新建一个窗口再添加 WinBar
 
 " In case this gets loaded twice.
 if exists('s:loaded')
@@ -8,26 +11,45 @@ let s:loaded = 1
 let s:pc_id = 1002
 let s:break_id = 1003
 let s:winbar_winids = []
+let s:cache_lines = []
+let g:cache_lines = s:cache_lines
+let s:dbg_type = ''
+let s:prompt = '(Pdb) '
 
 if &background == 'light'
-  hi default TermDbgCursor term=reverse ctermbg=lightblue guibg=lightblue
+  hi default TermdbgCursor term=reverse ctermbg=lightblue guibg=lightblue
 else
-  hi default TermDbgCursor term=reverse ctermbg=darkblue guibg=darkblue
+  hi default TermdbgCursor term=reverse ctermbg=darkblue guibg=darkblue
 endif
 hi default debugBreakpoint term=reverse ctermbg=red guibg=red
 
-" Sign used to highlight the line where the program has stopped.
-" There can be only one.
-sign define TermDbgCursor linehl=TermDbgCursor
+function! s:InitVariable(var, value, ...)
+  let force = a:0 > 0 ? a:1 : 0
+  if force || !exists(a:var)
+    if exists(a:var)
+      unlet {a:var}
+    endif
+    let {a:var} = a:value
+  endif
+endfunction
 
-" Sign used to indicate a breakpoint.
-" Can be used multiple times.
-sign define debugBreakpoint text=>> texthl=debugBreakpoint
+call s:InitVariable('g:termdbg_pdb_prog',   'pdb')
+call s:InitVariable('g:termdbg_pdb3_prog',  'pdb3')
+call s:InitVariable('g:termdbg_ipdb_prog',  'ipdb')
+call s:InitVariable('g:termdbg_ipdb3_prog', 'ipdb3')
 
+command -nargs=+ -complete=file -bang Termdbg call s:StartDebug(<bang>0, '', <f-args>)
 
-command -nargs=+ -complete=file -bang TermDbg call s:StartDebug(<bang>0, <f-args>)
+command -nargs=+ -complete=file -bang TermdbgPdb
+      \ call s:StartDebug(<bang>0, 'pdb', g:termdbg_pdb_prog, <f-args>)
+command -nargs=+ -complete=file -bang TermdbgPdb3
+      \ call s:StartDebug(<bang>0, 'pdb3', g:termdbg_pdb3_prog, <f-args>)
+"command -nargs=+ -complete=file -bang TermdbgIPdb
+      "\ call s:StartDebug(<bang>0, 'ipdb', g:termdbg_ipdb_prog, <f-args>)
+"command -nargs=+ -complete=file -bang TermdbgIPdb3
+      "\ call s:StartDebug(<bang>0, 'ipdb3', g:termdbg_ipdb3_prog, <f-args>)
 
-function s:StartDebug(bang, ...)
+function s:StartDebug(bang, type, ...)
   if exists('s:dbgwin')
     echoerr 'Terminal debugger is already running'
     return
@@ -47,9 +69,23 @@ function s:StartDebug(bang, ...)
   call s:InstallCommands()
   call win_gotoid(s:startwin)
   call s:InstallWinbar()
-endfunction
 
-let s:cache_lines = []
+  " Sign used to highlight the line where the program has stopped.
+  " There can be only one.
+  sign define TermdbgCursor linehl=TermdbgCursor
+
+  " Sign used to indicate a breakpoint.
+  " Can be used multiple times.
+  sign define debugBreakpoint text=>> texthl=debugBreakpoint
+
+  if a:type ==# 'ipdb' || a:type ==# 'ipdb3'
+    let s:dbg_type = 'ipdb'
+    let s:prompt = 'ipdb> '
+  elseif a:type ==# 'pdb' || a:type ==# 'pdb3'
+    let s:dbg_type = 'pdb'
+    let s:prompt = '(Pdb) '
+  endif
+endfunction
 
 function s:out_cb(chan, msg)
   "echomsg string(a:msg)
@@ -68,7 +104,7 @@ function s:out_cb(chan, msg)
       if line[0] == "\n"
         let line = line[1:]
       endif
-      if line ==# '(Pdb) '
+      if line ==# s:prompt
         let pdb_cnt += 1
         if pdb_cnt >= 2
           break
@@ -91,6 +127,7 @@ endfunction
 function s:exit_cb(job, status)
   execute 'bwipe!' s:ptybuf
   unlet s:dbgwin
+  call filter(s:cache_lines, 0)
 
   let curwinid = win_getid(winnr())
 
@@ -101,6 +138,9 @@ function s:exit_cb(job, status)
   call s:DeleteCommands()
   call s:DeleteWinbar()
   execute 'sign unplace' s:pc_id
+
+  sign undefine TermdbgCursor
+  sign undefine debugBreakpoint
 endfunction
 
 function s:getbufmaxline(bufnr)
@@ -126,19 +166,19 @@ func s:InstallWinbar()
   endif
 endfunc
 
-function s:TermDbgNext()
+function s:TermdbgNext()
   call s:SendCommand('next')
 endfunction
 
-function s:TermDbgStep()
+function s:TermdbgStep()
   call s:SendCommand('step')
 endfunction
 
-function s:TermDbgFinish()
+function s:TermdbgFinish()
   call s:SendCommand('return')
 endfunction
 
-function s:TermDbgContinue()
+function s:TermdbgContinue()
   call s:SendCommand('continue')
 endfunction
 
@@ -180,7 +220,7 @@ func s:_LocateCursor(msg)
   " 定位调试行
   execute lnum
   execute 'sign unplace' s:pc_id
-  execute 'sign place ' . s:pc_id . ' line=' . lnum . ' name=TermDbgCursor file=' . fname
+  execute 'sign place ' . s:pc_id . ' line=' . lnum . ' name=TermdbgCursor file=' . fname
   setlocal signcolumn=yes
 
   call win_gotoid(wid)
@@ -197,7 +237,7 @@ function g:LocateCursor()
   let pdb_cnt = 0
   for lnum in range(maxlnum, min, -1)
     let line = getbufline(s:ptybuf, lnum)[0]
-    if line ==# '(Pdb) '
+    if line ==# s:prompt
       let pdb_cnt += 1
       "if pdb_cnt >= 2
         "break
@@ -214,10 +254,10 @@ function g:LocateCursor()
 endfunction
 
 func s:InstallCommands()
-  command TNext call s:TermDbgNext()
-  command TStep call s:TermDbgStep()
-  command TFinish call s:TermDbgFinish()
-  command TContinue call s:TermDbgContinue()
+  command TNext call s:TermdbgNext()
+  command TStep call s:TermdbgStep()
+  command TFinish call s:TermdbgFinish()
+  command TContinue call s:TermdbgContinue()
   command TLocateCursor call g:LocateCursor()
 endfunc
 
