@@ -56,7 +56,9 @@ function s:out_cb(chan, msg)
 
   let lines = split(a:msg, "\r")
   call extend(s:cache_lines, lines)
-  let g:cache_lines = s:cache_lines
+  if len(s:cache_lines) > 100
+    let s:cache_lines = s:cache_lines[-100:-1]
+  endif
 
   if a:msg =~# '(Pdb) $'
     let pdb_cnt = 0
