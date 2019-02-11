@@ -88,7 +88,12 @@ function termdbg#StartDebug(bang, type, ...)
     let s:prompt = '(Pdb) '
   endif
 
-  " 初始调到调试窗口，以方便输入命令，然而，回调会重定位光标
+  augroup Termdbg
+    autocmd BufRead * call s:BufRead()
+    autocmd BufUnload * call s:BufUnloaded()
+  augroup END
+
+  " 初始跳到调试窗口，以方便输入命令，然而，回调会重定位光标
   call win_gotoid(s:ptybuf)
 endfunction
 
@@ -218,6 +223,8 @@ function s:exit_cb(job, status)
   sign undefine TermdbgCursor
   sign undefine TermdbgBreak
   call filter(s:breakpoints, 0)
+
+  autocmd! Termdbg
 endfunction
 
 function s:getbufmaxline(bufnr)
@@ -427,5 +434,25 @@ endfunc
 function termdbg#SendCommand(cmd)
   call s:SendCommand(a:cmd)
 endfunction
+
+" Handle a BufRead autocommand event: place any signs.
+func s:BufRead()
+  let file = expand('<afile>:p')
+  for [bpnr, entry] in items(s:breakpoints)
+    if entry['file'] ==# file
+      call s:PlaceSign(bpnr, entry)
+    endif
+  endfor
+endfunc
+
+" Handle a BufUnloaded autocommand event: unplace any signs.
+func s:BufUnloaded()
+  let file = expand('<afile>:p')
+  for [bpnr, entry] in items(s:breakpoints)
+    if entry['file'] == file
+      let entry['placed'] = 0
+    endif
+  endfor
+endfunc
 
 " vi:set sts=2 sw=2 et:
