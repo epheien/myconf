@@ -70,12 +70,12 @@ function s:out_cb(chan, msg)
       endif
       if line ==# '(Pdb) '
         let pdb_cnt += 1
+        if pdb_cnt >= 2
+          break
+        endif
       endif
       if line !~# '^> '
         continue
-      endif
-      if pdb_cnt >= 2
-        break
       endif
       if !s:_LocateCursor(line)
         execute 'sign unplace' s:pc_id
@@ -193,15 +193,23 @@ function g:LocateCursor()
     return
   endif
   let maxlnum = s:getbufmaxline(s:ptybuf)
-  let min = max([1, maxlnum - 100])
+  let min = 1
+  let pdb_cnt = 0
   for lnum in range(maxlnum, min, -1)
     let line = getbufline(s:ptybuf, lnum)[0]
-    if line =~# '^> '
-      if !s:_LocateCursor(line)
-        execute 'sign unplace' s:pc_id
-      endif
-      break
+    if line ==# '(Pdb) '
+      let pdb_cnt += 1
+      "if pdb_cnt >= 2
+        "break
+      "endif
     endif
+    if line !~# '^> '
+      continue
+    endif
+    if !s:_LocateCursor(line)
+      execute 'sign unplace' s:pc_id
+    endif
+    break
   endfor
 endfunction
 
@@ -210,6 +218,7 @@ func s:InstallCommands()
   command TStep call s:TermDbgStep()
   command TFinish call s:TermDbgFinish()
   command TContinue call s:TermDbgContinue()
+  command TLocateCursor call g:LocateCursor()
 endfunc
 
 func s:DeleteCommands()
@@ -217,6 +226,7 @@ func s:DeleteCommands()
   delcommand TStep
   delcommand TFinish
   delcommand TContinue
+  delcommand TLocateCursor
 endfunc
 
 func s:DeleteWinbar()
