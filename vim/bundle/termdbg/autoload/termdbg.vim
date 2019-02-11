@@ -220,13 +220,12 @@ endfunc
 " Install the window toolbar in the current window.
 func s:InstallWinbar()
   if has('menu') && &mouse != ''
-    nnoremenu WinBar.Next   :TNext<CR>
-    nnoremenu WinBar.Step   :TStep<CR>
-    nnoremenu WinBar.Finish :TFinish<CR>
-    nnoremenu WinBar.Cont   :TContinue<CR>
-    nnoremenu WinBar.Locate :TLocateCursor<CR>
-    nnoremenu WinBar.Break  :TBreakpoint<CR>
-    nnoremenu WinBar.Clear  :TClearBreak<CR>
+    nnoremenu <silent> WinBar.Next   :TNext<CR>
+    nnoremenu <silent> WinBar.Step   :TStep<CR>
+    nnoremenu <silent> WinBar.Finish :TFinish<CR>
+    nnoremenu <silent> WinBar.Cont   :TContinue<CR>
+    nnoremenu <silent> WinBar.Break  :call <SID>ToggleBreak()<CR>
+    nnoremenu <silent> WinBar.Locate :TLocateCursor<CR>
     call add(s:winbar_winids, win_getid(winnr()))
   endif
 endfunc
@@ -326,6 +325,7 @@ func s:InstallCommands()
   command TLocateCursor call g:LocateCursor()
   command TBreakpoint call s:SetBreakpoint()
   command TClearBreak call s:ClearBreakpoint()
+  command TToggleBreak call s:ToggleBreak()
 endfunc
 
 func s:DeleteCommands()
@@ -336,6 +336,7 @@ func s:DeleteCommands()
   delcommand TLocateCursor
   delcommand TBreakpoint
   delcommand TClearBreak
+  delcommand TToggleBreak
 endfunc
 
 func s:DeleteWinbar()
@@ -346,9 +347,8 @@ func s:DeleteWinbar()
       aunmenu WinBar.Step
       aunmenu WinBar.Finish
       aunmenu WinBar.Cont
-      aunmenu WinBar.Locate
       aunmenu WinBar.Break
-      aunmenu WinBar.Clear
+      aunmenu WinBar.Locate
     endif
   endfor
   call win_gotoid(curwinid)
@@ -374,12 +374,37 @@ func s:ClearBreakpoint()
   for [key, val] in items(s:breakpoints)
     if val['file'] ==# file && val['lnum'] == lnum
       call s:SendCommand('clear ' . key)
-      " Assume this always works, the reply is simply "^done".
-      execute 'sign unplace' (s:break_id + key)
-      unlet s:breakpoints[key]
       break
     endif
   endfor
+endfunc
+
+func s:ToggleBreak()
+  " --- Signs ---
+  " Signs for /Users/eph/a.py:
+  "     line=3  id=1002  name=TermdbgCursor
+  "     line=9  id=1004  name=TermdbgBreak
+  "     line=16  id=1007  name=TermdbgBreak
+  "     line=16  id=1006  name=TermdbgBreak
+  "     line=16  id=1005  name=TermdbgBreak
+  let found = 0
+  let li = split(vlutils#GetCmdOutput('sign place buffer=' . bufnr('%')), "\n")
+  for line in li[2:]
+    let fields = split(line)
+    if len(fields) != 3
+      continue
+    endif
+    let lnum = matchstr(fields[0], '\d\+$')
+    if lnum != line('.')
+      continue
+    endif
+    let found = 1
+  endfor
+  if found
+    call s:ClearBreakpoint()
+  else
+    call s:SetBreakpoint()
+  endif
 endfunc
 
 " vi:set sts=2 sw=2 et:
