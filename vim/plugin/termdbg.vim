@@ -74,7 +74,10 @@ function s:out_cb(chan, msg)
       if line !~# '^> '
         continue
       endif
-      if pdb_cnt >= 2 || !s:_LocateCursor(line)
+      if pdb_cnt >= 2
+        break
+      endif
+      if !s:_LocateCursor(line)
         execute 'sign unplace' s:pc_id
       endif
       break
