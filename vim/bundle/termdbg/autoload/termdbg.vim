@@ -1,3 +1,8 @@
+" Description:  Terminal debugger
+" Maintainer:   fanhe <fanhed@163.com>
+" License:      GPLv2
+" Create:       2019-02-11
+" Change:       2019-02-11
 "
 " NOTE:
 "   - 只留一个窗口显示 WinBar，如果此窗口被关闭，则新建一个窗口再添加 WinBar
