@@ -44,10 +44,10 @@ command -nargs=+ -complete=file -bang TermdbgPdb
       \ call s:StartDebug(<bang>0, 'pdb', g:termdbg_pdb_prog, <f-args>)
 command -nargs=+ -complete=file -bang TermdbgPdb3
       \ call s:StartDebug(<bang>0, 'pdb3', g:termdbg_pdb3_prog, <f-args>)
-"command -nargs=+ -complete=file -bang TermdbgIPdb
-      "\ call s:StartDebug(<bang>0, 'ipdb', g:termdbg_ipdb_prog, <f-args>)
-"command -nargs=+ -complete=file -bang TermdbgIPdb3
-      "\ call s:StartDebug(<bang>0, 'ipdb3', g:termdbg_ipdb3_prog, <f-args>)
+command -nargs=+ -complete=file -bang TermdbgIPdb
+      \ call s:StartDebug(<bang>0, 'ipdb', g:termdbg_ipdb_prog, <f-args>)
+command -nargs=+ -complete=file -bang TermdbgIPdb3
+      \ call s:StartDebug(<bang>0, 'ipdb3', g:termdbg_ipdb3_prog, <f-args>)
 
 function s:StartDebug(bang, type, ...)
   if exists('s:dbgwin')
@@ -89,21 +89,36 @@ endfunction
 
 function s:out_cb(chan, msg)
   "echomsg string(a:msg)
-
   let lines = split(a:msg, "\r")
+
+  for idx in range(len(lines))
+    " 去除 ipdb 的转义字符以及指令行的多余的空格
+    if s:dbg_type ==# 'ipdb'
+      let lines[idx] = g:TrimAnsiEscape(lines[idx])
+      if lines[idx] =~# '^\V' . s:prompt
+        let lines[idx] = s:prompt
+      endif
+    endif
+
+    " 去除 "^\n"
+    let lines[idx] = substitute(lines[idx], '^\n', '', '')
+  endfor
+
+  " 去除 ipdb 中多余的空行输出
+  if s:dbg_type ==# 'ipdb'
+    call filter(lines, {idx, val -> val !~# '^\s\+$'})
+    call filter(lines, '!empty(v:val)')
+  endif
+
   call extend(s:cache_lines, lines)
   if len(s:cache_lines) > 100
     let s:cache_lines = s:cache_lines[-100:-1]
   endif
 
-  if a:msg =~# '(Pdb) $'
+  if !empty(lines) && lines[-1] =~# '\V' . s:prompt . '\$'
     let pdb_cnt = 0
     for idx in range(len(s:cache_lines)-1, 0, -1)
       let line = s:cache_lines[idx]
-      " remove prefixed NL
-      if line[0] == "\n"
-        let line = line[1:]
-      endif
       if line ==# s:prompt
         let pdb_cnt += 1
         if pdb_cnt >= 2
@@ -285,6 +300,11 @@ endfunc
 
 func s:SendCommand(cmd)
   call term_sendkeys(s:ptybuf, a:cmd . "\r")
+endfunc
+
+func g:TrimAnsiEscape(msg)
+  let pat = '\C\v(%x9B|%x1B\[)[0-?]*[ -/]*[@-~]'
+  return substitute(a:msg, pat, '', 'g')
 endfunc
 
 " vi:set sts=2 sw=2 et:
