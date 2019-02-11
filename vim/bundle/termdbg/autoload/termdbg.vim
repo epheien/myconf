@@ -223,7 +223,7 @@ func s:InstallWinbar()
     nnoremenu <silent> WinBar.Next   :TNext<CR>
     nnoremenu <silent> WinBar.Step   :TStep<CR>
     nnoremenu <silent> WinBar.Finish :TFinish<CR>
-    nnoremenu <silent> WinBar.Cont   :TContinue<CR>
+    nnoremenu <silent> WinBar.Contin :TContinue<CR>
     nnoremenu <silent> WinBar.Break  :call <SID>ToggleBreak()<CR>
     nnoremenu <silent> WinBar.Locate :TLocateCursor<CR>
     call add(s:winbar_winids, win_getid(winnr()))
@@ -262,7 +262,7 @@ func s:_LocateCursor(msg)
       let lnum = str2nr(matches[2])
     endif
   endif
-  if empty(fname) || fname[0] !=# '/'
+  if empty(fname) || !vlutils#os.path.isabs(fname)
     return 0
   endif
 
@@ -346,7 +346,7 @@ func s:DeleteWinbar()
       aunmenu WinBar.Next
       aunmenu WinBar.Step
       aunmenu WinBar.Finish
-      aunmenu WinBar.Cont
+      aunmenu WinBar.Contin
       aunmenu WinBar.Break
       aunmenu WinBar.Locate
     endif
