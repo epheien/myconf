@@ -333,6 +333,7 @@ func s:InstallCommands()
   command TBreakpoint call s:SetBreakpoint()
   command TClearBreak call s:ClearBreakpoint()
   command TToggleBreak call s:ToggleBreak()
+  command -nargs=1 TSendCommand call s:SendCommand(<q-args>)
 endfunc
 
 func s:DeleteCommands()
@@ -344,6 +345,7 @@ func s:DeleteCommands()
   delcommand TBreakpoint
   delcommand TClearBreak
   delcommand TToggleBreak
+  delcommand TSendCommand
 endfunc
 
 func s:DeleteWinbar()
@@ -413,5 +415,9 @@ func s:ToggleBreak()
     call s:SetBreakpoint()
   endif
 endfunc
+
+function termdbg#SendCommand(cmd)
+  call s:SendCommand(a:cmd)
+endfunction
 
 " vi:set sts=2 sw=2 et:
