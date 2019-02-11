@@ -10,15 +10,15 @@ let s:break_id = 1003
 let s:winbar_winids = []
 
 if &background == 'light'
-  hi default debugPC term=reverse ctermbg=lightblue guibg=lightblue
+  hi default TermDbgCursor term=reverse ctermbg=lightblue guibg=lightblue
 else
-  hi default debugPC term=reverse ctermbg=darkblue guibg=darkblue
+  hi default TermDbgCursor term=reverse ctermbg=darkblue guibg=darkblue
 endif
 hi default debugBreakpoint term=reverse ctermbg=red guibg=red
 
 " Sign used to highlight the line where the program has stopped.
 " There can be only one.
-sign define debugPC linehl=debugPC
+sign define TermDbgCursor linehl=TermDbgCursor
 
 " Sign used to indicate a breakpoint.
 " Can be used multiple times.
@@ -175,7 +175,7 @@ func s:_LocateCursor(msg)
   " 定位调试行
   execute lnum
   execute 'sign unplace' s:pc_id
-  execute 'sign place ' . s:pc_id . ' line=' . lnum . ' name=debugPC file=' . fname
+  execute 'sign place ' . s:pc_id . ' line=' . lnum . ' name=TermDbgCursor file=' . fname
   setlocal signcolumn=yes
 
   call win_gotoid(wid)
