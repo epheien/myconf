@@ -51,6 +51,11 @@ function termdbg#StartDebug(bang, type, ...)
     echoerr 'Terminal debugger is already running'
     return
   endif
+  if !executable(a:1)
+    echoerr 'command not found:' a:1
+    return
+  endif
+
   let s:startwin = win_getid(winnr())
   let s:startsigncolumn = &signcolumn
 
@@ -82,6 +87,9 @@ function termdbg#StartDebug(bang, type, ...)
     let s:dbg_type = 'pdb'
     let s:prompt = '(Pdb) '
   endif
+
+  " 初始调到调试窗口，以方便输入命令，然而，回调会重定位光标
+  call win_gotoid(s:ptybuf)
 endfunction
 
 function s:out_cb(chan, msg)
