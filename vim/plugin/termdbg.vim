@@ -15,13 +15,14 @@ let s:cache_lines = []
 let g:cache_lines = s:cache_lines
 let s:dbg_type = ''
 let s:prompt = '(Pdb) '
+let s:breakpoints = {}
 
 if &background == 'light'
   hi default TermdbgCursor term=reverse ctermbg=lightblue guibg=lightblue
 else
   hi default TermdbgCursor term=reverse ctermbg=darkblue guibg=darkblue
 endif
-hi default debugBreakpoint term=reverse ctermbg=red guibg=red
+hi default TermdbgBreak term=reverse ctermbg=red guibg=red
 
 function! s:InitVariable(var, value, ...)
   let force = a:0 > 0 ? a:1 : 0
@@ -76,7 +77,7 @@ function s:StartDebug(bang, type, ...)
 
   " Sign used to indicate a breakpoint.
   " Can be used multiple times.
-  sign define debugBreakpoint text=>> texthl=debugBreakpoint
+  sign define TermdbgBreak text=>> texthl=TermdbgBreak
 
   if a:type ==# 'ipdb' || a:type ==# 'ipdb3'
     let s:dbg_type = 'ipdb'
@@ -125,16 +126,69 @@ function s:out_cb(chan, msg)
           break
         endif
       endif
-      if line !~# '^> '
-        continue
+
+      if line =~# '^> '
+        " 光标定位
+        if !s:_LocateCursor(line)
+          execute 'sign unplace' s:pc_id
+        endif
+        break
+      elseif line =~# '^Breakpoint \d\+ at '
+        call s:HandleNewBreakpoint(line)
+      elseif line =~# '^Deleted breakpoint \d\+ at '
+        call s:HandleDelBreakpoint(line)
       endif
-      if !s:_LocateCursor(line)
-        execute 'sign unplace' s:pc_id
-      endif
-      break
     endfor
   endif
 endfunction
+
+" Breakpoint 1 at /Users/eph/a.py:16
+func s:HandleNewBreakpoint(msg)
+  let matches = matchlist(a:msg, '^Breakpoint \(\d\+\) at \(.\+\):\(\d\+\)')
+  let nr = get(matches, 1, 0)
+  let file = get(matches, 2, '')
+  let lnum = get(matches, 3, 0)
+  if nr == 0 || empty(file) || lnum == 0
+    return
+  endif
+
+  if has_key(s:breakpoints, nr)
+    let entry = s:breakpoints[nr]
+  else
+    let entry = {}
+    let s:breakpoints[nr] = entry
+  endif
+  let entry['file'] = file
+  let entry['lnum'] = lnum
+
+  if bufloaded(file)
+    call s:PlaceSign(nr, entry)
+  endif
+endfunc
+
+" Deleted breakpoint 1 at /Users/eph/a.py:16
+func s:HandleDelBreakpoint(msg)
+  let matches = matchlist(a:msg, '^Deleted breakpoint \(\d\+\) at \(.\+\):\(\d\+\)')
+  let bpnr = get(matches, 1, 0)
+  let file = get(matches, 2, '')
+  let lnum = get(matches, 3, 0)
+  if bpnr == 0 || empty(file) || lnum == 0
+    return
+  endif
+  if has_key(s:breakpoints, bpnr)
+    let entry = s:breakpoints[bpnr]
+    if get(entry, 'placed', 0)
+      execute 'sign unplace' (s:break_id + bpnr)
+      let entry['placed'] = 0
+    endif
+    unlet s:breakpoints[bpnr]
+  endif
+endfunc
+
+func s:PlaceSign(bpnr, entry)
+  exe 'sign place ' . (s:break_id + a:bpnr) . ' line=' . a:entry['lnum'] . ' name=TermdbgBreak file=' . a:entry['file']
+  let a:entry['placed'] = 1
+endfunc
 
 function s:err_cb(chan, msg)
 endfunction
@@ -153,9 +207,13 @@ function s:exit_cb(job, status)
   call s:DeleteCommands()
   call s:DeleteWinbar()
   execute 'sign unplace' s:pc_id
+  for key in keys(s:breakpoints)
+    exe 'sign unplace ' . (s:break_id + key)
+  endfor
 
   sign undefine TermdbgCursor
-  sign undefine debugBreakpoint
+  sign undefine TermdbgBreak
+  call filter(s:breakpoints, 0)
 endfunction
 
 function s:getbufmaxline(bufnr)
@@ -178,6 +236,8 @@ func s:InstallWinbar()
     nnoremenu WinBar.Finish :TFinish<CR>
     nnoremenu WinBar.Cont   :TContinue<CR>
     nnoremenu WinBar.Locate :TLocateCursor<CR>
+    nnoremenu WinBar.Break  :TBreakpoint<CR>
+    nnoremenu WinBar.Clear  :TClearBreak<CR>
     call add(s:winbar_winids, win_getid(winnr()))
   endif
 endfunc
@@ -275,6 +335,8 @@ func s:InstallCommands()
   command TFinish call s:TermdbgFinish()
   command TContinue call s:TermdbgContinue()
   command TLocateCursor call g:LocateCursor()
+  command TBreakpoint call s:SetBreakpoint()
+  command TClearBreak call s:ClearBreakpoint()
 endfunc
 
 func s:DeleteCommands()
@@ -283,6 +345,8 @@ func s:DeleteCommands()
   delcommand TFinish
   delcommand TContinue
   delcommand TLocateCursor
+  delcommand TBreakpoint
+  delcommand TClearBreak
 endfunc
 
 func s:DeleteWinbar()
@@ -294,6 +358,8 @@ func s:DeleteWinbar()
       aunmenu WinBar.Finish
       aunmenu WinBar.Cont
       aunmenu WinBar.Locate
+      aunmenu WinBar.Break
+      aunmenu WinBar.Clear
     endif
   endfor
   call win_gotoid(curwinid)
@@ -307,6 +373,24 @@ endfunc
 func g:TrimAnsiEscape(msg)
   let pat = '\C\v(%x9B|%x1B\[)[0-?]*[ -/]*[@-~]'
   return substitute(a:msg, pat, '', 'g')
+endfunc
+
+func s:SetBreakpoint()
+  call s:SendCommand(printf('break %s:%d', fnameescape(expand('%:p')), line('.')))
+endfunc
+
+func s:ClearBreakpoint()
+  let file = fnameescape(expand('%:p'))
+  let lnum = line('.')
+  for [key, val] in items(s:breakpoints)
+    if val['file'] ==# file && val['lnum'] == lnum
+      call s:SendCommand('clear ' . key)
+      " Assume this always works, the reply is simply "^done".
+      execute 'sign unplace' (s:break_id + key)
+      unlet s:breakpoints[key]
+      break
+    endif
+  endfor
 endfunc
 
 " vi:set sts=2 sw=2 et:
