@@ -8,6 +8,8 @@ if exists('s:loaded')
 endif
 let s:loaded = 1
 
+let s:os = g:vlutils#os
+
 let s:pc_id = 1002
 let s:break_id = 1003
 let s:winbar_winids = []
@@ -262,7 +264,7 @@ func s:_LocateCursor(msg)
       let lnum = str2nr(matches[2])
     endif
   endif
-  if empty(fname) || !vlutils#os.path.isabs(fname)
+  if empty(fname) || !s:os.path.isabs(fname)
     return 0
   endif
 
