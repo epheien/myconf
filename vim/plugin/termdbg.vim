@@ -177,6 +177,7 @@ func s:InstallWinbar()
     nnoremenu WinBar.Step   :TStep<CR>
     nnoremenu WinBar.Finish :TFinish<CR>
     nnoremenu WinBar.Cont   :TContinue<CR>
+    nnoremenu WinBar.Locate :TLocateCursor<CR>
     call add(s:winbar_winids, win_getid(winnr()))
   endif
 endfunc
@@ -292,6 +293,7 @@ func s:DeleteWinbar()
       aunmenu WinBar.Step
       aunmenu WinBar.Finish
       aunmenu WinBar.Cont
+      aunmenu WinBar.Locate
     endif
   endfor
   call win_gotoid(curwinid)
