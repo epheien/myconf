@@ -222,11 +222,11 @@ endfunc
 " Install the window toolbar in the current window.
 func s:InstallWinbar()
   if has('menu') && &mouse != ''
+    nnoremenu <silent> WinBar.Break  :call <SID>ToggleBreak()<CR>
     nnoremenu <silent> WinBar.Next   :TNext<CR>
     nnoremenu <silent> WinBar.Step   :TStep<CR>
     nnoremenu <silent> WinBar.Finish :TFinish<CR>
     nnoremenu <silent> WinBar.Contin :TContinue<CR>
-    nnoremenu <silent> WinBar.Break  :call <SID>ToggleBreak()<CR>
     nnoremenu <silent> WinBar.Locate :TLocateCursor<CR>
     call add(s:winbar_winids, win_getid(winnr()))
   endif
