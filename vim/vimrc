@@ -384,6 +384,7 @@ if exists(':tmap')
     function s:tbs()
         call term_sendkeys(bufnr('%'), "\<C-w>")
     endfunction
+    tnoremap <C-\>: <C-w>:
     tnoremap <C-h> <C-w>h
     tnoremap <C-j> <C-w>j
     tnoremap <C-k> <C-w>k
@@ -601,7 +602,7 @@ hi link TagbarKind Constant
 " 设置不显示的文件，效果为仅显示 .c,.cpp,.h 文件，无后缀名文件暂时无法解决
 "let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
 let NERDTreeIgnore = []
-let NERDTreeMapMenu = "<C-m>"
+let NERDTreeMapMenu = "mm"
 hi link treeDir Statement
 hi link treeCWD Type
 "}}}
@@ -794,7 +795,7 @@ highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599
 inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap <expr> " (&filetype == "vim") ? "\"" : "\"\"\<Left>"
-inoremap <expr> ' (&filetype != "python") ? "'" : "''\<Left>"
+inoremap <expr> ' (0) ? "'" : "''\<Left>"
 
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
