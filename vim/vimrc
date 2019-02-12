@@ -967,6 +967,8 @@ Plug 'Yggdroot/LeaderF'
 
 Plug 'mbbill/undotree'
 
+Plug 'iamcco/markdown-preview.vim'
+
 call plug#end()
 " ####
 
