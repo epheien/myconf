@@ -312,6 +312,9 @@ set list listchars=tab:\ \
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 let $LANGUAGE=''
 
+" Man
+runtime ftplugin/man.vim
+
 " 摘录自vimrc sample by Bram
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
@@ -598,6 +601,7 @@ hi link TagbarKind Constant
 " 设置不显示的文件，效果为仅显示 .c,.cpp,.h 文件，无后缀名文件暂时无法解决
 "let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
 let NERDTreeIgnore = []
+let NERDTreeMapMenu = "<C-m>"
 hi link treeDir Statement
 hi link treeCWD Type
 "}}}
