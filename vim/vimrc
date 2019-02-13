@@ -558,6 +558,15 @@ let g:tagbar_type_autoit = {
     \ 'deffile' : s:USERRUNTIME . '/ctags/autoit.cnf',
 \ }
 
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:headings',
+    \ ],
+    \ 'sort' : 0,
+    \ 'deffile' : s:USERRUNTIME . '/ctags/markdown.cnf',
+\ }
+
 let g:tagbar_type_cpp = {
     \ 'ctagstype' : 'c++',
     \ 'kinds'     : [
@@ -943,10 +952,14 @@ endfunction
 "}}}
 "}}}
 
+let g:plug_window = 'new'
 " ## vim-plug
 call plug#begin('~/.vim/plugged')
 
+" NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
+
+" NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 
 " deoplete (pip3 install -U neovim/pynvim)
 "Plug 'Shougo/deoplete.nvim', {'tag': '4.1'}
@@ -955,19 +968,15 @@ Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af4410
 Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
 Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d5ba06'}
 
+Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
+
 " 增强的 js 语法高亮
 Plug 'othree/yajs.vim'
-
 Plug 'posva/vim-vue'
-
 Plug 'asins/vim-dict'
-
 Plug 'tpope/vim-surround'
-
 Plug 'Yggdroot/LeaderF'
-
 Plug 'mbbill/undotree'
-
 Plug 'iamcco/markdown-preview.vim'
 
 call plug#end()
