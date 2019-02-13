@@ -973,7 +973,9 @@ Plug 'iamcco/markdown-preview.vim'
 call plug#end()
 " ####
 
-let g:deoplete#sources#ternjs#tern_bin = expand('~/.nvm/versions/node/v10.13.0/bin/tern')
+let g:deoplete#sources#ternjs#tern_bin =
+        \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
+let g:mkdp_auto_close = 0
 
 " ==========================================================
 " 自己的简易插件
