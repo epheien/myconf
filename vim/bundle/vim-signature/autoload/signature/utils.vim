@@ -67,7 +67,7 @@ endfunction
 function! signature#utils#Input()                                                                                 " {{{1
   " Description: Grab input char
 
-  if &ft ==# "netrw"
+  if &ft ==# "netrw" || &ft ==# 'nerdtree'
     " Workaround for #104
     return
   endif
