@@ -558,14 +558,16 @@ let g:tagbar_type_autoit = {
     \ 'deffile' : s:USERRUNTIME . '/ctags/autoit.cnf',
 \ }
 
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:headings',
-    \ ],
-    \ 'sort' : 0,
-    \ 'deffile' : s:USERRUNTIME . '/ctags/markdown.cnf',
-\ }
+if s:IsWindowsOS()
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+            \ 'h:headings',
+        \ ],
+        \ 'sort' : 0,
+        \ 'deffile' : s:USERRUNTIME . '/ctags/markdown.cnf',
+    \ }
+endif
 
 let g:tagbar_type_cpp = {
     \ 'ctagstype' : 'c++',
@@ -937,6 +939,8 @@ Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
 Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d5ba06'}
 
 Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
+" 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
+Plug 'lvht/tagbar-markdown'
 
 " 增强的 js 语法高亮
 Plug 'othree/yajs.vim'
