@@ -614,9 +614,9 @@ hi link TagbarKind Constant
 " 设置不显示的文件，效果为仅显示 .c,.cpp,.h 文件，无后缀名文件暂时无法解决
 "let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
 let NERDTreeIgnore = []
-let NERDTreeMapMenu = "mm"
-hi link treeDir Statement
-hi link treeCWD Type
+let NERDTreeMapMenu = "."
+hi link NERDTreeDir Statement
+hi link NERDTreeCWD Type
 "}}}
 " ========== NERD commenter ==========
 "{{{
@@ -913,6 +913,8 @@ Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d
 Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
 Plug 'lvht/tagbar-markdown'
+
+Plug 'scrooloose/nerdtree'
 
 " 增强的 js 语法高亮
 Plug 'othree/yajs.vim'
