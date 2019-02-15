@@ -184,7 +184,8 @@ set pumheight=5
 " 显示水平滚动条
 "set guioptions+=b
 
-" 修改<Leader>键
+" 修改<Leader>键，默认为 '\'
+" 重新映射的原因是，很多插件擅自映射了复杂的<Leader>绑定，导致自用的绑定不灵敏
 "let mapleader = "\\"
 let mapleader = "\<F12>"
 
@@ -634,45 +635,16 @@ let g:pydiction_location = s:USERRUNTIME . '/dict/complete-dict'
 " 基于 VLWorkspace 的源/头文件切换
 nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
 
-" 修正 clang++ 的头文件搜索路径的问题
-command! -nargs=0 VIMCCCFixup call s:VIMCCCFixup()
-function! s:VIMCCCFixup() "{{{2
-    let output = system("echo '' | gcc -v -x c++ -fsyntax-only - |& sed -n '/^#include /,/^End of/p' | grep '^ ' | cut -c 2-")
-    let li = split(output, '\n')
-    call map(li, '"-I" . v:val')
-    let args = join(li, ' ')
-    echo 'VIMCCCAppendArgs' args
-    exec 'VIMCCCAppendArgs' args
-endfunction
-"}}}
-
 " pyclewn 的终端窗口高度，暂时这样设置
 set previewheight=8
 
 let g:videm_user_options = {
-    \ '.videm.Compatible'                   : 0,
-    \ '.videm.wsp.ShowBriefHelp'            : 0,
-    \ '.videm.wsp.keybind.PopupMenu'        : '<RightRelease>',
-    \ '.videm.wsp.LinkToEditor'             : 0,
-    \ '.videm.wsp.SaveBeforeBuild'          : 1,
-    \
-    \ '.videm.common.calltips.IndicateArgument' : 0,
-    \ '.videm.common.calltips.EnableSyntaxTest' : 0,
-    \
-    \ '.videm.cc.omnicpp.UseLibCxxParser'       : 1,
-    \ '.videm.cc.omnicpp.InclAllCondCmplBrch'   : 1,
-    \
-    \ '.videm.dbg.pyclewn.DisableNeedlessTools' : 0,
-    \ '.videm.dbg.pyclewn.SaveBpInfo'           : 0,
+    \ 'videm.Compatible'                   : 0,
+    \ 'videm.wsp.ShowBriefHelp'            : 0,
+    \ 'videm.wsp.keybind.PopupMenu'        : '<RightRelease>',
+    \ 'videm.wsp.LinkToEditor'             : 0,
+    \ 'videm.wsp.SaveBeforeBuild'          : 1,
 \ }
-"let g:videm_user_options['.videm.wsp.AutoSession'] = 1
-let g:videm_user_options['.videm.cc.omnicpp.ItemSelectMode'] = 2
-let g:videm_user_options['.videm.symdb.Current'] = "gtags"
-let g:videm_user_options['.videm.cc.Current'] = ""
-"if s:IsUnixOS()
-    "let g:videm_user_options['.videm.cc.Current'] = "vimccc"
-"endif
-"}}}
 " ========== xptemplate ==========
 "{{{
 " 选择模式下取消 j, k 原始的行为
@@ -950,6 +922,7 @@ Plug 'tpope/vim-surround'
 Plug 'Yggdroot/LeaderF'
 Plug 'mbbill/undotree'
 Plug 'iamcco/markdown-preview.vim'
+Plug 'dhruvasagar/vim-table-mode'
 
 call plug#end()
 " ####
@@ -1085,16 +1058,17 @@ endfunction
 "{{{
 autocmd BufReadPost * nested call <SID>FixDosFmt()
 function! s:FixDosFmt() "{{{2
-    if &ff == 'unix' && !&bin
-        " 搜索 ^M
-        let nStopLine = 0
-        let nTimeOut = 100
-        let nRet = search('\r$', 'nc', nStopLine, nTimeOut)
-        if nRet > 0
-            e ++ff=dos
-            "redraw
-            "echo 'File format has been set to UNIX.'
-        endif
+    if &ff != 'unix' || &bin || &buftype =~# '\<quickfix\>\|\<nofile\>'
+        return
+    endif
+    " 搜索 ^M
+    let nStopLine = 0
+    let nTimeOut = 100
+    let nRet = search('\r$', 'nc', nStopLine, nTimeOut)
+    if nRet > 0
+        e ++ff=dos
+        "redraw
+        "echo 'File format has been set to UNIX.'
     endif
 endfunction
 "}}}2
