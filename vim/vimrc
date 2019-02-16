@@ -415,7 +415,7 @@ nnoremap <silent> <C-s> :update<CR>
 nnoremap <C-p> <C-w>z
 nnoremap T :tag<CR>
 "nnoremap <C-z> u
-if has('gui_running')
+if has('gui_running') || has('gui_macvim')
     nnoremap <C-v> "+gP
 endif
 
@@ -435,14 +435,14 @@ cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-BS> <C-w>
 cnoremap <C-d> <Del>
-if has('gui_running')
+if has('gui_running') || has('gui_macvim')
     cnoremap <C-v> <C-r>+
 endif
 
 "=======================================
 " 可视和选择模式
 "=======================================
-if has('gui_running')
+if has('gui_running') || has('gui_macvim')
     vnoremap <C-x> "+x
     vnoremap <C-c> "+y
     vnoremap <C-v> "+gP
@@ -508,7 +508,7 @@ inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<End>"
 inoremap <C-a> <Home>
 inoremap <C-BS> <C-w>
 inoremap <C-d> <Del>
-if has('gui_running')
+if has('gui_running') || has('gui_macvim')
     inoremap <C-v> <C-r>+
 endif
 
