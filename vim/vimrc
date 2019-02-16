@@ -972,6 +972,8 @@ let g:airline_symbols_ascii = 1
 
 call s:SetupColorscheme()
 
+command -nargs=+ -complete=file Rg AsyncRun rg --vimgrep <args>
+
 " ==========================================================
 " 自己的简易插件
 " ==========================================================
