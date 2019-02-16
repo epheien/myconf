@@ -942,9 +942,6 @@ call plug#end()
 
 " ========== Plug 安装的插件的配置，理论上不应过长 ==========
 "let g:gruvbox_contrast_dark = 'soft'
-
-let g:deoplete#sources#ternjs#tern_bin =
-        \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
 let g:mkdp_auto_close = 0
 
 " ==========================================================
@@ -1136,10 +1133,11 @@ function! s:my_cr_function()
 endfunction
 
 " NOTE: 修正 html 补全后不能自动缩进的问题
-inoremap <silent> <expr> <CR> pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
+inoremap <silent> <expr> <CR>
+        \ pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
 
 if !s:IsWindowsOS() && has('python3')
-    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_at_startup = 0
     "let g:deoplete#on_insert_enter = v:false
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
@@ -1147,6 +1145,9 @@ if !s:IsWindowsOS() && has('python3')
     " Q: I don't want to see the typed word in the completion menu.
     "call deoplete#custom#source('_', 'matchers',
     "\   ['matcher_fuzzy', 'matcher_length'])
+    let g:deoplete#sources#ternjs#tern_bin =
+            \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
+    command -nargs=0 Deoplete call deoplete#enable()
 endif
 "}}}
 " ========== nvim-complete-manager ==========
