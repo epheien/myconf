@@ -934,6 +934,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'morhetz/gruvbox'
 " 此插件加载后，增加 200ms 以上的移动时间
 Plug 'vim-airline/vim-airline'
+Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
