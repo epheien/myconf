@@ -64,10 +64,9 @@ set cinoptions+=(0,W8
 "set ruler
 " 用 statusline 模拟
 "set statusline=%<%f\ %h%m%r%=%-13.(%l,%c%V%)\ %P
-set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fileencoding}]%)
-        \%{GetFmt()}%=%(%l/%L,%c%V%)\ %P
+set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fileencoding}]%)%{GetFtm()}%=%(%l/%L,%c%V%)\ %P
 set laststatus=2
-function! GetFmt() "{{{
+function! GetFtm() "{{{
     let l:fmt = getftime(expand("%:p"))
     if l:fmt != -1
         return "[". strftime("%Y-%m-%d %H:%M:%S", l:fmt) . "]"
@@ -870,7 +869,7 @@ Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'morhetz/gruvbox'
 " 此插件加载后，增加 200ms 以上的移动时间
-Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline', {'on': 'AirlineToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 
 " 本地插件的按需加载
