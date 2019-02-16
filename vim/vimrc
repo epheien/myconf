@@ -10,17 +10,23 @@ function s:IsUnixOS() "{{{
     return has('unix')
 endfunction
 "}}}
-
 function s:IsLinuxOS() "{{{
     return !s:IsWindowsOS()
 endfunction
 "}}}
-
+function s:joinpath(...) "{{{
+    let sep = '/'
+    if s:IsWindowsOS()
+        let sep = '\'
+    endif
+    return join(a:000, sep)
+endfunction
+"}}}
 " 用户配置文件所在的目录
 if s:IsWindowsOS()
-    let s:USERRUNTIME = $HOME . '\vimfiles'
+    let s:USERRUNTIME = s:joinpath($HOME, 'vimfiles')
 else
-    let s:USERRUNTIME = $HOME . '/.vim'
+    let s:USERRUNTIME = s:joinpath($HOME, '.vim')
 endif
 
 " 关闭 vi 兼容模式，否则无法使用 vim 的大部分扩展功能
@@ -538,7 +544,7 @@ let g:tagbar_type_rfc = {
         \ 'c:chapters',
     \ ],
     \ 'sort'    : 0,
-    \ 'deffile' : s:USERRUNTIME . '/ctags/rfc.cnf',
+    \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'rfc.cnf'),
 \ }
 
 let g:tagbar_type_autoit = {
@@ -547,7 +553,7 @@ let g:tagbar_type_autoit = {
         \ 'f:functions',
     \ ],
     \ 'sort'    : 0,
-    \ 'deffile' : s:USERRUNTIME . '/ctags/autoit.cnf',
+    \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'autoit.cnf'),
 \ }
 
 if s:IsWindowsOS()
@@ -557,7 +563,7 @@ if s:IsWindowsOS()
             \ 'h:headings',
         \ ],
         \ 'sort' : 0,
-        \ 'deffile' : s:USERRUNTIME . '/ctags/markdown.cnf',
+        \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'markdown.cnf'),
     \ }
 endif
 
@@ -888,6 +894,13 @@ endfunction
 "}}}
 "}}}
 
+function s:Plug(name, ...)
+    let plug = printf('my/%s', a:name)
+    let opt = {'dir': s:joinpath(s:USERRUNTIME, 'plugpack', a:name)}
+    let opt = extend(opt, get(a:000, 0, {}))
+    exec printf('Plug %s, %s', string(plug), string(opt))
+endfunction
+
 let g:plug_window = 'new'
 " ## vim-plug
 call plug#begin('~/.vim/plugged')
@@ -920,6 +933,9 @@ Plug 'mbbill/undotree'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'morhetz/gruvbox'
+
+" 本地插件的按需加载
+call s:Plug('colorizer', {'on': 'UpdateColor'})
 
 call plug#end()
 " ####
