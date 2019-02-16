@@ -932,6 +932,8 @@ Plug 'mbbill/undotree'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'morhetz/gruvbox'
+" 此插件加载后，增加 200ms 以上的移动时间
+Plug 'vim-airline/vim-airline'
 
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
@@ -944,6 +946,13 @@ call plug#end()
 let g:gruvbox_italic = 0
 let g:gruvbox_bold = 0
 let g:mkdp_auto_close = 0
+
+" gvim 下，如果使用 powerline 字体的话，就会改动默认的英文字体
+if has('gui_running')
+    "let g:airline_powerline_fonts = 1
+endif
+" NOTE: 如果使用 unicode 的话，会导致中文字体不是系统默认的
+let g:airline_symbols_ascii = 1
 
 call s:SetupColorscheme()
 
