@@ -949,11 +949,12 @@ call s:Plug('colorizer', {'on': 'UpdateColor'})
 call plug#end()
 " ####
 
-call s:SetupColorscheme()
-
 " ========== Plug 安装的插件的配置，理论上不应过长 ==========
-"let g:gruvbox_contrast_dark = 'soft'
+"let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_italic = 0
 let g:mkdp_auto_close = 0
+
+call s:SetupColorscheme()
 
 " ==========================================================
 " 自己的简易插件
