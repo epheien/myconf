@@ -232,57 +232,48 @@ endif
 " (缺省: "blank,buffers,curdir,folds,help,options,tabpages,winsize")
 set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winsize,resize
 
-" 普通模式和插入模式的光标设置
-let color_normal = 'grey'
-let color_insert = 'magenta'
-let color_exit = 'grey'
-if &term == "linux" || &term == "fbterm" "{{{
-    " console fbterm 通用
-    let g:loaded_vimcdoc = 0
-    set t_ve+=[?6c
-    autocmd! InsertEnter * set t_ve-=[?6c
-    autocmd! InsertLeave * set t_ve+=[?6c
-    autocmd! VimLeave * set t_ve-=[?6c
-"elseif &term == "xterm"
-    " konsole
-    "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-    "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-elseif &term == "xterm-256color"
-    " gnome-terminal xterm 通用
-    let &t_EI = "\<Esc>]12;" . color_normal . "\x7" " 普通模式的光标颜色
-    let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
-elseif &term =~ "screen"
-    set ttymouse=xterm2
-    if exists('$TMUX')
-        " tmux
-        exec 'silent !echo -ne "\033Ptmux;\033\e]12;"'
-                    \ . shellescape(color_normal, 1) . '"\007\033\\"'
-        let &t_SI="\033Ptmux;\033\e]12;" . color_insert . "\007\033\\"
-        let &t_EI="\033Ptmux;\033\e]12;" . color_normal . "\007\033\\"
-        exec 'autocmd VimLeave * :silent !echo -ne "\033Ptmux;\033\e]12;"'
-                    \ . shellescape(color_exit, 1) . '"\007\033\\"'
-    else
-        " screen
-        exec 'silent !echo -ne "\033P\e]12;"'
-                    \ . shellescape(color_normal, 1) . '"\007\033\\"'
-        let &t_SI="\033P\e]12;" . color_insert . "\007\033\\"
-        let &t_EI="\033P\e]12;" . color_normal . "\007\033\\"
-        exec 'autocmd VimLeave * :silent !echo -ne "\033P\e]12;"'
-                    \ . shellescape(color_exit, 1) . '"\007\033\\"'
+" 终端环境下，设置不同模式的光标形状，如果不支持改变形状的话，不设置
+" 通用约定为：普通模式：方块(t_EI)，插入模式：条状(t_SI))，替换模式：下划线(t_SR))
+function s:SetupCursorOnTerminal() "{{{
+    let color_normal = 'grey'
+    let color_insert = 'magenta'
+    let color_exit = 'grey'
+    if &term ==# "linux" || &term ==# "fbterm"
+        " console fbterm 通用，一般用于 Linux 控制台
+        let g:loaded_vimcdoc = 0
+        set t_ve+=[?6c
+        autocmd! InsertEnter * set t_ve-=[?6c
+        autocmd! InsertLeave * set t_ve+=[?6c
+        autocmd! VimLeave * set t_ve-=[?6c
+    elseif &term ==# "xterm-256color"
+        " 支持 256 色的一般是高级终端，一般支持改变光标形状
+        if $TERM_PROGRAM =~# '\V\<iTerm\|\<Apple_Terminal'
+            " 一般现代的终端都支持这种功能，例如 macOS 的终端和 konsole
+            let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+            let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+            let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+        else
+            " gnome-terminal xterm 通用，不能改变形状，只能改变颜色
+            let &t_EI = "\<Esc>]12;" . color_normal . "\x7" " 普通模式的光标颜色
+            let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
+        endif
+    elseif &term =~# "^screen"
+        " tmux 下没有测试成功，保守起见，不处理
+        "set ttymouse=xterm2
+    elseif &term =~ 'xterm.\+'
+        " xterm
+        " 0 or 1 -> blinking block
+        " 2 -> solid block
+        " 3 -> blinking underscore
+        " 4 -> solid underscore
+        "let &t_EI = "\<Esc>[0 q"
+        "let &t_SI = "\<Esc>[3 q"
     endif
-elseif &term =~ 'xterm.\+'
-    " xterm
-    " 0 or 1 -> blinking block
-    " 2 -> solid block
-    " 3 -> blinking underscore
-    " 4 -> solid underscore
-    let &t_EI = "\<Esc>[0 q"
-    let &t_SI = "\<Esc>[3 q"
-endif
-unlet color_normal
-unlet color_insert
-unlet color_exit
+endfunction
 "}}}
+if !has('gui_running')
+    call s:SetupCursorOnTerminal()
+endif
 
 " 编辑 po 文件时与中文输入法的配合
 "autocmd! syntax po set imactivatekey=C-space
@@ -917,7 +908,7 @@ Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
 Plug 'lvht/tagbar-markdown'
 
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
 
 " 增强的 js 语法高亮
 Plug 'othree/yajs.vim'
@@ -928,9 +919,13 @@ Plug 'Yggdroot/LeaderF'
 Plug 'mbbill/undotree'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 " ####
+
+" ========== Plug 安装的插件的配置，理论上不应过长 ==========
+"let g:gruvbox_contrast_dark = 'soft'
 
 let g:deoplete#sources#ternjs#tern_bin =
         \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
