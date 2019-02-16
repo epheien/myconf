@@ -31,8 +31,6 @@ endfunction
 
 " 窗口大小
 set columns=90 lines=45
-"autocmd syntax c,cpp set columns=125 lines=40
-"autocmd syntax c,cpp WMToggle
 
 " 启动时窗口的位置
 "winpos 230 230
@@ -49,4 +47,7 @@ set number
     "highlight CursorIM guibg=Purple guifg=NONE
 "endif
 
-" vi:set et sts=4:
+" 可设置窗口标题的命令
+command -nargs=+ Title set title | let &titlestring = <q-args>
+
+" vi:set et sts=4 sw=4:
