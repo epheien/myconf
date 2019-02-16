@@ -812,99 +812,21 @@ endfunction
 
 " ========== cscope 设置 ==========
 "{{{
-function! s:CscopeAdd(name) "{{{
-    let prepath = fnamemodify(a:name, ':p:h')
-    if a:name ==# 'GTAGS' && &cscopeprg !~# '\<gtags-cscope\>'
-        silent cscope kill -1
-        set cscopeprg=gtags-cscope
-        redraw
-    elseif a:name =~? 'cscope' && &cscopeprg =~# 'gtags'
-        silent cscope kill -1
-        if executable('cscope')
-            set cscopeprg=cscope
-        elseif s:IsWindowsOS()
-            let &cscopeprg = $VIM . '\vimfiles\bin\cscope.exe'
-        endif
-        redraw
-    endif
-    exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
-    autocmd! BufWritePost * call <SID>UpdateGtags(expand('%:p'))
-endfunction
-"}}}
-command! -complete=file -nargs=1 CsAdd :call <SID>CscopeAdd("<args>")
+set cscopeverbose
+set cscopetagorder=0
+set cscopetag
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+nnoremap <silent> <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>t :cs find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>e :cs find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>f :cs find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
+nnoremap <silent> <C-\>i :cs find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
+nnoremap <silent> <C-\>d :cs find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+"nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
 
-function! s:UpdateGtags(filename) "{{{
-    if !cscope_connection(1, 'GTAGS')
-        return
-    endif
-    " "cd %s && %s -f %s --single-update %s"
-    let prg = exepath(substitute(&cscopeprg, '-cscope\>', '', ''))
-    let cmd = [prg, '--single-update', a:filename]
-    let job = job_start(cmd)
-endfunction
-"}}}
-
-if has("cscope")
-    if executable('cscope')
-        set cscopeprg=cscope
-    elseif s:IsWindowsOS()
-        let &cscopeprg = $VIM . '\vimfiles\bin\cscope.exe'
-    endif
-    " add any database in current directory
-    if filereadable('cscope.out')
-        call s:CscopeAdd('cscope.out')
-    " else add database pointed to by environment
-    elseif $CSCOPE_DB != ""
-        call s:CscopeAdd($CSCOPE_DB)
-    " support gtags
-    "elseif filereadable("GTAGS") " 使用 gtags
-        "set csprg=gtags-cscope
-        "call s:CscopeAdd('GTAGS')
-    endif
-    set cscopeverbose
-    set cscopetagorder=0
-    set cscopetag
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-endif
-
-nnoremap <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <C-\>t :cs find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <C-\>e :cs find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <C-\>f :cs find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
-nnoremap <C-\>i :cs find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
-nnoremap <C-\>d :cs find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-
-"nnoremap <silent> <C-\>a :call <SID>AlterSource()<CR>
-function! s:AlterSource() "{{{
-    let l:file = expand("%:t:r")
-    let l:ext = expand("%:t:e")
-    if l:ext == "c" || l:ext == "cpp"
-        try
-            exec 'cs find f \<' . l:file . ".h$"
-        catch
-            try
-                exec 'cs find f \<' . l:file . ".hpp$"
-            catch
-                return
-            endtry
-            return
-        endtry
-    elseif l:ext == "h" || l:ext == "hpp"
-        try
-            exec 'cs find f \<' . l:file . ".c$"
-        catch
-            try
-                exec 'cs find f \<' . l:file . ".cpp$"
-            catch
-                return
-            endtry
-            return
-        endtry
-    endif
-endfunction
-"}}}
+command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
 "}}}
 
 function s:Plug(name, ...)
@@ -1190,6 +1112,10 @@ let g:cm_completeopt = 'menu,menuone,noinsert'
 let g:smartim_default = "com.apple.keylayout.ABC"
 let g:smartim_saved = 0
 "}}}
+" ========== videm ==========
+" videm 的一些扩展
+" ## gtags
+command VGtagsInit call myrc#VGtagsInit()
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
