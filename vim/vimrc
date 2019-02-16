@@ -278,14 +278,16 @@ function s:SetupColorscheme() "{{{
     if has('gui_running')   " gui 的情况下
         set background=dark
         try
-            colorscheme gruvbox
+            colorscheme desertEx
+            "colorscheme gruvbox
         catch /^E185:/
             colorscheme desertEx
         endtry
     elseif &t_Co == 256     " 支持 256 色的话
         set background=dark
         try
-            colorscheme gruvbox
+            colorscheme desertEx
+            "colorscheme gruvbox
         catch /^E185:/
             colorscheme desertEx256
         endtry
