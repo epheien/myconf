@@ -1147,7 +1147,7 @@ if !s:IsWindowsOS() && has('python3')
     "\   ['matcher_fuzzy', 'matcher_length'])
     let g:deoplete#sources#ternjs#tern_bin =
             \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
-    command -nargs=0 Deoplete call deoplete#enable()
+    autocmd InsertEnter * call deoplete#enable()
 endif
 "}}}
 " ========== nvim-complete-manager ==========
