@@ -285,15 +285,26 @@ endif
 "autocmd! syntax po set imactivatekey=C-space
 
 " 颜色方案
-if has('gui_running')   " gui 的情况下
-    colorscheme desertEx
-elseif &t_Co == 256     " 支持 256 色的话
-    colorscheme desertEx256
-elseif $TERM ==# "xterm"
-    colorscheme default
-else
-    colorscheme default
-endif
+function s:SetupColorscheme() "{{{
+    if has('gui_running')   " gui 的情况下
+        set background=dark
+        try
+            colorscheme gruvbox
+        catch /^E185:/
+            colorscheme desertEx
+        endtry
+    elseif &t_Co == 256     " 支持 256 色的话
+        set background=dark
+        try
+            colorscheme gruvbox
+        catch /^E185:/
+            colorscheme desertEx256
+        endtry
+    else
+        colorscheme default
+    endif
+endfunction
+"}}}
 
 " 增强的命令行补全
 set wildmenu
@@ -937,6 +948,8 @@ call s:Plug('colorizer', {'on': 'UpdateColor'})
 
 call plug#end()
 " ####
+
+call s:SetupColorscheme()
 
 " ========== Plug 安装的插件的配置，理论上不应过长 ==========
 "let g:gruvbox_contrast_dark = 'soft'
