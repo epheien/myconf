@@ -895,6 +895,7 @@ endfunction
 function s:Plug(name, ...)
     let plug = printf('my/%s', a:name)
     let opt = {'dir': s:joinpath(s:USERRUNTIME, 'plugpack', a:name)}
+    let opt['frozen'] = 1
     let opt = extend(opt, get(a:000, 0, {}))
     exec printf('Plug %s, %s', string(plug), string(opt))
 endfunction
