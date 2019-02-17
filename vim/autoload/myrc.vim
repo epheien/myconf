@@ -169,4 +169,14 @@ function! myrc#AlterSource()
     endif
 endfunction
 
+function! myrc#AsyncRun(qargs)
+    if !exists('*asyncrun#run')
+        try
+            exec 'AsyncRun'
+        catch
+        endtry
+    endif
+    call asyncrun#run(0, '', 'rg --vimgrep ' . a:qargs)
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4
