@@ -64,12 +64,29 @@ set cinoptions+=(0,W8
 "set ruler
 " 用 statusline 模拟
 "set statusline=%<%f\ %h%m%r%=%-13.(%l,%c%V%)\ %P
-set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fileencoding}]%)%{GetFtm()}%=%(%l/%L,%c%V%)\ %P
+" 显示了以下信息:
+"   - 文件名
+"   - [help]
+"   - [Preview]
+"   - [+]/[-]
+"   - [RO]
+"   - [vim]
+"   - [unix]                  <- &ff
+"   - [utf-8]                 <- &fenc
+"   - [2010-10-10 10:10:10]   <- GetFtm()
+"   =====
+"   - 行号/最大行号,列号-虚拟列号
+"   - ruler 百分比
+set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fenc}]%)%{GetFtm(0)}%=%(%l/%L,%v%)\ %p
 set laststatus=2
-function! GetFtm() "{{{
-    let l:fmt = getftime(expand("%:p"))
-    if l:fmt != -1
-        return "[". strftime("%Y-%m-%d %H:%M:%S", l:fmt) . "]"
+function! GetFtm(...) "{{{
+    let l:ftm = getftime(expand("%:p"))
+    if l:ftm != -1
+        if get(a:000, 0, 1)
+            return strftime("%Y-%m-%d %H:%M:%S", l:ftm)
+        else
+            return "[". strftime("%Y-%m-%d %H:%M:%S", l:ftm) . "]"
+        endif
     else
         return ""
     endif
@@ -872,6 +889,7 @@ Plug 'morhetz/gruvbox'
 " 此插件加载后，增加 200ms 以上的移动时间
 Plug 'vim-airline/vim-airline', {'on': 'AirlineToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
+Plug 'itchyny/lightline.vim'
 
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
@@ -891,6 +909,38 @@ if has('gui_running')
 endif
 " NOTE: 如果使用 unicode 的话，会导致中文字体不是系统默认的
 let g:airline_symbols_ascii = 1
+
+let g:lightline = {
+  \ 'colorscheme': 'wombat',
+  \ 'enable': {
+  \     'statusline': 1,
+  \     'tabline': 0,
+  \ },
+  \ 'component_function': {
+  \     'myftm': 'GetFtm',
+  \ },
+\ }
+let g:lightline.active = {
+    \ 'left': [ [ 'mode', 'paste' ],
+    \           [ 'filename', 'readonly', 'modified' ],
+    \         ],
+    \ 'right': [ [ 'lineinfo' ],
+    \            [ 'percent' ],
+    \            [ 'fileformat', 'fileencoding', 'filetype' ],
+    \           [ 'myftm' ],
+    \          ],
+    \ }
+let g:lightline.inactive = {
+    \ 'left': [ [ 'filename', 'readonly', 'modified' ] ],
+    \ 'right': [ [ 'lineinfo' ],
+    \            [ 'percent' ],
+    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
+let g:lightline.component = {}
+let g:lightline.component.lineinfo = '%3l/%L:%-2v'
+let g:lightline.component.filename = '%f'
+let g:lightline.component.modified = '%m'
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 
 call s:SetupColorscheme()
 
