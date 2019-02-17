@@ -9,6 +9,8 @@ endif
 
 " 切换菜单栏与工具栏显示快捷键
 set guioptions-=m
+" 使用非 gui 的标签页栏更美观
+set guioptions-=e
 "set guioptions-=T
 map <silent> <F10> :call <SID>SwitchGuiOpt()<CR>
 function! s:SwitchGuiOpt()
