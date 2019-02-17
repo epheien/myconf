@@ -941,6 +941,9 @@ let g:lightline.component.filename = '%f'
 let g:lightline.component.modified = '%m'
 let g:lightline.separator = { 'left': '', 'right': '' }
 let g:lightline.subseparator = { 'left': '', 'right': '' }
+if g:lightline.enable.statusline
+    set noshowmode
+endif
 
 call s:SetupColorscheme()
 
