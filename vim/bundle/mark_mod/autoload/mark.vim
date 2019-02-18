@@ -334,7 +334,7 @@ function! s:MarkScope( indices, expr )
 	" sizes and restore them after visiting all windows.
 	let l:originalWindowLayout = winrestcmd()
 
-	noautocmd windo call s:MarkMatch(a:indices, a:expr)
+	noautocmd keepjumps windo call s:MarkMatch(a:indices, a:expr)
 	execute l:currentWinNr . 'wincmd w'
 	silent! execute l:originalWindowLayout
 endfunction
@@ -347,7 +347,7 @@ function! mark#UpdateScope()
 	" sizes and restore them after visiting all windows.
 	let l:originalWindowLayout = winrestcmd()
 
-	noautocmd windo call mark#UpdateMark()
+	noautocmd keepjumps windo call mark#UpdateMark()
 	execute l:currentWinNr . 'wincmd w'
 	silent! execute l:originalWindowLayout
 endfunction
