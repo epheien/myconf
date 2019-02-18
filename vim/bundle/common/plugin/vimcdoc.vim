@@ -7,7 +7,7 @@ if exists("g:loaded_vimcdoc")
 endif
 let g:loaded_vimcdoc = 1
 
-if version >= 603
+if version >= 603 && !has('nvim')
   set helplang=cn
 endif
 
