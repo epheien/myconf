@@ -325,7 +325,9 @@ set wildmenu
 set ttimeoutlen=50
 
 " 用空格来显示制表并同时把光标放在空白开始位置
-set list listchars=tab:\ \ 
+set list
+"set listchars=tab:\ \ 
+set listchars=tab:▸\ ,eol:¬
 
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 let $LANGUAGE=''
