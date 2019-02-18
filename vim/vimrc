@@ -910,6 +910,7 @@ endif
 " NOTE: 如果使用 unicode 的话，会导致中文字体不是系统默认的
 let g:airline_symbols_ascii = 1
 
+" ## lightline 配置，用了他的高亮机制，显示的内容自己定制
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'enable': {
@@ -918,32 +919,42 @@ let g:lightline = {
   \ },
   \ 'component_function': {
   \     'myftm': 'GetFtm',
+  \     'myfileinfo': 'GetFI',
   \ },
 \ }
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
-    \           [ 'filename', 'readonly', 'modified' ],
+    \           [ 'filename' ],
+    \           [ 'fileflags' ],
     \         ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'fileformat', 'fileencoding', 'filetype' ],
-    \           [ 'myftm' ],
+    \ 'right': [ [ 'mylineinfo' ],
+    \            [ 'myfileinfo' ],
+    \            [ 'myftm' ],
     \          ],
     \ }
 let g:lightline.inactive = {
-    \ 'left': [ [ 'filename', 'readonly', 'modified' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
+    \ 'left': [ [ 'filename' ],
+    \           [ 'fileflags' ],
+    \         ],
+    \ 'right': [ [ 'mylineinfo' ],
+    \            [ 'myfileinfo' ] ],
+    \ }
 let g:lightline.component = {}
-let g:lightline.component.lineinfo = '%3l/%L:%-2v'
 let g:lightline.component.filename = '%f'
-let g:lightline.component.modified = '%m'
-let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.component.fileflags = '%m%r'
+let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
+let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
+let g:lightline.separator = { 'left': '►', 'right': '◄' }
 let g:lightline.subseparator = { 'left': '', 'right': '' }
 if g:lightline.enable.statusline
     set noshowmode
 endif
+function GetFI()
+    let ff = &ff
+    let ft = &ft ? &ft : 'n/a'
+    let fenc = &fenc ? &fenc : &enc
+    return join([ff, fenc, ft], ' ')
+endfunction
 
 call s:SetupColorscheme()
 
