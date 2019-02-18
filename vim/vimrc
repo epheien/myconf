@@ -669,10 +669,7 @@ nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
 set previewheight=8
 
 let g:videm_user_options = {
-    \ 'videm.Compatible'                   : 0,
     \ 'videm.wsp.ShowBriefHelp'            : 0,
-    \ 'videm.wsp.keybind.PopupMenu'        : '<RightRelease>',
-    \ 'videm.wsp.LinkToEditor'             : 0,
     \ 'videm.wsp.SaveBeforeBuild'          : 1,
 \ }
 " ========== xptemplate ==========
@@ -754,23 +751,6 @@ command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 command -nargs=0 CSangforMode setlocal ts=4 sts=4 sw=4 noet
 " 清理后置的多余的空白
 command -nargs=0 CleanSpaces silent! %s/\s\+$//g | normal! ``
-
-" ### Mark.vim 快速高亮单词。
-" 自定义高亮，默认有 6 组
-highlight HiWord1 gui=bold guifg=yellow guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=yellow
-highlight HiWord2 gui=bold guifg=white guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=white
-highlight HiWord3 gui=bold guifg=orange guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=Magenta
-highlight HiWord4 gui=bold guifg=green guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=green
-highlight HiWord5 gui=bold guifg=cyan guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=cyan
-highlight HiWord6 gui=bold guifg=salmon guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=red
-highlight HiWord7 gui=bold guifg=olivedrab3 guibg=#445599
-        \ cterm=NONE ctermfg=black ctermbg=blue
 
 " 括号自动补全. 为了性能, 直接禁用闭合检查
 inoremap ( ()<Left>
