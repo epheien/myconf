@@ -941,7 +941,7 @@ if g:lightline.enable.statusline
 endif
 function GetFI()
     let ff = &ff
-    let ft = &ft ? &ft : 'n/a'
+    let ft = empty(&ft) ? 'n/a' : &ft
     let fenc = &fenc ? &fenc : &enc
     return join([ff, fenc, ft], ' ')
 endfunction
