@@ -360,6 +360,7 @@ augroup Epheien
 augroup End
 
 if has('nvim')
+    let g:loaded_vimcdoc = 1
     set helplang=
 endif
 
@@ -861,6 +862,7 @@ Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 Plug 'lvht/tagbar-markdown'
 
 Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
+Plug 'yianwillis/vimcdoc'
 
 " 增强的 js 语法高亮
 Plug 'othree/yajs.vim'
