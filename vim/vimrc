@@ -398,16 +398,16 @@ autocmd! BufNewFile,BufRead *.txt
 " ======================================
 function! s:n_BufferDelete() "{{{
     let curb = bufnr('%')
-    bNext
-    exec "bd " . curb
-    if exists("*BufExplorer_Fix")
-        call BufExplorer_Fix()
+    if bufnr('#') != -1
+        buffer #
+    else
+        bNext
     endif
+    exec "bd " . curb
 endfunction
 "}}}
 nnoremap <silent> \- :set columns-=30<CR>
 nnoremap <silent> \= :set columns+=30<CR>
-nnoremap <silent> \l :%s/\r//g<CR>
 nnoremap <silent> \d :call <SID>n_BufferDelete()<CR>
 nnoremap \h :cd %:p:h <Bar> pwd<CR>
 nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
@@ -428,19 +428,12 @@ if exists(':tmap')
     tnoremap <C-k> <C-w>k
     tnoremap <C-l> <C-w>l
     tnoremap <C-v> <C-w>"+
-    tnoremap <silent> <C-BS> <C-w>:call <SID>tbs()<CR>
     tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
 endif
 nnoremap ; :
-"nnoremap <C-a> ggVG
-nnoremap <C-Tab> :bnext<CR>
-nnoremap <S-Tab> :bNext<CR>
 " stty -ixon
 nnoremap <silent> <C-s> :update<CR>
-"nnoremap <CR> <C-w>}
-nnoremap <C-p> <C-w>z
 nnoremap T :tag<CR>
-"nnoremap <C-z> u
 if has('gui_running') || has('gui_macvim')
     nnoremap <C-v> "+gP
 endif
@@ -459,7 +452,6 @@ cnoremap <C-l> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
-cnoremap <C-BS> <C-w>
 cnoremap <C-d> <Del>
 if has('gui_running') || has('gui_macvim')
     cnoremap <C-v> <C-r>+
@@ -527,12 +519,9 @@ endfunction
 "}}}
 "inoremap <silent> <C-s> <C-o>:update<CR>
 inoremap <silent> <C-s> <ESC>:update<CR>
-inoremap <C-CR> <ESC>o
 inoremap <C-o> <End><CR>
-inoremap <S-CR> <ESC>O
 inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<End>"
 inoremap <C-a> <Home>
-inoremap <C-BS> <C-w>
 inoremap <C-d> <Del>
 if has('gui_running') || has('gui_macvim')
     inoremap <C-v> <C-r>+
