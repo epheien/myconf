@@ -41,7 +41,9 @@ endif
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions+=M
 " 替换了工具栏的 menu.vim
-if !has('gui_macvim')
+if has('gui_macvim')
+    set macmeta
+else
     runtime menu.vim
 endif
 "set guioptions-=m
@@ -957,9 +959,8 @@ command! -nargs=+ Rg call myrc#AsyncRun(<q-args>)
 " ========== SimpleSuperTab ==========
 "{{{
 " 需要把 completeopt 设置为 menuone
-inoremap <C-Tab> <Tab>
+inoremap <M-i> <Tab>
 inoremap <silent> <Tab> <C-r>=<SID>i_Tab_plus()<CR>
-inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<C-d>"
 
 function! s:i_Tab_plus() "{{{2
     let preChar = getline('.')[col('.') - 2]
@@ -1062,18 +1063,6 @@ function! PreviewWord() "{{{2
 endfunction
 "}}}2
 "}}}
-" ========== 取色器，配合 colorsel 使用 ==========
-"{{{
-"nnoremap <Leader>c :execute "ColorSel " . <SID>PickColor2Colorsel()<CR>
-function! s:PickColor2Colorsel() "{{{2
-    if !exists("$DISPLAY") || !executable("colorpicker")
-        return ""
-    endif
-    let l:color = substitute(system("colorpicker"), '\n', '', '')
-    return l:color
-endfunction
-"}}}2
-"}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
 "{{{
 autocmd BufReadPost * nested call <SID>FixDosFmt()
@@ -1087,8 +1076,9 @@ function! s:FixDosFmt() "{{{2
     let nRet = search('\r$', 'nc', nStopLine, nTimeOut)
     if nRet > 0
         e ++ff=dos
-        "redraw
-        "echo 'File format has been set to UNIX.'
+        echohl WarningMsg
+        echomsg "'fileformat' of buffer" bufname('%') 'has been set to dos'
+        echohl None
     endif
 endfunction
 "}}}2
