@@ -947,8 +947,7 @@ endfunction
 
 call s:SetupColorscheme()
 
-"command! -nargs=+ Rg AsyncRun rg --vimgrep <args>
-command! -nargs=+ Rg call myrc#AsyncRun(<q-args>)
+command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#AsyncRun(<q-args>)
 
 " ==========================================================
 " 自己的简易插件

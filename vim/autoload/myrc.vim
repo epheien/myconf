@@ -281,4 +281,17 @@ func s:realpath(path)
     return resolve(fnamemodify(a:path, ':p'))
 endfunc
 
+func myrc#FileComplete(ArgLead, CmdLine, CursorPos)
+    let head = substitute(a:CmdLine, '^\s*Rg\s\+', '', 'g')
+    " 暂时只处理部分转义字符，对于自己来说，足够使用了
+    let head = substitute(head, '\\\([\\ \t%|]\)', '\1', 'g')
+    if head !~# '/$'
+        if isdirectory(head)
+            return [fnameescape(head) . '/']
+        endif
+    endif
+    let result = glob(head . '*', 0, 1)
+    return map(result, {idx, val -> isdirectory(val) ? fnameescape(val).'/' : fnameescape(val)})
+endfunc
+
 " vim: fdm=indent fen fdl=0 et sts=4
