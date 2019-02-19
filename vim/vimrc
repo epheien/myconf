@@ -392,6 +392,15 @@ autocmd! BufNewFile,BufRead *.txt
 " ============================================================================
 " 常规键盘映射
 " ============================================================================
+" 最常用的复制粘贴
+if has('gui_running') || has('gui_macvim') || (has('nvim') && has('mac'))
+    vnoremap <C-x> "+x
+    vnoremap <C-c> "+y
+    vnoremap <C-v> "+gP
+    nnoremap <C-v> "+gP
+    cnoremap <C-v> <C-r>+
+    inoremap <C-v> <C-r>+
+endif
 
 " ======================================
 " 普通模式
@@ -434,9 +443,6 @@ nnoremap ; :
 " stty -ixon
 nnoremap <silent> <C-s> :update<CR>
 nnoremap T :tag<CR>
-if has('gui_running') || has('gui_macvim')
-    nnoremap <C-v> "+gP
-endif
 
 " 交换 ' 和 `，因为 ` 比 ' 常用但太远
 nnoremap ' `
@@ -453,18 +459,10 @@ cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-d> <Del>
-if has('gui_running') || has('gui_macvim')
-    cnoremap <C-v> <C-r>+
-endif
 
 "=======================================
 " 可视和选择模式
 "=======================================
-if has('gui_running') || has('gui_macvim')
-    vnoremap <C-x> "+x
-    vnoremap <C-c> "+y
-    vnoremap <C-v> "+gP
-endif
 vnoremap <silent> <C-s> <C-c>:update<CR>
 "vnoremap y "+y
 "vnoremap x "+x
@@ -523,9 +521,6 @@ inoremap <C-o> <End><CR>
 inoremap <expr> <C-e> pumvisible()?"\<C-e>":"\<End>"
 inoremap <C-a> <Home>
 inoremap <C-d> <Del>
-if has('gui_running') || has('gui_macvim')
-    inoremap <C-v> <C-r>+
-endif
 
 "inoremap <C-z> <C-o>u
 "inoremap <C-r> <C-o><C-r>
