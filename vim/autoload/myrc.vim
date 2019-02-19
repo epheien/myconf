@@ -54,7 +54,7 @@ function myrc#VGtagsInit() abort
     endif
     let s:gtags_files_dict = {}
     for file in l:gtags_files
-        let s:gtags_files_dict[resolve(file)] = 1
+        let s:gtags_files_dict[s:realpath(file)] = 1
     endfor
     let dict = {'cwd': getcwd()}
     function! s:exit_cb(job, code) dict
@@ -80,7 +80,7 @@ function myrc#UpdateGtags(fname)
     if !cscope_connection(1, 'GTAGS')
         return
     endif
-    let fname = resolve(a:fname)
+    let fname = s:realpath(a:fname)
     if !has_key(s:gtags_files_dict, fname)
         return
     endif
@@ -131,7 +131,7 @@ function! myrc#CscopeAdd(name, ...) " ... -> refresh_gtags_files
             let gtags_files = readfile(s:joinpath(prepath, 'gtags.files'))
             call filter(s:gtags_files_dict, 0)
             for file in gtags_files
-                let s:gtags_files_dict[resolve(file)] = 1
+                let s:gtags_files_dict[s:realpath(file)] = 1
             endfor
         endif
         augroup myrc_gtags
@@ -275,6 +275,10 @@ func myrc#RepeatCommand()
     endif
     let s:last_repeat = now
     normal! @:
+endfunc
+
+func s:realpath(path)
+    return resolve(fnamemodify(a:path, ':p'))
 endfunc
 
 " vim: fdm=indent fen fdl=0 et sts=4
