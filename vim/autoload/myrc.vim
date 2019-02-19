@@ -179,4 +179,102 @@ function! myrc#AsyncRun(qargs)
     call asyncrun#run(0, '', 'rg --vimgrep ' . a:qargs)
 endfunction
 
+" ========== 在预览窗口显示标签内容 ==========
+"nnoremap <silent> <CR> :call PreviewWord()<CR>
+function! PreviewWord() "{{{2
+    " quickfix窗口和命令窗口不映射
+    if &ft ==# 'qf' ||
+            \ (bufname('%') ==# '[Command Line]' && &buftype ==# 'nofile')
+        exec "normal! \<CR>"
+        return
+    endif
+
+    if &previewwindow
+        let flag = 1
+    else
+        let flag = 0
+    endif
+
+    let orgbuf = bufnr('%')
+    let w = expand("<cword>")       " 在当前光标位置抓词
+    if w =~ '\a'                    " 如果该单词包括一个字母
+        let l:bak_shm = &shm
+        let l:bak_ei = &ei
+        set eventignore+=BufEnter,WinEnter,BufWinEnter "TODO: 需要更好的方案
+        set shortmess+=A
+
+        if &filetype == "help"
+            exec "normal! \<C-w>}"
+        else
+            try
+                exec "ptag " . w
+            catch
+                let &shm = l:bak_shm
+                let &ei = l:bak_ei
+                return
+            endtry
+        endif
+
+        let &shm = l:bak_shm
+        let &ei = l:bak_ei
+
+        let orgWinnr = winnr()
+
+        " 跳转至预览窗口
+        try
+            noautocmd wincmd P
+        catch /.*/
+            return
+        endtry
+        if &previewwindow           " 如果确实转到了预览窗口……
+
+"           if !buflisted(orgbuf)   " 如果需要打开的预览缓冲没有在可用缓冲列表
+"               setlocal buftype=nowrite
+"               setlocal bufhidden=delete
+"               setlocal noswapfile
+"               setlocal nobuflisted
+"               setlocal noma
+"           endif
+
+            if has("folding")
+                silent! .foldopen   " 展开折叠的行
+            endif
+
+"           call search("$", "b")   " 到前一行的行尾
+            let w = substitute(w, '\\', '\\\\', "")
+"           call search('\<\V' . w . '\>')      " 定位光标在匹配的单词上
+            call search('\<\V' . w . '\>', "c") " 定位光标在匹配的单词上
+            " 给在此位置的单词加上匹配高亮
+            "hi PreviewWord guifg=cyan guibg=grey40 term=bold ctermbg=green
+            hi link PreviewWord Search
+            exec 'match PreviewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+            normal! zz
+
+            if flag == 0
+                " 返回原来的窗口
+                exec 'noautocmd' orgWinnr 'wincmd w'
+            endif
+        endif
+    endif
+endfunction
+"}}}2
+
+let s:last_repeat = 0
+func myrc#RepeatCommand()
+    if empty(@:)
+        return
+    endif
+    let now = localtime()
+    let diff = now - s:last_repeat
+    " 10 秒内重复的话，不提示
+    if diff >= 10
+        let answer = input('repeat command: ' . @: . ', confirm? (y/n)', 'y')
+        if answer !~? '^y'
+            return
+        endif
+    endif
+    let s:last_repeat = now
+    normal! @:
+endfunc
+
 " vim: fdm=indent fen fdl=0 et sts=4
