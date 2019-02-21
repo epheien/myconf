@@ -40,11 +40,8 @@ endif
 
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions+=M
-" 替换了工具栏的 menu.vim
 if has('gui_macvim')
     set macmeta
-else
-    runtime menu.vim
 endif
 "set guioptions-=m
 set guioptions-=t
