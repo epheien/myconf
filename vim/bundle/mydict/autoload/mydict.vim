@@ -26,7 +26,8 @@ func mydict#popup(msg)
         let done = 1
     endfor
     if done
-        popup ]mydict
+        " BUG: 选择菜单的时候，会报错
+        silent! popup ]mydict
     endif
 endfunc
 
