@@ -264,6 +264,10 @@ func myrc#RepeatCommand()
     if empty(@:)
         return
     endif
+    if &buftype =~# '\<quickfix\>'
+        exec "normal! \<CR>"
+        return
+    endif
     let now = localtime()
     let diff = now - s:last_repeat
     " 10 秒内重复的话，不提示

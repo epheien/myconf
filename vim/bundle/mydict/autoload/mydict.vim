@@ -16,6 +16,9 @@ func mydict#popup(msg)
     else
         let lines = a:msg
     endif
+    if empty(lines)
+        return
+    endif
     silent! aunmenu ]mydict
     let done = 0
     for line in lines
@@ -42,5 +45,7 @@ func mydict#Search(word)
     for line in split(get(res, 'definition', ''), "\n")
         call add(lines, '  ' . line)
     endfor
+    let num = min([&lines - 2, len(lines)])
+    call filter(lines, {idx, val -> idx < num})
     call mydict#popup(lines)
 endfunc
