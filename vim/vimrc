@@ -307,18 +307,19 @@ function s:SetupColorscheme() "{{{
         set background=dark
         try
             colorscheme gruvbox
-        catch /^E185:/
+        catch /^Vim\%((\a\+)\)\=:E185:/
+            echomsg 'colorscheme gruvbox fail, fallback to desertEx'
             colorscheme desertEx
         endtry
     elseif &t_Co == 256     " 支持 256 色的话
         set background=dark
         try
             colorscheme gruvbox
-        catch /^E185:/
+        catch /^Vim\%((\a\+)\)\=:E185:/
+            echomsg 'colorscheme gruvbox fail, fallback to desertEx'
             colorscheme desertEx256
         endtry
     else
-        colorscheme default
     endif
     if g:colors_name ==# 'gruvbox'
         " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
