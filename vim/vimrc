@@ -848,6 +848,11 @@ call plug#begin('~/.vim/plugged')
 " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
 
+" 自己的插件
+Plug 'epheien/myjl'
+Plug 'epheien/termdbg'
+Plug 'epheien/videm'
+
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 
 " deoplete (pip3 install -U neovim/pynvim)
