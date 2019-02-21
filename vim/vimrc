@@ -1089,6 +1089,7 @@ nnoremap <silent> <M-s> :TStep<CR>
 " ========== mydict ==========
 nnoremap <silent> <M-d> :call mydict#Search(expand('<cword>'))<CR>
 vnoremap <silent> <M-d> y:call mydict#Search(@")<CR>
+command! -nargs=+ Dict call mydict#Search(<q-args>)
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
