@@ -176,7 +176,7 @@ function! myrc#AsyncRun(qargs)
         catch
         endtry
     endif
-    call asyncrun#run(0, '', 'rg --vimgrep ' . a:qargs)
+    call asyncrun#run(0, '', 'rg -u --vimgrep ' . a:qargs)
 endfunction
 
 " ========== 在预览窗口显示标签内容 ==========
