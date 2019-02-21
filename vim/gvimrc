@@ -49,7 +49,4 @@ set number
     "highlight CursorIM guibg=Purple guifg=NONE
 "endif
 
-" 可设置窗口标题的命令
-command -nargs=+ Title set title | let &titlestring = <q-args>
-
 " vi:set et sts=4 sw=4:
