@@ -300,10 +300,12 @@ endif
 
 " 颜色方案
 function s:SetupColorscheme() "{{{
+    let colors_name = 'default'
     if has('gui_running')   " gui 的情况下
         set background=dark
         try
             colorscheme gruvbox
+            let colors_name = 'gruvbox'
         catch /^Vim\%((\a\+)\)\=:E185:/
             echomsg 'colorscheme gruvbox fail, fallback to desertEx'
             colorscheme desertEx
@@ -312,13 +314,14 @@ function s:SetupColorscheme() "{{{
         set background=dark
         try
             colorscheme gruvbox
+            let colors_name = 'gruvbox'
         catch /^Vim\%((\a\+)\)\=:E185:/
             echomsg 'colorscheme gruvbox fail, fallback to desertEx'
             colorscheme desertEx256
         endtry
     else
     endif
-    if g:colors_name ==# 'gruvbox'
+    if colors_name ==# 'gruvbox'
         " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
         hi! link String Constant
     endif
