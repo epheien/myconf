@@ -9,7 +9,7 @@
 if v:version < 700
   finish
 endif
-if !has('gui_running')
+if !has('gui_running') && !(has('termguicolors') && &termguicolors)
   finish
 endif
 
