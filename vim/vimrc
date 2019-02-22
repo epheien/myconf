@@ -456,6 +456,7 @@ if exists(':tmap')
     tnoremap <C-l> <C-w>l
     tnoremap <C-v> <C-w>"+
     tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
+    tnoremap <silent> <Esc> <C-\><C-n>
 endif
 nnoremap ; :
 " stty -ixon
