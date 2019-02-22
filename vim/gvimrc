@@ -7,10 +7,11 @@ else
     set guifont=monospace\ 9
 endif
 
-" 切换菜单栏与工具栏显示快捷键
+" 菜单栏
 set guioptions-=m
-" 使用非 gui 的标签页栏更美观
+" 使用非 gui 的标签页栏更美观，
 set guioptions-=e
+" 工具栏
 "set guioptions-=T
 map <silent> <F10> :call <SID>SwitchGuiOpt()<CR>
 function! s:SwitchGuiOpt()
@@ -48,5 +49,17 @@ set number
     "highlight Cursor guibg=Green guifg=NONE
     "highlight CursorIM guibg=Purple guifg=NONE
 "endif
+
+if has('gui_macvim')
+    " macvim 如果显示滚动条的话，标签也换的时候会有刷新问题
+    set guioptions-=r
+    set guioptions-=L
+    nnoremap <silent> <D-Left> :tabNext<CR>
+    nnoremap <silent> <D-Right> :tabnext<CR>
+    tnoremap <silent> <D-Left> <C-w>:tabNext<CR>
+    tnoremap <silent> <D-Right> <C-w>:tabnext<CR>
+    "nnoremap <silent> <D-Left> :tabNext <Bar> redraw!<CR>
+    "nnoremap <silent> <D-Right> :tabnext <Bar> redraw!<CR>
+endif
 
 " vi:set et sts=4 sw=4:
