@@ -576,6 +576,7 @@ let g:tagbar_width = 30
 let g:tagbar_sort = 0
 "let g:tagbar_expand = 1
 let g:tagbar_map_showproto = 'S'
+let g:tagbar_silent = 1
 if has("win32") || has("win64")
     if !executable('ctags')
         let g:tagbar_ctags_bin = $VIM . '\vimfiles\bin\ctags.exe'
