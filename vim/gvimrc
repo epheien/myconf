@@ -13,7 +13,7 @@ set guioptions-=m
 set guioptions-=e
 " 工具栏
 "set guioptions-=T
-map <silent> <F10> :call <SID>SwitchGuiOpt()<CR>
+noremap <silent> <F10> :call <SID>SwitchGuiOpt()<CR>
 function! s:SwitchGuiOpt()
     " 'mT' -> 'T' -> '' -> 'mT'
     if &guioptions =~# 'T' && &guioptions =~# 'm'
@@ -58,8 +58,20 @@ if has('gui_macvim')
     nnoremap <silent> <D-Right> :tabnext<CR>
     tnoremap <silent> <D-Left> <C-w>:tabNext<CR>
     tnoremap <silent> <D-Right> <C-w>:tabnext<CR>
-    "nnoremap <silent> <D-Left> :tabNext <Bar> redraw!<CR>
-    "nnoremap <silent> <D-Right> :tabnext <Bar> redraw!<CR>
+endif
+
+if has('terminal')
+    " why not work?
+    "tnoremap <M-.> <C-w>:<C-u>call term_sendkeys(bufnr('%'), "\<Esc>.")<CR>
+    func! s:tmap_meta(key)
+        call term_sendkeys(bufnr('%'), "\<Esc>" . a:key)
+    endfunc
+    func! s:setup_terminal_meta()
+        for i in range(65, 90) + range(97, 122)
+            exec "tnoremap <silent> <M-.> \<C-w>:call \<SID>tmap_meta('.')\<CR>"
+        endfor
+    endfunc
+    call s:setup_terminal_meta()
 endif
 
 " vi:set et sts=4 sw=4:
