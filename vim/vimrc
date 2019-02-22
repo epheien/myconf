@@ -852,6 +852,8 @@ call plug#begin('~/.vim/plugged')
 " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
 
+Plug 'mhinz/vim-startify'
+
 " 自己的插件
 Plug 'epheien/myjl'
 Plug 'epheien/termdbg'
