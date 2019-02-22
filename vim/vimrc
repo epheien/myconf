@@ -735,9 +735,7 @@ nnoremap <silent> <2-LeftMouse> :call <SID>MouseMark()<CR>
 "}}}
 " ========== vim-signature ==========
 "{{{
-" yz 留给 xptemplate 用，暂时没办法
-"let g:SignatureIncludeMarks =
-            "\ 'abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ'
+let g:SignaturePeriodicRefresh = 0
 let g:SignatureMap = {
   \ 'PlaceNextMark'      :  "m,",
   \ 'PurgeMarks'         :  "m<Space>",

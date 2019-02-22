@@ -58,7 +58,9 @@ if has('autocmd')
     " This is required to remove signs for global marks that were removed when in another window
     autocmd BufEnter,CmdwinEnter * call signature#sign#Refresh()
 
-    autocmd CursorHold * if (g:SignaturePeriodicRefresh) | call signature#sign#Refresh() | endif
+    if g:SignaturePeriodicRefresh
+      autocmd CursorHold * call signature#sign#Refresh() | endif
+    endif
   augroup END
 endif
 
