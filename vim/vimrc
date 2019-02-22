@@ -864,9 +864,16 @@ Plug 'epheien/videm'
 " deoplete (pip3 install -U neovim/pynvim)
 "Plug 'Shougo/deoplete.nvim', {'tag': '4.1'}
 " NOTE: 实测，这个版本补全菜单弹出速度比较快
-Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101'}
-Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
-Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d5ba06'}
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101',
+            \ 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101'}
+    Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
+    Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d5ba06'}
+endif
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
@@ -978,10 +985,17 @@ function! s:i_Tab_plus() "{{{2
         return "\<Tab>"
     elseif (getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.'
         return "\<C-x>\<C-o>"
-    elseif &ft ==# 'c' || &ft ==# 'cpp'
-        return "\<C-n>"
     else
-        return "\<C-x>\<C-n>"
+        if exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
+            call feedkeys("\<Plug>(neosnippet_expand_or_jump)")
+            return ''
+        else
+            if &ft ==# 'c' || &ft ==# 'cpp'
+                return "\<C-n>"
+            else
+                return "\<C-x>\<C-n>"
+            endif
+        endif
     endif
 endfunction
 "}}}2
