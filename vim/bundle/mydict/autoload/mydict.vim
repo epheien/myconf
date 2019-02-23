@@ -41,9 +41,15 @@ func mydict#Search(word)
         return
     endif
     let res = data[0]
-    let lines = [get(res, 'word', '')]
+    let word = get(res, 'word', '')
+    let dict = get(res, 'dict', '')
+    if !empty(dict)
+        let lines = [printf('%s [%s]', word, dict)]
+    else
+        let lines = [word]
+    endif
     for line in split(get(res, 'definition', ''), "\n")
-        call add(lines, '  ' . line)
+        call add(lines, ' ' . line)
     endfor
     let num = min([&lines - 2, len(lines)])
     call filter(lines, {idx, val -> idx < num})
