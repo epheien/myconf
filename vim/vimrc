@@ -1114,5 +1114,9 @@ nnoremap <silent> <C-f> :call mydict#Search(expand('<cword>'))<CR>
 vnoremap <silent> <C-f> y:call mydict#Search(@")<CR>
 command! -nargs=+ Dict call mydict#Search(<q-args>)
 
+" ========== table-mode ==========
+" 兼容 markdown 表格格式
+let g:table_mode_corner = '|'
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
