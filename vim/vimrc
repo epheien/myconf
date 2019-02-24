@@ -853,6 +853,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'mhinz/vim-startify'
+Plug 'easymotion/vim-easymotion'
 
 " 自己的插件
 Plug 'epheien/myjl'
