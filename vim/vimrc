@@ -924,7 +924,7 @@ let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'enable': {
   \     'statusline': 1,
-  \     'tabline': 0,
+  \     'tabline': 1,
   \ },
   \ 'component_function': {
   \     'myftm': 'GetFtm',
@@ -955,6 +955,7 @@ let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
 let g:lightline.separator = { 'left': '►', 'right': '◄' }
 let g:lightline.subseparator = { 'left': '', 'right': '' }
+let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
 if g:lightline.enable.statusline
     set noshowmode
 endif
@@ -964,6 +965,10 @@ function GetFI()
     let fenc = &fenc ? &fenc : &enc
     return join([ff, fenc, ft], ' ')
 endfunction
+let s:palette = g:lightline#colorscheme#wombat#palette
+let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
+let s:palette.tabline.left = [s:palette.normal.right[1]]
+unlet s:palette
 
 call s:SetupColorscheme()
 
