@@ -900,6 +900,11 @@ Plug 'vim-airline/vim-airline', {'on': 'AirlineToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 Plug 'itchyny/lightline.vim'
 
+" git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
+
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
 
@@ -1123,6 +1128,9 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 " ========== table-mode ==========
 " 兼容 markdown 表格格式
 let g:table_mode_corner = '|'
+
+" ========== git 相关 ==========
+let g:loaded_gitgutter = 1
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
