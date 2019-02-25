@@ -58,6 +58,8 @@ if has('gui_macvim')
     nnoremap <silent> <D-Right> :tabnext<CR>
     tnoremap <silent> <D-Left> <C-w>:tabNext<CR>
     tnoremap <silent> <D-Right> <C-w>:tabnext<CR>
+    inoremap <silent> <D-Left> <C-\><C-o>:tabNext<CR>
+    inoremap <silent> <D-Right> <C-\><C-o>:tabnext<CR>
 endif
 
 if has('terminal')
