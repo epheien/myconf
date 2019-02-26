@@ -325,6 +325,8 @@ function s:SetupColorscheme() "{{{
     if colors_name ==# 'gruvbox'
         " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
         hi! link String Constant
+        " 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
+        hi Cursor guifg=black guibg=yellow gui=NONE ctermfg=16 ctermbg=226 cterm=NONE
     endif
 endfunction
 "}}}
