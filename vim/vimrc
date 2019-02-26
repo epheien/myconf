@@ -979,6 +979,16 @@ let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
 let s:palette.tabline.left = [s:palette.normal.right[1]]
 unlet s:palette
 
+" 稍微定制一下 startify 的 header
+let g:startify_custom_header = [
+    \ '        __________       ______ ___                  _____            ',
+    \ '        ___  ____/__________  /__( )_______   ___   ____(_)______ ___ ',
+    \ '        __  __/  ___  __ \_  __ \|/__  ___/   __ | / /_  /__  __ `__ \',
+    \ '        _  /___  __  /_/ /  / / /  _(__  )    __ |/ /_  / _  / / / / /',
+    \ '        /_____/  _  .___//_/ /_/   /____/     _____/ /_/  /_/ /_/ /_/ ',
+    \ '                 /_/                                                  ',
+    \ ]
+
 call s:SetupColorscheme()
 
 command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#AsyncRun(<q-args>)
