@@ -29,6 +29,10 @@ else
     let s:USERRUNTIME = s:joinpath($HOME, '.vim')
 endif
 
+" vimrc 配置专用自动命令组
+augroup vimrc
+augroup END
+
 " 关闭 vi 兼容模式，否则无法使用 vim 的大部分扩展功能
 set nocompatible
 " 让退格键以现代化的方式工作
@@ -368,12 +372,10 @@ runtime ftplugin/man.vim
 " (happens when dropping a file on gvim).
 " Also don't do it when the mark is in the first line, that is the default
 " position when opening a file.
-augroup Epheien
-    autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \     exe "normal! g`\"" |
-        \ endif
-augroup End
+autocmd vimrc BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \     exe "normal! g`\"" |
+    \ endif
 
 if has('nvim')
     let g:loaded_vimcdoc = 1
@@ -459,6 +461,11 @@ if exists(':tmap')
     tnoremap <C-v> <C-w>"+
     tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
     tnoremap <silent> <Esc> <C-\><C-n>
+    if has('nvim')
+        autocmd vimrc TermOpen * if &buftype ==# 'terminal' | setl nolist nonu | endif
+    else
+        autocmd vimrc TerminalOpen * if &buftype ==# 'terminal' | setl nolist nonu | endif
+    endif
 endif
 nnoremap ; :
 " stty -ixon
