@@ -169,14 +169,16 @@ function! myrc#AlterSource()
     endif
 endfunction
 
-function! myrc#AsyncRun(qargs)
+" 简单的 rg 调用封装，固定添加 --vimgrep 参数
+function! myrc#rg(qargs) abort
     if !exists('*asyncrun#run')
         try
             exec 'AsyncRun'
         catch
         endtry
     endif
-    call asyncrun#run(0, '', 'rg -u --vimgrep ' . a:qargs)
+    call asyncrun#run(0, '', 'rg --vimgrep ' . a:qargs)
+    botright copen
 endfunction
 
 " ========== 在预览窗口显示标签内容 ==========
