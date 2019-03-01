@@ -285,8 +285,24 @@ func s:realpath(path)
     return resolve(fnamemodify(a:path, ':p'))
 endfunc
 
+func myrc#shellsplit(cmdline)
+    return split(a:cmdline, '\\\@<!\s\+')
+endfunc
+
 func myrc#FileComplete(ArgLead, CmdLine, CursorPos)
     let head = substitute(a:CmdLine, '^\s*Rg\s\+', '', 'g')
+    let args = myrc#shellsplit(head)
+    if empty(args)
+        let head = ''
+    elseif head[-2:-1] ==# '\ '
+        " abc\ |
+        let head = args[-1]
+    elseif head[-1:-1] ==# ' '
+        " abc\  |
+        let head = ''
+    else
+        let head = args[-1]
+    endif
     " 暂时只处理部分转义字符，对于自己来说，足够使用了
     let head = substitute(head, '\\\([\\ \t%|]\)', '\1', 'g')
     if head !~# '/$'
