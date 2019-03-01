@@ -861,7 +861,7 @@ call plug#begin('~/.vim/plugged')
 " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
 
-Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'easymotion/vim-easymotion'
 
 " 自己的插件
