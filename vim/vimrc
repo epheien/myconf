@@ -110,6 +110,8 @@ let g:vimsyn_noerror = 1
 let g:python_highlight_all = 1
 " 禁用很慢的语法
 let g:python_slow_sync = 0
+" 对于 lisp，使用彩虹高亮括号匹配
+let g:lisp_rainbow = 1
 
 " 文件类型的检测
 " 为特定的文件类型允许插件文件的载入
@@ -776,7 +778,7 @@ command -nargs=0 CleanSpaces silent! %s/\s\+$//g | normal! ``
 inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap <expr> " (&filetype == "vim") ? "\"" : "\"\"\<Left>"
-inoremap <expr> ' (0) ? "'" : "''\<Left>"
+inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
 
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
