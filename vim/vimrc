@@ -772,7 +772,7 @@ command -nargs=0 CSpaceMode setlocal ts=8 sts=4 sw=4 et
 command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 command -nargs=0 CSangforMode setlocal ts=4 sts=4 sw=4 noet
 " 清理后置的多余的空白
-command -nargs=0 CleanSpaces silent! %s/\s\+$//g | normal! ``
+command -nargs=0 CleanSpaces silent! %s/\s\+$//g | noh | normal! ``
 
 " 括号自动补全. 为了性能, 直接禁用闭合检查
 inoremap ( ()<Left>
