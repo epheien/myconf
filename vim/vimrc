@@ -1008,8 +1008,8 @@ command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args
 " ========== SimpleSuperTab ==========
 "{{{
 " 需要把 completeopt 设置为 menuone
-inoremap <M-i> <Tab>
 inoremap <silent> <Tab> <C-r>=<SID>i_Tab_plus()<CR>
+inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<Tab>"
 
 function! s:i_Tab_plus() "{{{2
     let preChar = getline('.')[col('.') - 2]
