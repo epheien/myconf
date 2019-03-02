@@ -915,7 +915,7 @@ Plug 'epheien/lightline.vim'
 
 " git
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
 Plug 'junegunn/gv.vim'
 
 " 本地插件的按需加载
@@ -1153,7 +1153,7 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 let g:table_mode_corner = '|'
 
 " ========== git 相关 ==========
-let g:loaded_gitgutter = 1
+"let g:loaded_gitgutter = 1
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
