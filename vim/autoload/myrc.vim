@@ -330,4 +330,104 @@ func myrc#i_CTRL_E()
     endif
 endfunc
 
+let s:popup_winid = 0
+let s:popup_orig_pos = []
+" autoclose=1
+func myrc#popup(lines, width, height, ...)
+    if !has('nvim')
+        return mydict#popup(a:lines)
+    endif
+    if !exists('*nvim_open_win')
+        return -1
+    endif
+    if s:popup_winid
+        return
+    endif
+
+    " 使用 nvim 的 floating window
+    let bak_ei = &eventignore
+    let &eventignore = 'all'    " BUG: nvim 仍然会触发 CursorMoved 事件
+    let orig_winid = win_getid()
+
+    let options = {
+            \ 'relative': 'cursor',
+            \ 'row': 1,
+            \ 'col': 0,
+            \ }
+    let enter = 1
+    " @ 创建一个 popup 窗口
+    " TODO: 窗口的尺寸受限于 &lines, &columns 以及当前的位置（无法完美实现）
+    let winid = nvim_open_win(0, enter, a:width, a:height, options)
+
+    " @ 设置窗口信息，添加内容
+    enew
+    call setwinvar(winid, '&wrap', 0)
+    call setwinvar(winid, '&winhighlight', 'Normal:Pmenu,CursorLine:PmenuSel')
+    " 以下两场产生一个临时窗口，关闭即清空
+    setlocal bufhidden=wipe colorcolumn= nobuflisted nocursorcolumn nocursorline
+    setlocal nolist nonumber norelativenumber nospell noswapfile matchpairs=
+    call append(1, a:lines)
+    " 删除多余的首行
+    1delete
+    " 锁定窗口不能修改
+    setlocal nomodifiable nomodified
+
+    autocmd BufUnload <buffer> call myrc#popup_close()
+
+    " 跳回原始窗口
+    call win_gotoid(orig_winid)
+
+    let autoclose = get(a:000, 0, 1)
+    if autoclose
+        " nvim 有 CursorMoved 的 BUG，暂时用一定的方法规避掉这个 BUG
+        let pos = getpos('.')
+        let s:popup_orig_pos = [orig_winid, pos[1], pos[2]]
+        augroup myrc_popup
+            autocmd CursorMoved * call myrc#popup_auto_close()
+            autocmd InsertEnter * call myrc#popup_auto_close(1)
+            autocmd InsertLeave * call myrc#popup_auto_close(1)
+            autocmd WinLeave * call myrc#popup_auto_close(1)
+        augroup END
+    endif
+
+    let &eventignore = bak_ei
+    let s:popup_winid = winid
+    return winid
+endfunc
+
+func myrc#popup_close()
+    if !s:popup_winid
+        return
+    endif
+    let bak_ei = &eventignore
+    let &eventignore = 'all'
+
+    let orig_winid = win_getid()
+    call win_gotoid(s:popup_winid)
+    wincmd c
+    call win_gotoid(orig_winid)
+
+    let s:popup_winid = 0
+    let &eventignore = bak_ei
+endfunc
+
+" force=0
+func myrc#popup_auto_close(...)
+    let force = get(a:000, 0, 0)
+    " 规避 nvim 的 BUG
+    if !force && !empty(s:popup_orig_pos)
+        let pos = getpos('.')
+        if win_getid() == s:popup_orig_pos[0] && pos[1] == s:popup_orig_pos[1]
+                \ && pos[2] == s:popup_orig_pos[2]
+            return
+        endif
+    endif
+    " 删除自动组
+    augroup myrc_popup
+        autocmd!
+    augroup END
+    call filter(s:popup_orig_pos, 0)
+    call myrc#popup_close()
+endfunc
+
 " vim: fdm=indent fen fdl=0 et sts=4

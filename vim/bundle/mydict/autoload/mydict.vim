@@ -1,12 +1,18 @@
 " 自用 stardict 插件，依赖 sdcv (https://github.com/Dushistov/sdcv)
 
-if exists('s:loaded') || !exists('*getjumplist')
+if exists('s:loaded')
   finish
 endif
 let s:loaded = 1
 
 func mydict#esc4menu(s)
     return substitute(escape(a:s, '. \' . "\t"), '&', '&&', 'g')
+endfunc
+
+func mydict#clearmap(key)
+    nunmap <buffer> <Esc>
+    call myrc#popup_close()
+    exec printf('call feedkeys("\<%s>")', a:key)
 endfunc
 
 " 弹出菜单，支持多行
@@ -19,6 +25,19 @@ func mydict#popup(msg)
     if empty(lines)
         return
     endif
+
+    if has('nvim')
+        let width = 1
+        for line in lines
+            let width = max([width, strwidth(line)])
+        endfor
+        call myrc#popup_close()
+        " 支持 <Esc> 关闭 popup
+        " FIXME: 直接填 "\<Esc>" 会报错，暂时原因不明
+        nnoremap <silent> <buffer> <Esc> :call mydict#clearmap("Esc")<CR>
+        return myrc#popup(lines, width, len(lines))
+    endif
+
     silent! aunmenu ]mydict
     let done = 0
     for line in lines
