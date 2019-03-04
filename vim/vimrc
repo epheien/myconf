@@ -987,12 +987,14 @@ function GetFI()
     let fenc = &fenc ? &fenc : &enc
     return join([ff, fenc, ft], ' ')
 endfunction
-if exists('g:lightline#colorscheme#wombat#palette')
+
+try
     let s:palette = g:lightline#colorscheme#wombat#palette
     let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
     let s:palette.tabline.left = [s:palette.normal.right[1]]
     unlet s:palette
-endif
+catch /.*/
+endtry
 
 " 稍微定制一下 startify 的 header
 let g:startify_custom_header = [
