@@ -354,16 +354,18 @@ set listchars=tab:▸\ ,eol:¬
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 let $LANGUAGE=''
 
-" 修复 terminal locale 错误问题
-try
-    language zh_CN.UTF-8
-catch /.*/
+if !s:IsWindowsOS()
+    " 修复 terminal locale 错误问题
     try
-        language en_US.UTF-8
+        language zh_CN.UTF-8
     catch /.*/
-        echomsg 'Failed to run :language en_US.UTF-8'
+        try
+            language en_US.UTF-8
+        catch /.*/
+            echomsg 'Failed to run :language en_US.UTF-8'
+        endtry
     endtry
-endtry
+endif
 
 " Man
 runtime ftplugin/man.vim
@@ -985,10 +987,12 @@ function GetFI()
     let fenc = &fenc ? &fenc : &enc
     return join([ff, fenc, ft], ' ')
 endfunction
-let s:palette = g:lightline#colorscheme#wombat#palette
-let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
-let s:palette.tabline.left = [s:palette.normal.right[1]]
-unlet s:palette
+if exists('g:lightline#colorscheme#wombat#palette')
+    let s:palette = g:lightline#colorscheme#wombat#palette
+    let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
+    let s:palette.tabline.left = [s:palette.normal.right[1]]
+    unlet s:palette
+endif
 
 " 稍微定制一下 startify 的 header
 let g:startify_custom_header = [
