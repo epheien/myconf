@@ -871,6 +871,8 @@ Plug 'epheien/myjl'
 Plug 'epheien/termdbg'
 Plug 'epheien/videm'
 
+Plug 'cespare/vim-toml'
+
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 
 " deoplete (pip3 install -U neovim/pynvim)
