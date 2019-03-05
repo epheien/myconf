@@ -860,7 +860,7 @@ endfunction
 
 let g:plug_window = 'new'
 " ## vim-plug
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
@@ -975,9 +975,12 @@ let g:lightline.component.filename = '%f'
 let g:lightline.component.fileflags = '%m%r'
 let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
-let g:lightline.separator = { 'left': '►', 'right': '◄' }
+if !s:IsWindowsOS()
+    " Windows 7 下面的中文要好看的话，就很难显示 unicode 了
+    let g:lightline.separator = { 'left': '►', 'right': '◄' }
+    let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
+endif
 let g:lightline.subseparator = { 'left': '', 'right': '' }
-let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
 if g:lightline.enable.statusline
     set noshowmode
 endif

@@ -1,6 +1,8 @@
 " 字体设置
 if has("win32") || has("win64")
+    set linespace=0
     set guifont=Consolas:h10:cDEFAULT
+    "set guifont=YaHei_Consolas_Hybrid:h10:cDEFAULT
 elseif has("mac")
     set guifont=Menlo:h12
 else
@@ -12,7 +14,10 @@ set guioptions-=m
 " 使用非 gui 的标签页栏更美观，
 set guioptions-=e
 " 工具栏
-"set guioptions-=T
+set guioptions-=T
+" 滚动条
+set guioptions-=r
+set guioptions-=L
 noremap <silent> <F10> :call <SID>SwitchGuiOpt()<CR>
 function! s:SwitchGuiOpt()
     " 'mT' -> 'T' -> '' -> 'mT'
