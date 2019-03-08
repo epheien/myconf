@@ -453,6 +453,16 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap ; :
+" stty -ixon
+nnoremap <silent> <C-s> :update<CR>
+nnoremap T :tag<CR>
+
+" 交换 ' 和 `，因为 ` 比 ' 常用但太远
+nnoremap ' `
+nnoremap ` '
+
+" 终端模拟器键位绑定
 if exists(':tmap')
     tnoremap <silent> <Esc> <C-\><C-n>
     if has('nvim')
@@ -477,14 +487,6 @@ if exists(':tmap')
         autocmd vimrc TerminalOpen * if &buftype ==# 'terminal' | setl nolist nonu | endif
     endif
 endif
-nnoremap ; :
-" stty -ixon
-nnoremap <silent> <C-s> :update<CR>
-nnoremap T :tag<CR>
-
-" 交换 ' 和 `，因为 ` 比 ' 常用但太远
-nnoremap ' `
-nnoremap ` '
 
 "=======================================
 " 命令行模式，包括搜索时
