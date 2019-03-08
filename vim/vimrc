@@ -578,10 +578,6 @@ inoremap <A-l> <C-Right>
 "{{{
 call pathogen#infect()
 "}}}
-" ========== matchparen ==========
-"{{{
-let matchparen_noinsert = 1
-"}}}
 " ========== tagbar ==========
 "{{{
 let g:tagbar_compact = 1
