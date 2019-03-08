@@ -454,20 +454,26 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 if exists(':tmap')
-    function s:tbs()
-        call term_sendkeys(bufnr('%'), "\<C-w>")
-    endfunction
-    tnoremap <C-\>: <C-w>:
-    tnoremap <C-h> <C-w>h
-    tnoremap <C-j> <C-w>j
-    tnoremap <C-k> <C-w>k
-    tnoremap <C-l> <C-w>l
-    tnoremap <C-v> <C-w>"+
-    tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
     tnoremap <silent> <Esc> <C-\><C-n>
     if has('nvim')
-        autocmd vimrc TermOpen * if &buftype ==# 'terminal' | setl nolist nonu | endif
+        tnoremap <C-\>: <C-\><C-n>:
+        tnoremap <C-h> <C-\><C-n><C-w>h
+        tnoremap <C-j> <C-\><C-n><C-w>j
+        tnoremap <C-k> <C-\><C-n><C-w>k
+        tnoremap <C-l> <C-\><C-n><C-w>l
+        tnoremap <C-v> <C-\><C-n>"+pa
+        autocmd vimrc TermOpen * if &buftype ==# 'terminal' | setl nolist nonu | startinsert | endif
     else
+        function s:tbs()
+            call term_sendkeys(bufnr('%'), "\<C-w>")
+        endfunction
+        tnoremap <C-\>: <C-w>:
+        tnoremap <C-h> <C-w>h
+        tnoremap <C-j> <C-w>j
+        tnoremap <C-k> <C-w>k
+        tnoremap <C-l> <C-w>l
+        tnoremap <C-v> <C-w>"+
+        tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
         autocmd vimrc TerminalOpen * if &buftype ==# 'terminal' | setl nolist nonu | endif
     endif
 endif
