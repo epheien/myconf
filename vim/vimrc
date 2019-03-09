@@ -42,11 +42,10 @@ if s:IsWindowsOS()
     set encoding=utf-8
 endif
 
-" 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
-"set guioptions+=M
 if has('gui_macvim')
     set macmeta
 endif
+" 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions-=m
 set guioptions-=t
 set winaltkeys=no
@@ -116,6 +115,7 @@ let g:lisp_rainbow = 1
 " 文件类型的检测
 " 为特定的文件类型允许插件文件的载入
 " 为特定的文件类型载入缩进文件
+" 这个命令触发载入 $VIMRUNTIME/filetype.vim
 filetype plugin indent on
 
 
@@ -141,8 +141,6 @@ set incsearch
 
 " 设置不自动备份
 set nobackup
-" 保留原始文件
-"set patchmode=.orig
 
 " 启动对鼠标的支持
 set mouse=a
@@ -197,19 +195,11 @@ inoremap <3-MiddleMouse> <Nop>
 inoremap <4-MiddleMouse> <Nop>
 
 " 全能补全禁止预览
-"set completeopt=longest,menu
-"set completeopt=menuone,preview
 set completeopt=menuone
-try
-    " 暂时不知道具体到什么版本才支持这个选项
-    set completeopt+=noinsert
-catch /.*/
-endtry
+silent! set completeopt+=noinsert
+
 " 补全窗口不用太大, 限制之
 set pumheight=5
-
-" 显示水平滚动条
-"set guioptions+=b
 
 " 修改<Leader>键，默认为 '\'
 " 重新映射的原因是，很多插件擅自映射了复杂的<Leader>绑定，导致自用的绑定不灵敏
@@ -218,23 +208,9 @@ let mapleader = "\<F12>"
 
 " 设置折叠级别: 高于此级别的折叠会被关闭
 set foldlevel=10000
-"autocmd syntax c,cpp setl foldmethod=indent foldlevel=0
 
 " 允许光标移动到刚刚超过行尾字符之后的位置
 set virtualedit=onemore,block
-
-" 标签页显示。0:1:2 = 总是不显示:超过一个才显示:总是显示
-"set showtabline=2
-
-" 自动完成扫描的文件
-" 缺省 ".,w,b,u,t,i"
-" 当前缓冲区，其他窗口的buf，其他载入的buf，卸载的buf，标签，头文件
-"set complete=.,w,b,u,t,i
-"set complete=.,t,i
-set complete=.,t,w,b,k
-
-" 注意: 打开次选项会使得某些插件无法工作。
-"set autochdir
 
 " 切换时隐藏缓冲而不是提示已修改未保存
 set hidden
@@ -248,62 +224,59 @@ endif
 " (缺省: "blank,buffers,curdir,folds,help,options,tabpages,winsize")
 set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winsize,resize
 
-" 终端环境下，设置不同模式的光标形状，如果不支持改变形状的话，不设置
-" 通用约定为：普通模式：方块(t_EI)，插入模式：条状(t_SI))，替换模式：下划线(t_SR))
-function s:SetupCursorOnTerminal() "{{{
-    let color_normal = 'grey'
-    let color_insert = 'magenta'
-    let color_exit = 'grey'
-    if &term ==# "linux" || &term ==# "fbterm"
-        " console fbterm 通用，一般用于 Linux 控制台
-        let g:loaded_vimcdoc = 0
-        set t_ve+=[?6c
-        autocmd! InsertEnter * set t_ve-=[?6c
-        autocmd! InsertLeave * set t_ve+=[?6c
-        autocmd! VimLeave * set t_ve-=[?6c
-    elseif &term ==# "xterm-256color"
-        " 支持 256 色的一般是高级终端，一般支持改变光标形状
-        if $TERM_PROGRAM =~# '\V\<iTerm'
-            " 一般现代的终端都支持这种功能，例如 iTerm2 和 konsole
-            let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-            let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-            let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-            set termguicolors
-        elseif $TERM_PROGRAM =~# '\V\<Apple_Terminal'
-            let &t_EI = "\033[1 q"
-            let &t_SI = "\033[5 q"
-            let &t_SR = "\033[4 q"
-        else
-            " gnome-terminal xterm 通用，不能改变形状，只能改变颜色
-            let &t_EI = "\<Esc>]12;" . color_normal . "\x7" " 普通模式的光标颜色
-            let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
-        endif
-    elseif &term =~# "^screen"
-        " tmux 下没有测试成功，保守起见，不处理
-        "set ttymouse=xterm2
-    elseif &term =~ 'xterm.\+'
-        " xterm
-        " 0 or 1 -> blinking block
-        " 2 -> solid block
-        " 3 -> blinking underscore
-        " 4 -> solid underscore
-        "let &t_EI = "\<Esc>[0 q"
-        "let &t_SI = "\<Esc>[3 q"
-    endif
-endfunction
-"}}}
 if !has('gui_running')
     if has('nvim')
-        :set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+        set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
           \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
           \,sm:block-blinkwait175-blinkoff150-blinkon175
     else
+        " 终端环境下，设置不同模式的光标形状，如果不支持改变形状的话，不设置
+        " 通用约定为：普通模式：方块(t_EI)，插入模式：条状(t_SI))，替换模式：下划线(t_SR))
+        function s:SetupCursorOnTerminal() "{{{
+            let color_normal = 'grey'
+            let color_insert = 'magenta'
+            let color_exit = 'grey'
+            if &term ==# "linux" || &term ==# "fbterm"
+                " console fbterm 通用，一般用于 Linux 控制台
+                let g:loaded_vimcdoc = 0
+                set t_ve+=[?6c
+                autocmd! InsertEnter * set t_ve-=[?6c
+                autocmd! InsertLeave * set t_ve+=[?6c
+                autocmd! VimLeave * set t_ve-=[?6c
+            elseif &term ==# "xterm-256color"
+                " 支持 256 色的一般是高级终端，一般支持改变光标形状
+                if $TERM_PROGRAM =~# '\V\<iTerm'
+                    " 一般现代的终端都支持这种功能，例如 iTerm2 和 konsole
+                    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+                    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+                    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+                    set termguicolors
+                elseif $TERM_PROGRAM =~# '\V\<Apple_Terminal'
+                    let &t_EI = "\033[1 q"
+                    let &t_SI = "\033[5 q"
+                    let &t_SR = "\033[4 q"
+                else
+                    " gnome-terminal xterm 通用，不能改变形状，只能改变颜色
+                    let &t_EI = "\<Esc>]12;" . color_normal . "\x7" " 普通模式的光标颜色
+                    let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
+                endif
+            elseif &term =~# "^screen"
+                " tmux 下没有测试成功，保守起见，不处理
+                "set ttymouse=xterm2
+            elseif &term =~ 'xterm.\+'
+                " xterm
+                " 0 or 1 -> blinking block
+                " 2 -> solid block
+                " 3 -> blinking underscore
+                " 4 -> solid underscore
+                "let &t_EI = "\<Esc>[0 q"
+                "let &t_SI = "\<Esc>[3 q"
+            endif
+        endfunction
+        "}}}
         call s:SetupCursorOnTerminal()
     endif
 endif
-
-" 编辑 po 文件时与中文输入法的配合
-"autocmd! syntax po set imactivatekey=C-space
 
 " 颜色方案
 function s:SetupColorscheme() "{{{
@@ -340,9 +313,6 @@ endfunction
 " 增强的命令行补全
 set wildmenu
 
-" 执行宏、寄存器和其它不通过输入的命令时屏幕不会重画
-"set lazyredraw
-
 " 设置键码延时, 避免终端下 <ESC> 的等待
 set ttimeoutlen=50
 
@@ -352,7 +322,9 @@ set list
 set listchars=tab:▸\ ,eol:¬
 
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
-let $LANGUAGE=''
+if exists('$LANGUAGE')
+    let $LANGUAGE = ''
+endif
 
 if !s:IsWindowsOS()
     " 修复 terminal locale 错误问题
@@ -368,7 +340,7 @@ if !s:IsWindowsOS()
 endif
 
 " Man
-runtime ftplugin/man.vim
+command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
 
 " 摘录自vimrc sample by Bram
 " When editing a file, always jump to the last known cursor position.
@@ -387,7 +359,7 @@ if has('nvim')
 endif
 
 " <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
-nnoremap <CR> :call myrc#RepeatCommand()<CR>
+nnoremap <silent> <CR> :call myrc#RepeatCommand()<CR>
 
 " 可设置窗口标题的命令
 command -nargs=+ Title set title | let &titlestring = <q-args>
@@ -399,21 +371,8 @@ command -nargs=+ Title set title | let &titlestring = <q-args>
 " shell 文件格式语法类型默认为 bash
 let g:is_bash = 1
 
-" ========== 特殊文件格式 ==========
-" txt2tags 格式文件高亮
-autocmd! BufNewFile,BufRead *.t2t set ft=txt2tags
-"asciidoc 格式文件高亮
-autocmd! BufNewFile,BufRead *.adc set ft=asciidoc
-" vimhelp(自定义) 格式文件高亮
-"autocmd! BufNewFile,BufRead *.vhp set tw=78 ts=4 ft=help norl
-" Org-Mode
-"autocmd BufEnter *.org call org#SetOrgFileType()
-autocmd! BufNewFile,BufRead *.org set ft=org
-" NetWide Assembly
-autocmd! BufNewFile,BufRead *.nasm setf nasm
-" rfc
-autocmd! BufNewFile,BufRead *.txt
-        \ if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
+" rfc 文件格式
+autocmd vimrc BufNewFile,BufRead *.txt if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
 
 " ============================================================================
 " 常规键盘映射
@@ -431,19 +390,9 @@ endif
 " ======================================
 " 普通模式
 " ======================================
-function! s:n_BufferDelete() "{{{
-    let curb = bufnr('%')
-    if bufnr('#') != -1
-        buffer #
-    else
-        bNext
-    endif
-    exec "bd " . curb
-endfunction
-"}}}
 nnoremap <silent> \- :set columns-=30<CR>
 nnoremap <silent> \= :set columns+=30<CR>
-nnoremap <silent> \d :call <SID>n_BufferDelete()<CR>
+nnoremap <silent> \d :call myrc#n_BufferDelete()<CR>
 nnoremap \h :cd %:p:h <Bar> pwd<CR>
 nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
 nnoremap <Space> 3<C-e>
@@ -510,15 +459,6 @@ vnoremap <silent> <C-s> <C-c>:update<CR>
 "=======================================
 " 可视模式
 "=======================================
-function! MacroComment() "{{{
-    let l:firstline = line("'<")
-    let l:lastline = line("'>")
-    let l:curline = line(".")
-    exec l:firstline . "put! ='#if 0'"
-    exec l:lastline + 1 . "put ='#endif'"
-    exec l:curline + 1
-endfunction
-"}}}
 xnoremap <Space> 3j
 xnoremap , 3k
 xnoremap ( di()<ESC>Pl
@@ -530,43 +470,20 @@ xnoremap " di""<ESC>Pl
 xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
     \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
 " C 文件的 #if 0 段落注释
-xnoremap 0 <C-c>:call MacroComment()<CR>
+xnoremap 0 <C-c>:call myrc#MacroComment()<CR>
 
 
 " ======================================
 " 插入模式下
 " ======================================
-function! s:ToggleCase() "{{{
-    let sLine = getline('.')
-    let nEndIdx = col('.') - 2
-    let sWord = matchstr(sLine[: nEndIdx], '\zs\k*\ze$')
-    if sWord ==# ''
-        return ''
-    endif
-
-    if sWord =~# '[a-z]'
-        call setline(line('.'), substitute(sLine[: nEndIdx], '\zs\k*\ze$', 
-                    \   toupper(sWord), '') . sLine[nEndIdx+1 :])
-    else
-        call setline(line('.'), substitute(sLine[: nEndIdx], '\zs\k*\ze$', 
-                    \   tolower(sWord), '') . sLine[nEndIdx+1 :])
-    endif
-
-    return ''
-endfunction
-"}}}
-"inoremap <silent> <C-s> <C-o>:update<CR>
 inoremap <silent> <C-s> <ESC>:update<CR>
 inoremap <C-o> <End><CR>
 inoremap <silent> <expr> <C-e> myrc#i_CTRL_E()
 inoremap <C-a> <Home>
 inoremap <C-d> <Del>
 
-"inoremap <C-z> <C-o>u
-"inoremap <C-r> <C-o><C-r>
 " 写 C 时麻烦的宏定义大写问题，解决！
-inoremap <silent> <expr> <C-y>
-        \ pumvisible()?"\<C-y>":"\<C-r>=<SID>ToggleCase()\<CR>"
+inoremap <silent> <expr> <C-y> pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"
 
 imap <C-h> <Left>
 imap <C-j> <Down>
@@ -788,27 +705,12 @@ inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
 
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
-inoremap <C-g> <C-r>=<SID>i_InsertHGuard()<CR>
+inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
 
 " 补全模式下的映射
 "inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
 "inoremap <expr> <ESC> pumvisible()?"\<C-e>":"\<ESC>"
 
-function! s:i_InsertHGuard() "{{{
-    let gudname = "__".substitute(toupper(expand("%:t")), "\\.", "_", "g")."__"
-    return "#ifndef ".gudname."\<CR>"."#define ".gudname."\<CR>\<CR>\<CR>\<CR>\<CR>\<CR>"."#endif /* ".gudname." */\<Up>\<Up>\<Up>"
-endfunction
-"}}}
-function! s:i_Tab_plus_old() "{{{
-    if (&filetype == "c" || &filetype == "cpp") && !pumvisible()
-        return "\<Tab>"
-    elseif !pumvisible()
-        return "\<C-x>\<C-n>"
-    elseif pumvisible()
-        return "\<C-n>"
-    endif
-endfunction
-"}}}
 function! s:i_Semicolon_plus() "{{{
     let sLine = getline('.')
     if sLine !~# '^\s*for\>' && sLine[col('.') - 1] ==# ')'
@@ -1133,11 +1035,6 @@ if !s:IsWindowsOS() && has('python3')
             \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
     autocmd InsertEnter * call deoplete#enable()
 endif
-"}}}
-" ========== nvim-complete-manager ==========
-"{{{
-"let g:cm_smart_enable = 0
-let g:cm_completeopt = 'menu,menuone,noinsert'
 "}}}
 " ========== smartim ==========
 "{{{

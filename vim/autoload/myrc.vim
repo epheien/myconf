@@ -430,4 +430,61 @@ func myrc#popup_auto_close(...)
     call myrc#popup_close()
 endfunc
 
+let s:init_man = 0
+func myrc#Man(cmd, mods, args)
+    if s:init_man
+        return
+    endif
+    exec 'delcommand' a:cmd
+    runtime ftplugin/man.vim
+    let s:init_man = 1
+    exec a:mods a:cmd a:args
+endfunc
+
+function! myrc#MacroComment() "{{{
+    let l:firstline = line("'<")
+    let l:lastline = line("'>")
+    let l:curline = line(".")
+    exec l:firstline . "put! ='#if 0'"
+    exec l:lastline + 1 . "put ='#endif'"
+    exec l:curline + 1
+endfunction
+"}}}
+
+function! myrc#ToggleCase() "{{{
+    let sLine = getline('.')
+    let nEndIdx = col('.') - 2
+    let sWord = matchstr(sLine[: nEndIdx], '\zs\k*\ze$')
+    if sWord ==# ''
+        return ''
+    endif
+
+    if sWord =~# '[a-z]'
+        call setline(line('.'), substitute(sLine[: nEndIdx], '\zs\k*\ze$',
+                    \   toupper(sWord), '') . sLine[nEndIdx+1 :])
+    else
+        call setline(line('.'), substitute(sLine[: nEndIdx], '\zs\k*\ze$',
+                    \   tolower(sWord), '') . sLine[nEndIdx+1 :])
+    endif
+
+    return ''
+endfunction
+"}}}
+
+function! myrc#i_InsertHGuard() "{{{
+    let gudname = "__".substitute(toupper(expand("%:t")), "\\.", "_", "g")."__"
+    return "#ifndef ".gudname."\<CR>"."#define ".gudname."\<CR>\<CR>\<CR>\<CR>\<CR>\<CR>"."#endif /* ".gudname." */\<Up>\<Up>\<Up>"
+endfunction
+"}}}
+
+function! myrc#n_BufferDelete()
+    let curb = bufnr('%')
+    if bufnr('#') != -1
+        buffer #
+    else
+        bNext
+    endif
+    exec "bd " . curb
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4
