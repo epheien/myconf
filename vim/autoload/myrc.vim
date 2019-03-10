@@ -130,7 +130,7 @@ function! myrc#CscopeAdd(name, ...) abort
         exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
     endif
     let &cscopeverbose = save_csverb
-    if &cscopeprg =~# '\<gtags-cscope\>'
+    if &cscopeprg =~# '\<gtags-cscope\>' && filereadable(s:joinpath(prepath, 'gtags.files'))
         let refresh_gtags_files = get(a:000, 0, 1)
         if refresh_gtags_files
             " FIXME: 不能处理编码
