@@ -81,13 +81,14 @@ function myrc#UpdateGtags(fname)
         return
     endif
     let fname = s:realpath(a:fname)
-    if !has_key(s:gtags_files_dict, fname)
+    let prepath = get(s:gtags_files_dict, fname, '')
+    if empty(prepath)
         return
     endif
     " "cd %s && %s -f %s --single-update %s"
     let prg = exepath(substitute(&cscopeprg, '-cscope\>', '', ''))
     let cmd = [prg, '--single-update', fname]
-    let s:gtags_job = job_start(cmd)
+    let s:gtags_job = job_start(cmd, {'cwd': prepath})
 endfunction
 
 " cscope 的场合，直接添加就不管了
@@ -123,9 +124,9 @@ function! myrc#CscopeAdd(name, ...) abort
     exec printf('silent! cscope kill %s %s', fnameescape(a:name), fnameescape(prepath))
     if a:name =~# '\<GTAGS$'
         " NOTE: 添加 GTAGS 的时候，只能添加当前目录下的 GTAGS
-        exec 'cd' fnameescape(prepath)
+        exec 'silent' 'cd' fnameescape(prepath)
         exec printf('cscope add %s %s', 'GTAGS', fnameescape(prepath))
-        cd -
+        silent cd -
     else
         exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
     endif
@@ -133,12 +134,17 @@ function! myrc#CscopeAdd(name, ...) abort
     if &cscopeprg =~# '\<gtags-cscope\>' && filereadable(s:joinpath(prepath, 'gtags.files'))
         let refresh_gtags_files = get(a:000, 0, 1)
         if refresh_gtags_files
-            " FIXME: 不能处理编码
-            let gtags_files = readfile(s:joinpath(prepath, 'gtags.files'))
-            call filter(s:gtags_files_dict, 0)
-            for file in gtags_files
-                let s:gtags_files_dict[s:realpath(file)] = 1
-            endfor
+            exec 'silent' 'cd' fnameescape(prepath)
+            try
+                " NOTE: 不能处理编码，一般来说，utf-8 编码的话一般不出问题
+                let gtags_files = readfile(s:joinpath(prepath, 'gtags.files'))
+                call filter(s:gtags_files_dict, 0)
+                for file in gtags_files
+                    let s:gtags_files_dict[s:realpath(file)] = prepath
+                endfor
+            finally
+                silent cd -
+            endtry
         endif
         augroup myrc_gtags
             autocmd!
