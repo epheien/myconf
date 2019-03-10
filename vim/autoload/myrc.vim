@@ -94,7 +94,8 @@ endfunction
 " gtags 的场合，以 gtags.files 为基准，作增量更新
 " gtags 的增量更新包括：添加文件，更新文件，删除文件
 " 本函数只支持 gtags 的“更新文件”情况下的增量更新
-function! myrc#CscopeAdd(name, ...) " ... -> refresh_gtags_files
+" (name, refresh_gtags_files=1)
+function! myrc#CscopeAdd(name, ...) abort
     let prepath = fnamemodify(a:name, ':p:h')
     " &cscopeprg 默认为 'cscope'
     if a:name =~# '\<GTAGS$'
@@ -106,7 +107,6 @@ function! myrc#CscopeAdd(name, ...) " ... -> refresh_gtags_files
             silent cscope kill -1
             set cscopeprg=gtags-cscope
         endif
-        "redraw
     elseif a:name =~? 'cscope'
         if !executable('cscope')
             return
@@ -115,14 +115,20 @@ function! myrc#CscopeAdd(name, ...) " ... -> refresh_gtags_files
             silent cscope kill -1
             set cscopeprg=cscope
         endif
-        "redraw
     else
         return
     endif
     let save_csverb = &cscopeverbose
     set cscopeverbose
     exec printf('silent! cscope kill %s %s', fnameescape(a:name), fnameescape(prepath))
-    exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
+    if a:name =~# '\<GTAGS$'
+        " NOTE: 添加 GTAGS 的时候，只能添加当前目录下的 GTAGS
+        exec 'cd' fnameescape(prepath)
+        exec printf('cscope add %s %s', 'GTAGS', fnameescape(prepath))
+        cd -
+    else
+        exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
+    endif
     let &cscopeverbose = save_csverb
     if &cscopeprg =~# '\<gtags-cscope\>'
         let refresh_gtags_files = get(a:000, 0, 1)
