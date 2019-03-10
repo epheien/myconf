@@ -144,6 +144,9 @@ set nobackup
 
 " 启动对鼠标的支持
 set mouse=a
+if exists('$TMUX')
+    set ttymouse=xterm2
+endif
 
 " 第一行设置tab键为4个空格，第二行设置当行之间交错时使用4个空格
 "set tabstop=4
