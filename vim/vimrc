@@ -1030,18 +1030,19 @@ endfunction
 inoremap <silent> <expr> <CR>
         \ pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
 
-if !s:IsWindowsOS() && has('python3')
+if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
     let g:deoplete#enable_at_startup = 0
-    "let g:deoplete#on_insert_enter = v:false
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
     \ })
     " Q: I don't want to see the typed word in the completion menu.
     "call deoplete#custom#source('_', 'matchers',
     "\   ['matcher_fuzzy', 'matcher_length'])
-    let g:deoplete#sources#ternjs#tern_bin =
-            \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
-    autocmd InsertEnter * call deoplete#enable()
+    if !s:IsWindowsOS()
+        let g:deoplete#sources#ternjs#tern_bin =
+                \ expand('~/.nvm/versions/node/v10.13.0/bin/tern')
+    endif
+    autocmd vimrc InsertEnter * call deoplete#enable()
 endif
 "}}}
 " ========== smartim ==========
