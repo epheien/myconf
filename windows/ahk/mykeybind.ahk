@@ -14,7 +14,10 @@
 
 #InstallKeybdHook
 #SingleInstance force
-SetTitleMatchMode 2
+; 1: 窗口标题必须以指定的 WinTitle 开头.
+; 2: 窗口标题的某个位置必须包含 WinTitle。(default)
+; 3: 窗口标题必须准确匹配 WinTitle.
+SetTitleMatchMode 3
 SendMode Input
 
 ; swap left command/windows key with left alt
@@ -24,8 +27,9 @@ SendMode Input
 ; --------------------------------------------------------------
 ; Emacs/Vim style shortcuts
 ; --------------------------------------------------------------
-#If (not WinActive("ahk_exe gvim.exe")
+#If (not WinActive("ahk_class Vim")
      and not WinActive("ahk_class FaTTY")
+     and not WinActive("ahk_class mintty")
      and not WinActive("ahk_exe nvim-qt.exe"))
 ; Emacs style shortcuts
 ^a::Send {Home}
@@ -88,6 +92,8 @@ LWin & Tab::AltTab
 ; minimize active windows
 #m::WinMinimize, A
 
+LWin & Backspace::Send ^{Backspace}
+
 ; --------------------------------------------------------------
 ; Application specific
 ; --------------------------------------------------------------
@@ -106,5 +112,7 @@ LWin & Tab::AltTab
 ; --------------------------------------------------------------
 ; Trigger
 ; --------------------------------------------------------------
+; FIXME: 无法指定起始目录
 ^#v::Run "C:\Program Files\Vim\vim81\gvim.exe"
+^#n::Run "D:\opt\Neovim\bin\nvim-qt.exe" -qwindowgeometry 720x765
 ^#t::Run "C:\Users\fxq\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\wsl-terminal"
