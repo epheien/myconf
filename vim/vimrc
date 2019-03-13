@@ -134,6 +134,8 @@ set number
 " 设定文件编码类型，彻底解决中文编码问题
 let &termencoding=&encoding
 set fileencodings=utf-8,gbk,gb18030,utf-16,ucs-bom,cp936
+" 我们统一使用 unix 风格换行
+set fileformat=unix
 
 " 设置搜索结果高亮显示
 set hlsearch
@@ -457,14 +459,15 @@ cnoremap <C-a> <Home>
 cnoremap <C-d> <Del>
 
 "=======================================
-" 可视和选择模式
+" 可视模式
 "=======================================
 vnoremap <silent> <C-s> <C-c>:update<CR>
 "vnoremap y "+y
 "vnoremap x "+x
+vnoremap $ $h
 
 "=======================================
-" 可视模式
+" 可视和选择模式
 "=======================================
 xnoremap <Space> 3j
 xnoremap , 3k
