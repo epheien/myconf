@@ -112,7 +112,7 @@ LWin & Backspace::Send ^{Backspace}
 ; --------------------------------------------------------------
 ; Trigger
 ; --------------------------------------------------------------
-; FIXME: 无法指定起始目录
-^#v::Run "C:\Program Files\Vim\vim81\gvim.exe"
+; NOTE: 通过启动快捷方式的方式来指定其他参数
+^#v::Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Vim 8.1\gVim"
 ^#n::Run "D:\opt\Neovim\bin\nvim-qt.exe" -qwindowgeometry 720x765
 ^#t::Run "C:\Users\fxq\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\wsl-terminal"
