@@ -787,6 +787,7 @@ Plug 'epheien/termdbg'
 Plug 'epheien/videm'
 
 Plug 'cespare/vim-toml'
+Plug 'kassio/neoterm', {'on': 'Tnew'}
 
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 
