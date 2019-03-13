@@ -54,7 +54,12 @@ func mydict#popup(msg)
 endfunc
 
 func mydict#Search(word)
-    let out = system('sdcv -nj ' . shellescape(a:word))
+    if has('win64') || has('win32')
+        " 先简单粗暴地实现
+        let out = system(printf('bash -c "sdcv -nj %s"', a:word))
+    else
+        let out = system('sdcv -nj ' . shellescape(a:word))
+    endif
     let data = json_decode(out)
     if empty(data)
         return
