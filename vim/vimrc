@@ -150,7 +150,7 @@ set nobackup
 
 " 启动对鼠标的支持
 set mouse=a
-if exists('$TMUX')
+if exists('$TMUX') && !has('nvim')
     set ttymouse=xterm2
 endif
 
