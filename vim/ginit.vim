@@ -4,6 +4,7 @@ if has('mac')
     set guifont=Menlo:h12
 elseif has('win32') || has('win64')
     " nvim-qt.exe -qwindowgeometry 720x765
-    set linespace=-1
+    GuiLinespace -1
 endif
 GuiTabline 0
+GuiPopupmenu 0
