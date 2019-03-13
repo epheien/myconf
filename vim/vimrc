@@ -44,6 +44,8 @@ endif
 
 if has('gui_macvim')
     set macmeta
+    " 干掉 macvim 的一些默认键位绑定
+    let macvim_skip_cmd_opt_movement = 1
 endif
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions-=m
@@ -396,6 +398,13 @@ if has('gui_running') || has('gui_macvim') || has('nvim')
     inoremap <C-v> <C-r>+
 endif
 
+nnoremap <silent> <M-h> :tabNext<CR>
+nnoremap <silent> <M-l> :tabnext<CR>
+tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
+tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
+inoremap <silent> <M-h> <C-\><C-o>:tabNext<CR>
+inoremap <silent> <M-l> <C-\><C-o>:tabnext<CR>
+
 " ======================================
 " 普通模式
 " ======================================
@@ -503,8 +512,6 @@ imap <C-b> <Left>
 imap <C-f> <Right>
 imap <C-p> <Up>
 imap <C-n> <Down>
-inoremap <A-h> <C-Left>
-inoremap <A-l> <C-Right>
 
 " ============================================================================
 " 插件设置
