@@ -30,6 +30,7 @@ SendMode Input
 #If (not WinActive("ahk_class Vim")
      and not WinActive("ahk_class FaTTY")
      and not WinActive("ahk_class mintty")
+     and not WinActive("ahk_exe Xshell.exe")
      and not WinActive("ahk_exe nvim-qt.exe"))
 ; Emacs style shortcuts
 ^a::Send {Home}
@@ -93,6 +94,10 @@ LWin & Tab::AltTab
 #m::WinMinimize, A
 
 LWin & Backspace::Send ^{Backspace}
+
+; 禁用掉烦死人的 Win 按键！
+LWin::return
+RWin::return
 
 ; --------------------------------------------------------------
 ; Application specific
