@@ -70,10 +70,14 @@ function myrc#VGtagsInit() abort
     endfunction
     let prg = exepath(substitute(&cscopeprg, '-cscope\>', '', ''))
     let options = {}
-    let options['exit_cb'] = function('s:exit_cb', [], dict)
-    let options['err_io'] = 'out'
-    let options['out_cb'] = function('s:output_cb')
-    let s:gtags_job = job_start([prg], options)
+    if has('nvim')
+        " TODO: nvim
+    else
+        let options['exit_cb'] = function('s:exit_cb', [], dict)
+        let options['err_io'] = 'out'
+        let options['out_cb'] = function('s:output_cb')
+        let s:gtags_job = job_start([prg], options)
+    endif
 endfunction
 
 function myrc#UpdateGtags(fname)
@@ -88,7 +92,11 @@ function myrc#UpdateGtags(fname)
     " "cd %s && %s -f %s --single-update %s"
     let prg = exepath(substitute(&cscopeprg, '-cscope\>', '', ''))
     let cmd = [prg, '--single-update', fname]
-    let s:gtags_job = job_start(cmd, {'cwd': prepath})
+    if has('nvim')
+        let s:gtags_job = jobstart(cmd, {'cwd': prepath})
+    else
+        let s:gtags_job = job_start(cmd, {'cwd': prepath})
+    endif
 endfunction
 
 " cscope 的场合，直接添加就不管了
