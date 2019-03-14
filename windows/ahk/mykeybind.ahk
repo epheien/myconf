@@ -73,6 +73,8 @@ SendMode Input
 
 ; Finding
 #f::Send ^f
+; BUG: 不知为何上面的绑定无法对 RWin & f 生效
+RWin & f::Send ^f
 
 ; Undo
 #z::Send ^z
@@ -90,16 +92,20 @@ SendMode Input
 #q::Send !{F4}
 
 ; Remap Windows + Tab to Alt + Tab.
-LWin & Tab::AltTab
+;LWin & Tab::AltTab
+<#Tab::AltTab
 
 ; minimize active windows
 #m::WinMinimize, A
 
-LWin & Backspace::Send ^{Backspace}
+#Backspace::Send ^{Backspace}
 
 ; 禁用掉烦死人的 Win 按键！
 LWin::return
 RWin::return
+
+; Wox
+#Space::Send !{Space}
 
 ; --------------------------------------------------------------
 ; Application specific
