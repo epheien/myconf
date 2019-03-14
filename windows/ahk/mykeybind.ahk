@@ -40,6 +40,8 @@ SendMode Input
 ^b::Send {Left}
 ^f::Send {Right}
 
+^w::Send ^{Backspace}
+
 ; Vim style shortcuts
 ^k::Send {Up}
 ^j::Send {Down}
