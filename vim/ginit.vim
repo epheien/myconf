@@ -5,6 +5,8 @@ if has('mac')
 elseif has('win32') || has('win64')
     " nvim-qt.exe -qwindowgeometry 720x765
     GuiLinespace -1
+    GuiFont! Microsoft YaHei Mono:h11
 endif
 GuiTabline 0
 GuiPopupmenu 0
+set guicursor&
