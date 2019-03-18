@@ -411,7 +411,7 @@ inoremap <silent> <M-l> <C-\><C-o>:tabnext<CR>
 nnoremap <silent> \- :set columns-=30<CR>
 nnoremap <silent> \= :set columns+=30<CR>
 nnoremap <silent> \d :call myrc#n_BufferDelete()<CR>
-nnoremap \h :cd %:p:h <Bar> pwd<CR>
+nnoremap \h :lcd %:p:h <Bar> pwd<CR>
 nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
 nnoremap <Space> 3<C-e>
 nnoremap <S-Space> 3<C-y>
@@ -725,7 +725,7 @@ inoremap <expr> ; <SID>i_Semicolon_plus()
 inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
 
 " 补全模式下的映射
-"inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
+inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
 "inoremap <expr> <ESC> pumvisible()?"\<C-e>":"\<ESC>"
 
 function! s:i_Semicolon_plus() "{{{
@@ -845,6 +845,12 @@ Plug 'epheien/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
 Plug 'junegunn/gv.vim'
+
+if s:IsWindowsOS() && !has('nvim')
+    Plug 'ncm2/ncm2'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-path'
+endif
 
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
@@ -1037,11 +1043,11 @@ function! s:my_cr_function()
     endif
 endfunction
 
-" NOTE: 修正 html 补全后不能自动缩进的问题
-inoremap <silent> <expr> <CR>
-        \ pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
-
 if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
+    " NOTE: 修正 html 补全后不能自动缩进的问题
+    inoremap <silent> <expr> <CR>
+            \ pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
+
     let g:deoplete#enable_at_startup = 0
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
@@ -1061,6 +1067,12 @@ endif
 let g:smartim_default = "com.apple.keylayout.ABC"
 let g:smartim_saved = 0
 "}}}
+" ========== ncm2 ==========
+if s:IsWindowsOS() && !has('nvim')
+    autocmd InsertEnter * call ncm2#enable_for_buffer()
+    inoremap <expr> <CR> (pumvisible() ? "\<C-r>=myrc#complete_done()\<CR>" : "\<CR>")
+endif
+
 " ========== videm ==========
 " videm 的一些扩展
 " ## gtags

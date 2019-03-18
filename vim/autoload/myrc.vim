@@ -507,4 +507,18 @@ function! myrc#n_BufferDelete()
     exec "bd " . curb
 endfunction
 
+let s:bak_ei = &ei
+function! myrc#restore_ei(...) abort
+    let &ei = s:bak_ei
+    return ''
+endfunction
+
+function! myrc#complete_done() abort
+    let s:bak_ei = &ei
+    set ei=all
+    call feedkeys("\<C-y>")
+    call timer_start(0, "myrc#restore_ei")
+    return ''
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4
