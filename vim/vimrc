@@ -400,8 +400,10 @@ endif
 
 nnoremap <silent> <M-h> :tabNext<CR>
 nnoremap <silent> <M-l> :tabnext<CR>
-tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
-tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
+if exists(':tmap')
+    tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
+    tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
+endif
 inoremap <silent> <M-h> <C-\><C-o>:tabNext<CR>
 inoremap <silent> <M-l> <C-\><C-o>:tabnext<CR>
 
@@ -433,6 +435,7 @@ nnoremap ` '
 if exists(':tmap')
     tnoremap <silent> <Esc> <C-\><C-n>
     if has('nvim')
+        command -nargs=* Terminal sp | terminal <args>
         tnoremap <C-\>: <C-\><C-n>:
         tnoremap <C-h> <C-\><C-n><C-w>h
         tnoremap <C-j> <C-\><C-n><C-w>j
@@ -441,6 +444,7 @@ if exists(':tmap')
         tnoremap <C-v> <C-\><C-n>"+pa
         autocmd vimrc TermOpen * if &buftype ==# 'terminal' | setl nolist nonu | startinsert | endif
     else
+        command -nargs=* Terminal terminal <args>
         function s:tbs()
             call term_sendkeys(bufnr('%'), "\<C-w>")
         endfunction
