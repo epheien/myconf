@@ -1071,6 +1071,7 @@ let g:smartim_saved = 0
 if s:IsWindowsOS() && !has('nvim')
     autocmd InsertEnter * call ncm2#enable_for_buffer()
     inoremap <expr> <CR> (pumvisible() ? "\<C-r>=myrc#complete_done()\<CR>" : "\<CR>")
+    let g:ncm2#complete_length = [[1, 2], [7, 2]]
 endif
 
 " ========== videm ==========
