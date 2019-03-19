@@ -323,6 +323,9 @@ endfunction
 
 " 增强的命令行补全
 set wildmenu
+if has('nvim')
+    silent! set wildoptions+=pum
+endif
 
 " 设置键码延时, 避免终端下 <ESC> 的等待
 set ttimeoutlen=50
