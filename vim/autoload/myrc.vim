@@ -373,11 +373,13 @@ func myrc#popup(lines, width, height, ...)
             \ 'relative': 'cursor',
             \ 'row': 1,
             \ 'col': 0,
+            \ 'width': a:width,
+            \ 'height': a:height,
             \ }
     let enter = 1
     " @ 创建一个 popup 窗口
     " TODO: 窗口的尺寸受限于 &lines, &columns 以及当前的位置（无法完美实现）
-    let winid = nvim_open_win(0, enter, a:width, a:height, options)
+    let winid = nvim_open_win(0, enter, options)
 
     " @ 设置窗口信息，添加内容
     enew

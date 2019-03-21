@@ -827,7 +827,10 @@ Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 Plug 'lvht/tagbar-markdown'
 
 Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
-if !has('nvim')
+
+if has('nvim')
+    Plug 'sakhnik/nvim-gdb', { 'do': ':UpdateRemotePlugins' }
+else
     Plug 'yianwillis/vimcdoc'
 endif
 
