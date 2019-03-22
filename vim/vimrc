@@ -418,9 +418,8 @@ nnoremap <silent> \= :set columns+=30<CR>
 nnoremap <silent> \d :call myrc#n_BufferDelete()<CR>
 nnoremap \h :lcd %:p:h <Bar> pwd<CR>
 nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
-nnoremap <Space> 3<C-e>
-nnoremap <S-Space> 3<C-y>
-nnoremap , 3<C-y>
+nnoremap <Space> <C-e><C-e><C-e>
+nnoremap , <C-y><C-y><C-y>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
