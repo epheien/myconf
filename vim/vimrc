@@ -437,6 +437,15 @@ nnoremap ` '
 if exists(':tmap')
     tnoremap <silent> <Esc> <C-\><C-n>
     if has('nvim')
+        func s:SetupTerminal()
+            if &buftype !=# 'terminal'
+                return
+            endif
+            setl nolist nonumber
+            let pos = getpos('.')
+            autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
+            startinsert
+        endfunc
         command -nargs=* Terminal sp | terminal <args>
         tnoremap <C-\>: <C-\><C-n>:
         tnoremap <C-h> <C-\><C-n><C-w>h
@@ -444,7 +453,7 @@ if exists(':tmap')
         tnoremap <C-k> <C-\><C-n><C-w>k
         tnoremap <C-l> <C-\><C-n><C-w>l
         tnoremap <C-v> <C-\><C-n>"+pa
-        autocmd vimrc TermOpen * if &buftype ==# 'terminal' | setl nolist nonu | startinsert | endif
+        autocmd vimrc TermOpen * call s:SetupTerminal()
     else
         command -nargs=* Terminal terminal <args>
         function s:tbs()
