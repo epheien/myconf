@@ -512,6 +512,7 @@ xnoremap 0 <C-c>:call myrc#MacroComment()<CR>
 " ======================================
 inoremap <silent> <C-s> <ESC>:update<CR>
 inoremap <C-o> <End><CR>
+inoremap <M-o> <C-\><C-o>O
 inoremap <silent> <expr> <C-e> myrc#i_CTRL_E()
 inoremap <C-a> <Home>
 inoremap <C-d> <Del>
@@ -872,6 +873,8 @@ endif
 
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
+
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 " ####
