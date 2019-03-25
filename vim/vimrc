@@ -858,7 +858,9 @@ Plug 'epheien/gruvbox'
 Plug 'vim-airline/vim-airline', {'on': 'AirlineToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 " 自己做了一些小修改
-Plug 'epheien/lightline.vim'
+if has('gui_running') || &t_Co == 256
+    Plug 'epheien/lightline.vim'
+endif
 
 " git
 Plug 'tpope/vim-fugitive'
