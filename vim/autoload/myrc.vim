@@ -506,7 +506,7 @@ function! myrc#n_BufferDelete()
     else
         bNext
     endif
-    exec "bd " . curb
+    exec "bw " . curb
 endfunction
 
 let s:bak_ei = &ei
