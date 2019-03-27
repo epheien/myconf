@@ -31,6 +31,7 @@ SendMode Input
      and not WinActive("ahk_class FaTTY")
      and not WinActive("ahk_class mintty")
      and not WinActive("ahk_exe Xshell.exe")
+     and not WinActive("ahk_exe gonvim.exe")
      and not WinActive("ahk_exe nvim-qt.exe"))
 ; Emacs style shortcuts
 ^a::Send {Home}
@@ -107,6 +108,9 @@ RWin::return
 ; Wox
 #Space::Send !{Space}
 
+;RegWrite, REG_DWORD, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Policies\System, DisableLockWorkstation, 100
+;#l::Send ^l
+
 ; --------------------------------------------------------------
 ; Application specific
 ; --------------------------------------------------------------
@@ -127,5 +131,6 @@ RWin::return
 ; --------------------------------------------------------------
 ; NOTE: 通过启动快捷方式的方式来指定其他参数
 ^#v::Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Vim 8.1\gVim"
-^#n::Run "D:\opt\Neovim\bin\nvim-qt.exe" -qwindowgeometry 720x765
-^#t::Run "C:\Users\fxq\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\wsl-terminal"
+;^#n::Run "D:\opt\Neovim\bin\nvim-qt.exe" -qwindowgeometry 720x765
+^#n::Run "D:\opt\Gonvim-0.3.4-win64-without-nvim\gonvim.exe"
+^#t::Run "C:\Users\fxq\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\WSL Terminal"
