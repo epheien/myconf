@@ -132,9 +132,15 @@ function! myrc#CscopeAdd(name, ...) abort
     exec printf('silent! cscope kill %s %s', fnameescape(a:name), fnameescape(prepath))
     if a:name =~# '\<GTAGS$'
         " NOTE: 添加 GTAGS 的时候，只能添加当前目录下的 GTAGS
-        exec 'silent' 'cd' fnameescape(prepath)
+        let flag = 0
+        if getcwd() !=# prepath
+            let flag = 1
+            exec 'silent' 'cd' fnameescape(prepath)
+        endif
         exec printf('cscope add %s %s', 'GTAGS', fnameescape(prepath))
-        silent cd -
+        if flag
+            silent cd -
+        endif
     else
         exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
     endif
