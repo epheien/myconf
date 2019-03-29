@@ -4,8 +4,8 @@ set columns=90 lines=45
 " 字体设置
 if has("win32") || has("win64")
     set linespace=-1
-    set guifont=Consolas:h11:cDEFAULT
-    set guifontwide=Microsoft_YaHei_Mono:h11:cDEFAULT
+    set guifont=DejaVu_Sans_Mono:h9
+    set guifontwide=DejaVuSansMono_YaHei_NF:h9
 elseif has("mac")
     set guifont=Menlo:h12
 else
