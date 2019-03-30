@@ -469,7 +469,7 @@ if exists(':tmap')
         tnoremap <C-l> <C-w>l
         tnoremap <C-v> <C-w>"+
         tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
-        if exists('#TerminalOpen')
+        if exists('##TerminalOpen')
             autocmd vimrc TerminalOpen * if &bt ==# 'terminal' | setl nolist nonu | endif
         endif
     endif
