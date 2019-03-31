@@ -16,6 +16,9 @@ endfunction
 function s:IsLinuxOS()
     return !s:IsWindowsOS()
 endfunction
+function s:IsMacOS()
+    return has('mac')
+endfunction
 
 function s:joinpath(...)
     let sep = '/'
@@ -526,6 +529,60 @@ function! myrc#complete_done() abort
     set ei=all
     call feedkeys("\<C-y>")
     call timer_start(0, "myrc#restore_ei")
+    return ''
+endfunction
+
+function! myrc#yankcmd()
+    if !has_key(s:, 'yankcmd')
+        let s:yankcmd = ''
+        if s:IsWindowsOS()
+            if executable('win32yank.exe')
+                let s:yankcmd = 'win32yank.exe -i'
+            endif
+        elseif s:IsMacOS()
+            if executable('pbcopy')
+                let s:yankcmd = 'pbcopy'
+            endif
+        endif
+    endif
+    return s:yankcmd
+endfunction
+
+function! myrc#pastecmd()
+    if !has_key(s:, 'pastecmd')
+        let s:pastecmd = ''
+        if s:IsWindowsOS()
+            if executable('win32yank.exe')
+                let s:pastecmd = 'win32yank.exe -o'
+            endif
+        elseif s:IsMacOS()
+            if executable('pbpaste')
+                let s:pastecmd = 'pbpaste'
+            endif
+        endif
+    endif
+    return s:pastecmd
+endfunction
+
+function! myrc#cby() abort
+    let cmd = myrc#yankcmd()
+    if empty(cmd)
+        return
+    endif
+    call system(cmd, getreg('"'))
+endfunction
+
+function! myrc#cbp() abort
+    let cmd = myrc#pastecmd()
+    if empty(cmd)
+        return ''
+    endif
+    call setreg('"', system(cmd))
+    return ''
+endfunction
+
+function! myrc#_paste()
+    call feedkeys("\<C-r>\"", 'n')
     return ''
 endfunction
 
