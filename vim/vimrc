@@ -958,7 +958,7 @@ endif
 function GetFI()
     let ff = &ff
     let ft = empty(&ft) ? 'n/a' : &ft
-    let fenc = &fenc ? &fenc : &enc
+    let fenc = empty(&fenc) ? &enc : &fenc
     return join([ff, fenc, ft], ' ')
 endfunction
 
