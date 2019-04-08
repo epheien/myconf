@@ -461,7 +461,8 @@ if exists(':tmap')
             endif
             setl nolist nonumber
             let pos = getpos('.')
-            autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
+            "autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
+            autocmd! WinEnter <buffer> if getpos('.')[1] == line('$') | star | endif
             startinsert
         endfunc
         command -nargs=* Terminal sp | terminal <args>
