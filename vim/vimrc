@@ -453,7 +453,7 @@ nnoremap ` '
 if exists(':tmap')
     " NOTE: 由于终端的转义特性，<Esc> 的识别依赖于延时，所以如果映射了这个按键
     "       的话，会导致鼠标点击的识别出问题，所以，我们不再映射 <Esc> 了
-    "tnoremap <silent> <Esc> <C-\><C-n>
+    tnoremap <silent> <C-\><C-\> <C-\><C-n>
     if has('nvim')
         func s:SetupTerminal()
             if &buftype !=# 'terminal'
