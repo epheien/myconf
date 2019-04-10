@@ -420,8 +420,13 @@ endif
 nnoremap <silent> <M-h> :tabNext<CR>
 nnoremap <silent> <M-l> :tabnext<CR>
 if exists(':tmap')
-    tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
-    tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
+    if has('nvim')
+        tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
+        tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
+    else
+        tnoremap <silent> <M-h> <C-w>:tabNext<CR>
+        tnoremap <silent> <M-l> <C-w>:tabnext<CR>
+    endif
 endif
 inoremap <silent> <M-h> <C-\><C-o>:tabNext<CR>
 inoremap <silent> <M-l> <C-\><C-o>:tabnext<CR>
