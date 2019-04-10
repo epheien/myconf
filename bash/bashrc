@@ -95,11 +95,3 @@ fi
 if [ -f ~/.myshrc ]; then
     . ~/.myshrc
 fi
-
-# cross compiler
-if [ -d "$HOME/CodeSourcery" ] ; then
-    export PATH="$PATH:$HOME/CodeSourcery/Sourcery_G++_Lite/bin"
-fi
-
-# set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
