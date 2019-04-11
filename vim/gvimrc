@@ -14,7 +14,7 @@ endif
 
 " 菜单栏
 set guioptions-=m
-" 使用非 gui 的标签页栏更美观，
+" 使用非 gui 的标签页栏更美观
 set guioptions-=e
 " 工具栏
 set guioptions-=T
