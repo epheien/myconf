@@ -12,7 +12,7 @@ if exists('g:smartim_loaded') || &cp
 endif
 let g:smartim_loaded = 1
 
-if !has('osx')
+if !has('mac')
   finish
 endif
 
@@ -34,6 +34,14 @@ endif
 
 let s:imselect_path = expand('<sfile>:p:h') . "/im-select "
 let s:smartim_debug_output = $HOME . "/vim_smartim_debug_output"
+
+function! s:job_start(cmd)
+  if has('nvim')
+    return jobstart(a:cmd)
+  else
+    return job_start(a:cmd)
+  endif
+endfunction
 
 function! Smartim_debug_print(msg)
   if g:smartim_debug == 0
@@ -68,8 +76,8 @@ function! Smartim_SelectDefault()
     return
   endif
 
-  silent let b:saved_im = job_start(s:imselect_path)
-  silent call job_start(s:imselect_path . g:smartim_default)
+  silent let b:saved_im = s:job_start(s:imselect_path)
+  silent call s:job_start(s:imselect_path . g:smartim_default)
 
   call Smartim_debug_print('b:saved_im = ' . b:saved_im)
   call Smartim_debug_print('<<< Smartim_SelectDefault returned ' . v:shell_error)
@@ -84,9 +92,9 @@ function! Smartim_SelectSaved()
 
   if exists("b:saved_im")
     if g:smartim_saved
-      silent call job_start(s:imselect_path . b:saved_im)
+      silent call s:job_start(s:imselect_path . b:saved_im)
     else
-      silent call job_start(s:imselect_path . g:smartim_default)
+      silent call s:job_start(s:imselect_path . g:smartim_default)
     endif
     call Smartim_debug_print('b:saved_im = ' . b:saved_im)
     call Smartim_debug_print('<<< Smartim_SelectSaved returned ' . v:shell_error)
