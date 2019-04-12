@@ -317,6 +317,8 @@ function s:SetupColorscheme() "{{{
         hi! link String Constant
         " 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
         hi Cursor guifg=black guibg=yellow gui=NONE ctermfg=16 ctermbg=226 cterm=NONE
+        hi IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
+        hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
     endif
 endfunction
 "}}}
