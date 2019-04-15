@@ -361,6 +361,11 @@ endif
 " Man
 command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
 
+" user PATH
+if $PATH !~ expand('~/bin')
+    let $PATH .= ':' . expand('~/bin')
+endif
+
 " 摘录自vimrc sample by Bram
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
