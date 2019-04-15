@@ -83,6 +83,23 @@ end
 initDisableForApp()
 enableKeyBind()
 
+hs.hotkey.bind({}, hs.keycodes.map["f18"], function()
+  if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
+    hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+  end
+  --hs.alert.show(hs.keycodes.currentMethod())
+end)
+
+-- 切换到中文输入法
+hs.hotkey.bind({}, hs.keycodes.map["f19"], function()
+  if (hs.keycodes.currentSourceID() ~= 'com.sogou.inputmethod.sogou.pinyin') then
+    -- BUG
+    --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
+    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+  end
+  --hs.alert.show(hs.keycodes.currentSourceID())
+end)
+
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
   hs.reload()
 end)
