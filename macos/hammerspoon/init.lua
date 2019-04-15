@@ -49,7 +49,15 @@ function disableKeybind()
   end
 end
 
-g_disableApps = {'MacVim', 'iTerm2', 'iTerm', 'Terminal', '终端', 'Parallels Desktop'}
+g_disableApps = {
+  '终端',
+  'MacVim',
+  'iTerm2',
+  'iTerm',
+  'Terminal',
+  'Parallels Desktop',
+  'gonvim',
+}
 
 g_disableApps_dict = {}
 for _, app in pairs(g_disableApps) do
