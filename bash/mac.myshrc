@@ -1,21 +1,16 @@
 stty -ixon
 
-# Setting PATH for Python 3.6
-PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
-
+# set PATH so it includes user's private bin directories
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+# gnu coreutils, ls, pwd, etc.
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 PATH="/Applications/MacVim.app/Contents/bin:$PATH"
 PATH="$HOME/node/bin:$PATH"
 PATH="/usr/local/opt/mysql-client/bin:$PATH"
-PATH="$PATH:$HOME/Library/Python/2.7/bin"
 # gnu-tar
 PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 # gopath
 PATH="$PATH:$HOME/go/bin"
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
 
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # use vim as MANPAGER
@@ -31,13 +26,6 @@ export HOMEBREW_NO_AUTO_UPDATE=true
 alias diff="diff --color=auto"
 # macOS的zcat和Linux下的行为不一致，用gzcat替代
 alias zcat=gzcat
-
-# ssh alias
-alias sshsocks5="sshpass -p 'root@sangfor' ssh -lroot -D 127.0.0.1:1080 -p2222 fanheyun -Nv"
-alias sshsocks52="ssh -lroot -D 127.0.0.1:1080 -p9078 113.52.135.160 -Nv"
-alias fanyunhk="ssh fxq@fanyunhk -p9078"
-alias bwgtiny4="sshpass -p 'root@bwgtiny4X' ssh -p29227 -lroot 172.96.247.98"
-alias sshsf="ssh -t fxq@fanyunhk -p9078 ssh -t fxq@10.7.0.254 ssh -t fxq@200.200.154.154"
 
 # 让脚本可以直接使用全局的模块
 export NODE_PATH=/Users/eph/.nvm/versions/node/v10.13.0/lib/node_modules/
@@ -66,5 +54,9 @@ function findn()
 }
 
 unset LESS
+# 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
+unset VIMRUNTIME
+unset VIM
+unset MYVIMRC
 
 # vi:set ft=sh:
