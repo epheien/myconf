@@ -57,6 +57,8 @@ g_disableApps = {
   'Terminal',
   'Parallels Desktop',
   'gonvim',
+  'VimR',
+  'Royal TSX',
 }
 
 g_disableApps_dict = {}
