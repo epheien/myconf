@@ -76,6 +76,9 @@ function initDisableForApp()
         print('activated and enableKeyBind', applicationName, application:bundleID())
         enableKeyBind()
       end
+      if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
+        hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+      end
     end
   end)
   watcher:start()
