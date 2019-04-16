@@ -586,4 +586,30 @@ function! myrc#_paste()
     return ''
 endfunction
 
+function! myrc#optionset_hook()
+    let option = expand('<amatch>')
+    if option ==# 'lines'
+        let diff = v:option_new - v:option_old
+        let op = 'add'
+        if diff < 0
+            let op = 'sub'
+        endif
+        let ppp = get(g:, 'line_ppp', 10)
+        let cmd = printf("open -g 'hammerspoon://resizeWindow?op=%s&height=%d'",
+                \        op, abs(diff) * ppp)
+        call system(cmd)
+    endif
+    if option ==# 'columns'
+        let diff = v:option_new - v:option_old
+        let op = 'add'
+        if diff < 0
+            let op = 'sub'
+        endif
+        let ppp = get(g:, 'column_ppp', 10)
+        let cmd = printf("open -g 'hammerspoon://resizeWindow?op=%s&width=%d'",
+                \        op, abs(diff) * ppp)
+        call system(cmd)
+    endif
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4

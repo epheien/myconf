@@ -1159,5 +1159,11 @@ if get(g:, 'resize_window', 0)
     unlet g:resize_window
 endif
 
+if get(g:, 'gonvim_running', 0)
+    let g:line_ppp = 14
+    let g:column_ppp = 8
+    autocmd OptionSet * call myrc#optionset_hook()
+endif
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
