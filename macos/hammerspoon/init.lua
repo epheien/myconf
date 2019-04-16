@@ -102,6 +102,44 @@ hs.hotkey.bind({}, hs.keycodes.map["f19"], function()
   --hs.alert.show(hs.keycodes.currentSourceID())
 end)
 
+function resizeWindow(op, width, height)
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+
+  if (width ~= nil and width > 0) then
+    if (op == 'add') then
+      f.w = f.w + width
+    elseif (op == 'sub') then
+      f.w = f.w - width
+    else
+      f.w = width
+    end
+  end
+  if (height ~= nil and height > 0) then
+    if (op == 'add') then
+      f.h = f.h + height
+    elseif (op == 'sub') then
+      f.h = f.h - height
+    else
+      f.h = height
+    end
+  end
+  win:setFrame(f)
+end
+
+hs.urlevent.bind("resizeWindow", function(eventName, params)
+  local width = 0
+  local height = 0
+  local op = params['op']
+  if (params['width'] ~= nil) then
+    width = tonumber(params['width'])
+  end
+  if (params['height'] ~= nil) then
+    height = tonumber(params['height'])
+  end
+  resizeWindow(op, width, height)
+end)
+
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
   hs.reload()
 end)
