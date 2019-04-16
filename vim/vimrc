@@ -240,6 +240,9 @@ if !has('gui_running')
         set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
           \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
           \,sm:block-blinkwait175-blinkoff150-blinkon175
+        if $TERM_PROGRAM =~# '\V\<iTerm'
+            set termguicolors
+        endif
     else
         " 终端环境下，设置不同模式的光标形状，如果不支持改变形状的话，不设置
         " 通用约定为：普通模式：方块(t_EI)，插入模式：条状(t_SI))，替换模式：下划线(t_SR))
