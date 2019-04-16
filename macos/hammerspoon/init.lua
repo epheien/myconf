@@ -36,8 +36,8 @@ function enableKeyBind()
     g_keyBinds['p'] = hs.hotkey.bind({'ctrl'}, 'p', keyCode('up'),    nil, keyCode('up'))
     g_keyBinds['f'] = hs.hotkey.bind({'ctrl'}, 'f', keyCode('right'), nil, keyCode('right'))
 
-    g_keyBinds['a'] = hs.hotkey.bind({'ctrl'}, 'a', keyCode('home'), nil, keyCode('home'))
-    g_keyBinds['e'] = hs.hotkey.bind({'ctrl'}, 'e', keyCode('end'),   nil, keyCode('end'))
+    --g_keyBinds['a'] = hs.hotkey.bind({'ctrl'}, 'a', keyCode('home'), nil, keyCode('home'))
+    --g_keyBinds['e'] = hs.hotkey.bind({'ctrl'}, 'e', keyCode('end'),   nil, keyCode('end'))
     g_keyBinds['w'] = hs.hotkey.bind({'ctrl'}, 'w', keyCode('delete', {'alt'}), nil, keyCode('delete', {'alt'}))
     g_keyBinds['u'] = hs.hotkey.bind({'ctrl'}, 'u', keyCode('delete', {'cmd'}), nil, keyCode('delete', {'cmd'}))
   end
