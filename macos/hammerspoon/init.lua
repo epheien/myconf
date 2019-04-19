@@ -72,12 +72,13 @@ function initDisableForApp()
       if g_disableApps_dict[applicationName] ~= nil then
         print('activated and disableKeybind', applicationName, application:bundleID())
         disableKeybind()
+        -- 只在特定 app 启用默认输入法
+        if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
+          hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+        end
       else
         print('activated and enableKeyBind', applicationName, application:bundleID())
         enableKeyBind()
-      end
-      if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-        hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
       end
     end
   end)
