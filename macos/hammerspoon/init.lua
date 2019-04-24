@@ -59,6 +59,7 @@ g_disableApps = {
   'gonvim',
   'VimR',
   'Royal TSX',
+  'Neovim',
 }
 
 g_disableApps_dict = {}

@@ -42,6 +42,9 @@ if s:IsWindowsOS()
     set encoding=utf-8
 endif
 
+" 不强制在末尾添加换行符，兼容其他编辑器的行为
+"set nofixendofline
+
 if has('gui_macvim')
     set macmeta
     " 干掉 macvim 的一些默认键位绑定
