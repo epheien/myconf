@@ -43,7 +43,7 @@ if s:IsWindowsOS()
 endif
 
 " 不强制在末尾添加换行符，兼容其他编辑器的行为
-set nofixendofline
+"set nofixendofline
 
 if has('gui_macvim')
     set macmeta
