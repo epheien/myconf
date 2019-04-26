@@ -843,6 +843,10 @@ call plug#begin()
 " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
 
+" brew install fzf
+Plug '/usr/local/opt/fzf', {'on': 'Rg'}
+Plug 'junegunn/fzf.vim', {'on': 'Rg'}
+
 Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'easymotion/vim-easymotion'
 
@@ -1006,7 +1010,7 @@ let g:startify_custom_header = [
 
 call s:SetupColorscheme()
 
-if !exists(':Rg')
+if exists(':Rg') != 2
     command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
 endif
 
