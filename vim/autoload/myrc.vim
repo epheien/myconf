@@ -132,7 +132,7 @@ function! myrc#CscopeAdd(name, ...) abort
     endif
     let save_csverb = &cscopeverbose
     set cscopeverbose
-    exec printf('silent! cscope kill %s %s', fnameescape(a:name), fnameescape(prepath))
+    "exec printf('silent! cscope kill %s %s', fnameescape(a:name), fnameescape(prepath))
     if a:name =~# '\<GTAGS$'
         " NOTE: 添加 GTAGS 的时候，只能添加当前目录下的 GTAGS
         let flag = 0
@@ -140,10 +140,13 @@ function! myrc#CscopeAdd(name, ...) abort
             let flag = 1
             exec 'silent' 'cd' fnameescape(prepath)
         endif
-        exec printf('cscope add %s %s', 'GTAGS', fnameescape(prepath))
-        if flag
-            silent cd -
-        endif
+        try
+            exec printf('cscope add %s %s', 'GTAGS', fnameescape(prepath))
+        finally
+            if flag
+                silent cd -
+            endif
+        endtry
     else
         exec printf('cscope add %s %s', fnameescape(a:name), fnameescape(prepath))
     endif
