@@ -1,5 +1,26 @@
 stty -ixon
 
+if [ -n "$ZSH_VERSION" ]; then
+    PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
+    # enable color support of ls and also add handy aliases
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+
+    # some more ls aliases
+    alias ll='ls -AlhF'
+    alias la='ls -A'
+    alias l='ls -CF'
+
+    bindkey "^U" backward-kill-line
+    # bash compatible ctrl-w
+    unset WORDCHARS
+fi
+
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # gnu coreutils, ls, pwd, etc.
@@ -28,7 +49,7 @@ alias diff="diff --color=auto"
 alias zcat=gzcat
 
 # 让脚本可以直接使用全局的模块
-export NODE_PATH=/Users/eph/.nvm/versions/node/v10.13.0/lib/node_modules/
+export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
 
 # 默认不加载 nvm，只有主动触发 nvm 时才加载
 function nvm()
@@ -58,5 +79,9 @@ unset LESS
 unset VIMRUNTIME
 unset VIM
 unset MYVIMRC
+
+if [ -f "$HOME/.shalias" ]; then
+    source "$HOME/.shalias"
+fi
 
 # vi:set ft=sh:
