@@ -340,7 +340,7 @@ set ttimeoutlen=50
 
 " 用空格来显示制表并同时把光标放在空白开始位置
 set list
-if &t_Co == 256
+if has('gui_running') || &t_Co == 256
     set listchars=tab:▸\ ,eol:¬
 else
     set listchars=tab:\ \ 
