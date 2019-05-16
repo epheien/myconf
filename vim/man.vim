@@ -215,6 +215,28 @@ set list listchars=tab:\ \
 " ============================================================================
 " 常规键盘映射
 " ============================================================================
+" 最常用的复制粘贴
+if has('clipboard')
+    vnoremap <C-x> "+x
+    vnoremap <C-c> "+y
+    vnoremap <C-v> "+gP
+    nnoremap <C-v> "+gP
+    inoremap <C-v> <C-r>+
+    cnoremap <C-v> <C-r>+
+    if exists(':tmap')
+        tnoremap <C-v> <C-w>"+
+    endif
+else
+    vnoremap <silent> <C-x> ""x:call myrc#cby()<CR>
+    vnoremap <silent> <C-c> ""y:call myrc#cby()<CR>
+    vnoremap <silent> <C-v> "_d:<C-u>call myrc#cbp()<CR>""gP
+    nnoremap <silent> <C-v> :call myrc#cbp()<CR>""gP
+    inoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>"
+    cnoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>
+    if exists(':tmap')
+        tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
+    endif
+endif
 
 " ======================================
 " 普通模式
