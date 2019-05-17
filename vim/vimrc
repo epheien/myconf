@@ -650,6 +650,18 @@ let g:tagbar_type_cpp = {
     \ }
 \ }
 
+" 修正 go 文件类型无法显示结构体成员的问题
+let g:tagbar_type_go = {
+    \ 'kind2scope' : {
+        \ 's' : 'struct',
+        \ 'p' : 'package',
+    \ },
+    \ 'scope2kind' : {
+        \ 'struct'  : 's',
+        \ 'package' : 'p',
+    \ }
+\ }
+
 nnoremap <Leader>t :TagbarToggle<CR>
 
 hi TagbarAccessProtected guifg=Magenta ctermfg=Magenta
