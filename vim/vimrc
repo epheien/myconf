@@ -855,6 +855,8 @@ call plug#begin()
 " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'junegunn/vim-plug'
 
+Plug 'metakirby5/codi.vim', {'on': 'Codi'}
+
 " brew install fzf
 Plug '/usr/local/opt/fzf', {'on': 'Rg'}
 Plug 'junegunn/fzf.vim', {'on': 'Rg'}
@@ -1019,6 +1021,13 @@ let g:startify_custom_header = [
     \ '        /_____/  _  .___//_/ /_/   /____/     _____/ /_/  /_/ /_/ /_/ ',
     \ '                 /_/                                                  ',
     \ ]
+
+let g:codi#interpreters = {
+   \ 'python': {
+       \ 'bin': 'python3',
+       \ 'prompt': '^\(>>>\|\.\.\.\) ',
+       \ },
+   \ }
 
 call s:SetupColorscheme()
 
