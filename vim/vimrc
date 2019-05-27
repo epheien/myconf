@@ -508,6 +508,8 @@ if exists(':tmap')
     endif
 endif
 
+nnoremap <silent> <Leader>f :FZF<CR>
+
 "=======================================
 " 命令行模式，包括搜索时
 "=======================================
@@ -907,7 +909,9 @@ Plug 'posva/vim-vue'
 Plug 'asins/vim-dict'
 Plug 'tpope/vim-surround'
 "Plug 'Yggdroot/LeaderF'
-Plug '/usr/local/opt/fzf', {'on': 'FZF'}
+" git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+" ~/.fzf/install
+Plug '~/.fzf', {'on': 'FZF'}
 Plug 'mbbill/undotree'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode'
