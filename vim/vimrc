@@ -949,6 +949,8 @@ let g:mkdp_auto_close = 0
 " 禁用 leaderf 所有缓存机制
 let g:Lf_UseCache = 0
 let g:Lf_UseMemoryCache = 0
+" 不使用版本控制机制，要的是简单粗暴直接磁盘搜索！
+let g:Lf_UseVersionControlTool = 0
 
 " gvim 下，如果使用 powerline 字体的话，就会改动默认的英文字体
 if has('gui_running')
