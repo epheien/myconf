@@ -887,6 +887,7 @@ else
 endif
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'deoplete-plugins/deoplete-jedi'
 
 Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
