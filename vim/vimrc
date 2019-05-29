@@ -654,6 +654,18 @@ let g:tagbar_type_cpp = {
 
 " 修正 go 文件类型无法显示结构体成员的问题
 let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:packages:0:0',
+        \ 'i:interfaces:0:0',
+        \ 'c:constants:0:0',
+        \ 's:structs:0:1',
+        \ 'm:struct members:0:0',
+        \ 't:types:0:1',
+        \ 'f:functions:0:1',
+        \ 'v:variables:0:0',
+    \ ],
+    \ 'sro' : '.',
     \ 'kind2scope' : {
         \ 's' : 'struct',
         \ 'p' : 'package',
