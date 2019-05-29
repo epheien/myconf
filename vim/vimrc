@@ -859,10 +859,6 @@ Plug 'junegunn/vim-plug'
 
 Plug 'metakirby5/codi.vim', {'on': 'Codi'}
 
-" brew install fzf
-Plug '/usr/local/opt/fzf', {'on': 'Rg'}
-Plug 'junegunn/fzf.vim', {'on': 'Rg'}
-
 Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'easymotion/vim-easymotion'
 
