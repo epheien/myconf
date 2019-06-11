@@ -231,7 +231,7 @@ set hidden
 
 " 显示 80 字符右边距的实现，需要 7.3 以上版本
 if version >= 703
-    set cc=81
+    set cc=81,101,121
 endif
 
 " 设置 session 文件保存的信息
