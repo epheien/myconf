@@ -301,6 +301,8 @@ endif
 " 颜色方案
 function s:SetupColorscheme() "{{{
     let colors_name = 'default'
+    " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
+    let g:gitgutter_override_sign_column_highlight = 1
     if has('gui_running')   " gui 的情况下
         set background=dark
         try
