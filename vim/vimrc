@@ -1212,7 +1212,12 @@ let g:table_mode_corner = '|'
 " ========== git 相关 ==========
 "let g:loaded_gitgutter = 1
 let g:gitgutter_diff_args = '--ignore-cr-at-eol'
-autocmd vimrc BufWritePost * if exists(':GitGutter') == 2 | GitGutter | endif
+autocmd vimrc BufWritePost * call s:GitGutter()
+func s:GitGutter()
+    if exists(':GitGutter') == 2
+        GitGutter
+    endif
+endfunc
 
 " 标识在终端使用单一实例的 vim/nvim，一般用于启动 nvim，因为 nvim gui 都是渣渣
 if get(g:, 'resize_window', 0)
