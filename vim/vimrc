@@ -721,26 +721,6 @@ let g:videm_user_options = {
     \ 'videm.wsp.ShowBriefHelp'            : 0,
     \ 'videm.wsp.SaveBeforeBuild'          : 1,
 \ }
-" ========== xptemplate ==========
-"{{{
-" 选择模式下取消 j, k 原始的行为
-snoremap j <C-g>cj
-snoremap k <C-g>ck
-
-if has('gui_running')
-    "let g:xptemplate_nav_next = '<C-CR>'
-    "let g:xptemplate_nav_prev = '<S-CR>'
-    let g:xptemplate_nav_next = '<C-o>'
-    let g:xptemplate_nav_prev = '<S-Tab>'
-else
-    let g:xptemplate_nav_next = '<C-o>'
-    let g:xptemplate_nav_prev = '<S-Tab>'
-endif
-let g:xptemplate_nav_cancel = '<C-c>'
-let g:xptemplate_key = '<C-\>'
-"inoremap <silent> <expr> <C-p> pumvisible() ? "\<C-p>" :
-            "\"\<C-r>=XPTemplateStart(0,{'k':'<C-p++'})\<CR>"
-"}}}
 " ========== mark ==========
 "{{{
 function! s:MouseMark() "{{{2
