@@ -513,7 +513,7 @@ if exists(':tmap')
     endif
 endif
 
-nnoremap <silent> <Leader>f :FZF<CR>
+nnoremap <silent> <Leader>f :Leaderf file<CR>
 
 "=======================================
 " 命令行模式，包括搜索时
