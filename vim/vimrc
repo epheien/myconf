@@ -52,6 +52,9 @@ if has('gui_macvim')
     set macmeta
     " 干掉 macvim 的一些默认键位绑定
     let macvim_skip_cmd_opt_movement = 1
+elseif has('gui_vimr')
+    " 解决终端颜色问题
+    set termguicolors
 endif
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions-=m
@@ -876,6 +879,7 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101',
             \ 'do': ':UpdateRemotePlugins' }
+    "Plug 'ncm2/float-preview.nvim'
 else
     Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101'}
     Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
@@ -884,6 +888,8 @@ endif
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'deoplete-plugins/deoplete-jedi'
+" go get -u https://github.com/stamblerre/gocode
+Plug 'deoplete-plugins/deoplete-go'
 
 Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
