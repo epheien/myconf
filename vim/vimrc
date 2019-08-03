@@ -940,7 +940,7 @@ endif
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
 
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 " ####
