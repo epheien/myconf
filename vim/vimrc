@@ -796,7 +796,6 @@ inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
 
 " 补全模式下的映射
 inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
-"inoremap <expr> <ESC> pumvisible()?"\<C-e>":"\<ESC>"
 
 function! s:i_Semicolon_plus() "{{{
     let sLine = getline('.')
@@ -877,13 +876,12 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 "Plug 'Shougo/deoplete.nvim', {'tag': '4.1'}
 " NOTE: 实测，这个版本补全菜单弹出速度比较快
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101',
-            \ 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     "Plug 'ncm2/float-preview.nvim'
 else
-    Plug 'Shougo/deoplete.nvim', {'commit': 'afd92a94bce51eb2bf83bdcab4b90acd6af44101'}
-    Plug 'roxma/nvim-yarp', {'commit': '5443ac06b3989baa9262adec810503e0234c316e'}
-    Plug 'roxma/vim-hug-neovim-rpc', {'commit': 'a18bf1ca99526a6f2140c5699ef25b4b18d5ba06'}
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -1104,55 +1102,7 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
-" 摘录自 neocomplcache
-function! s:_indent_current_line() abort
-    let pos = getpos('.')
-    let len = len(getline('.'))
-    let equalprg = &l:equalprg
-    try
-        setlocal equalprg=
-        silent normal! ==
-    finally
-        let &l:equalprg = equalprg
-        let pos[2] += len(getline('.')) - len
-        call setpos('.', pos)
-    endtry
-    return ''
-endfunction
-
-function! s:indent_current_line() abort
-    if &ft != 'html'
-        return ''
-    endif
-    " indent line matched by indentkeys
-    for word in filter(map(split(&l:indentkeys, ','),
-            \ "v:val =~ '^<.*>$' ? matchstr(v:val, '^<\\zs.*\\ze>$')
-            \                  : matchstr(v:val, ':\\|e\\|=\\zs.*')"),
-            \ "v:val != ''")
-
-        if word ==# 'e'
-            let word = 'else'
-        endif
-
-        call s:_indent_current_line()
-        break
-    endfor
-    return ''
-endfunction
-
-function! s:my_cr_function()
-    if pumvisible()
-        return "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>"
-    else
-        return "\<CR>"
-    endif
-endfunction
-
 if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
-    " NOTE: 修正 html 补全后不能自动缩进的问题
-    inoremap <silent> <expr> <CR>
-            \ pumvisible() ? "\<C-y>\<C-r>=<SID>indent_current_line()\<CR>" : "\<CR>"
-
     let g:deoplete#enable_at_startup = 0
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
