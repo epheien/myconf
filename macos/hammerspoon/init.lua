@@ -76,7 +76,8 @@ function initDisableForApp()
         disableKeybind()
         -- 只在特定 app 启用默认输入法
         if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-          hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+          --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+          hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
         end
       else
         print('activated and enableKeyBind', applicationName, application:bundleID())
@@ -93,7 +94,8 @@ enableKeyBind()
 
 hs.hotkey.bind({}, hs.keycodes.map["f18"], function()
   if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-    hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+    --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
   end
   --hs.alert.show(hs.keycodes.currentMethod())
 end)
