@@ -61,6 +61,7 @@ g_disableApps = {
   'Royal TSX',
   'Neovim',
   'TeamViewer',
+  '屏幕共享',
 }
 
 g_disableApps_dict = {}
