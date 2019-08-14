@@ -8,6 +8,25 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", function()
   hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
 end)
 
+-- 切换到英文输入法
+function toEnIM()
+  if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
+    --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+  end
+  --hs.alert.show(hs.keycodes.currentMethod())
+end
+
+-- 切换到中文输入法
+function toZhIM()
+  if (hs.keycodes.currentSourceID() ~= 'com.sogou.inputmethod.sogou.pinyin') then
+    -- BUG
+    --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
+    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+  end
+  --hs.alert.show(hs.keycodes.currentSourceID())
+end
+
 g_keyBinds = {}
 function enableKeyBind()
   local function keyCode(key, modifiers)
@@ -76,10 +95,7 @@ function initDisableForApp()
         print('activated and disableKeybind', applicationName, application:bundleID())
         disableKeybind()
         -- 只在特定 app 启用默认输入法
-        if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-          --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
-          hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
-        end
+        toEnIM()
       else
         print('activated and enableKeyBind', applicationName, application:bundleID())
         enableKeyBind()
@@ -93,22 +109,22 @@ end
 initDisableForApp()
 enableKeyBind()
 
+-- 切换到英文输入法
 hs.hotkey.bind({}, hs.keycodes.map["f18"], function()
-  if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-    --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
-    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
-  end
-  --hs.alert.show(hs.keycodes.currentMethod())
+  toEnIM()
 end)
 
 -- 切换到中文输入法
 hs.hotkey.bind({}, hs.keycodes.map["f19"], function()
-  if (hs.keycodes.currentSourceID() ~= 'com.sogou.inputmethod.sogou.pinyin') then
-    -- BUG
-    --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
-    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
-  end
-  --hs.alert.show(hs.keycodes.currentSourceID())
+  toZhIM()
+end)
+
+hs.urlevent.bind('toEnIM', function(eventName, params)
+  toEnIM()
+end)
+
+hs.urlevent.bind('toZhIM', function(eventName, params)
+  toZhIM()
 end)
 
 function resizeWindow(op, width, height)
