@@ -828,7 +828,7 @@ endfunction
 set cscopeverbose
 set cscopetagorder=0
 set cscopetag
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+set cscopequickfix=s-,c-,d-,i-,t-,e-,g-
 nnoremap <silent> <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
 nnoremap <silent> <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
 nnoremap <silent> <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
