@@ -1044,6 +1044,9 @@ if exists(':Rg') != 2
     command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
 endif
 
+" vim-go
+let g:go_fmt_autosave = 0
+
 " ==========================================================
 " 自己的简易插件
 " ==========================================================
