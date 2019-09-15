@@ -51,21 +51,35 @@ alias zcat=gzcat
 # 让脚本可以直接使用全局的模块
 export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
 
-# 默认不加载 nvm，只有主动触发 nvm 时才加载
-function nvm()
+function setup_nvm()
 {
+    if [[ $(command -v node) == /* ]]; then
+        return
+    fi
     echo 'Preparing nvm...'
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+
+function setup_node()
+{
+    setup_nvm
     nvm use stable
+}
+
+# 默认不加载 nvm，只有主动触发 nvm 时才加载
+function nvm()
+{
+    setup_nvm
+    nvm "$@"
 }
 
 function node()
 {
-    nvm
+    setup_node
     unset -f node
-    /usr/bin/env node
+    /usr/bin/env node "$@"
 }
 
 function findn()
