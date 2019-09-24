@@ -1048,6 +1048,15 @@ endif
 
 " vim-go
 let g:go_fmt_autosave = 0
+" 高亮色以 :h group-name 为指导
+" 高亮函数声明
+let g:go_highlight_functions = 1
+" 高亮函数调用
+let g:go_highlight_function_calls = 1
+hi link goFunctionCall Function
+" 高亮 x := 的 x
+let g:go_highlight_variable_declarations = 1
+hi link goVarDefs Identifier
 
 " ==========================================================
 " 自己的简易插件
