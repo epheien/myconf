@@ -562,6 +562,7 @@ xnoremap 0 <C-c>:call myrc#MacroComment()<CR>
 inoremap <silent> <C-s> <ESC>:update<CR>
 inoremap <C-o> <End><CR>
 inoremap <M-o> <C-\><C-o>O
+inoremap <C-z> <C-\><C-o>O
 inoremap <silent> <expr> <C-e> myrc#i_CTRL_E()
 inoremap <C-a> <Home>
 inoremap <C-d> <Del>
@@ -673,6 +674,7 @@ let g:tagbar_type_go = {
         \ 't:types:0:1',
         \ 'f:functions:0:1',
         \ 'v:variables:0:0',
+        \ 'a:talias:0:0',
     \ ],
     \ 'sro' : '.',
     \ 'kind2scope' : {
@@ -1057,6 +1059,8 @@ hi link goFunctionCall Function
 " 高亮 x := 的 x
 let g:go_highlight_variable_declarations = 1
 hi link goVarDefs Identifier
+" GoDoc 使用 floating window
+let g:go_doc_popup_window = 1
 
 " ==========================================================
 " 自己的简易插件
@@ -1120,10 +1124,13 @@ if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
     let g:deoplete#enable_at_startup = 0
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
+    \   'ignore_case': v:false,
+    \   'smart_case': v:false,
     \ })
+    " Use head matcher instead of fuzzy matcher
+    call deoplete#custom#source('_', 'matchers', ['matcher_head'])
     " Q: I don't want to see the typed word in the completion menu.
-    "call deoplete#custom#source('_', 'matchers',
-    "\   ['matcher_fuzzy', 'matcher_length'])
+    "call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
     autocmd vimrc InsertEnter * call deoplete#enable()
 
 " Whether to include the types of the completions in the result data. Default: 0
