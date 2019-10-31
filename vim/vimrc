@@ -1125,8 +1125,8 @@ if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
     let g:deoplete#enable_at_startup = 0
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
-    \   'ignore_case': v:false,
-    \   'smart_case': v:false,
+    \   'ignore_case': v:true,
+    \   'smart_case': v:true,
     \ })
     " Use head matcher instead of fuzzy matcher
     call deoplete#custom#source('_', 'matchers', ['matcher_head'])
