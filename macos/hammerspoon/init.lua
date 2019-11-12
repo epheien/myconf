@@ -75,6 +75,7 @@ g_disableApps = {
   'iTerm',
   'Terminal',
   'Parallels Desktop',
+  'VMware Fusion',
   'gonvim',
   'VimR',
   'Royal TSX',
