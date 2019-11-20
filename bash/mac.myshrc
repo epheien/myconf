@@ -1,7 +1,6 @@
 stty -ixon
 
 if [ -n "$ZSH_VERSION" ]; then
-    # NOTE: 不能使用 reset_color, 否则会导致 nvim 的 terminal 晃屏
     #PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
     PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m ${PROMPT}"
     # enable color support of ls and also add handy aliases
