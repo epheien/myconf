@@ -886,6 +886,7 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     "Plug 'ncm2/float-preview.nvim'
+    "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
@@ -948,7 +949,8 @@ endif
 " 本地插件的按需加载
 call s:Plug('colorizer', {'on': 'UpdateColor'})
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" {'do': 'GoUpdateBinaries'}
+Plug 'fatih/vim-go'
 
 call plug#end()
 " ####
@@ -1068,6 +1070,7 @@ let g:go_highlight_variable_declarations = 1
 hi link goVarDefs Identifier
 " GoDoc 使用 floating window
 let g:go_doc_popup_window = 1
+let g:go_debug_log_output = ''
 
 " ==========================================================
 " 自己的简易插件
