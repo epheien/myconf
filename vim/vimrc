@@ -491,9 +491,10 @@ if exists(':tmap')
                 return
             endif
             setl nolist nonumber
-            let pos = getpos('.')
             "autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
             autocmd! WinEnter <buffer> if getpos('.')[1] == line('$') | star | endif
+            " nvim 有 BUG, 某些情况下创建新窗口的时候, 会导致意外的进入插入模式
+            autocmd! WinLeave <buffer> stopinsert
             startinsert
         endfunc
         command -nargs=* Terminal sp | terminal <args>
