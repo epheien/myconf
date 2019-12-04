@@ -1071,6 +1071,7 @@ hi link goVarDefs Identifier
 " GoDoc 使用 floating window
 let g:go_doc_popup_window = 1
 let g:go_debug_log_output = ''
+let g:go_def_mapping_enabled = 0
 
 " ==========================================================
 " 自己的简易插件
