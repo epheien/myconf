@@ -1087,8 +1087,9 @@ if executable('gtags-cscope') && executable('gtags')
 endif
 " ctags 的一些参数
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" 这两个选项会导致 ctags 退出码有异常, 禁用掉
+"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " ==========================================================
 " 自己的简易插件
