@@ -875,6 +875,8 @@ Plug 'epheien/myjl'
 Plug 'epheien/termdbg'
 Plug 'epheien/videm'
 
+Plug 'ludovicchabant/vim-gutentags'
+
 Plug 'cespare/vim-toml'
 Plug 'kassio/neoterm', {'on': 'Tnew'}
 
@@ -1072,6 +1074,20 @@ hi link goVarDefs Identifier
 let g:go_doc_popup_window = 1
 let g:go_debug_log_output = ''
 let g:go_def_mapping_enabled = 0
+
+" gutentags
+let g:gutentags_file_list_command = 'cat gtags.files'
+let g:gutentags_modules = []
+if executable('ctags')
+    let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+    let g:gutentags_modules += ['gtags_cscope']
+endif
+" ctags 的一些参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " ==========================================================
 " 自己的简易插件
