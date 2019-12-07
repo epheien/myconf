@@ -1077,6 +1077,7 @@ let g:go_def_mapping_enabled = 0
 
 " gutentags
 let g:gutentags_file_list_command = 'cat gtags.files'
+let g:gutentags_project_root = ['.root']
 let g:gutentags_modules = []
 if executable('ctags')
     let g:gutentags_modules += ['ctags']
