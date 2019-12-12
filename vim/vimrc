@@ -833,6 +833,7 @@ endfunction
 
 " ========== cscope 设置 ==========
 "{{{
+set tagcase=match " 标签文件一般是区分大小写的
 set cscopeverbose
 set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
 set cscopetag
