@@ -188,7 +188,7 @@ set wrap
 set scrolloff=3
 if has('nvim')
     " nvim 下的终端模拟器的终端模式使用 scrolloff=3 会有问题
-    autocmd TermEnter * setlocal scrolloff=0
+    autocmd TermEnter * silent! call matchdelete(3) | setlocal scrolloff=0
     autocmd TermLeave * setlocal scrolloff=3
 endif
 
