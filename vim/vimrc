@@ -1015,9 +1015,9 @@ let g:lightline.component.fileflags = '%m%r'
 let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
 " ◄► ◀︎▶︎
-let g:lightline.separator = { 'left': '►', 'right': '◄' }
+"let g:lightline.separator = { 'left': '►', 'right': '◄' }
 let g:lightline.subseparator = { 'left': '', 'right': '' }
-let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
+"let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
 if g:lightline.enable.statusline
     set noshowmode
 endif
