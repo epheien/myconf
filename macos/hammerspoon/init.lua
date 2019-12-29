@@ -82,6 +82,8 @@ g_disableApps = {
   'Neovim',
   'TeamViewer',
   '屏幕共享',
+  'Emacs',
+  'Code', -- vscode
 }
 
 g_disableApps_dict = {}
