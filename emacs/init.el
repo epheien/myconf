@@ -55,6 +55,14 @@
   (set-frame-width (selected-frame) 90)
   (set-frame-height (selected-frame) 45))
 
+;; ##### 从此以下的配置全部针对安装的插件
+
+;; 初始化 elpa 的包
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
 ;; ========== evil ==========
 ;; 我只需要 vim 风格的键位
 (setq evil-want-C-i-jump t)
@@ -74,15 +82,10 @@
 (define-key evil-normal-state-map ";" 'evil-ex)
 ;; ----- evil
 
-;; 初始化 elpa 的包
-(require 'package)
-(package-initialize)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;; 使用 gruvbox 主题, 和 vim 的对比有色差, 暂时不用
+;(load-theme 'gruvbox t)
 
-;; 使用 gruvbox 主题
-(load-theme 'gruvbox t)
-
+;; 以下为 customize 模块填充
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
