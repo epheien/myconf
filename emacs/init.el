@@ -58,6 +58,9 @@
 
 ;; ##### 从此以下的配置全部针对安装的插件
 
+;; 一些固定的小插件
+(add-to-list 'load-path "~/.emacs.d/bundle")
+
 ;; 初始化 elpa 的包
 (require 'package)
 (add-to-list 'package-archives
@@ -78,10 +81,27 @@
 (define-key evil-motion-state-map (kbd "SPC") (kbd "3 C-e"))
 (define-key evil-motion-state-map "," (kbd "3 C-y"))
 (define-key evil-motion-state-map ";" 'evil-ex)
+(define-key evil-motion-state-map "\C-f" 'sdcv-search-pointer+)
+
 (define-key evil-normal-state-map (kbd "SPC") (kbd "3 C-e"))
 (define-key evil-normal-state-map "," (kbd "3 C-y"))
 (define-key evil-normal-state-map ";" 'evil-ex)
+(define-key evil-normal-state-map "\C-f" 'sdcv-search-pointer+)
 ;; ----- evil
+
+;; sdcv 词典
+(require 'sdcv)
+(setq sdcv-dictionary-data-dir (expand-file-name "~/.stardict/dic"))
+(setq sdcv-dictionary-simple-list
+      '(
+        "朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+        ))
+(setq sdcv-dictionary-complete-list
+      '(
+        "朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+        ))
 
 ;; 使用 gruvbox 主题, 和 vim 的对比有色差, 暂时不用
 ;(load-theme 'gruvbox t)
