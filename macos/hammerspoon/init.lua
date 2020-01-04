@@ -84,6 +84,7 @@ g_disableApps = {
   '屏幕共享',
   'Emacs',
   'Code', -- vscode
+  'Oni',
 }
 
 g_disableApps_dict = {}
