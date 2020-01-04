@@ -11,11 +11,6 @@
 ;; s-x -> M-x
 (global-set-key (kbd "s-x") 'execute-extended-command)
 
-;; 设置字体
-;; TODO: 优先 SF Mono, 否则 Menlo
-;(set-default-font "Menlo-12")
-(set-frame-font "SF Mono-12")
-
 ;; 禁用响铃
 (setq ring-bell-function 'ignore)
 
@@ -50,10 +45,16 @@
   )
 )
 
+;; 设置图形界面
+;; 优先使用字体 SF Mono, 否则 Menlo
 (when (window-system)
   ;(set-frame-position (selected-frame) 650 300)
-  (set-frame-width (selected-frame) 90)
-  (set-frame-height (selected-frame) 45))
+  ;(set-frame-width (selected-frame) 90)
+  ;(set-frame-height (selected-frame) 45))
+  (add-to-list 'default-frame-alist '(width . 90))
+  (add-to-list 'default-frame-alist '(height . 45))
+  (add-to-list 'default-frame-alist '(font . "Menlo-12"))
+  (add-to-list 'default-frame-alist '(font . "SF Mono-12")))
 
 ;; ##### 从此以下的配置全部针对安装的插件
 
