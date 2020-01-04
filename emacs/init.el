@@ -68,6 +68,10 @@
 (package-initialize)
 
 ;; ========== evil ==========
+;; it's still not 100% equivalent. The case when it's not same is when you quit
+;; emacs, and emacs asks if you want to save some files. In that case, pressing
+;; Esc doesn't cancel. This is the only case i know it's not same.
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 ;; 我只需要 vim 风格的键位
 (setq evil-want-C-i-jump t)
 (setq evil-want-C-u-scroll t)
