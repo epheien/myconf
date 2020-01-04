@@ -399,6 +399,7 @@ autocmd vimrc BufReadPost *
 if has('nvim')
     let g:loaded_vimcdoc = 1
     set helplang=
+    set title " nvim 一般都运行在终端, 需要显示标题以标识
 endif
 
 " <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
