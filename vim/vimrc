@@ -522,7 +522,8 @@ if exists(':tmap')
     endif
 endif
 
-nnoremap <silent> <Leader>f :Leaderf file<CR>
+nnoremap <silent> \f :Leaderf file<CR>
+nnoremap <silent> \e :Leaderf cmdHistory<CR>
 
 "=======================================
 " 命令行模式，包括搜索时
