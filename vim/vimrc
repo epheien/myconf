@@ -142,6 +142,11 @@ filetype plugin indent on
 " 显示行号
 set number
 
+" 标号栏
+if has('nvim')
+    set signcolumn=auto:9
+endif
+
 " 设定文件编码类型，彻底解决中文编码问题
 let &termencoding=&encoding
 set fileencodings=utf-8,gbk,gb18030,ucs-bom,utf-16,cp936
