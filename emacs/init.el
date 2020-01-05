@@ -4,18 +4,29 @@
 ;; cl - Common Lisp Extension
 ;(require 'cl)
 
+;; it's still not 100% equivalent. The case when it's not same is when you quit
+;; emacs, and emacs asks if you want to save some files. In that case, pressing
+;; Esc doesn't cancel. This is the only case i know it's not same.
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
 ;; 避免 emacs-mac 把 alt 改为 super
 (setq-default mac-option-modifier 'meta)
 ;; 避免 emacs-mac 把 super 改为 alt
 (setq-default mac-command-modifier 'super)
-;; s-x -> M-x
+;; s-x => M-x
 (global-set-key (kbd "s-x") 'execute-extended-command)
+;; C-x C-x => M-x
+(global-set-key "\C-x\C-x" 'execute-extended-command)
 
 ;; 禁用响铃
 (setq ring-bell-function 'ignore)
 
 ;; 显示行号
-(global-linum-mode t)
+;(global-linum-mode t)
+(setq linum-format "%3d")
+
+;; 去掉边框
+(fringe-mode '(4 . 0))
 
 ;; 回绕标识, 太丑了, 关掉!
 (global-visual-line-mode nil)
@@ -56,12 +67,56 @@
   (add-to-list 'default-frame-alist '(font . "Menlo-12"))
   (add-to-list 'default-frame-alist '(font . "SF Mono-12")))
 
-;; ##### 从此以下的配置全部针对安装的插件
+;; 干掉烦人的 customizing 写入机制
+(setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+;(when (file-exists-p custom-file)
+  ;(load custom-file))
 
-;; 一些固定的小插件
-(add-to-list 'load-path "~/.emacs.d/bundle")
+;; ==========================================================================
+;; 以下的配置全部针对插件
+;; ==========================================================================
+;; 一些固定的小插件 (undo-tree sdcv posframe ...)
+(add-to-list 'load-path (expand-file-name "bundle" user-emacs-directory))
 
-;; 初始化 elpa 的包
+;; ========== evil ==========
+;; evil 作为最基础的插件之一, 手动安装并归档! 同时从 melpa 安装是为了看帮助文件!
+;; 只需要 vim 风格的键位
+(setq evil-want-C-i-jump t)
+(setq evil-want-C-u-scroll t)
+;; 手动安装 evil:
+;;  git clone --depth 1 https://github.com/emacs-evil/evil.git
+(add-to-list 'load-path (expand-file-name "evil" user-emacs-directory))
+(require 'evil)
+(evil-mode 1)
+
+;; 定制 evil，主要是键位绑定
+;; motion (read-only) mode
+(define-key evil-motion-state-map (kbd "SPC") (kbd "3 C-e"))
+(define-key evil-motion-state-map "," (kbd "3 C-y"))
+(define-key evil-motion-state-map ";" 'evil-ex)
+(define-key evil-motion-state-map "\C-f" 'sdcv-search-pointer+)
+;; normal mode
+(define-key evil-normal-state-map (kbd "SPC") (kbd "3 C-e"))
+(define-key evil-normal-state-map "," (kbd "3 C-y"))
+(define-key evil-normal-state-map ";" 'evil-ex)
+(define-key evil-normal-state-map "\C-f" 'sdcv-search-pointer+)
+;; ----- evil
+
+;; sdcv 词典
+(require 'sdcv)
+(setq sdcv-dictionary-data-dir (expand-file-name "~/.stardict/dic"))
+(setq sdcv-dictionary-simple-list
+      '(
+        "朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+        ))
+(setq sdcv-dictionary-complete-list
+      '(
+        "朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+        ))
+
+;; ========== elpa ==========
 (require 'package)
 ;; -----
 ;; bleeding-edge
@@ -86,73 +141,105 @@ There are two things you can do about this warning:
 ;; -----
 (package-initialize)
 
+;; 使用的包
+(defvar my/packages '(
+                      use-package
+                      evil ; 安装这个是为了方便看 info
+                      which-key
+                      spacemacs-theme
+                      treemacs
+                      ))
+(setq package-selected-packages my/packages)
 
-;; ========== evil ==========
-;; it's still not 100% equivalent. The case when it's not same is when you quit
-;; emacs, and emacs asks if you want to save some files. In that case, pressing
-;; Esc doesn't cancel. This is the only case i know it's not same.
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-;; 我只需要 vim 风格的键位
-(setq evil-want-C-i-jump t)
-(setq evil-want-C-u-scroll t)
-;; 手动安装 evil:
-;;  git clone --depth 1 https://github.com/emacs-evil/evil.git
-(add-to-list 'load-path "~/.emacs.d/evil")
-(require 'evil)
-(evil-mode 1)
-
-;; 定制 evil，主要是键位绑定
-(define-key evil-motion-state-map (kbd "SPC") (kbd "3 C-e"))
-(define-key evil-motion-state-map "," (kbd "3 C-y"))
-(define-key evil-motion-state-map ";" 'evil-ex)
-(define-key evil-motion-state-map "\C-f" 'sdcv-search-pointer+)
-
-(define-key evil-normal-state-map (kbd "SPC") (kbd "3 C-e"))
-(define-key evil-normal-state-map "," (kbd "3 C-y"))
-(define-key evil-normal-state-map ";" 'evil-ex)
-(define-key evil-normal-state-map "\C-f" 'sdcv-search-pointer+)
-;; ----- evil
-
-;; sdcv 词典
-(require 'sdcv)
-(setq sdcv-dictionary-data-dir (expand-file-name "~/.stardict/dic"))
-(setq sdcv-dictionary-simple-list
-      '(
-        "朗道英汉字典5.0"
-        "朗道汉英字典5.0"
-        ))
-(setq sdcv-dictionary-complete-list
-      '(
-        "朗道英汉字典5.0"
-        "朗道汉英字典5.0"
-        ))
-
-;; theme
-(load-theme 'spacemacs-dark t)
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  ;(add-to-list 'load-path (expand-file-name "use-package" user-emacs-directory))
+  (require 'use-package))
 
 ; which-key
-(require 'which-key)
-(which-key-mode)
+(use-package which-key
+  :config
+  (which-key-mode)
+  )
 
-;; 以下为 customize 模块填充
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-    '(
-      evil
-      undo-tree
-      which-key
-      spacemacs-theme
-      neotree
-      centaur-tabs
-      )))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; theme
+(ignore-errors (load-theme 'spacemacs-dark t))
+
+;; --------------------
+;; UNSTABLE
+;; --------------------
+
+;; 从官网主页摘录
+(use-package treemacs
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-directory-name-transformer    #'identity
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-extension-regex          treemacs-last-period-regex-value
+          treemacs-file-follow-delay             0.2
+          treemacs-file-name-transformer         #'identity
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-asc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-width                         35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    (treemacs-resize-icons 12)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+;; TODO
+(with-eval-after-load "persp-mode-autoloads"
+  (setq wg-morph-on nil) ;; switch off animation
+  (setq persp-autokill-buffer-on-remove 'kill-weak)
+  (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
 
