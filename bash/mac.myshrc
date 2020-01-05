@@ -20,6 +20,13 @@ if [ -n "$ZSH_VERSION" ]; then
     bindkey "^U" backward-kill-line
     # bash compatible ctrl-w
     unset WORDCHARS
+
+    # Uncomment the following line to disable auto-setting terminal title.
+    DISABLE_AUTO_TITLE="true"
+    # 设置标题栏
+    function precmd () {
+        print -Pn - '\e]0;%1~\a'
+    }
 fi
 
 # set PATH so it includes user's private bin directories
