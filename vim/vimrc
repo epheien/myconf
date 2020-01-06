@@ -982,6 +982,10 @@ let g:Lf_UseVersionControlTool = 0
 " Up 和 Down 使用 C-P 和 C-N
 "let g:Lf_CommandMap = {'<C-K>': ['<C-P>'], '<C-J>': ['<C-N>']}
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+if has('nvim')
+    let g:Lf_WindowPosition = 'popup'
+    autocmd filetype * setl nonumber
+endif
 
 " gvim 下，如果使用 powerline 字体的话，就会改动默认的英文字体
 if has('gui_running')
