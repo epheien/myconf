@@ -118,6 +118,8 @@ set showmode
 
 " 语法高亮
 syntax on
+" 扩大正则使用的内存, 至少 20MiB
+set maxmempattern=20000
 " 禁用 vim 文件类型的错误
 let g:vimsyn_noerror = 1
 " 使用增强的 python 语法高亮的所有功能
