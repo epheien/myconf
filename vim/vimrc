@@ -984,7 +984,7 @@ let g:Lf_UseVersionControlTool = 0
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 if has('nvim')
     let g:Lf_WindowPosition = 'popup'
-    autocmd filetype * setl nonumber
+    autocmd filetype * if &ft == 'leaderf' | setl nonumber | endif
 endif
 
 " gvim 下，如果使用 powerline 字体的话，就会改动默认的英文字体
