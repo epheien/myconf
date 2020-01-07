@@ -61,12 +61,9 @@ export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
 
 function setup_nvm()
 {
-    if [[ $(command -v node) == /* ]]; then
-        return
-    fi
     echo 'Preparing nvm...'
     export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
@@ -105,6 +102,24 @@ unset MYVIMRC
 
 if [ -f "$HOME/.shalias" ]; then
     source "$HOME/.shalias"
+fi
+
+unset -f node
+DEFAULT_NODE_VERSION=10.16.0
+# Ensure we have a default node version in our PATH at startup
+if [ -d "$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin" ]; then
+    PATH="$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin:$PATH"
+else
+    output=$(ls -1 "$HOME/.nvm/versions/node" | tail -n1)
+    if [[ -n "$output" ]]; then
+        PATH="$HOME/.nvm/versions/node/$output/bin:$PATH"
+    fi
+    unset output
+fi
+
+# fuck 命令
+if command -v thefuck &>/dev/null; then
+    eval $(thefuck --alias)
 fi
 
 # vi:set ft=sh:
