@@ -14,6 +14,11 @@ function s:IsLinuxOS() "{{{
     return !s:IsWindowsOS()
 endfunction
 "}}}
+" 表示是否仅使用 ASCII 显示
+function s:OnlyASCII() "{{{
+    return !has('mac')
+endfunction
+"}}}
 function s:joinpath(...) "{{{
     let sep = '/'
     if s:IsWindowsOS()
@@ -714,8 +719,10 @@ hi link TagbarKind Constant
 "let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
 let NERDTreeIgnore = []
 let NERDTreeMapMenu = "."
-let NERDTreeDirArrowExpandable = '+'
-let NERDTreeDirArrowCollapsible = '~'
+if s:OnlyASCII()
+    let NERDTreeDirArrowExpandable = '+'
+    let NERDTreeDirArrowCollapsible = '~'
+endif
 let NERDTreeMinimalUI = 1
 "}}}
 " ========== NERD commenter ==========
@@ -917,6 +924,10 @@ Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
 Plug 'lvht/tagbar-markdown'
 
 Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
+if !s:OnlyASCII()
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'ryanoasis/vim-devicons'
+endif
 
 if has('nvim')
     Plug 'sakhnik/nvim-gdb', { 'do': ':UpdateRemotePlugins' }
