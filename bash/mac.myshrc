@@ -31,6 +31,11 @@ fi
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+# python2.7
+# wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py --user
+if [ -d "$HOME/Library/Python/2.7/bin" ]; then
+    PATH="$HOME/Library/Python/2.7/bin:$PATH"
+fi
 # gnu coreutils, ls, pwd, etc.
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 PATH="/Applications/MacVim.app/Contents/bin:$PATH"
