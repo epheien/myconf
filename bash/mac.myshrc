@@ -2,7 +2,7 @@ stty -ixon
 
 if [ -n "$ZSH_VERSION" ]; then
     #PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
-    PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m ${PROMPT}"
+    PROMPT="%B%{\$fg[red]%}%n@%{\$fg[blue]%}%m%b ${PROMPT}"
     # enable color support of ls and also add handy aliases
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
