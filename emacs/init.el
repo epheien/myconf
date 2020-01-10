@@ -126,6 +126,7 @@
 (define-key evil-normal-state-map "\C-k" 'evil-window-up)
 (define-key evil-normal-state-map "\C-l" 'evil-window-right)
 (define-key evil-normal-state-map "\C-s" (lambda() (interactive) (save-buffer)))
+(define-key evil-normal-state-map "\C-v" 'yank)
 ;; insert mode
 (define-key evil-insert-state-map "\C-j" 'my-next-line)
 (define-key evil-insert-state-map "\C-k" 'evil-previous-line)
@@ -136,6 +137,9 @@
 (define-key evil-insert-state-map "\C-a" 'beginning-of-visual-line)
 (define-key evil-insert-state-map "\C-e" 'end-of-visual-line)
 (define-key evil-insert-state-map "\C-s" (lambda() (interactive) (evil-normal-state) (save-buffer)))
+(define-key evil-insert-state-map "\C-v" 'yank)
+;; visual mode
+(define-key evil-visual-state-map "\C-c" 'kill-ring-save)
 ;; ----- evil
 
 ;; sdcv 词典
