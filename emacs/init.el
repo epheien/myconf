@@ -89,6 +89,16 @@
 (require 'evil)
 (evil-mode 1)
 
+;; 针对不同的major-mode做不同处理的C-j键位绑定
+(defun my-next-line()
+  (interactive)
+  (if (and (eq major-mode 'lisp-interaction-mode)
+           (eolp)
+           (not (equal (current-column) 0)))
+    (eval-print-last-sexp)
+    (evil-next-line))
+  )
+
 ;; 定制 evil，主要是键位绑定
 ;; motion (read-only) mode
 (define-key evil-motion-state-map (kbd "SPC") (kbd "3 C-e"))
@@ -100,9 +110,25 @@
 (define-key evil-normal-state-map "," (kbd "3 C-y"))
 (define-key evil-normal-state-map ";" 'evil-ex)
 (define-key evil-normal-state-map "\C-f" 'sdcv-search-pointer+)
+(define-key evil-normal-state-map "\\=" (lambda()
+  (interactive)
+  (set-frame-width (selected-frame) (+ (frame-width) 30))))
+(define-key evil-normal-state-map "\\-" (lambda()
+  (interactive)
+  (set-frame-width (selected-frame) (- (frame-width) 30))))
+;(define-key evil-normal-state-map "\C-h" 'evil-window-left)
+(define-key evil-normal-state-map "\C-j" 'evil-window-down)
+(define-key evil-normal-state-map "\C-k" 'evil-window-up)
+(define-key evil-normal-state-map "\C-l" 'evil-window-right)
 ;; insert mode
-;(define-key evil-insert-state-map "\C-j" 'evil-next-line)
-;(define-key evil-insert-state-map "\C-k" 'evil-previous-line)
+(define-key evil-insert-state-map "\C-j" 'my-next-line)
+(define-key evil-insert-state-map "\C-k" 'evil-previous-line)
+(define-key evil-insert-state-map "\C-l" 'forward-char)
+(define-key evil-insert-state-map "\C-h" 'backward-char)
+(define-key evil-insert-state-map "\C-n" 'next-line)
+(define-key evil-insert-state-map "\C-p" 'previous-line)
+(define-key evil-insert-state-map "\C-a" 'beginning-of-visual-line)
+(define-key evil-insert-state-map "\C-e" 'end-of-visual-line)
 ;; ----- evil
 
 ;; sdcv 词典
