@@ -100,6 +100,9 @@
 (define-key evil-normal-state-map "," (kbd "3 C-y"))
 (define-key evil-normal-state-map ";" 'evil-ex)
 (define-key evil-normal-state-map "\C-f" 'sdcv-search-pointer+)
+;; insert mode
+;(define-key evil-insert-state-map "\C-j" 'evil-next-line)
+;(define-key evil-insert-state-map "\C-k" 'evil-previous-line)
 ;; ----- evil
 
 ;; sdcv 词典
@@ -165,6 +168,17 @@ There are two things you can do about this warning:
 
 ;; theme
 (ignore-errors (load-theme 'spacemacs-dark t))
+
+;; company
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-minimum-prefix-length 2)
+  (setq company-idle-delay 0.1)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "C-j") 'company-select-next)
+  (define-key company-active-map (kbd "C-k") 'company-select-previous))
 
 ;; --------------------
 ;; UNSTABLE
