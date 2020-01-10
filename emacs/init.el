@@ -72,6 +72,11 @@
 ;(when (file-exists-p custom-file)
   ;(load custom-file))
 
+;; 重新加载配置的命令
+(defun reload-init.el()
+  (interactive)
+  (load-file (expand-file-name "init.el" user-emacs-directory)))
+
 ;; ==========================================================================
 ;; 以下的配置全部针对插件
 ;; ==========================================================================
@@ -120,6 +125,7 @@
 (define-key evil-normal-state-map "\C-j" 'evil-window-down)
 (define-key evil-normal-state-map "\C-k" 'evil-window-up)
 (define-key evil-normal-state-map "\C-l" 'evil-window-right)
+(define-key evil-normal-state-map "\C-s" (lambda() (interactive) (save-buffer)))
 ;; insert mode
 (define-key evil-insert-state-map "\C-j" 'my-next-line)
 (define-key evil-insert-state-map "\C-k" 'evil-previous-line)
@@ -129,6 +135,7 @@
 (define-key evil-insert-state-map "\C-p" 'previous-line)
 (define-key evil-insert-state-map "\C-a" 'beginning-of-visual-line)
 (define-key evil-insert-state-map "\C-e" 'end-of-visual-line)
+(define-key evil-insert-state-map "\C-s" (lambda() (interactive) (evil-normal-state) (save-buffer)))
 ;; ----- evil
 
 ;; sdcv 词典
