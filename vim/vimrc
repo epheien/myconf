@@ -1081,10 +1081,12 @@ let g:startify_custom_header = [
     \ '                 /_/                                                  ',
     \ ]
 
+" python3 的 readline 会生成历史文件(~/.python_history-01234.tmp), 退出的时候需要清理掉
 let g:codi#interpreters = {
    \ 'python': {
        \ 'bin': 'python3',
        \ 'prompt': '^\(>>>\|\.\.\.\) ',
+       \ 'quitcmd': "import readline; readline.clear_history();",
        \ },
    \ }
 
