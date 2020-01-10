@@ -186,7 +186,7 @@ There are two things you can do about this warning:
                       use-package
                       evil ; 安装这个是为了方便看 info
                       which-key
-                      spacemacs-theme
+                      doom-theme
                       treemacs
                       ))
 (setq package-selected-packages my/packages)
@@ -204,7 +204,7 @@ There are two things you can do about this warning:
   )
 
 ;; theme
-(ignore-errors (load-theme 'spacemacs-dark t))
+(ignore-errors (load-theme 'doom-one t))
 
 ;; company
 (use-package company
