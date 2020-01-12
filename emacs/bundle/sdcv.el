@@ -530,9 +530,11 @@ will be displayed in buffer named with `sdcv-buffer-name' with
 (defun sdcv-hide-tooltip-after-move ()
   (ignore-errors
     (when (get-buffer sdcv-tooltip-name)
-      (unless (and
-               (equal (point) sdcv-tooltip-last-point)
-               (equal (window-start) sdcv-tooltip-last-scroll-offset))
+      (when (or
+              (not (equal (point) sdcv-tooltip-last-point))
+              (not (equal (window-start) sdcv-tooltip-last-scroll-offset))
+              (eq this-command 'evil-force-normal-state)
+              (eq this-command 'keyboard-quit))
         (posframe-delete sdcv-tooltip-name)
         (kill-buffer sdcv-tooltip-name)))))
 
