@@ -16,7 +16,10 @@ endfunction
 "}}}
 " 表示是否仅使用 ASCII 显示
 function s:OnlyASCII() "{{{
-    return !has('mac')
+    if $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM =~# '\V\<Apple_Terminal'
+        return 0
+    endif
+    return 1
 endfunction
 "}}}
 function s:joinpath(...) "{{{
