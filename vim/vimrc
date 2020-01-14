@@ -1265,8 +1265,10 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 let g:table_mode_corner = '|'
 
 " ========== git 相关 ==========
-"let g:loaded_gitgutter = 1
 let g:gitgutter_diff_args = '--ignore-cr-at-eol'
+if !has('gui_running')
+    let g:gitgutter_terminal_reports_focus = 0
+endif
 autocmd vimrc BufWritePost * call s:GitGutter()
 func s:GitGutter()
     if exists(':GitGutter') == 2
