@@ -925,7 +925,7 @@ Plug 'lvht/tagbar-markdown'
 
 Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
 if !s:OnlyASCII()
-    Plug 'Xuyuanp/nerdtree-git-plugin'
+    "Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'ryanoasis/vim-devicons'
 endif
 
