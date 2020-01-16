@@ -540,6 +540,7 @@ endif
 
 nnoremap <silent> \f :Leaderf file<CR>
 nnoremap <silent> \e :Leaderf cmdHistory<CR>
+nnoremap <silent> \b :Leaderf buffer<CR>
 
 "=======================================
 " 命令行模式，包括搜索时
