@@ -1222,22 +1222,23 @@ endif
 " ========== smartim ==========
 "{{{
 function! s:job_start(cmd)
-  if has('nvim')
-    return jobstart(a:cmd)
-  else
-    return job_start(a:cmd)
-  endif
+    if has('nvim')
+        return jobstart(a:cmd)
+    else
+        return job_start(a:cmd)
+    endif
 endfunction
 "let g:smartim_default = "com.apple.keylayout.ABC"
 "let g:smartim_saved = 0
 " 禁用了 smartim 原始实现, 使用统一的 hammerspoon 实现
 let g:smartim_loaded = 1
+" 可使用 system 来同步, 只要 hammerspoon 足够快就没问题
 augroup smartim
-  autocmd!
-  autocmd VimEnter    * call s:job_start('open -g hammerspoon://toEnIM')
-  autocmd VimLeavePre * call s:job_start('open -g hammerspoon://toEnIM')
-  autocmd InsertLeave * call s:job_start('open -g hammerspoon://toEnIM')
-  autocmd FocusGained * call s:job_start('open -g hammerspoon://toEnIM')
+    autocmd!
+    autocmd VimEnter    * call s:job_start('open -g hammerspoon://toEnIM')
+    autocmd VimLeavePre * call s:job_start('open -g hammerspoon://toEnIM')
+    autocmd InsertLeave * call s:job_start('open -g hammerspoon://toEnIM')
+    autocmd FocusGained * call s:job_start('open -g hammerspoon://toEnIM')
 augroup end
 "}}}
 " ========== ncm2 ==========
