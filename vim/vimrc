@@ -506,7 +506,7 @@ if exists(':tmap')
             if &buftype !=# 'terminal'
                 return
             endif
-            setl nolist nonumber
+            setl nolist nonumber winfixheight
             "autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
             autocmd! WinEnter <buffer> if getpos('.')[1] == line('$') | star | endif
             " vim 有 BUG, 某些情况下创建新窗口的时候, 会导致意外的进入插入模式
@@ -533,7 +533,7 @@ if exists(':tmap')
         tnoremap <C-l> <C-w>l
         tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
         if exists('##TerminalOpen')
-            autocmd vimrc TerminalOpen * if &bt ==# 'terminal' | setl nolist nonu | endif
+            autocmd vimrc TerminalOpen * if &bt ==# 'terminal' | setl nolist nonu wfh | endif
         endif
     endif
 endif
