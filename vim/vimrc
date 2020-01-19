@@ -46,9 +46,7 @@ set nocompatible
 " 让退格键以现代化的方式工作
 set backspace=2
 " 设置 Vim 内部使用的字符编码
-if s:IsWindowsOS()
-    set encoding=utf-8
-endif
+set encoding=utf-8
 
 " 由于安全原因, 直接禁用 modeline, 使用 securemodelines 替代
 set nomodeline
@@ -158,7 +156,9 @@ if has('nvim')
 endif
 
 " 设定文件编码类型，彻底解决中文编码问题
-let &termencoding=&encoding
+if !has('nvim')
+    let &termencoding=&encoding
+endif
 set fileencodings=utf-8,gbk,gb18030,ucs-bom,utf-16,cp936
 " 我们统一使用 unix 风格换行
 set fileformat=unix
@@ -170,6 +170,11 @@ set ignorecase
 set smartcase
 " 在搜索模式时输入时即时显示相应的匹配点。
 set incsearch
+
+" 终于在nvim 0.5.0解决了恶心的jumplist问题
+if exists('&jumpoptions')
+    set jumpoptions=stack
+endif
 
 " 设置不自动备份
 set nobackup
