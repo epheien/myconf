@@ -154,7 +154,7 @@ set number
 
 " 标号栏
 if has('nvim')
-    set signcolumn=auto:9
+    set signcolumn=auto
 endif
 
 " 设定文件编码类型，彻底解决中文编码问题
