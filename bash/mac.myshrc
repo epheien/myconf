@@ -38,7 +38,7 @@ if [ -d "$HOME/Library/Python/2.7/bin" ]; then
 fi
 # gnu coreutils, ls, pwd, etc.
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-PATH="/Applications/MacVim.app/Contents/bin:$PATH"
+#PATH="/Applications/MacVim.app/Contents/bin:$PATH"
 PATH="$HOME/node/bin:$PATH"
 PATH="/usr/local/opt/mysql-client/bin:$PATH"
 # gnu-tar
