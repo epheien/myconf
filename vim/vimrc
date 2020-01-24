@@ -1287,7 +1287,7 @@ func s:GitGutter()
 endfunc
 
 func s:AutoGitGutter()
-    if globpath('.', '.git') != ''
+    if globpath('.', '.git') != '' || filereadable('.gitignore')
         GitGutterEnable
     endif
 endfunc
