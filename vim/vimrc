@@ -1198,7 +1198,7 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
-if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
+if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3') && get(g:, 'loaded_deoplete')
     let g:deoplete#enable_at_startup = 0
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
