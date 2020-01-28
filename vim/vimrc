@@ -1198,7 +1198,8 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
-if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3') && get(g:, 'loaded_deoplete')
+if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
+try
     let g:deoplete#enable_at_startup = 0
     call deoplete#custom#option({
     \   'on_insert_enter': v:false,
@@ -1211,18 +1212,19 @@ if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3') 
     "call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
     autocmd vimrc InsertEnter * call deoplete#enable()
 
-" Whether to include the types of the completions in the result data. Default: 0
-let g:deoplete#sources#ternjs#types = 1
+    " Whether to include the types of the completions in the result data. Default: 0
+    let g:deoplete#sources#ternjs#types = 1
 
-" Whether to include the distance (in scopes for variables, in prototypes for 
-" properties) between the completions and the origin position in the result 
-" data. Default: 0
-let g:deoplete#sources#ternjs#depths = 1
-let g:deoplete#sources#ternjs#docs = 1
-let g:deoplete#sources#ternjs#filter = 0
+    " Whether to include the distance (in scopes for variables, in prototypes for 
+    " properties) between the completions and the origin position in the result 
+    " data. Default: 0
+    let g:deoplete#sources#ternjs#depths = 1
+    let g:deoplete#sources#ternjs#docs = 1
+    let g:deoplete#sources#ternjs#filter = 0
 
-let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
-
+    let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
+catch
+endtry
 endif
 "}}}
 " ========== smartim ==========
