@@ -364,6 +364,7 @@ endfunction
 
 " 增强的命令行补全
 set wildmenu
+set wildignorecase
 if has('nvim')
     silent! set wildoptions+=pum
 endif
