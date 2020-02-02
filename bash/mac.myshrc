@@ -59,7 +59,7 @@ else
 fi
 
 export HOMEBREW_NO_AUTO_UPDATE=true
-#export LANG="zh_CN.UTF-8"
+export LANG="zh_CN.UTF-8"
 
 alias diff="diff --color=auto"
 # macOS的zcat和Linux下的行为不一致，用gzcat替代
