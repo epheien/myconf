@@ -1117,6 +1117,7 @@ if exists(':Rg') != 2
 endif
 
 " vim-go
+let g:go_gopls_enabled = 0
 let g:go_version_warning = 0
 let g:go_fmt_autosave = 0
 " 高亮色以 :h group-name 为指导
