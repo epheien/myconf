@@ -86,6 +86,8 @@ g_disableApps = {
   'Code', -- vscode
   'Oni',
   'goneovim',
+  'kitty',
+  'Alacritty',
 }
 
 g_disableApps_dict = {}
