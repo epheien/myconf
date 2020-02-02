@@ -489,7 +489,7 @@ nnoremap <silent> \d :call myrc#n_BufferDelete()<CR>
 nnoremap \h :lcd %:p:h <Bar> pwd<CR>
 "nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
 " vim -S vimp.vim
-nnoremap \] :mksession! vimp.vim
+nnoremap \] :mksession! vimp.vim<CR>
 nnoremap <Space>    3<C-e>
 nnoremap ,          3<C-y>
 nnoremap <C-h> <C-w>h
