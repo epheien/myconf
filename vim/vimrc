@@ -923,7 +923,7 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     "Plug 'ncm2/float-preview.nvim'
-    "Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
@@ -1222,7 +1222,7 @@ try
     call deoplete#custom#source('_', 'matchers', ['matcher_head'])
     " Q: I don't want to see the typed word in the completion menu.
     "call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
-    autocmd vimrc InsertEnter * call deoplete#enable()
+    "autocmd vimrc InsertEnter * call deoplete#enable()
 
     " Whether to include the types of the completions in the result data. Default: 0
     let g:deoplete#sources#ternjs#types = 1
