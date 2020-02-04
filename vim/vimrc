@@ -550,7 +550,7 @@ if exists(':tmap')
 endif
 
 nnoremap <silent> \f :Leaderf file<CR>
-nnoremap <silent> \e :Leaderf cmdHistory<CR>
+nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
 nnoremap <silent> \b :Leaderf buffer<CR>
 
 "=======================================
