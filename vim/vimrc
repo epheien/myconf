@@ -190,6 +190,8 @@ endif
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+" 设置 vim 脚本的续行缩进
+let g:vim_indent_cont = shiftwidth()
 
 " 长行不能完全显示时显示当前屏幕能显示的部分，长行不能完全显示时显示 @
 set display=lastline
