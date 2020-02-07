@@ -431,6 +431,7 @@ nnoremap <silent> <CR> :call myrc#RepeatCommand()<CR>
 
 " 可设置窗口标题的命令
 command -nargs=+ Title set title | let &titlestring = <q-args>
+command -nargs=+ TabTitle let t:title = '['.<q-args>.']' | redrawtabline
 
 " ============================================================================
 " 额外的文件格式支持
@@ -1060,6 +1061,16 @@ let g:lightline.inactive = {
     \ 'right': [ [ 'mylineinfo' ],
     \            [ 'myfileinfo' ] ],
     \ }
+let g:lightline.tab = {
+    \ 'active': [ 'tabnum', 'mytabfile', 'modified' ],
+    \ 'inactive': [ 'tabnum', 'mytabfile', 'modified' ] }
+let g:lightline.tab_component_function = {
+    \ 'mytabfile': 'GetTabFile',
+    \ 'filename': 'lightline#tab#filename',
+    \ 'modified': 'lightline#tab#modified',
+    \ 'readonly': 'lightline#tab#readonly',
+    \ 'tabnum': 'lightline#tab#tabnum',
+    \ }
 let g:lightline.component = {}
 let g:lightline.component.filename = '%f'
 let g:lightline.component.fileflags = '%m%r'
@@ -1083,6 +1094,13 @@ function GetFI()
     let ft = empty(&ft) ? 'n/a' : &ft
     let fenc = empty(&fenc) ? &enc : &fenc
     return join([ff, fenc, ft], ' ')
+endfunction
+function GetTabFile(tabnum)
+    let title = gettabvar(a:tabnum, 'title', '')
+    if title !=# ''
+        return title
+    endif
+    return lightline#tab#filename(a:tabnum)
 endfunction
 
 try
