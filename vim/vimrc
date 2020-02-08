@@ -471,6 +471,8 @@ endif
 
 nnoremap <silent> <M-h> :tabNext<CR>
 nnoremap <silent> <M-l> :tabnext<CR>
+nnoremap <silent> <M-j> <C-w>-
+nnoremap <silent> <M-k> <C-w>+
 if exists(':tmap')
     if has('nvim')
         tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
