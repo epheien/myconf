@@ -40,4 +40,5 @@
     "suggest.minTriggerInputLength": 2,
     "suggest.noselect": false,
     "suggest.snippetIndicator": "",
+    "diagnostic.enable": false,
 }

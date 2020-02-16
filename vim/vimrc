@@ -928,7 +928,7 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     "Plug 'ncm2/float-preview.nvim'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
