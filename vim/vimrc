@@ -1139,7 +1139,7 @@ if exists(':Rg') != 2
 endif
 
 " vim-go
-"let g:go_gopls_enabled = 0
+let g:go_gopls_enabled = 0
 let g:go_version_warning = 0
 let g:go_fmt_autosave = 0
 " 高亮色以 :h group-name 为指导
@@ -1245,7 +1245,7 @@ try
     " Q: I don't want to see the typed word in the completion menu.
     call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
     autocmd vimrc InsertEnter * call deoplete#enable()
-    call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.' })
+    "call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.' })
 
     " Whether to include the types of the completions in the result data. Default: 0
     let g:deoplete#sources#ternjs#types = 1
