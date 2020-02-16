@@ -1024,7 +1024,7 @@ else
 endif
 if has('nvim')
     let g:Lf_WindowPosition = 'popup'
-    autocmd filetype * if &ft == 'leaderf' | setl nonumber | endif
+    "autocmd vimrc filetype * if &ft == 'leaderf' | setl nonumber | endif
 endif
 
 " gvim 下，如果使用 powerline 字体的话，就会改动默认的英文字体
