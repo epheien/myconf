@@ -942,9 +942,9 @@ Plug 'deoplete-plugins/deoplete-jedi'
 " npm install -g tern
 Plug 'carlitux/deoplete-ternjs'
 
-Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70'}
+Plug 'majutsushi/tagbar', {'commit': '387bbadda98e1376ff3871aa461b1f0abd4ece70', 'on': 'TagbarToggle'}
 " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
-Plug 'lvht/tagbar-markdown'
+Plug 'lvht/tagbar-markdown', {'on': 'TagbarToggle'}
 
 Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
 if !s:OnlyASCII()
