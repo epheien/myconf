@@ -615,4 +615,11 @@ function! myrc#optionset_hook()
     endif
 endfunction
 
+function! myrc#drop(arglist)
+    let name = (type(a:arglist) == v:t_string)? a:arglist : a:arglist[0]
+    let cmd = get(g:, 'terminal_edit', 'tab drop')
+    silent exec cmd . ' ' . fnameescape(name)
+    return ''
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4
