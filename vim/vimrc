@@ -999,7 +999,7 @@ endif
 call s:Plug('colorizer', {'on': 'UpdateColor'})
 
 " {'do': 'GoUpdateBinaries'}
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 " ####
