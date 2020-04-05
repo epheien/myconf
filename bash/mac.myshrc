@@ -24,6 +24,8 @@ if [ -n "$ZSH_VERSION" ]; then
     bindkey "^U" backward-kill-line
     # bash compatible ctrl-w
     unset WORDCHARS
+    # 禁用历史共享
+    unsetopt share_history
 
     # Uncomment the following line to disable auto-setting terminal title.
     DISABLE_AUTO_TITLE="true"
