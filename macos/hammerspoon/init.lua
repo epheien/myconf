@@ -19,7 +19,7 @@ end
 
 -- 切换到中文输入法
 function toZhIM()
-  if (hs.keycodes.currentSourceID() ~= 'com.sogou.inputmethod.sogou.pinyin') then
+  if (hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC') then
     -- BUG
     --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
     hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
