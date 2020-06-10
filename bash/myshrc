@@ -1,5 +1,8 @@
 stty -ixon
 
+# set PATH so it includes user's private bin directories
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
 # 256color
 if [ -n "$TMUX" ]; then
     export TERM=screen-256color
@@ -43,15 +46,24 @@ if [ -n "$ZSH_VERSION" ]; then
 fi
 
 # use vim as MANPAGER
-if [ -f "$HOME/.vim/man.vim" ]; then
-    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
-else
-    export MANPAGER="env MAN_PN=1 vim --not-a-term -M +MANPAGER -c 'set nonu' -"
+# Linux 环境下好像没法正常工作, 暂时忽略
+#if [ -f "$HOME/.vim/man.vim" ]; then
+#    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
+#else
+#    export MANPAGER="env MAN_PN=1 vim --not-a-term -M +MANPAGER -c 'set nonu' -"
+#fi
+
+# 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
+unset VIMRUNTIME
+unset VIM
+unset MYVIMRC
+
+if [ -f "$HOME/.shalias" ]; then
+    source "$HOME/.shalias"
 fi
 
 alias eng="export LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
-alias zho="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
-alias zhong="export LANG=zh_CN.UTF-8"
+alias zhong="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
 
 function findn()
 {
