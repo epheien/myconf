@@ -845,7 +845,7 @@ inoremap <expr> ; <SID>i_Semicolon_plus()
 inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
 
 " 补全模式下的映射
-inoremap <expr> <CR> pumvisible()?"\<C-y>":"\<CR>"
+inoremap <expr> <CR> (pumvisible() ? "\<C-r>=myrc#complete_confirm()\<CR>" : "\<CR>")
 
 function! s:i_Semicolon_plus() "{{{
     let sLine = getline('.')
@@ -931,7 +931,6 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 " pip3 install -U pynvim
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    "Plug 'ncm2/float-preview.nvim'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
     Plug 'Shougo/deoplete.nvim'
@@ -989,10 +988,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
 Plug 'junegunn/gv.vim'
 
-if s:IsWindowsOS() && !has('nvim')
-    Plug 'ncm2/ncm2'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-path'
+if has('nvim')
+    "Plug 'neovim/nvim-lsp'
 endif
 
 " 本地插件的按需加载
@@ -1187,10 +1184,12 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 " ========== SimpleSuperTab ==========
 "{{{
 " 需要把 completeopt 设置为 menuone
-inoremap <silent> <Tab> <C-r>=<SID>i_Tab_plus()<CR>
+inoremap <silent> <Tab> <C-r>=<SID>SuperTab()<CR>
 inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<Tab>"
 
-function! s:i_Tab_plus() "{{{2
+" 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则
+" 触发 <c-x>xxx 系列补全
+function! s:SuperTab() "{{{2
     let preChar = getline('.')[col('.') - 2]
     if pumvisible()
         return "\<C-n>"
@@ -1202,6 +1201,8 @@ function! s:i_Tab_plus() "{{{2
         if exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
             call feedkeys("\<Plug>(neosnippet_expand_or_jump)")
             return ''
+        elseif exists('g:did_coc_loaded') && coc#expandableOrJumpable()
+            call coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
         else
             if &ft ==# 'c' || &ft ==# 'cpp'
                 return "\<C-n>"
@@ -1293,12 +1294,6 @@ augroup smartim
     autocmd FocusGained * call s:job_start('open -g hammerspoon://toEnIM')
 augroup end
 "}}}
-" ========== ncm2 ==========
-if s:IsWindowsOS() && !has('nvim')
-    autocmd InsertEnter * call ncm2#enable_for_buffer()
-    inoremap <expr> <CR> (pumvisible() ? "\<C-r>=myrc#complete_done()\<CR>" : "\<CR>")
-    let g:ncm2#complete_length = [[1, 2], [7, 2]]
-endif
 
 " ========== videm ==========
 " videm 的一些扩展

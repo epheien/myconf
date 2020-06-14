@@ -527,10 +527,10 @@ function! myrc#restore_ei(...) abort
     return ''
 endfunction
 
-function! myrc#complete_done() abort
+function! myrc#complete_confirm() abort
     let s:bak_ei = &ei
     set ei=all
-    call feedkeys("\<C-y>")
+    call feedkeys("\<C-y>", 'n')
     call timer_start(0, "myrc#restore_ei")
     return ''
 endfunction
