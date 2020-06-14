@@ -528,6 +528,9 @@ function! myrc#restore_ei(...) abort
 endfunction
 
 function! myrc#complete_confirm() abort
+    if exists('g:did_coc_loaded')
+        return coc#_select_confirm()
+    endif
     let s:bak_ei = &ei
     set ei=all
     call feedkeys("\<C-y>", 'n')
