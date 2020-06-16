@@ -1,7 +1,7 @@
-#!/bin/bash
-# custom shell config
-
 stty -ixon
+
+# set PATH so it includes user's private bin directories
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # 256color
 if [ -n "$TMUX" ]; then
@@ -10,9 +10,57 @@ else
     export TERM=xterm-256color
 fi
 
+if [ -n "$ZSH_VERSION" ]; then
+    # original
+    #PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+    #PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
+    #PROMPT="%B%{\$fg[red]%}%n@%{\$fg[blue]%}%m%b ${PROMPT}"
+    # ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    # enable color support of ls and also add handy aliases
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+
+    # some more ls aliases
+    alias ll='ls -AlhF'
+    alias la='ls -A'
+    alias l='ls -CF'
+
+    bindkey "^U" backward-kill-line
+    # bash compatible ctrl-w
+    unset WORDCHARS
+    # 禁用历史共享
+    unsetopt share_history
+
+    # Uncomment the following line to disable auto-setting terminal title.
+    DISABLE_AUTO_TITLE="true"
+    # 设置标题栏
+    function precmd () {
+        print -Pn - '\e]0;%1~\a'
+    }
+fi
+
+# use vim as MANPAGER
+if [ -f "$HOME/.vim/man.vim" ]; then
+    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
+fi
+
+# 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
+unset VIMRUNTIME
+unset VIM
+unset MYVIMRC
+
+if [ -f "$HOME/.shalias" ]; then
+    source "$HOME/.shalias"
+fi
+
 alias eng="export LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
-alias zho="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
-alias zhong="export LANG=zh_CN.UTF-8"
+alias zhong="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
 
 function findn()
 {
@@ -21,4 +69,9 @@ function findn()
     return $?
 }
 
-# vi:set et sts=4:
+# fuck 命令
+if command -v thefuck &>/dev/null; then
+    eval $(thefuck --alias)
+fi
+
+# vi:set et sts=4 ft=sh:

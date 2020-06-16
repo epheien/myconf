@@ -391,7 +391,7 @@ if exists('$LANGUAGE')
     let $LANGUAGE = ''
 endif
 
-if !s:IsWindowsOS()
+if has('mac')
     " 修复 terminal locale 错误问题
     try
         language zh_CN.UTF-8
