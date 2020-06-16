@@ -56,8 +56,6 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # use vim as MANPAGER
 if [ -f "$HOME/.vim/man.vim" ]; then
     export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
-else
-    export MANPAGER="env MAN_PN=1 vim --not-a-term -M +MANPAGER -c 'set nonu' -"
 fi
 
 export HOMEBREW_NO_AUTO_UPDATE=true
