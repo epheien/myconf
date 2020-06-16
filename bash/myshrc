@@ -46,12 +46,9 @@ if [ -n "$ZSH_VERSION" ]; then
 fi
 
 # use vim as MANPAGER
-# Linux 环境下好像没法正常工作, 暂时忽略
-#if [ -f "$HOME/.vim/man.vim" ]; then
-#    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
-#else
-#    export MANPAGER="env MAN_PN=1 vim --not-a-term -M +MANPAGER -c 'set nonu' -"
-#fi
+if [ -f "$HOME/.vim/man.vim" ]; then
+    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
+fi
 
 # 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
 unset VIMRUNTIME
