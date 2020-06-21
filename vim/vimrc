@@ -1269,9 +1269,13 @@ try
 
     let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
 catch
+    " ignore
 endtry
 endif
 "}}}
+" ========== coc.nvim ==========
+let g:coc_snippet_next = ''
+let g:coc_snippet_prev = ''
 " ========== smartim ==========
 "{{{
 function! s:job_start(cmd)
