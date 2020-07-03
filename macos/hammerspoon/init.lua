@@ -11,8 +11,8 @@ end)
 -- 切换到英文输入法
 function toEnIM()
   if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-    --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
-    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+    --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
   end
   --hs.alert.show(hs.keycodes.currentMethod())
 end
@@ -20,9 +20,10 @@ end
 -- 切换到中文输入法
 function toZhIM()
   if (hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC') then
-    -- BUG
+    -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
     --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
-    hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    hs.keycodes.currentSourceID('com.apple.inputmethod.SCIM.ITABC')
+    --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
   end
   --hs.alert.show(hs.keycodes.currentSourceID())
 end
@@ -94,6 +95,13 @@ g_disableApps_dict = {}
 for _, app in pairs(g_disableApps) do
   g_disableApps_dict[app] = true
 end
+
+function isInDisableApp()
+  local win = hs.window.focusedWindow()
+  local appName = win:application():name()
+  return g_disableApps_dict[appName] ~= nil
+end
+
 g_watchers = {}
 function initDisableForApp()
   local watcher = hs.application.watcher.new(function(applicationName, eventType, application)
