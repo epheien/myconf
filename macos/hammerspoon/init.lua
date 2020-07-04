@@ -107,12 +107,12 @@ function initDisableForApp()
   local watcher = hs.application.watcher.new(function(applicationName, eventType, application)
     if eventType == hs.application.watcher.activated then
       if g_disableApps_dict[applicationName] ~= nil then
-        print('activated and disableKeybind', applicationName, application:bundleID())
+        --print('activated and disableKeybind', applicationName, application:bundleID())
         disableKeybind()
         -- 只在特定 app 启用默认输入法
         toEnIM()
       else
-        print('activated and enableKeyBind', applicationName, application:bundleID())
+        --print('activated and enableKeyBind', applicationName, application:bundleID())
         enableKeyBind()
       end
     end
