@@ -932,14 +932,20 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets'
 else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+    let g:apc_enable_tab = 0
+    let g:apc_enable_ft = {'*': 1}
+    Plug 'skywind3000/vim-auto-popmenu'
+    " vim 下面不使用 rplugin, 因为初始化实在太慢了
+    "Plug 'Shougo/deoplete.nvim'
+    "Plug 'roxma/nvim-yarp'
+    "Plug 'roxma/vim-hug-neovim-rpc'
+    "Plug 'Shougo/neosnippet.vim'
+    "Plug 'Shougo/neosnippet-snippets'
 endif
 
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 Plug 'deoplete-plugins/deoplete-jedi'
 " go get -u https://github.com/stamblerre/gocode
 Plug 'deoplete-plugins/deoplete-go'
