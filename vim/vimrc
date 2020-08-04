@@ -607,8 +607,8 @@ xnoremap 0 <C-c>:call myrc#MacroComment()<CR>
 " ======================================
 inoremap <silent> <C-s> <ESC>:update<CR>
 inoremap <C-o> <End><CR>
-inoremap <M-o> <C-\><C-o>O
-inoremap <C-z> <C-\><C-o>O
+" 不能使用 <C-\><C-o>O, 因为可能会导致多余的缩进
+inoremap <C-z> <Esc>O
 inoremap <silent> <expr> <C-e> myrc#i_CTRL_E()
 inoremap <C-a> <Home>
 inoremap <C-d> <Del>
