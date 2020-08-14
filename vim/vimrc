@@ -1151,6 +1151,12 @@ endif
 let g:go_gopls_enabled = 1
 let g:go_version_warning = 0
 let g:go_fmt_autosave = 0
+let g:go_fmt_experimental = 1
+let g:go_term_enabled = 1
+let g:go_term_mode = "split"
+let g:go_diagnostics_enabled = 0
+let g:go_highlight_diagnostic_errors = 0
+let g:go_metalinter_enabled = ['errcheck']
 " 高亮色以 :h group-name 为指导
 " 高亮函数声明
 let g:go_highlight_functions = 1
