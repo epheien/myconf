@@ -178,6 +178,10 @@ endif
 
 " 设置不自动备份
 set nobackup
+if has('nvim')
+    " nvim 没有删除对话框选项, 直接禁用算了
+    set noswapfile
+endif
 
 " 启动对鼠标的支持
 set mouse=a
@@ -880,14 +884,15 @@ set cscopeverbose
 set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
 set cscopetag
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-nnoremap <silent> <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>t :cs find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>e :cs find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>f :cs find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
-nnoremap <silent> <C-\>i :cs find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
-nnoremap <silent> <C-\>d :cs find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+" 如果安装了 'skywind3000/gutentags_plus' 插件: "cs find" => "GscopeFind"
+nnoremap <silent> <C-\>s :GscopeFind s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>g :GscopeFind g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>c :GscopeFind c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>t :GscopeFind t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>e :GscopeFind e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+nnoremap <silent> <C-\>f :GscopeFind f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
+nnoremap <silent> <C-\>i :GscopeFind i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
+nnoremap <silent> <C-\>d :GscopeFind d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
 "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
 
 command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
@@ -922,6 +927,7 @@ Plug 'epheien/termdbg'
 Plug 'epheien/videm'
 
 Plug 'epheien/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 
 Plug 'cespare/vim-toml'
 Plug 'kassio/neoterm', {'on': 'Tnew'}
