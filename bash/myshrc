@@ -50,6 +50,8 @@ if [ -f "$HOME/.vim/man.vim" ]; then
     export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
 fi
 
+# 这是避免 git diff 无输出的时候仍然需要交互的问题, 默认值是: LESS=-R
+unset LESS
 # 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
 unset VIMRUNTIME
 unset VIM
