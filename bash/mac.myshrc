@@ -33,6 +33,13 @@ if [ -n "$ZSH_VERSION" ]; then
     function precmd () {
         print -Pn - '\e]0;%1~\a'
     }
+    if [ -x ~/bin/z.lua ]; then
+        eval "$(lua ~/bin/z.lua --init zsh)"
+    fi
+else
+    if [ -x ~/bin/z.lua ]; then
+        eval "$(lua ~/bin/z.lua --init bash)"
+    fi
 fi
 
 # set PATH so it includes user's private bin directories
