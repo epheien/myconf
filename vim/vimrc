@@ -16,7 +16,7 @@ endfunction
 "}}}
 " 表示是否仅使用 ASCII 显示
 function s:OnlyASCII() "{{{
-    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM =~# '\V\<Apple_Terminal'
+    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM =~# '\V\<Apple_Terminal' || $TERM_PROGRAM ==# 'kitty'
         return 0
     endif
     return 1
@@ -283,7 +283,7 @@ if !has('gui_running')
         set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
           \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
           \,sm:block-blinkwait175-blinkoff150-blinkon175
-        if $TERM_PROGRAM =~# '\V\<iTerm'
+        if $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM ==# 'kitty'
             set termguicolors
         endif
     else
