@@ -625,4 +625,14 @@ function! myrc#drop(arglist)
     return ''
 endfunction
 
+function! myrc#close()
+    try
+        close
+    catch /^Vim\%((\a\+)\)\=:E5601:/
+        " Vim(close):E5601: Cannot close window, only floating window would remain
+        " BUG: https://github.com/neovim/neovim/issues/11440
+        q!
+    endtry
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4
