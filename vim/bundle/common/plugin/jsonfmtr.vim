@@ -47,7 +47,7 @@ def JsonFmtr(**kwargs):
     }
     for key, val in k.items():
         k[key] = type(val)(kwargs.get(key, val))
-    if k['indent'] == 0:
+    if k['indent'] < 0:
         k['indent'] = None
         k['separators'] = [',', ':']
     output = json.dumps(obj, **k)
@@ -61,7 +61,7 @@ function! s:JsonFmtr(...)
     let d = {}
     let d['indent'] = get(a:000, 0, 4)
     let d['sort_keys'] = get(a:000, 1, 1)
-    let d['ensure_ascii'] = get(a:000, 1, 0)
+    let d['ensure_ascii'] = get(a:000, 2, 0)
     call s:InitPyif()
     pyx JsonFmtr(**vim.eval('d'))
 endfunction
