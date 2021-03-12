@@ -625,7 +625,9 @@ function! myrc#drop(arglist)
     return ''
 endfunction
 
-function! myrc#close()
+function! myrc#close() abort
+    let winnr = winnr('#')
+    let winid = win_getid(winnr)
     try
         close
     catch /^Vim\%((\a\+)\)\=:E5601:/
@@ -633,6 +635,7 @@ function! myrc#close()
         " BUG: https://github.com/neovim/neovim/issues/11440
         q!
     endtry
+    call win_gotoid(winid)
 endfunction
 
 " vim: fdm=indent fen fdl=0 et sts=4
