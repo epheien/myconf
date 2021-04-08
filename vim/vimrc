@@ -1,3 +1,8 @@
+" 0 - 全模式, 1 - 精简模式, 2 - man模式
+if !exists('g:vmode')
+    let g:vmode = 0
+endif
+
 " ============================================================================
 " 基本设定
 " ============================================================================
@@ -268,15 +273,13 @@ set virtualedit=onemore,block
 set hidden
 
 " 显示 80 字符右边距的实现，需要 7.3 以上版本
-if version >= 703
-    set cc=81,121
-endif
+silent! set cc=81,121
 
 " 设置 session 文件保存的信息
 " (缺省: "blank,buffers,curdir,folds,help,options,tabpages,winsize")
 set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winsize,resize
 if has('terminal')
-    set sessionoptions+=terminal
+    silent! set sessionoptions+=terminal
 endif
 
 if !has('gui_running')
@@ -773,9 +776,6 @@ let g:pydiction_location = s:USERRUNTIME . '/dict/complete-dict'
 " 基于 VLWorkspace 的源/头文件切换
 nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
 
-" pyclewn 的终端窗口高度，暂时这样设置
-set previewheight=8
-
 let g:videm_user_options = {
     \ 'videm.wsp.ShowBriefHelp'            : 0,
     \ 'videm.wsp.SaveBeforeBuild'          : 1,
@@ -819,12 +819,6 @@ let g:SignatureMap = {
   \ 'GotoPrevSpotByPos'  :  "<S-F2>",
   \ 'ListBufferMarks'    :  "m/",
   \ }
-"}}}
-" ========== ex-gsearch ==========
-"{{{
-highlight link exConfirmLine IncSearch
-highlight link exTargetLine IncSearch
-nnoremap <C-\>w :GSW <C-R>=fnameescape(expand("<cword>"))<CR><CR>
 "}}}
 " ============================================================================
 " IDE 设置
@@ -909,111 +903,104 @@ endfunction
 
 let g:plug_window = 'new'
 " ## vim-plug
+" NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
+" NOTE: 对于 nvim, 必须安装 python 模块: pip3 install -U pynvim
 call plug#begin()
 
-" NOTE: 重复安装 plug 是为了看帮助信息
-Plug 'junegunn/vim-plug'
+" 完全懒加载的插件
+Plug 'cespare/vim-toml'
+
+if g:vmode == 0
+    Plug 'epheien/gruvbox' " 支持了 terminal 颜色
+    Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
+    Plug 'sunaku/vim-dasht', {'on': 'Dasht'}
+    Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
+    Plug 'yianwillis/vimcdoc' " 中文文档
+    Plug 'easymotion/vim-easymotion'
+    Plug 'epheien/vim-gutentags'
+    Plug 'skywind3000/gutentags_plus'
+    Plug 'othree/yajs.vim' " 增强的 js 语法高亮
+    Plug 'posva/vim-vue'
+    Plug 'asins/vim-dict'
+    Plug 'tpope/vim-surround'
+    Plug 'Yggdroot/LeaderF', {'on': 'Leaderf'}
+    Plug '~/.fzf', {'on': 'FZF'} " git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+    Plug 'mbbill/undotree'
+    Plug 'iamcco/markdown-preview.vim'
+    Plug 'dhruvasagar/vim-table-mode'
+    Plug 'vobornik/vim-mql4'
+    Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
+    Plug 'metakirby5/codi.vim', {'on': 'Codi'}
+    Plug 'mhinz/vim-startify', {'on': 'Startify'}
+    Plug 'kassio/neoterm', {'on': 'Tnew'}
+    Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
+    Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
+    Plug 'lvht/tagbar-markdown', {'on': 'TagbarToggle'} " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
+
+    if !s:OnlyASCII()
+        "Plug 'Xuyuanp/nerdtree-git-plugin'
+        "Plug 'ryanoasis/vim-devicons'
+    endif
+
+    if has('nvim')
+        Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins'}
+        "Plug 'neovim/nvim-lsp'
+    endif
+
+    " 自己的插件
+    Plug 'epheien/myjl'
+    Plug 'epheien/termdbg'
+    Plug 'epheien/videm'
+
+    " 本地插件
+    call s:Plug('nerdcommenter')
+    call s:Plug('jsonfmtr')
+    call s:Plug('vim-repeat')
+    call s:Plug('vim-signature')
+    call s:Plug('mymark')
+    call s:Plug('colorizer', {'on': 'UpdateColor'})
+    call s:Plug('colorsel', {'on': 'ColorSel'})
+endif
 
 if has('nvim')
     Plug 'dstein64/nvim-scrollview', {'branch': 'main'}
 endif
 
-" 中文文档
-Plug 'yianwillis/vimcdoc'
 
-Plug 'metakirby5/codi.vim', {'on': 'Codi'}
-
-Plug 'mhinz/vim-startify', {'on': 'Startify'}
-Plug 'easymotion/vim-easymotion'
-
-" 自己的插件
-Plug 'epheien/myjl'
-Plug 'epheien/termdbg'
-Plug 'epheien/videm'
-
-Plug 'epheien/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
-
-Plug 'cespare/vim-toml'
-Plug 'kassio/neoterm', {'on': 'Tnew'}
-
-" NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
-
-" pip3 install -U pynvim
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" 代码补全相关插件
+if g:vmode == 0
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    if has('nvim')
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        "Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+    else
+        let g:apc_enable_tab = 0
+        let g:apc_enable_ft = {'*': 1}
+        Plug 'skywind3000/vim-auto-popmenu'
+        " vim 下面不使用 rplugin, 因为初始化实在太慢了
+        "Plug 'Shougo/deoplete.nvim'
+        "Plug 'roxma/nvim-yarp'
+        "Plug 'roxma/vim-hug-neovim-rpc'
+    endif
     Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/neosnippet-snippets'
-else
-    let g:apc_enable_tab = 0
-    let g:apc_enable_ft = {'*': 1}
-    Plug 'skywind3000/vim-auto-popmenu'
-    " vim 下面不使用 rplugin, 因为初始化实在太慢了
-    "Plug 'Shougo/deoplete.nvim'
-    "Plug 'roxma/nvim-yarp'
-    "Plug 'roxma/vim-hug-neovim-rpc'
-    "Plug 'Shougo/neosnippet.vim'
-    "Plug 'Shougo/neosnippet-snippets'
+
+    "Plug 'deoplete-plugins/deoplete-jedi'
+    "Plug 'deoplete-plugins/deoplete-go' " go get -u https://github.com/stamblerre/gocode
+    "Plug 'carlitux/deoplete-ternjs' " npm install -g tern
 endif
 
-Plug 'deoplete-plugins/deoplete-jedi'
-" go get -u https://github.com/stamblerre/gocode
-Plug 'deoplete-plugins/deoplete-go'
-" npm install -g tern
-Plug 'carlitux/deoplete-ternjs'
-
-Plug 'epheien/tagbar'
-" 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
-Plug 'lvht/tagbar-markdown', {'on': 'TagbarToggle'}
-
-Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
-if !s:OnlyASCII()
-    "Plug 'Xuyuanp/nerdtree-git-plugin'
-    "Plug 'ryanoasis/vim-devicons'
-endif
-
-if has('nvim')
-    Plug 'sakhnik/nvim-gdb', { 'do': ':UpdateRemotePlugins' }
-endif
-
-" 增强的 js 语法高亮
-Plug 'othree/yajs.vim'
-Plug 'posva/vim-vue'
-Plug 'asins/vim-dict'
-Plug 'tpope/vim-surround'
-Plug 'Yggdroot/LeaderF', {'on': 'Leaderf'}
-" git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-" ~/.fzf/install
-Plug '~/.fzf', {'on': 'FZF'}
-Plug 'mbbill/undotree'
-Plug 'iamcco/markdown-preview.vim'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'vobornik/vim-mql4'
-" 支持了 terminal 颜色
-Plug 'epheien/gruvbox'
-" 此插件加载后，增加 200ms 以上的移动时间
-Plug 'vim-airline/vim-airline', {'on': 'AirlineToggle'}
-Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 " 自己做了一些小修改
 if has('gui_running') || &t_Co == 256
     Plug 'epheien/lightline.vim'
 endif
 
-" git
-Plug 'tpope/vim-fugitive'
+" git 相关插件
+Plug 'tpope/vim-fugitive', {'on': 'Gstatus'}
 Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
-Plug 'junegunn/gv.vim'
-
-if has('nvim')
-    "Plug 'neovim/nvim-lsp'
-endif
-
-" 本地插件的按需加载
-call s:Plug('colorizer', {'on': 'UpdateColor'})
-
-" {'do': 'GoUpdateBinaries'}
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'junegunn/gv.vim', {'on': 'GV'}
+Plug 'jreybert/vimagit', {'on': 'Magit'}
+Plug 'lambdalisue/gina.vim', {'on': 'Gina'}
 
 call plug#end()
 " ####
@@ -1237,10 +1224,6 @@ function! s:SuperTab() "{{{2
     return ''
 endfunction
 "}}}2
-function! I_OnPopupPost() "{{{2
-    return pumvisible()?"\<C-p>\<Down>":""
-endfunction
-"}}}2
 "}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
 "{{{
@@ -1264,63 +1247,63 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
-if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
-try
-    let g:deoplete#enable_at_startup = 0
-    call deoplete#custom#option({
-    \   'on_insert_enter': v:false,
-    \   'ignore_case': v:true,
-    \   'smart_case': v:true,
-    \ })
-    " Use head matcher instead of fuzzy matcher
-    call deoplete#custom#source('_', 'matchers', ['matcher_head'])
-    " Q: I don't want to see the typed word in the completion menu.
-    "call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
-    if !has('nvim')
-        autocmd vimrc InsertEnter * call deoplete#enable()
+if g:vmode == 0
+    if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
+        try
+            let g:deoplete#enable_at_startup = 0
+            call deoplete#custom#option({
+            \   'on_insert_enter': v:false,
+            \   'ignore_case': v:true,
+            \   'smart_case': v:true,
+            \ })
+            " Use head matcher instead of fuzzy matcher
+            call deoplete#custom#source('_', 'matchers', ['matcher_head'])
+            " Q: I don't want to see the typed word in the completion menu.
+            "call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
+            if !has('nvim')
+                autocmd vimrc InsertEnter * call deoplete#enable()
+            endif
+            "call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.' })
+
+            " Whether to include the types of the completions in the result data. Default: 0
+            let g:deoplete#sources#ternjs#types = 1
+
+            " Whether to include the distance (in scopes for variables, in prototypes for 
+            " properties) between the completions and the origin position in the result 
+            " data. Default: 0
+            let g:deoplete#sources#ternjs#depths = 1
+            let g:deoplete#sources#ternjs#docs = 1
+            let g:deoplete#sources#ternjs#filter = 0
+
+            let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
+        catch
+            " ignore
+        endtry
     endif
-    "call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.' })
-
-    " Whether to include the types of the completions in the result data. Default: 0
-    let g:deoplete#sources#ternjs#types = 1
-
-    " Whether to include the distance (in scopes for variables, in prototypes for 
-    " properties) between the completions and the origin position in the result 
-    " data. Default: 0
-    let g:deoplete#sources#ternjs#depths = 1
-    let g:deoplete#sources#ternjs#docs = 1
-    let g:deoplete#sources#ternjs#filter = 0
-
-    let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
-catch
-    " ignore
-endtry
 endif
 "}}}
 " ========== coc.nvim ==========
 let g:coc_snippet_next = ''
 let g:coc_snippet_prev = ''
-" ========== smartim ==========
+" ========== smartim by hammerspoon ==========
 "{{{
-function! s:job_start(cmd)
-    if has('nvim')
-        return jobstart(a:cmd)
-    else
-        return job_start(a:cmd)
-    endif
-endfunction
-"let g:smartim_default = "com.apple.keylayout.ABC"
-"let g:smartim_saved = 0
-" 禁用了 smartim 原始实现, 使用统一的 hammerspoon 实现
-let g:smartim_loaded = 1
-" 可使用 system 来同步, 只要 hammerspoon 足够快就没问题
-augroup smartim
-    autocmd!
-    autocmd VimEnter    * call s:job_start('open -g hammerspoon://toEnIM')
-    autocmd VimLeavePre * call s:job_start('open -g hammerspoon://toEnIM')
-    autocmd InsertLeave * call s:job_start('open -g hammerspoon://toEnIM')
-    autocmd FocusGained * call s:job_start('open -g hammerspoon://toEnIM')
-augroup end
+if g:vmode == 0
+    function! s:job_start(cmd)
+        if has('nvim')
+            return jobstart(a:cmd)
+        else
+            return job_start(a:cmd)
+        endif
+    endfunction
+    " 可使用 system 来同步, 只要 hammerspoon 足够快就没问题
+    augroup smartim
+        autocmd!
+        autocmd VimEnter    * call s:job_start('open -g hammerspoon://toEnIM')
+        autocmd VimLeavePre * call s:job_start('open -g hammerspoon://toEnIM')
+        autocmd InsertLeave * call s:job_start('open -g hammerspoon://toEnIM')
+        autocmd FocusGained * call s:job_start('open -g hammerspoon://toEnIM')
+    augroup end
+endif
 "}}}
 
 " ========== videm ==========
@@ -1329,10 +1312,12 @@ augroup end
 command VGtagsInit call myrc#VGtagsInit()
 
 " ========== termdbg ==========
-nnoremap <silent> <M-p> :exec 'TSendCommand p' expand('<cword>')<CR>
-vnoremap <silent> <M-p> y:exec 'TSendCommand p' @"<CR>
-nnoremap <silent> <M-n> :TNext<CR>
-nnoremap <silent> <M-s> :TStep<CR>
+if g:vmode == 0
+    nnoremap <silent> <M-p> :exec 'TSendCommand p' expand('<cword>')<CR>
+    vnoremap <silent> <M-p> y:exec 'TSendCommand p' @"<CR>
+    nnoremap <silent> <M-n> :TNext<CR>
+    nnoremap <silent> <M-s> :TStep<CR>
+endif
 
 " ========== mydict ==========
 nnoremap <silent> <C-f> :call mydict#Search(expand('<cword>'))<CR>
@@ -1343,31 +1328,34 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 " 兼容 markdown 表格格式
 let g:table_mode_corner = '|'
 
-" ========== git 相关 ==========
-let g:gitgutter_diff_args = '--ignore-cr-at-eol'
-if !has('gui_running')
-    let g:gitgutter_terminal_reports_focus = 0
+" ========== gitgutter ==========
+if g:vmode == 0
+    let g:gitgutter_diff_args = '--ignore-cr-at-eol'
+    if !has('gui_running')
+        let g:gitgutter_terminal_reports_focus = 0
+    endif
+    autocmd vimrc BufWritePost * call s:GitGutter()
+    func s:GitGutter()
+        if exists(':GitGutter') == 2
+            GitGutter
+        endif
+    endfunc
+
+    func s:AutoGitGutter()
+        if globpath('.', '.git') != '' || filereadable('.gitignore')
+            GitGutterEnable
+        endif
+    endfunc
+    autocmd vimrc BufReadPost * call s:AutoGitGutter()
 endif
-autocmd vimrc BufWritePost * call s:GitGutter()
-func s:GitGutter()
-    if exists(':GitGutter') == 2
-        GitGutter
-    endif
-endfunc
 
-func s:AutoGitGutter()
-    if globpath('.', '.git') != '' || filereadable('.gitignore')
-        GitGutterEnable
-    endif
-endfunc
-autocmd vimrc BufReadPost * call s:AutoGitGutter()
-
-" 标识在终端使用单一实例的 vim/nvim，一般用于启动 nvim，因为 nvim gui 都是渣渣
+" 可在启动的时候指定 vim 的窗口尺寸, eg: vim --cmd 'let resize_window=1'
 if get(g:, 'resize_window', 0)
     set lines=45 columns=90
     unlet g:resize_window
 endif
 
+" 使用 gonvim 的时候, 通过外挂的形式改变窗口的尺寸
 if get(g:, 'gonvim_running', 0)
     let g:line_ppp = 14
     let g:column_ppp = 8
