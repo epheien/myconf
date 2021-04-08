@@ -970,13 +970,13 @@ endif
 " 代码补全相关插件
 if g:vmode == 0
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
     if has('nvim')
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
         "Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
     else
         let g:apc_enable_tab = 0
         let g:apc_enable_ft = {'*': 1}
-        Plug 'skywind3000/vim-auto-popmenu'
         " vim 下面不使用 rplugin, 因为初始化实在太慢了
         "Plug 'Shougo/deoplete.nvim'
         "Plug 'roxma/nvim-yarp'
