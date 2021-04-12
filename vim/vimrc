@@ -949,8 +949,8 @@ if g:vmode == 0
 
     " 自己的插件
     Plug 'epheien/myjl'
-    Plug 'epheien/termdbg'
-    Plug 'epheien/videm'
+    Plug 'epheien/termdbg', {'on': 'Termdbg'}
+    Plug 'epheien/videm', {'on': 'VidemOpen'}
 
     " 本地插件
     call s:Plug('nerdcommenter')
