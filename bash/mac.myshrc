@@ -6,7 +6,7 @@ if [ -n "$ZSH_VERSION" ]; then
     #PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
     #PROMPT="%B%{\$fg[red]%}%n@%{\$fg[blue]%}%m%b ${PROMPT}"
     # ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
     # enable color support of ls and also add handy aliases
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
