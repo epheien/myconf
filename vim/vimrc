@@ -907,6 +907,11 @@ let g:plug_window = 'new'
 " NOTE: 对于 nvim, 必须安装 python 模块: pip3 install -U pynvim
 call plug#begin()
 
+" ssh 环境下, 使用 OSC52 剪切板机制, 仅支持某些终端模拟器
+if exists('$SSH_CLIENT')
+    Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+endif
+
 " 完全懒加载的插件
 Plug 'cespare/vim-toml'
 
