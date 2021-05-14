@@ -908,9 +908,7 @@ let g:plug_window = 'new'
 call plug#begin()
 
 " ssh 环境下, 使用 OSC52 剪切板机制, 仅支持某些终端模拟器
-if exists('$SSH_CLIENT')
-    Plug 'ojroques/vim-oscyank', {'branch': 'main'}
-endif
+Plug 'ojroques/vim-oscyank', {'on': 'OSCYank'}
 
 " 完全懒加载的插件
 Plug 'cespare/vim-toml'
@@ -968,7 +966,7 @@ if g:vmode == 0
 endif
 
 if has('nvim')
-    Plug 'dstein64/nvim-scrollview', {'branch': 'main'}
+    Plug 'dstein64/nvim-scrollview'
 endif
 
 
