@@ -571,7 +571,7 @@ function! myrc#pastecmd()
 endfunction
 
 function! myrc#cby() abort
-    if exists('$SSH_CLIENT') && exists('g:loaded_oscyank')
+    if exists('$SSH_CLIENT') && exists(':OSCYank')
         OSCYank
         return
     endif
@@ -583,7 +583,7 @@ function! myrc#cby() abort
 endfunction
 
 function! myrc#cbp() abort
-    if exists('$SSH_CLIENT') && exists('g:loaded_oscyank')
+    if exists('$SSH_CLIENT') && exists(':OSCYank')
         return
     endif
     let cmd = myrc#pastecmd()
