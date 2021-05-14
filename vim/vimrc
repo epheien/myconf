@@ -460,7 +460,7 @@ autocmd vimrc BufNewFile,BufRead *.txt if expand('%:t') =~# 'rfc\d\+\.txt' | set
 " 常规键盘映射
 " ============================================================================
 " 最常用的复制粘贴
-if has('clipboard')
+if !has('nvim') && has('clipboard')
     vnoremap <C-x> "+x
     vnoremap <C-c> "+y
     vnoremap <C-v> "+gP
