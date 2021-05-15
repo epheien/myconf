@@ -584,7 +584,7 @@ endfunction
 
 function! myrc#cbp() abort
     if exists('$SSH_CLIENT') && exists(':OSCYank')
-        return
+        return ''
     endif
     let cmd = myrc#pastecmd()
     if empty(cmd)
