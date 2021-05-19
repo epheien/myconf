@@ -642,7 +642,10 @@ function! myrc#close() abort
         " BUG: https://github.com/neovim/neovim/issues/11440
         q!
     endtry
-    call win_gotoid(winid)
+    " nvim 的 prev window 逻辑和 vim 的不一样, 会有奇怪的情况
+    if !has('nvim')
+        call win_gotoid(winid)
+    endif
 endfunction
 
 " vim: fdm=indent fen fdl=0 et sts=4
