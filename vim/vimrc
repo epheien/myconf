@@ -948,7 +948,7 @@ if g:vmode == 0
     endif
 
     if has('nvim')
-        Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins'}
+        Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
         "Plug 'neovim/nvim-lsp'
     endif
 
