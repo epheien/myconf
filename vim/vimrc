@@ -909,6 +909,8 @@ call plug#begin()
 
 " ssh 环境下, 使用 OSC52 剪切板机制, 仅支持某些终端模拟器
 Plug 'ojroques/vim-oscyank', {'on': 'OSCYank'}
+command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
+command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 
 " 完全懒加载的插件
 Plug 'cespare/vim-toml'

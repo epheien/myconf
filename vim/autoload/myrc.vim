@@ -5,6 +5,7 @@ if exists('s:loaded')
 endif
 let s:loaded = 1
 let s:gtags_files_dict = {}
+let s:enable_oscyank = v:false
 
 " 副本函数，为了懒加载，容许一定量的副本函数
 function s:IsWindowsOS()
@@ -570,8 +571,16 @@ function! myrc#pastecmd()
     return s:pastecmd
 endfunction
 
+function! myrc#enable_oscyank() abort
+    let s:enable_oscyank = v:true
+endfunction
+
+function! myrc#disable_oscyank() abort
+    let s:enable_oscyank = v:false
+endfunction
+
 function! myrc#cby() abort
-    if exists('$SSH_CLIENT') && exists(':OSCYank')
+    if (exists('$SSH_CLIENT') || s:enable_oscyank) && exists(':OSCYank')
         OSCYank
         return
     endif
@@ -583,7 +592,7 @@ function! myrc#cby() abort
 endfunction
 
 function! myrc#cbp() abort
-    if exists('$SSH_CLIENT') && exists(':OSCYank')
+    if (exists('$SSH_CLIENT') || s:enable_oscyank) && exists(':OSCYank')
         return ''
     endif
     let cmd = myrc#pastecmd()
