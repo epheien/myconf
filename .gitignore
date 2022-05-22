@@ -4,3 +4,6 @@ vim/bundle/videm-dev
 vim/bundle/videm/
 .DS_Store
 vimp.vim
+GPATH
+GRTAGS
+GTAGS
