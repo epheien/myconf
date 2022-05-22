@@ -924,7 +924,7 @@ if g:vmode == 0
     Plug 'easymotion/vim-easymotion'
     Plug 'epheien/vim-gutentags'
     Plug 'skywind3000/gutentags_plus'
-    Plug 'othree/yajs.vim' " 增强的 js 语法高亮
+    "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
     Plug 'posva/vim-vue'
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
