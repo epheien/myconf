@@ -393,6 +393,15 @@ if has('gui_running') || &t_Co == 256
 else
     set listchars=tab:\ \ 
 endif
+" diff 模式就不能设置 list 了
+autocmd OptionSet diff call s:OptionSetDiffHook()
+function! s:OptionSetDiffHook() abort
+    if v:option_new == 0
+        setl list
+    else
+        setl nolist
+    endif
+endfunction
 
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 if exists('$LANGUAGE')
