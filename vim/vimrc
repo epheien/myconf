@@ -480,6 +480,8 @@ else
     if exists(':tmap')
         tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
     endif
+    command -nargs=0 OSCYankEnable  call myrc#enable_oscyank()
+    command -nargs=0 OSCYankDisable call myrc#disable_oscyank()
 endif
 
 nnoremap <silent> <M-h> :tabNext<CR>
@@ -529,6 +531,7 @@ nnoremap ` '
 if exists(':tmap')
     " NOTE: 由于终端的转义特性，<Esc> 的识别依赖于延时，所以如果映射了这个按键
     "       的话，会导致鼠标点击的识别出问题，所以，我们不再映射 <Esc> 了
+    tnoremap <silent> <C-y><C-y> <C-\><C-n>
     tnoremap <silent> <C-\><C-\> <C-\><C-n>
     if has('nvim')
         func s:SetupTerminal()
@@ -1002,7 +1005,7 @@ if has('gui_running') || &t_Co == 256
 endif
 
 " git 相关插件
-Plug 'tpope/vim-fugitive', {'on': 'Gstatus'}
+Plug 'tpope/vim-fugitive', {'on': ['Gstatus', 'Gblame']}
 Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
 Plug 'junegunn/gv.vim', {'on': 'GV'}
 Plug 'jreybert/vimagit', {'on': 'Magit'}
