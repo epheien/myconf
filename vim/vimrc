@@ -965,6 +965,7 @@ if g:vmode == 0
     call s:Plug('mymark')
     call s:Plug('colorizer', {'on': 'UpdateColor'})
     call s:Plug('colorsel', {'on': 'ColorSel'})
+    call s:Plug('visincr', {'on': 'I'})
 endif
 
 if has('nvim')
