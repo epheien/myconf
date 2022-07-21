@@ -1295,14 +1295,16 @@ if g:vmode == 0
             let g:deoplete#sources#ternjs#depths = 1
             let g:deoplete#sources#ternjs#docs = 1
             let g:deoplete#sources#ternjs#filter = 0
-
-            let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
         catch
             " ignore
         endtry
     endif
 endif
 "}}}
+
+" ========== neosnippet ==========
+let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
+
 " ========== coc.nvim ==========
 let g:coc_snippet_next = ''
 let g:coc_snippet_prev = ''
