@@ -411,7 +411,7 @@ if exists('$LANGUAGE')
     let $LANGUAGE = ''
 endif
 
-if has('mac')
+if has('mac') && !has('nvim')
     " 修复 terminal locale 错误问题
     try
         language zh_CN.UTF-8
