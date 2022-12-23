@@ -1063,7 +1063,7 @@ let g:airline_symbols_ascii = 1
 
 " ## lightline 配置，用了他的高亮机制，显示的内容自己定制
 let g:lightline = {
-  \ 'colorscheme': 'wombat',
+  \ 'colorscheme': 'mywombat',
   \ 'enable': {
   \     'statusline': 1,
   \     'tabline': 1,
