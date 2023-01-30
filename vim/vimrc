@@ -1062,6 +1062,14 @@ endif
 let g:airline_symbols_ascii = 1
 
 " ## lightline 配置，用了他的高亮机制，显示的内容自己定制
+" 修改主题的 tabline 高亮
+try
+    let s:palette = g:lightline#colorscheme#mywombat#palette
+    let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
+    let s:palette.tabline.left = [s:palette.normal.right[1]]
+    unlet s:palette
+catch /.*/
+endtry
 let g:lightline = {
   \ 'colorscheme': 'mywombat',
   \ 'enable': {
@@ -1132,14 +1140,6 @@ function GetTabFile(tabnum)
     endif
     return lightline#tab#filename(a:tabnum)
 endfunction
-
-try
-    let s:palette = g:lightline#colorscheme#mywombat#palette
-    let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
-    let s:palette.tabline.left = [s:palette.normal.right[1]]
-    unlet s:palette
-catch /.*/
-endtry
 
 " 稍微定制一下 startify 的 header
 let g:startify_custom_header = [
