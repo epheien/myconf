@@ -1134,7 +1134,7 @@ function GetTabFile(tabnum)
 endfunction
 
 try
-    let s:palette = g:lightline#colorscheme#wombat#palette
+    let s:palette = g:lightline#colorscheme#mywombat#palette
     let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
     let s:palette.tabline.left = [s:palette.normal.right[1]]
     unlet s:palette
