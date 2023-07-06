@@ -1310,6 +1310,9 @@ let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
 " ========== coc.nvim ==========
 let g:coc_snippet_next = ''
 let g:coc_snippet_prev = ''
+" 补全后自动弹出函数参数提示
+" 一般按<CR>确认补全函数后, 会自动添加括号并让光标置于括号中
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 " ========== smartim by hammerspoon ==========
 "{{{
 if g:vmode == 0
