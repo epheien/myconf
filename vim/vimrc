@@ -1313,6 +1313,15 @@ let g:coc_snippet_prev = ''
 " 补全后自动弹出函数参数提示
 " 一般按<CR>确认补全函数后, 会自动添加括号并让光标置于括号中
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" Show hover when provider exists, fallback to vim's builtin behavior.
+nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
+function! s:ShowDocumentation()
+    if exists('g:did_coc_loaded') && CocAction('hasProvider', 'hover')
+        call CocActionAsync('definitionHover')
+    else
+        call feedkeys('K', 'in')
+    endif
+endfunction
 " ========== smartim by hammerspoon ==========
 "{{{
 if g:vmode == 0
