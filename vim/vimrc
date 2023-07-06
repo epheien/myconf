@@ -379,7 +379,7 @@ endfunction
 " 增强的命令行补全
 set wildmenu
 set wildignorecase
-if has('nvim')
+if has('nvim') || v:version >= 900
     silent! set wildoptions+=pum
 endif
 
@@ -1223,7 +1223,9 @@ inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<Tab>"
 " 触发 <c-x>xxx 系列补全
 function! s:SuperTab() "{{{2
     let preChar = getline('.')[col('.') - 2]
-    if pumvisible()
+    if exists('g:did_coc_loaded') && coc#pum#visible()
+        return coc#pum#next(1)
+    elseif pumvisible()
         return "\<C-n>"
     elseif preChar == '' || preChar =~ '\s'
         return "\<Tab>"
