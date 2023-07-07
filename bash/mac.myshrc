@@ -73,7 +73,7 @@ alias diff="diff --color=auto"
 alias zcat=gzcat
 
 # 让脚本可以直接使用全局的模块
-export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
+#export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
 
 function setup_nvm()
 {
