@@ -600,7 +600,7 @@ cnoremap <C-a> <Home>
 cnoremap <C-d> <Del>
 
 "=======================================
-" 可视模式
+" 可视和选择模式
 "=======================================
 vnoremap <silent> <C-s> <C-c>:update<CR>
 "vnoremap y "+y
@@ -608,8 +608,9 @@ vnoremap <silent> <C-s> <C-c>:update<CR>
 vnoremap $ $h
 
 "=======================================
-" 可视和选择模式
+" 可视模式
 "=======================================
+xnoremap ; :
 xnoremap <Space> 3j
 xnoremap , 3k
 xnoremap ( di()<ESC>Pl
@@ -930,6 +931,7 @@ command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 " 完全懒加载的插件
 Plug 'cespare/vim-toml'
 
+" 0 - 全模式, 1 - 精简模式, 2 - man模式
 if g:vmode == 0
     Plug 'epheien/gruvbox' " 支持了 terminal 颜色
     Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
@@ -956,6 +958,7 @@ if g:vmode == 0
     Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
     Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
     Plug 'lvht/tagbar-markdown', {'on': 'TagbarToggle'} " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
+    Plug 'rhysd/vim-clang-format', {'on': 'ClangFormat'}
 
     if !s:OnlyASCII()
         "Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -1364,6 +1367,8 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 " ========== table-mode ==========
 " 兼容 markdown 表格格式
 let g:table_mode_corner = '|'
+" ========== clang-format ==========
+let g:clang_format#code_style = 'LLVM'
 
 " ========== gitgutter ==========
 if g:vmode == 0
