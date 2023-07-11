@@ -76,4 +76,52 @@ if command -v thefuck &>/dev/null; then
     eval $(thefuck --alias)
 fi
 
+# ======================================
+# nvm 相关配置
+# ======================================
+# 让脚本可以直接使用全局的模块
+#export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
+
+function setup_nvm()
+{
+    echo 'Preparing nvm...'
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+
+function setup_node()
+{
+    setup_nvm
+    nvm use stable
+}
+
+# 默认不加载 nvm，只有主动触发 nvm 时才加载
+function nvm()
+{
+    setup_nvm
+    nvm "$@"
+}
+
+function node()
+{
+    setup_node
+    unset -f node
+    /usr/bin/env node "$@"
+}
+
+unset -f node
+DEFAULT_NODE_VERSION=18.16.1
+# Ensure we have a default node version in our PATH at startup
+if [ -d "$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin" ]; then
+    PATH="$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin:$PATH"
+else
+    output=$(ls -1 "$HOME/.nvm/versions/node" | tail -n1)
+    if [[ -n "$output" ]]; then
+        PATH="$HOME/.nvm/versions/node/$output/bin:$PATH"
+    fi
+    unset output
+fi
+# ======================================
+
 # vi:set et sts=4 ft=sh:
