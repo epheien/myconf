@@ -72,6 +72,9 @@ alias diff="diff --color=auto"
 # macOS的zcat和Linux下的行为不一致，用gzcat替代
 alias zcat=gzcat
 
+# ======================================
+# nvm 相关配置
+# ======================================
 # 让脚本可以直接使用全局的模块
 #export NODE_PATH=~/.nvm/versions/node/v10.13.0/lib/node_modules/
 
@@ -103,6 +106,20 @@ function node()
     /usr/bin/env node "$@"
 }
 
+unset -f node
+DEFAULT_NODE_VERSION=18.16.1
+# Ensure we have a default node version in our PATH at startup
+if [ -d "$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin" ]; then
+    PATH="$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin:$PATH"
+else
+    output=$(ls -1 "$HOME/.nvm/versions/node" | tail -n1)
+    if [[ -n "$output" ]]; then
+        PATH="$HOME/.nvm/versions/node/$output/bin:$PATH"
+    fi
+    unset output
+fi
+# ======================================
+
 function findn()
 {
     [ $# -eq 0 ] && return 0
@@ -118,19 +135,6 @@ unset MYVIMRC
 
 if [ -f "$HOME/.shalias" ]; then
     source "$HOME/.shalias"
-fi
-
-unset -f node
-DEFAULT_NODE_VERSION=10.16.0
-# Ensure we have a default node version in our PATH at startup
-if [ -d "$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin" ]; then
-    PATH="$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin:$PATH"
-else
-    output=$(ls -1 "$HOME/.nvm/versions/node" | tail -n1)
-    if [[ -n "$output" ]]; then
-        PATH="$HOME/.nvm/versions/node/$output/bin:$PATH"
-    fi
-    unset output
 fi
 
 # fuck 命令
