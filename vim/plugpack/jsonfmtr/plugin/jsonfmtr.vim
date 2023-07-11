@@ -9,8 +9,12 @@ if exists('g:loaded_jsonfmtr')
 endif
 let g:loaded_jsonfmtr = 1
 
-if !has('python3') && !has('python')
-    echoerr "Error: Required vim compiled with +python or +python3"
+if !has('nvim')
+    finish
+endif
+
+if !has('python3')
+    echoerr "Error: jsonfmtr required vim compiled with +python3"
     finish
 endif
 
@@ -19,7 +23,7 @@ function s:InitPyif()
     if s:initpyif
         return
     endif
-pythonx << PYTHON_EOF
+python3 << PYTHON_EOF
 import sys
 import vim
 import json
