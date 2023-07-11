@@ -977,7 +977,7 @@ if g:vmode == 0
 
     " 本地插件
     call s:Plug('nerdcommenter')
-    call s:Plug('jsonfmtr')
+    call s:Plug('jsonfmtr', {'on': 'JsonFmtr'})
     call s:Plug('vim-repeat')
     call s:Plug('vim-signature')
     call s:Plug('mymark')
@@ -1274,7 +1274,8 @@ endfunction
 "}}}
 " ========== deoplete ==========
 "{{{
-if g:vmode == 0
+" NOTE: deoplete 的配置语句会让 vim 加载 python2
+if g:vmode == 0 && has('nvim')
     if (!s:IsWindowsOS() || has('nvim')) && has('python3') && executable('python3')
         try
             let g:deoplete#enable_at_startup = 0
