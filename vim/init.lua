@@ -100,6 +100,8 @@ local function my_on_attach(bufnr)
 
   -- your removals and mappings go here
   vim.keymap.set("n", ".", tree_actions_menu, opts("nvim tree menu"))
+  vim.keymap.del('n', 'g?', opts('Help'))
+  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
 end
 
 require("nvim-tree").setup({
