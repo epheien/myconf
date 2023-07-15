@@ -1413,5 +1413,9 @@ if get(g:, 'gonvim_running', 0)
     autocmd OptionSet * call myrc#optionset_hook()
 endif
 
+if has('nvim-0.8.0')
+    exec 'source' s:joinpath(s:USERRUNTIME, 'nvim-init.lua')
+endif
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
