@@ -128,3 +128,17 @@ require("nvim-tree").setup({
 
 require("indent_blankline").setup({
 })
+
+require('telescope').setup{
+  defaults = {
+    -- Default configuration for telescope goes here:
+    -- config_key = value,
+    mappings = {
+      i = {
+        --["<Esc>"] = require('telescope.actions').close,
+        ["<C-j>"] = require('telescope.actions').move_selection_next,
+        ["<C-k>"] = require('telescope.actions').move_selection_previous,
+      }
+    }
+  },
+}
