@@ -35,6 +35,10 @@ local tree_actions = {
     handler = require("nvim-tree.api").fs.copy.node,
   },
   {
+    name = "Paste",
+    handler = require("nvim-tree.api").fs.paste,
+  },
+  {
     name = "Run Command",
     handler = require("nvim-tree.api").node.run.cmd,
   },
@@ -102,6 +106,7 @@ local function my_on_attach(bufnr)
   vim.keymap.set("n", ".", tree_actions_menu, opts("nvim tree menu"))
   vim.keymap.del('n', 'g?', opts('Help'))
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+  vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
 end
 
 require("nvim-tree").setup({
