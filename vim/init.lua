@@ -104,12 +104,18 @@ end
 
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
+  git = {
+    enable = false,
+  },
   view = {
     width = 31,
     signcolumn = "auto",
   },
   renderer = {
     group_empty = true,
+    icons = {
+      git_placement = "after",
+    },
   },
   filters = {
     dotfiles = true,
