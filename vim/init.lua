@@ -11,31 +11,33 @@ vim.g.loaded_netrwPlugin = 1
 -- ========================================
 local tree_actions = {
   {
-    name = "Create node",
+    name = "Create",
     handler = require("nvim-tree.api").fs.create,
   },
   {
-    name = "Remove node",
+    name = "Delete",
     handler = require("nvim-tree.api").fs.remove,
   },
   {
-    name = "Trash node",
+    name = "Trash",
     handler = require("nvim-tree.api").fs.trash,
   },
   {
-    name = "Rename node",
+    name = "Rename",
     handler = require("nvim-tree.api").fs.rename,
   },
   {
-    name = "Fully rename node",
+    name = "Rename: Omit Filename",
     handler = require("nvim-tree.api").fs.rename_sub,
   },
   {
     name = "Copy",
     handler = require("nvim-tree.api").fs.copy.node,
   },
-
-  -- ... other custom actions you may want to display in the menu
+  {
+    name = "Run Command",
+    handler = require("nvim-tree.api").node.run.cmd,
+  },
 }
 
 local function tree_actions_menu(node)
@@ -84,7 +86,20 @@ local function tree_actions_menu(node)
   }
 
   -- Opening the menu
-  require("telescope.pickers").new({ prompt_title = "Tree menu" }, default_options):find()
+  require("telescope.pickers").new({ prompt_title = "Tree Menu" }, default_options):find()
+end
+
+local function my_on_attach(bufnr)
+  local api = require('nvim-tree.api')
+
+  local function opts(desc)
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- your removals and mappings go here
+  vim.keymap.set("n", ".", tree_actions_menu, opts("nvim tree menu"))
 end
 
 require("nvim-tree").setup({
@@ -99,14 +114,7 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = true,
   },
-  -- on_attach = function(buffer)
-  --   vim.keymap.set(
-  --     "n",
-  --     ".",
-  --     tree_actions_menu,
-  --     { buffer = buffer, noremap = true, silent = true }
-  --   )
-  -- end,
+  on_attach = my_on_attach,
 })
 -- ----------------------------------------
 
