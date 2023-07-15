@@ -657,4 +657,77 @@ function! myrc#close() abort
     endif
 endfunction
 
+" 打开指定缓冲区的窗口数目
+function! s:BufInWinCount(nBufNr) "{{{2
+    let nCount = 0
+    let nWinNr = 1
+    while 1
+        let nWinBufNr = winbufnr(nWinNr)
+        if nWinBufNr < 0
+            break
+        endif
+        if nWinBufNr ==# a:nBufNr
+            let nCount += 1
+        endif
+        let nWinNr += 1
+    endwhile
+
+    return nCount
+endfunction
+
+" 判断窗口是否可用
+" 可用 - 即可用其他窗口替换本窗口而不会令本窗口的内容消失
+function! s:IsWindowUsable(nWinNr) "{{{2
+    let nWinNr = a:nWinNr
+    " 特殊窗口，如特殊缓冲类型的窗口、预览窗口
+    let bIsSpecialWindow = getwinvar(nWinNr, '&buftype') !=# ''
+                \|| getwinvar(nWinNr, '&previewwindow')
+    if bIsSpecialWindow
+        return 0
+    endif
+
+    " 窗口缓冲是否已修改
+    let bModified = getwinvar(nWinNr, '&modified')
+
+    " 如果可允许隐藏，则无论缓冲是否修改
+    if &hidden
+        return 1
+    endif
+
+    " 如果缓冲区没有修改，或者，已修改，但是同时有其他窗口打开着，则表示可用
+    if !bModified || s:BufInWinCount(winbufnr(nWinNr)) >= 2
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
+" 获取第一个"可用"(常规, 非特殊)的窗口
+" 特殊: 特殊的缓冲区类型、预览缓冲区、已修改的缓冲并且不能隐藏
+" Return: 窗口编号 - -1 表示没有可用的窗口
+function! s:GetFirstUsableWinNr() "{{{2
+    let i = 1
+    while i <= winnr("$")
+        if s:IsWindowUsable(i)
+            return i
+        endif
+
+        let i += 1
+    endwhile
+    return -1
+endfunction
+
+function! myrc#GetWindowIdForNvimTreeToOpen() abort
+    let prev_winnr = winnr('#')
+    if s:IsWindowUsable(prev_winnr)
+        return win_getid(prev_winnr)
+    endif
+    let nr = s:GetFirstUsableWinNr()
+    if nr != -1
+        return win_getid(nr)
+    endif
+    " 返回 0 的话, nvim-tree 会按照自己逻辑新建一个可用窗口
+    return 0
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4

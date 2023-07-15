@@ -127,6 +127,14 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = true,
   },
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = true,
+        picker = vim.fn['myrc#GetWindowIdForNvimTreeToOpen'],
+      },
+    },
+  },
   on_attach = my_on_attach,
 })
 -- ----------------------------------------
