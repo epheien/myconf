@@ -170,7 +170,7 @@ if ok then
       },
     },
     messages = {
-      enabled = false, -- false 会使用 cmdline, 避免闪烁
+      --enabled = false, -- false 会使用 cmdline, 避免闪烁
       view = 'mini',
       view_error = 'mini',
       view_warn = 'mini',
