@@ -142,7 +142,7 @@ require("nvim-tree").setup({
 require("indent_blankline").setup({
 })
 
-require('telescope').setup{
+require('telescope').setup({
   defaults = {
     -- Default configuration for telescope goes here:
     -- config_key = value,
@@ -154,7 +154,7 @@ require('telescope').setup{
       }
     }
   },
-}
+})
 
 local ok, noice_mod = pcall(require, 'noice')
 if ok then
@@ -169,7 +169,7 @@ if ok then
       },
     },
     messages = {
-      enabled = true,
+      enabled = false, -- false 会使用 cmdline, 避免闪烁
       view = 'mini',
       view_error = 'mini',
       view_warn = 'mini',
