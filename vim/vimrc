@@ -891,23 +891,25 @@ endfunction
 
 " ========== cscope 设置 ==========
 "{{{
-set tagcase=match " 标签文件一般是区分大小写的
-set cscopeverbose
-set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
-set cscopetag
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-" 如果安装了 'skywind3000/gutentags_plus' 插件: "cs find" => "GscopeFind"
-nnoremap <silent> <C-\>s :GscopeFind s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>g :GscopeFind g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>c :GscopeFind c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>t :GscopeFind t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>e :GscopeFind e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-nnoremap <silent> <C-\>f :GscopeFind f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
-nnoremap <silent> <C-\>i :GscopeFind i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
-nnoremap <silent> <C-\>d :GscopeFind d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-"nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
+if !has('nvim-0.9.0') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
+    set tagcase=match " 标签文件一般是区分大小写的
+    set cscopeverbose
+    set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
+    set cscopetag
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    " 如果安装了 'skywind3000/gutentags_plus' 插件: "cs find" => "GscopeFind"
+    nnoremap <silent> <C-\>s :GscopeFind s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>g :GscopeFind g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>c :GscopeFind c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>t :GscopeFind t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>e :GscopeFind e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>f :GscopeFind f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
+    nnoremap <silent> <C-\>i :GscopeFind i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
+    nnoremap <silent> <C-\>d :GscopeFind d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
 
-command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
+    command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
+endif
 "}}}
 
 function s:Plug(name, ...)
@@ -940,8 +942,10 @@ if g:vmode == 0
     Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
     Plug 'yianwillis/vimcdoc' " 中文文档
     Plug 'easymotion/vim-easymotion'
-    Plug 'epheien/vim-gutentags'
-    Plug 'skywind3000/gutentags_plus'
+    if !has('nvim-0.9.0')
+        Plug 'epheien/vim-gutentags'
+        Plug 'skywind3000/gutentags_plus'
+    endif
     "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
     Plug 'posva/vim-vue'
     Plug 'asins/vim-dict'
@@ -1202,24 +1206,26 @@ let g:go_debug_log_output = ''
 let g:go_def_mapping_enabled = 0
 
 " gutentags
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_file_list_command = 'cat gtags.files'
-let g:gutentags_ctags_tagfile = 'gutags'
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['gtags.files']
-let g:gutentags_auto_add_gtags_cscope = 0
-let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
+if !has('nvim-0.9.0')
+    let g:gutentags_define_advanced_commands = 1
+    let g:gutentags_file_list_command = 'cat gtags.files'
+    let g:gutentags_ctags_tagfile = 'gutags'
+    let g:gutentags_add_default_project_roots = 0
+    let g:gutentags_project_root = ['gtags.files']
+    let g:gutentags_auto_add_gtags_cscope = 0
+    let g:gutentags_modules = []
+    if executable('ctags')
+        let g:gutentags_modules += ['ctags']
+    endif
+    if executable('gtags-cscope') && executable('gtags')
+        let g:gutentags_modules += ['gtags_cscope']
+    endif
+    " ctags 的一些参数
+    let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+    " 这两个选项会导致 ctags 退出码有异常, 禁用掉
+    "let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+    "let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 endif
-if executable('gtags-cscope') && executable('gtags')
-    let g:gutentags_modules += ['gtags_cscope']
-endif
-" ctags 的一些参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-" 这两个选项会导致 ctags 退出码有异常, 禁用掉
-"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " ==========================================================
 " 自己的简易插件
