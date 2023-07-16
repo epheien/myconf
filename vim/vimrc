@@ -965,6 +965,10 @@ if g:vmode == 0
     Plug 'lvht/tagbar-markdown', {'on': 'TagbarToggle'} " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
     Plug 'rhysd/vim-clang-format', {'on': 'ClangFormat'}
 
+    "Plug 'folke/noice.nvim'
+    "Plug 'MunifTanjim/nui.nvim'
+    "Plug 'rcarriga/nvim-notify'
+
     if !s:OnlyASCII()
         "Plug 'Xuyuanp/nerdtree-git-plugin'
         "Plug 'ryanoasis/vim-devicons'

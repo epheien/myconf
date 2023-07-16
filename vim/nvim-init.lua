@@ -155,3 +155,18 @@ require('telescope').setup{
     }
   },
 }
+
+local ok, noice_mod = pcall(require, 'noice')
+if ok then
+  noice_mod.setup({
+    cmdline = {
+      format = {
+        help = false,
+        lua = false,
+        filter = false,
+        --search_down = { icon = "/ ⌄" },
+        --search_up = { icon = "? ⌃" },
+      },
+    },
+  })
+end
