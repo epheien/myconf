@@ -168,5 +168,26 @@ if ok then
         --search_up = { icon = "? ⌃" },
       },
     },
+    messages = {
+      enabled = true,
+      view = 'mini',
+      view_error = 'mini',
+      view_warn = 'mini',
+      view_history = 'popup',
+    },
+    commands = {
+      history = {
+        view = 'popup',
+      },
+    },
+    format = {
+      level = {
+        icons = {
+          error = "✖",
+          warn = "▼",
+          info = "●",
+        },
+      },
+    },
   })
 end
