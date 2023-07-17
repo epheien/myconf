@@ -726,6 +726,13 @@ function! myrc#GetWindowIdForNvimTreeToOpen() abort
     if nr != -1
         return win_getid(nr)
     endif
+    " 当前仅剩下 nvim-tree 窗口了或没有可用的窗口了
+    let width = luaeval("require('nvim-tree').config.view.width")
+    if &columns > width + 1
+        exec 'rightbelow' (&columns - (width + 1)) 'vnew'
+        echomsg win_getid()
+        return win_getid()
+    endif
     " 返回 0 的话, nvim-tree 会按照自己逻辑新建一个可用窗口
     return 0
 endfunction
