@@ -1404,7 +1404,10 @@ if g:vmode == 0
 
     func s:AutoGitGutter()
         if globpath('.', '.git') != '' || filereadable('.gitignore')
-            GitGutterEnable
+            try
+                GitGutterEnable
+            catch
+            endtry
         endif
     endfunc
     autocmd vimrc BufReadPost * call s:AutoGitGutter()
