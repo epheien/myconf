@@ -27,7 +27,7 @@ local tree_actions = {
     handler = require("nvim-tree.api").fs.rename,
   },
   {
-    name = "Rename: Omit Filename",
+    name = "Rename: Omit Filename (Move)",
     handler = require("nvim-tree.api").fs.rename_sub,
   },
   {
@@ -123,6 +123,9 @@ local nvim_tree_opts = {
   },
   filters = {
     dotfiles = true,
+  },
+  trash = {
+    cmd = "trash"
   },
   actions = {
     open_file = {
