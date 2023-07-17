@@ -992,7 +992,7 @@ if g:vmode == 0
 
     " 本地插件
     call s:Plug('nerdcommenter')
-    call s:Plug('jsonfmtr', {'on': 'JsonFmtr'})
+    call s:Plug('jsonfmt', {'on': 'JsonFmt'})
     call s:Plug('vim-repeat')
     call s:Plug('vim-signature')
     call s:Plug('mymark')
