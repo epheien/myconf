@@ -109,7 +109,7 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
 end
 
-require("nvim-tree").setup({
+local nvim_tree_opts = {
   sort_by = "case_sensitive",
   git = {
     enable = false,
@@ -120,9 +120,6 @@ require("nvim-tree").setup({
   },
   renderer = {
     group_empty = true,
-    icons = {
-      git_placement = "after",
-    },
   },
   filters = {
     dotfiles = true,
@@ -137,7 +134,24 @@ require("nvim-tree").setup({
     },
   },
   on_attach = my_on_attach,
-})
+}
+if vim.fn.OnlyASCII() ~= 0 then
+  nvim_tree_opts.renderer.icons = {
+    symlink_arrow = ' -> ',
+    show = {
+      file = false,
+      folder = false,
+    },
+    glyphs = {
+      symlink = '',
+      folder = {
+        arrow_closed = '+',
+        arrow_open = '~',
+      }
+    },
+  }
+end
+require("nvim-tree").setup(nvim_tree_opts)
 -- ----------------------------------------
 
 require("indent_blankline").setup({

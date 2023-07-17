@@ -20,7 +20,7 @@ function s:IsLinuxOS() "{{{
 endfunction
 "}}}
 " 表示是否仅使用 ASCII 显示
-function s:OnlyASCII() "{{{
+function g:OnlyASCII() "{{{
     if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM =~# '\V\<Apple_Terminal' || $TERM_PROGRAM ==# 'kitty'
         return 0
     endif
@@ -770,7 +770,7 @@ hi link TagbarKind Constant
 "let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
 let NERDTreeIgnore = []
 let NERDTreeMapMenu = "."
-if s:OnlyASCII()
+if g:OnlyASCII()
     let NERDTreeDirArrowExpandable = '+'
     let NERDTreeDirArrowCollapsible = '~'
 endif
@@ -969,7 +969,7 @@ if g:vmode == 0
     "Plug 'MunifTanjim/nui.nvim'
     "Plug 'rcarriga/nvim-notify'
 
-    if !s:OnlyASCII()
+    if !g:OnlyASCII()
         "Plug 'Xuyuanp/nerdtree-git-plugin'
         "Plug 'ryanoasis/vim-devicons'
     endif
@@ -1062,7 +1062,7 @@ let g:Lf_UseCache = 0
 let g:Lf_UseVersionControlTool = 0
 " Up 和 Down 使用 C-P 和 C-N
 let g:Lf_CommandMap = {'<C-K>': ['<C-K>', '<Up>'], '<C-J>': ['<C-J>', '<Down>']}
-if s:OnlyASCII()
+if g:OnlyASCII()
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 else
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
@@ -1132,7 +1132,7 @@ let g:lightline.component.fileflags = '%m%r'
 let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
 " ◄► ◀︎▶︎  
-if s:OnlyASCII()
+if g:OnlyASCII()
     " 非 Nerd Font
     "let g:lightline.separator = { 'left': '►', 'right': '◄' }
     "let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
