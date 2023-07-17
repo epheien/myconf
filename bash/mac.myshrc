@@ -111,7 +111,7 @@ DEFAULT_NODE_VERSION=18.16.1
 # Ensure we have a default node version in our PATH at startup
 if [ -d "$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin" ]; then
     PATH="$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin:$PATH"
-else
+elif [ -d "$HOME/.nvm/versions/node" ]; then
     output=$(ls -1 "$HOME/.nvm/versions/node" | tail -n1)
     if [[ -n "$output" ]]; then
         PATH="$HOME/.nvm/versions/node/$output/bin:$PATH"
