@@ -353,6 +353,9 @@ endfunc
 " 因为 <C-e> 的时候，会触发 CompleteDone CursorMovedI TextChangedI 时间
 " TODO: 只能处理几种 case，要完全解决的话，只能报 bug 给 deoplete
 func myrc#i_CTRL_E()
+    if get(g:, 'did_coc_loaded') && coc#pum#visible()
+        return coc#pum#cancel()
+    endif
     if pumvisible()
         if exists('*deoplete#close_popup')
             call deoplete#close_popup()
