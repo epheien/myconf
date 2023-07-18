@@ -114,6 +114,9 @@ local nvim_tree_opts = {
   git = {
     enable = false,
   },
+  sort = {
+    sorter = "name",
+  },
   view = {
     width = 31,
     signcolumn = "auto",
