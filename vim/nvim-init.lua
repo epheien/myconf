@@ -107,6 +107,14 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', 'g?', opts('Help'))
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
   vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
+  vim.keymap.del('n', "<C-k>", opts('Info'))
+  vim.keymap.del('n', 'U', opts('Toggle Hidden'))
+  vim.keymap.del('n', "<Tab>", opts('Open Preview'))
+  vim.keymap.set('n', "<C-i>", api.node.show_info_popup, opts('Info'))
+  vim.keymap.del('n', 'I', opts('Toggle Git Ignore'))
+  vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts('Toggle Hidden'))
+  vim.keymap.del('n', 'C', opts('Toggle Git Clean'))
+  vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
 end
 
 local nvim_tree_opts = {
