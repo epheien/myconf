@@ -166,6 +166,7 @@ if vim.fn.OnlyASCII() ~= 0 then
   }
 end
 require("nvim-tree").setup(nvim_tree_opts)
+vim.keymap.set('n', '<Leader>e', require('nvim-tree.api').tree.toggle)
 -- ----------------------------------------
 
 require("indent_blankline").setup({
