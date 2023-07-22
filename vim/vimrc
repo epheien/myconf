@@ -954,7 +954,7 @@ if g:vmode == 0
     Plug '~/.fzf', {'on': 'FZF'} " git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
     Plug 'mbbill/undotree'
     Plug 'iamcco/markdown-preview.vim'
-    Plug 'dhruvasagar/vim-table-mode'
+    Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
     Plug 'vobornik/vim-mql4'
     Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
     Plug 'metakirby5/codi.vim', {'on': 'Codi'}
