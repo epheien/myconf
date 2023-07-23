@@ -7,7 +7,7 @@ if [ "$(uname -s)" != Linux ]; then
     exit 1
 fi
 
-command -v realpath || { "realpath not found" ; exit 1; }
+command -v realpath >/dev/null || { "realpath not found" ; exit 1; }
 __file__=$(realpath "$0")
 __dir__=$(dirname "$__file__")
 
