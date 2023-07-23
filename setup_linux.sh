@@ -1,5 +1,6 @@
 #!/bin/bash
 # 自动设置 linux 环境
+# nvim 下载地址: https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage
 set -e
 
 if [ "$(uname -s)" != Linux ]; then
