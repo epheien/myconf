@@ -416,10 +416,10 @@ if has('mac') && !has('nvim')
     " 修复 terminal locale 错误问题
     try
         language zh_CN.UTF-8
-    catch /.*/
+    catch
         try
             language en_US.UTF-8
-        catch /.*/
+        catch
             echomsg 'Failed to run :language en_US.UTF-8'
         endtry
     endtry
