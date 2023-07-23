@@ -96,6 +96,7 @@ local function my_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 
   -- your removals and mappings go here
+  vim.keymap.del('n', '.', opts('Run Command'))
   local ok, mod = pcall(require, 'telescope')
   if ok then
     vim.keymap.set("n", ".", tree_actions_menu, opts("nvim tree menu"))
