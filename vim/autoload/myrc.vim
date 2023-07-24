@@ -740,4 +740,10 @@ function! myrc#GetWindowIdForNvimTreeToOpen() abort
     return 0
 endfunction
 
+function! myrc#LogSetup() abort
+    setl termguicolors
+    setl nowrap cursorline
+    setl cc=
+endfunction
+
 " vim: fdm=indent fen fdl=0 et sts=4
