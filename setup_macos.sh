@@ -26,6 +26,10 @@ ln -s myconf/tmux/tmux.conf ../.tmux.conf
 ln -s myconf/bash/inputrc ../.inputrc
 ln -s myconf/bash/mac.myshrc ../.myshrc
 
+# hammerspoon
+mkdir -p ~/.hammerspoon
+ln -s ../myconf/macos/hammerspoon/init.lua ../.hammerspoon/
+
 target=~/.bashrc
 if [ "$SHELL" == "/bin/zsh" ]; then
     target=~/.zshrc
