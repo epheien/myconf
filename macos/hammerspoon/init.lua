@@ -8,22 +8,47 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", function()
   hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
 end)
 
+-- 纳秒级别的时间戳, 基于 hs.timer.absoluteTime()
+-- 这个机制主要是避免短时间连续触发, 导致连续按F18/F19的时候, 一直切换输入法
+local g_lastToEn = 0
+local g_lastToZh = 0
+local g_IMThresh = 1000000000 -- 单位纳秒
 -- 切换到英文输入法
 function toEnIM()
+  local now = hs.timer.absoluteTime()
+  local diff = now - g_lastToEn
+  --print("F18", string.format('%f, %f', g_lastToEn, now))
+  if diff < g_IMThresh then
+    --print('bypass toEnIM', diff)
+    return
+  end
+
   if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
     --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
     hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    g_lastToEn = now
+    g_lastToZh = 0
   end
   --hs.alert.show(hs.keycodes.currentMethod())
 end
 
 -- 切换到中文输入法
 function toZhIM()
+  local now = hs.timer.absoluteTime()
+  local diff = now - g_lastToZh
+  --print("F19", string.format('%f, %f', g_lastToZh, now))
+  if diff < g_IMThresh then
+    --print('bypass toZhIM', diff)
+    return
+  end
+
   if (hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC') then
     -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
     --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
     --hs.keycodes.currentSourceID('com.apple.inputmethod.SCIM.ITABC')
     hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    g_lastToZh = now
+    g_lastToEn = 0
   end
   --hs.alert.show(hs.keycodes.currentSourceID())
 end
