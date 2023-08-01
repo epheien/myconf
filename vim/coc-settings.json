@@ -1,14 +1,20 @@
 {
+    // coc-go
+    "go": {
+        //"enable": false,
+        //"completeUnimported": false
+    },
     "languageserver": {
-        "golang": {
-            "command": "gopls",
-            "filetypes": [
-                "go",
-            ],
-            "rootPatterns": [
-                "go.mod",
-            ],
-        },
+        // 使用 coc-go 替代: CocInstall coc-go
+        //"golang": {
+        //    "command": "gopls",
+        //    "filetypes": [
+        //        "go",
+        //    ],
+        //    "rootPatterns": [
+        //        "go.mod",
+        //    ],
+        //},
         "cmake": {
             "command": "cmake-language-server",
             "filetypes": ["cmake"],
