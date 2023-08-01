@@ -894,7 +894,7 @@ endfunction
 
 " ========== cscope 设置 ==========
 "{{{
-if !has('nvim-0.9.0') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
+if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
     set tagcase=match " 标签文件一般是区分大小写的
     set cscopeverbose
     set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
@@ -945,7 +945,7 @@ if g:vmode == 0
     Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
     Plug 'yianwillis/vimcdoc' " 中文文档
     Plug 'easymotion/vim-easymotion'
-    if !has('nvim-0.9.0')
+    if has('cscope')
         Plug 'epheien/vim-gutentags'
         Plug 'skywind3000/gutentags_plus'
     endif
@@ -1213,7 +1213,7 @@ let g:go_debug_log_output = ''
 let g:go_def_mapping_enabled = 0
 
 " gutentags
-if !has('nvim-0.9.0')
+if has('cscope')
     let g:gutentags_define_advanced_commands = 1
     let g:gutentags_file_list_command = 'cat gtags.files'
     let g:gutentags_ctags_tagfile = 'gutags'
