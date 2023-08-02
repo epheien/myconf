@@ -21,7 +21,7 @@ endfunction
 "}}}
 " 表示是否仅使用 ASCII 显示
 function g:OnlyASCII() "{{{
-    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM =~# '\V\<Apple_Terminal' || $TERM_PROGRAM ==# 'kitty'
+    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm\|\<Apple_Terminal\|\<kitty\|\<alacritty'
         return 0
     endif
     return 1
@@ -287,7 +287,7 @@ if !has('gui_running')
         set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
           \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
           \,sm:block-blinkwait175-blinkoff150-blinkon175
-        if $TERM_PROGRAM ==# 'alacritty' || $TERM_PROGRAM =~# '\V\<iTerm' || $TERM_PROGRAM ==# 'kitty' || $TERM_PROGRAM ==# 'tmux'
+        if $TERM_PROGRAM =~# '\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty'
             set termguicolors
         endif
     else
@@ -969,7 +969,7 @@ if g:vmode == 0
     Plug 'rhysd/vim-clang-format', {'on': 'ClangFormat'}
 
     " 处理 kitty 背景问题
-    if $TERM_PROGRAM ==# 'kitty' || $TERM_PROGRAM ==# 'alacritty'
+    if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
         Plug 'epheien/bg.nvim'
     endif
 
