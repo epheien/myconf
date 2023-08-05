@@ -8,6 +8,42 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", function()
   hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
 end)
 
+local wf = hs.window.filter.new()
+local previousWindow = nil
+local focusedWindow = nil
+wf:subscribe(hs.window.filter.windowFocused, function(win)
+  -- 将当前窗口保存为上一个窗口
+  previousWindow = focusedWindow
+  focusedWindow = win
+  --if previousWindow ~= nil then
+    --print(string.format('Focus: %s(%s) => %s(%s)', previousWindow:application():name(), previousWindow:title(), win:application():name(), win:title()))
+  --end
+end)
+
+-- NOTE: 无法用这个函数实现切换, 因为主动关闭的动作导致的事件顺序为: windowFocused => windowDestroyed
+-- 这时候 previousWindow 就已经被改变了, 并且焦点 app 的其他窗口也已经弹出来了
+--wf:subscribe(hs.window.filter.windowDestroyed, function(win, appName, event)
+--  --hs.alert.show(string.format('[%s]:Window %s of %s occur %s event', prevWin:title(), win:title(), appName, event))
+--  if previousWindow ~= nil then
+--    print(string.format('previousWindow: %s(%s)', previousWindow:application():name(), previousWindow:title()))
+--    previousWindow:focus()
+--  end
+--end)
+
+-- 初步实现关闭窗口的时候, 切换到上一个窗口
+hs.hotkey.bind({"cmd"}, "w", function()
+  local win = hs.window.focusedWindow()
+  local prevWin = previousWindow
+  --local prevWin = hs.window.orderedWindows()[2]
+  --win:close() -- NOTE: another window of this app will popup
+
+  --print('prevWin:', prevWin:title())
+  if prevWin ~= nil and win:application() ~= prevWin:application() then
+    prevWin:focus()
+  end
+  win:close()
+end)
+
 -- 纳秒级别的时间戳, 基于 hs.timer.absoluteTime()
 -- 这个机制主要是避免短时间连续触发, 导致连续按F18/F19的时候, 一直切换输入法
 local g_lastToEn = 0
