@@ -771,7 +771,7 @@ hi link TagbarKind Constant
 "{{{
 " 设置不显示的文件，效果为仅显示 .c,.cpp,.h 文件，无后缀名文件暂时无法解决
 "let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
-let NERDTreeIgnore = []
+let NERDTreeIgnore = ['^__pycache__$[[dir]]']
 let NERDTreeMapMenu = "."
 if g:OnlyASCII()
     let NERDTreeDirArrowExpandable = '+'
