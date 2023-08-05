@@ -8,6 +8,22 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", function()
   hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
 end)
 
+-- hook cmd-w 快捷键的 app
+local hookApps = {
+  '终端',
+  'MacVim',
+  'iTerm2',
+  'iTerm',
+  'Terminal',
+  'kitty',
+  'Alacritty',
+}
+
+local hookAppsDict = {}
+for _, app in ipairs(hookApps) do
+  hookAppsDict[app] = true
+end
+
 local wf = hs.window.filter.new()
 local previousWindow = nil
 local focusedWindow = nil
@@ -46,6 +62,12 @@ hs.hotkey.bind({"cmd"}, "w", function()
   local prevWin = previousWindow
   --local prevWin = hs.window.orderedWindows()[2]
   --win:close() -- NOTE: another window of this app will popup
+
+  local tabCount = win:tabCount() or 0
+  if hookAppsDict[win:application():name()] == nil or tabCount > 1 then
+    hs.eventtap.keyStroke({'cmd'}, 'w', 200000, win:application())
+    return
+  end
 
   --print('prevWin:', prevWin:title())
   if prevWin ~= nil and win:application() ~= prevWin:application() then
@@ -149,7 +171,7 @@ function disableKeybind()
   end
 end
 
-g_disableApps = {
+local g_disableApps = {
   '终端',
   'MacVim',
   'iTerm2',
@@ -171,7 +193,7 @@ g_disableApps = {
   'Alacritty',
 }
 
-g_disableApps_dict = {}
+local g_disableApps_dict = {}
 for _, app in pairs(g_disableApps) do
   g_disableApps_dict[app] = true
 end
