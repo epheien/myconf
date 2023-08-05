@@ -11,13 +11,23 @@ end)
 local wf = hs.window.filter.new()
 local previousWindow = nil
 local focusedWindow = nil
-wf:subscribe(hs.window.filter.windowFocused, function(win)
+function updateWindow(win, title)
   -- 将当前窗口保存为上一个窗口
-  previousWindow = focusedWindow
-  focusedWindow = win
-  --if previousWindow ~= nil then
-    --print(string.format('Focus: %s(%s) => %s(%s)', previousWindow:application():name(), previousWindow:title(), win:application():name(), win:title()))
-  --end
+  if win ~= focusedWindow then
+    previousWindow = focusedWindow
+    focusedWindow = win
+    --if previousWindow ~= nil then
+      --print(string.format('%s: %s(%s) => %s(%s)', title, previousWindow:application():name(), previousWindow:title(), win:application():name(), win:title()))
+    --end
+  end
+end
+
+wf:subscribe(hs.window.filter.windowFocused, function(win)
+  updateWindow(win, 'Focus')
+end)
+
+wf:subscribe(hs.window.filter.windowVisible, function(win)
+  updateWindow(win, 'Visible')
 end)
 
 -- NOTE: 无法用这个函数实现切换, 因为主动关闭的动作导致的事件顺序为: windowFocused => windowDestroyed
@@ -42,6 +52,15 @@ hs.hotkey.bind({"cmd"}, "w", function()
     prevWin:focus()
   end
   win:close()
+end)
+
+hs.hotkey.bind({"cmd"}, "m", function()
+  local win = hs.window.focusedWindow()
+  local prevWin = previousWindow
+  if prevWin ~= nil and win:application() ~= prevWin:application() then
+    prevWin:focus()
+  end
+  win:minimize()
 end)
 
 -- 纳秒级别的时间戳, 基于 hs.timer.absoluteTime()
