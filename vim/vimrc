@@ -794,7 +794,7 @@ let g:pydiction_location = s:USERRUNTIME . '/dict/complete-dict'
 " ========== videm ==========
 "{{{
 " 基于 VLWorkspace 的源/头文件切换
-nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
+"nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
 
 let g:videm_user_options = {
     \ 'videm.wsp.ShowBriefHelp'            : 0,
@@ -899,7 +899,7 @@ if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支�
     set cscopeverbose
     set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
     set cscopetag
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
     " 如果安装了 'skywind3000/gutentags_plus' 插件: "cs find" => "GscopeFind"
     nnoremap <silent> <C-\>s :GscopeFind s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
     nnoremap <silent> <C-\>g :GscopeFind g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
@@ -909,6 +909,7 @@ if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支�
     nnoremap <silent> <C-\>f :GscopeFind f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
     nnoremap <silent> <C-\>i :GscopeFind i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
     nnoremap <silent> <C-\>d :GscopeFind d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>a :GscopeFind a <C-R>=fnameescape(expand("<cword>"))<CR><CR>
     "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
 
     command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
