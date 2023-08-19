@@ -57,33 +57,33 @@ end)
 --end)
 
 -- 初步实现关闭窗口的时候, 切换到上一个窗口
-hs.hotkey.bind({"cmd"}, "w", function()
-  local win = hs.window.focusedWindow()
-  local prevWin = previousWindow
-  --local prevWin = hs.window.orderedWindows()[2]
-  --win:close() -- NOTE: another window of this app will popup
+--hs.hotkey.bind({"cmd"}, "w", function()
+--  local win = hs.window.focusedWindow()
+--  local prevWin = previousWindow
+--  --local prevWin = hs.window.orderedWindows()[2]
+--  --win:close() -- NOTE: another window of this app will popup
+--
+--  local tabCount = win:tabCount() or 0
+--  if hookAppsDict[win:application():name()] == nil or tabCount > 1 then
+--    hs.eventtap.keyStroke({'cmd'}, 'w', 200000, win:application())
+--    return
+--  end
+--
+--  --print('prevWin:', prevWin:title())
+--  if prevWin ~= nil and win:application() ~= prevWin:application() then
+--    prevWin:focus()
+--  end
+--  win:close()
+--end)
 
-  local tabCount = win:tabCount() or 0
-  if hookAppsDict[win:application():name()] == nil or tabCount > 1 then
-    hs.eventtap.keyStroke({'cmd'}, 'w', 200000, win:application())
-    return
-  end
-
-  --print('prevWin:', prevWin:title())
-  if prevWin ~= nil and win:application() ~= prevWin:application() then
-    prevWin:focus()
-  end
-  win:close()
-end)
-
-hs.hotkey.bind({"cmd"}, "m", function()
-  local win = hs.window.focusedWindow()
-  local prevWin = previousWindow
-  if prevWin ~= nil and win:application() ~= prevWin:application() then
-    prevWin:focus()
-  end
-  win:minimize()
-end)
+--hs.hotkey.bind({"cmd"}, "m", function()
+--  local win = hs.window.focusedWindow()
+--  local prevWin = previousWindow
+--  if prevWin ~= nil and win:application() ~= prevWin:application() then
+--    prevWin:focus()
+--  end
+--  win:minimize()
+--end)
 
 -- 纳秒级别的时间戳, 基于 hs.timer.absoluteTime()
 -- 这个机制主要是避免短时间连续触发, 导致连续按F18/F19的时候, 一直切换输入法
