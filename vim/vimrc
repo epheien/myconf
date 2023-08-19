@@ -1438,5 +1438,14 @@ if has('nvim-0.8.0')
     exec 'source' s:joinpath(s:USERRUNTIME, 'nvim-init.lua')
 endif
 
+" 初始化 packer 的命令
+function s:InitPacker()
+    let cmd = printf(
+        \ 'git clone --depth 1 https://github.com/wbthomason/packer.nvim %s/site/pack/packer/start/packer.nvim',
+        \ stdpath('data'))
+    exec '!' cmd
+endfunction
+command -nargs=0 InitPacker call s:InitPacker()
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
