@@ -15,9 +15,9 @@ function lazysetup(plugin, config)
   end
 end
 
--- FIXME: 这个命令会导致错误, 初步断定为 nvim 的 BUG
---vim.cmd [[packadd packer.nvim]]
 -- packer.nvim 管理的插件, 理论上只管理 nvim 专用的 lua 插件
+-- 使用 InitPacker 命令安装 packer.nvim
+vim.cmd [[silent! packadd packer.nvim]]
 lazysetup('packer', function() require('packer').startup(function(use)
   use {
     'stevearc/oil.nvim',
