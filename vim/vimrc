@@ -793,9 +793,6 @@ let g:pydiction_location = s:USERRUNTIME . '/dict/complete-dict'
 "}}}
 " ========== videm ==========
 "{{{
-" 基于 VLWorkspace 的源/头文件切换
-"nnoremap <silent> <C-\>a :VSwapSourceHeader<CR>
-
 let g:videm_user_options = {
     \ 'videm.wsp.ShowBriefHelp'            : 0,
     \ 'videm.wsp.SaveBeforeBuild'          : 1,
