@@ -9,7 +9,7 @@ function lazysetup(plugin, config)
     return
   end
   if type(config) == 'function' then
-    config()
+    config(mod)
   else
     mod.setup(config)
   end
@@ -25,6 +25,10 @@ lazysetup('packer', function() require('packer').startup(function(use)
     opt = true,
     cmd = {'Oil'},
   }
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.2',
+    requires = { {'nvim-lua/plenary.nvim'} },
+  }
 end) end)
 
 lazysetup('nvim-tree', function()
@@ -33,7 +37,7 @@ end)
 
 lazysetup('indent_blankline', {})
 
-lazysetup('telescope', {
+lazysetup('telescope', function(mod) mod.setup({
   defaults = {
     -- Default configuration for telescope goes here:
     -- config_key = value,
@@ -45,7 +49,7 @@ lazysetup('telescope', {
       }
     }
   },
-})
+}) end)
 
 lazysetup('noice', {
   cmdline = {
