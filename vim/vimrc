@@ -982,7 +982,7 @@ if g:vmode == 0
 
     " nvim 专用的插件
     if has('nvim')
-        "Plug 'wbthomason/packer.nvim'
+        Plug 'wbthomason/packer.nvim' " 主要提供帮助文档
         Plug 'nvim-tree/nvim-web-devicons' " optional
         Plug 'nvim-tree/nvim-tree.lua', {'on': 'NvimTreeOpen'}
         Plug 'lukas-reineke/indent-blankline.nvim'
