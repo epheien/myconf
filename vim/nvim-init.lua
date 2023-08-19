@@ -15,6 +15,16 @@ function lazysetup(plugin, config)
   end
 end
 
+-- packer.nvim 管理的插件, 理论上只管理 nvim 专用的 lua 插件
+lazysetup('packer', function() require('packer').startup(function(use)
+  use {
+    'stevearc/oil.nvim',
+    config = function() require('oil').setup() end
+  }
+end) end)
+
+lazysetup('oil')
+
 lazysetup('nvim-tree', function()
   require('config/nvim-tree')
 end)
