@@ -8,13 +8,16 @@ function lazysetup(plugin, config)
   if not ok then
     return
   end
-  mod.setup(config)
+  if type(config) == 'function' then
+    config()
+  else
+    mod.setup(config)
+  end
 end
 
-local ok, mod = pcall(require, 'nvim-tree')
-if ok then
+lazysetup('nvim-tree', function()
   require('config/nvim-tree')
-end
+end)
 
 lazysetup('indent_blankline', {})
 
