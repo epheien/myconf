@@ -38,13 +38,13 @@ function updateWindow(win, title)
   end
 end
 
-wf:subscribe(hs.window.filter.windowFocused, function(win)
-  updateWindow(win, 'Focus')
-end)
+--wf:subscribe(hs.window.filter.windowFocused, function(win)
+--  updateWindow(win, 'Focus')
+--end)
 
-wf:subscribe(hs.window.filter.windowVisible, function(win)
-  updateWindow(win, 'Visible')
-end)
+--wf:subscribe(hs.window.filter.windowVisible, function(win)
+--  updateWindow(win, 'Visible')
+--end)
 
 -- NOTE: 无法用这个函数实现切换, 因为主动关闭的动作导致的事件顺序为: windowFocused => windowDestroyed
 -- 这时候 previousWindow 就已经被改变了, 并且焦点 app 的其他窗口也已经弹出来了
