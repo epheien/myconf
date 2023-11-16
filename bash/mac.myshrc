@@ -50,7 +50,9 @@ if [ -d "$HOME/Library/Python/2.7/bin" ]; then
     PATH="$HOME/Library/Python/2.7/bin:$PATH"
 fi
 # gnu coreutils, ls, pwd, etc.
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+__coreutils=/usr/local/opt/coreutils
+[ -d $__coreutils ] || __coreutils=/opt/homebrew/opt/coreutils
+PATH="$__coreutils/libexec/gnubin:$PATH"
 #PATH="/Applications/MacVim.app/Contents/bin:$PATH"
 PATH="$HOME/node/bin:$PATH"
 PATH="/usr/local/opt/mysql-client/bin:$PATH"
@@ -59,11 +61,12 @@ PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 # gopath
 PATH="$PATH:$HOME/go/bin"
 
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export MANPATH="$__coreutils/libexec/gnuman:$MANPATH"
 # use vim as MANPAGER
 if [ -f "$HOME/.vim/man.vim" ]; then
     export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
 fi
+unset __coreutils
 
 export HOMEBREW_NO_AUTO_UPDATE=true
 export LANG="zh_CN.UTF-8"
