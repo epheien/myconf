@@ -179,7 +179,8 @@ set incsearch
 
 " 终于在nvim 0.5.0解决了恶心的jumplist问题
 if exists('&jumpoptions')
-    set jumpoptions=stack,view
+    set jumpoptions=stack
+    silent! set jumpoptions+=view
 endif
 
 " 设置不自动备份
