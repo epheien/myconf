@@ -1014,7 +1014,7 @@ endif
 
 " 代码补全相关插件
 if g:vmode == 0
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
