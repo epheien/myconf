@@ -1448,4 +1448,4 @@ endfunction
 command -nargs=0 InitPacker call s:InitPacker()
 
 " ----------------------------------------------------------------------------
-" vim: fdm=marker fen fdl=0 expandtab softtabstop=4
+" vim: fdm=marker fen fdl=0 sw=4 sts=-1 et
