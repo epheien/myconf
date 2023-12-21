@@ -179,7 +179,8 @@ set incsearch
 
 " 终于在nvim 0.5.0解决了恶心的jumplist问题
 if exists('&jumpoptions')
-    set jumpoptions=stack,view
+    set jumpoptions=stack
+    "silent! set jumpoptions+=view
 endif
 
 " 设置不自动备份
@@ -1336,6 +1337,8 @@ endif
 let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
 
 " ========== coc.nvim ==========
+" CocInstall coc-neosnippet
+" CocInstall coc-json
 let g:coc_snippet_next = ''
 let g:coc_snippet_prev = ''
 " 补全后自动弹出函数参数提示

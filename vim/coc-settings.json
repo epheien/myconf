@@ -1,20 +1,23 @@
 {
     // coc-go
+    // 优点: nvim ~/a.go 的时候, 不会有报错信息
+    // 缺点: 不能使用 go install 的 gopls, 而且可能会对 go 的版本有要求
     "go": {
-        //"enable": false,
+        "enable": false,
         //"completeUnimported": false
     },
     "languageserver": {
         // 使用 coc-go 替代: CocInstall coc-go
-        //"golang": {
-        //    "command": "gopls",
-        //    "filetypes": [
-        //        "go",
-        //    ],
-        //    "rootPatterns": [
-        //        "go.mod",
-        //    ],
-        //},
+        // 优点貌似仅仅是(参考上述 coc-go 的优点)
+        "golang": {
+            "command": "gopls",
+            "filetypes": [
+                "go",
+            ],
+            "rootPatterns": [
+                "go.mod",
+            ],
+        },
         "cmake": {
             "command": "cmake-language-server",
             "filetypes": ["cmake"],
