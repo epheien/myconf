@@ -101,8 +101,11 @@ function toEnIM()
   end
 
   if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-    hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
-    --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    if hs.host.operatingSystemVersion().major > 10 then
+      hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+    else
+      hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    end
     g_lastToEn = now
     g_lastToZh = 0
   end
@@ -122,8 +125,11 @@ function toZhIM()
   if (hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC') then
     -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
     --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
-    hs.keycodes.currentSourceID('com.apple.inputmethod.SCIM.ITABC')
-    --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    if hs.host.operatingSystemVersion().major > 10 then
+      hs.keycodes.currentSourceID('com.apple.inputmethod.SCIM.ITABC')
+    else
+      hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+    end
     g_lastToZh = now
     g_lastToEn = 0
   end
