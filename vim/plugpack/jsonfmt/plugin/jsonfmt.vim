@@ -61,12 +61,12 @@ function! s:JsonFmt(...)
     let d = {}
     if get(a:000, 0, '') =~# '-h\|--help'
         echo 'Usage: JsonFmt [{indent}, [{sort_keys}, [{ensure_ascii}]]]'
-        echo 'Default Params: indent=4, sort_keys=0, ensure_ascii=1'
+        echo 'Default Params: indent=4, sort_keys=0, ensure_ascii=0'
         return
     endif
     let d['indent'] = get(a:000, 0, 4)
     let d['sort_keys'] = get(a:000, 1, 0)
-    let d['ensure_ascii'] = get(a:000, 2, 1)
+    let d['ensure_ascii'] = get(a:000, 2, 0)
     call s:InitPyif()
     py3 JsonFmt(**vim.eval('d'))
 endfunction
