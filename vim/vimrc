@@ -1016,7 +1016,7 @@ endif
 
 " 代码补全相关插件
 if g:vmode == 0
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
@@ -1452,4 +1452,4 @@ endfunction
 command -nargs=0 InitPacker call s:InitPacker()
 
 " ----------------------------------------------------------------------------
-" vim: fdm=marker fen fdl=0 expandtab softtabstop=4
+" vim: fdm=marker fen fdl=0 sw=4 sts=-1 et
