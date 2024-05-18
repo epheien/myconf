@@ -899,15 +899,15 @@ if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支�
     set cscopetag
     set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
     " 如果安装了 'skywind3000/gutentags_plus' 插件: "cs find" => "GscopeFind"
-    nnoremap <silent> <C-\>s :GscopeFind s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>g :GscopeFind g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>c :GscopeFind c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>t :GscopeFind t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>e :GscopeFind e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>f :GscopeFind f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
-    nnoremap <silent> <C-\>i :GscopeFind i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
-    nnoremap <silent> <C-\>d :GscopeFind d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>a :GscopeFind a <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>t :cs find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>e :cs find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>f :cs find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
+    nnoremap <silent> <C-\>i :cs find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
+    nnoremap <silent> <C-\>d :cs find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
+    nnoremap <silent> <C-\>a :cs find a <C-R>=fnameescape(expand("<cword>"))<CR><CR>
     "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
 
     command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
@@ -946,7 +946,7 @@ if g:vmode == 0
     Plug 'easymotion/vim-easymotion'
     if has('cscope')
         Plug 'epheien/vim-gutentags'
-        Plug 'skywind3000/gutentags_plus'
+        "Plug 'skywind3000/gutentags_plus'
     endif
     "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
     Plug 'posva/vim-vue'
