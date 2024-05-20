@@ -990,7 +990,7 @@ if g:vmode == 0
 
     " nvim 专用的插件
     if has('nvim')
-        Plug 'wbthomason/packer.nvim' " 主要提供帮助文档
+        Plug 'folke/lazy.nvim'
         Plug 'nvim-tree/nvim-web-devicons' " optional
         Plug 'nvim-tree/nvim-tree.lua', {'on': 'NvimTreeOpen'}
         Plug 'lukas-reineke/indent-blankline.nvim'
@@ -1454,17 +1454,6 @@ endif
 if has('nvim-0.8.0')
     exec 'source' s:joinpath(s:USERRUNTIME, 'nvim-init.lua')
 endif
-
-" 初始化 packer 的命令
-function s:InitPacker()
-    " NOTE: packer.nvim 这个插件总诡异地执行 :packadd 动作
-    "       所以最终目录需要使用 pack/*/opt/{name} 模式
-    let cmd = printf(
-        \ 'git clone --depth 1 https://github.com/wbthomason/packer.nvim %s/site/pack/packer.nvim/opt/packer.nvim',
-        \ stdpath('data'))
-    exec '!' cmd
-endfunction
-command -nargs=0 InitPacker call s:InitPacker()
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 sw=4 sts=-1 et

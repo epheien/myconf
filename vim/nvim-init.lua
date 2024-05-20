@@ -6,6 +6,7 @@
 function lazysetup(plugin, config)
   local ok, mod = pcall(require, plugin)
   if not ok then
+    --print('ignore lua plugin:', plugin)
     return
   end
   if type(config) == 'function' then
@@ -15,27 +16,38 @@ function lazysetup(plugin, config)
   end
 end
 
--- packer.nvim 管理的插件, 理论上只管理 nvim 专用的 lua 插件
--- 使用 InitPacker 命令安装 packer.nvim
-vim.cmd [[silent! packadd packer.nvim]]
-lazysetup('packer', function() require('packer').startup(function(use)
-  use {
-    'stevearc/oil.nvim',
-    config = function() require('oil').setup() end,
-    opt = true,
-    cmd = {'Oil'},
+-- NOTE: Plug 管理的插件需要放到 lazy 初始化之前
+lazysetup('cscope_maps', {
+  disable_maps = true,
+  skip_input_prompt = false,
+  prefix = '',
+  cscope = {
+    db_file = './GTAGS',
+    exec = 'gtags-cscope',
+    skip_picker_for_single_result = true
   }
-  use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
-    requires = { {'nvim-lua/plenary.nvim'} },
-  }
-end) end)
+})
 
 lazysetup('nvim-tree', function()
   require('config/nvim-tree')
 end)
 
 lazysetup('indent_blankline', {})
+
+lazysetup('lazy', {
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.7',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    lazy = true,
+    -- Optional dependencies
+    --dependencies = { "nvim-tree/nvim-web-devicons" },
+  }
+})
 
 lazysetup('telescope', function(mod) mod.setup({
   defaults = {
@@ -82,17 +94,6 @@ lazysetup('noice', {
       },
     },
   },
-})
-
-lazysetup('cscope_maps', {
-  disable_maps = true,
-  skip_input_prompt = false,
-  prefix = '',
-  cscope = {
-    db_file = './GTAGS',
-    exec = 'gtags-cscope',
-    skip_picker_for_single_result = true
-  }
 })
 
 function CscopeFind(op, symbol)
