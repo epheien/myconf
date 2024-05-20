@@ -990,7 +990,6 @@ if g:vmode == 0
 
     " nvim 专用的插件
     if has('nvim')
-        Plug 'folke/lazy.nvim'
         Plug 'nvim-tree/nvim-web-devicons' " optional
         Plug 'nvim-tree/nvim-tree.lua', {'on': 'NvimTreeOpen'}
         Plug 'lukas-reineke/indent-blankline.nvim'

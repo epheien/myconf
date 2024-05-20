@@ -3,6 +3,7 @@
 --vim.cmd.source(vimrc)
 
 -- 插件设置入口, 避免在新环境中出现各种报错
+-- NOTE: vim-plug 和 lazy.nvim 不兼容, 而 packer.nvim 已经停止维护
 function lazysetup(plugin, config)
   local ok, mod = pcall(require, plugin)
   if not ok then
@@ -33,21 +34,6 @@ lazysetup('nvim-tree', function()
 end)
 
 lazysetup('indent_blankline', {})
-
-lazysetup('lazy', {
-  {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.7',
-    dependencies = { 'nvim-lua/plenary.nvim' }
-  },
-  {
-    'stevearc/oil.nvim',
-    opts = {},
-    lazy = true,
-    -- Optional dependencies
-    --dependencies = { "nvim-tree/nvim-web-devicons" },
-  }
-})
 
 lazysetup('telescope', function(mod) mod.setup({
   defaults = {
