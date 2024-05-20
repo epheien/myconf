@@ -91,6 +91,7 @@ lazysetup('cscope_maps', {
   cscope = {
     db_file = './GTAGS',
     exec = 'gtags-cscope',
+    skip_picker_for_single_result = true
   }
 })
 
