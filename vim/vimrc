@@ -931,7 +931,8 @@ else
         return result
     endfunction
     " NOTE: :echo taglist({pat}) 居然会触发 tagfunc
-    set tagfunc=MyTagFunc
+    "set tagfunc=MyTagFunc
+    nnoremap <silent> <C-]> :Cstag <C-R>=expand("<cword>")<CR><CR>
 endif
 " cscope_maps 插件
 exec printf('nnoremap <silent> <C-\>s :%s find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
