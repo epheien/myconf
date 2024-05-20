@@ -908,30 +908,7 @@ if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支�
     "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
     command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
 else
-    " set cscopetag cscopetagorder=1 功能模拟
     let s:cmd = 'Cs'
-    function MyTagFunc(pattern, flags, info) abort
-        let ispat = stridx(a:flags, 'r') >= 0
-        if ispat
-            let tl = taglist(a:pattern)
-        else
-            let tl = taglist('\V' . escape(a:pattern, '\'))
-        endif
-        if !empty(tl)
-            return tl
-        endif
-        " cstag a:pattern
-        let cstl = luaeval(printf('CscopeFind("g", "%s")', escape(a:pattern, '"\')))
-        for item in cstl
-            let item['name'] = item['ctx']
-            let item['cmd'] = item['lnum']
-        endfor
-        let result = extend(tl, cstl)
-        "let g:last_taglist = result
-        return result
-    endfunction
-    " NOTE: :echo taglist({pat}) 居然会触发 tagfunc
-    "set tagfunc=MyTagFunc
     nnoremap <silent> <C-]> :Cstag <C-R>=expand("<cword>")<CR><CR>
 endif
 " cscope_maps 插件
