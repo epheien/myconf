@@ -101,5 +101,5 @@ function CscopeFind(op, symbol)
   if not ok then
     return {}
   end
-  return res
+  return res or {}
 end

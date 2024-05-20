@@ -910,7 +910,7 @@ if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支�
 else
     " set cscopetag cscopetagorder=1 功能模拟
     let s:cmd = 'Cs'
-    function MyTagFunc(pattern, flags, info)
+    function MyTagFunc(pattern, flags, info) abort
         let ispat = stridx(a:flags, 'r') >= 0
         if ispat
             let tl = taglist(a:pattern)
@@ -921,13 +921,16 @@ else
             return tl
         endif
         " cstag a:pattern
-        let tl = luaeval(printf('CscopeFind("g", "%s")', escape(a:pattern, '"\')))
-        for item in tl
+        let cstl = luaeval(printf('CscopeFind("g", "%s")', escape(a:pattern, '"\')))
+        for item in cstl
             let item['name'] = item['ctx']
             let item['cmd'] = item['lnum']
         endfor
-        return tl
+        let result = extend(tl, cstl)
+        "let g:last_taglist = result
+        return result
     endfunction
+    " NOTE: :echo taglist({pat}) 居然会触发 tagfunc
     set tagfunc=MyTagFunc
 endif
 " cscope_maps 插件
