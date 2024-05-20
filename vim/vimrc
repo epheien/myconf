@@ -373,6 +373,8 @@ function s:SetupColorscheme() "{{{
         hi Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE
         hi IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
         hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
+        " 0.10.0 改为连接 Normal, 改回来
+        hi link WinSeparator VertSplit
     endif
 endfunction
 "}}}
@@ -1007,7 +1009,7 @@ if g:vmode == 0
         Plug 'nvim-tree/nvim-web-devicons' " optional
         Plug 'nvim-tree/nvim-tree.lua', {'on': 'NvimTreeOpen'}
         Plug 'lukas-reineke/indent-blankline.nvim'
-        if !has('cscope')
+        if has('nvim-0.9')
             Plug 'dhananjaylatkar/cscope_maps.nvim'
         endif
 
@@ -1252,13 +1254,19 @@ if has('nvim') || has('cscope')
         let g:gutentags_modules += ['ctags']
     endif
     if executable('gtags-cscope') && executable('gtags')
-        let g:gutentags_modules += ['gtags_cscope']
+        if has('nvim-0.9')
+            let g:gutentags_modules += ['cscope_maps']
+            let g:gutentags_cscope_executable_maps = 'gtags'
+        else
+            let g:gutentags_modules += ['gtags_cscope']
+        endif
     endif
     " ctags 的一些参数
     let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
     " 这两个选项会导致 ctags 退出码有异常, 禁用掉
     "let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
     "let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+    "let g:gutentags_trace = 1
 endif
 
 " ==========================================================
