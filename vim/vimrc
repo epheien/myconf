@@ -892,26 +892,48 @@ endfunction
 
 " ========== cscope 设置 ==========
 "{{{
+set tagcase=match " 标签文件一般是区分大小写的
+let s:cmd = 'cs'
 if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
-    set tagcase=match " 标签文件一般是区分大小写的
     set cscopeverbose
     set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
     set cscopetag
     set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
-    " 如果安装了 'skywind3000/gutentags_plus' 插件: "cs find" => "GscopeFind"
-    nnoremap <silent> <C-\>s :cs find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>g :cs find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>c :cs find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>t :cs find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>e :cs find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>f :cs find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>
-    nnoremap <silent> <C-\>i :cs find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>
-    nnoremap <silent> <C-\>d :cs find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>
-    nnoremap <silent> <C-\>a :cs find a <C-R>=fnameescape(expand("<cword>"))<CR><CR>
     "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
-
     command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
+else
+    " set cscopetag cscopetagorder=1 功能模拟
+    let s:cmd = 'Cs'
+    function MyTagFunc(pattern, flags, info)
+        let ispat = stridx(a:flags, 'r') >= 0
+        if ispat
+            let tl = taglist(a:pattern)
+        else
+            let tl = taglist('\V' . escape(a:pattern, '\'))
+        endif
+        if !empty(tl)
+            return tl
+        endif
+        " cstag a:pattern
+        let tl = luaeval(printf('CscopeFind("g", "%s")', escape(a:pattern, '"\')))
+        for item in tl
+            let item['name'] = item['ctx']
+            let item['cmd'] = item['lnum']
+        endfor
+        return tl
+    endfunction
+    set tagfunc=MyTagFunc
 endif
+" cscope_maps 插件
+exec printf('nnoremap <silent> <C-\>s :%s find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>g :%s find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>c :%s find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>t :%s find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>e :%s find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>f :%s find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>i :%s find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>d :%s find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
+exec printf('nnoremap <silent> <C-\>a :%s find a <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
 "}}}
 
 function s:Plug(name, ...)
@@ -944,10 +966,7 @@ if g:vmode == 0
     Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
     Plug 'yianwillis/vimcdoc' " 中文文档
     Plug 'easymotion/vim-easymotion'
-    if has('cscope')
-        Plug 'epheien/vim-gutentags'
-        "Plug 'skywind3000/gutentags_plus'
-    endif
+    Plug 'epheien/vim-gutentags'
     "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
     Plug 'posva/vim-vue'
     Plug 'asins/vim-dict'
@@ -988,6 +1007,9 @@ if g:vmode == 0
         Plug 'nvim-tree/nvim-web-devicons' " optional
         Plug 'nvim-tree/nvim-tree.lua', {'on': 'NvimTreeOpen'}
         Plug 'lukas-reineke/indent-blankline.nvim'
+        if !has('cscope')
+            Plug 'dhananjaylatkar/cscope_maps.nvim'
+        endif
 
         Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
         "Plug 'neovim/nvim-lsp'
@@ -1218,13 +1240,13 @@ let g:go_debug_log_output = ''
 let g:go_def_mapping_enabled = 0
 
 " gutentags
-if has('cscope')
+if has('nvim') || has('cscope')
     let g:gutentags_define_advanced_commands = 1
     let g:gutentags_file_list_command = 'cat gtags.files'
     let g:gutentags_ctags_tagfile = 'gutags'
     let g:gutentags_add_default_project_roots = 0
     let g:gutentags_project_root = ['gtags.files']
-    let g:gutentags_auto_add_gtags_cscope = 0
+    let g:gutentags_auto_add_gtags_cscope = 0 " 这个必须设置为 0, 避免 nvim 报错
     let g:gutentags_modules = []
     if executable('ctags')
         let g:gutentags_modules += ['ctags']

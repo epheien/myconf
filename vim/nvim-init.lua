@@ -83,3 +83,22 @@ lazysetup('noice', {
     },
   },
 })
+
+lazysetup('cscope_maps', {
+  disable_maps = true,
+  skip_input_prompt = false,
+  prefix = '',
+  cscope = {
+    db_file = './GTAGS',
+    exec = 'gtags-cscope',
+  }
+})
+
+function CscopeFind(op, symbol)
+  local cscope = require('cscope')
+  local ok, res = cscope.cscope_get_result(1, op, symbol, false)
+  if not ok then
+    return {}
+  end
+  return res
+end
