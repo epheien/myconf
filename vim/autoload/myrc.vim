@@ -296,11 +296,11 @@ endfunction
 
 let s:last_repeat = 0
 func myrc#RepeatCommand()
-    if empty(@:)
-        return
-    endif
     if &buftype =~# '\<quickfix\>'
         exec "normal! \<CR>"
+        return
+    endif
+    if empty(@:)
         return
     endif
     let now = localtime()
@@ -746,4 +746,4 @@ function! myrc#LogSetup() abort
     setl cc=
 endfunction
 
-" vim: fdm=indent fen fdl=0 et sts=4
+" vim: fdm=indent fen fdl=0 sw=4 sts=-1 et
