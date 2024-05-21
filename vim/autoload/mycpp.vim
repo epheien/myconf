@@ -4,6 +4,8 @@ let s:file = expand('<sfile>')
 let s:mod = fnamemodify(s:file, ':t:r')
 let s:header_exts = ['hpp', 'hxx', 'hh', 'h']
 let s:source_exts = ['cpp', 'cxx', 'cc', 'c']
+let s:cache_files = []
+let s:files_time = 0 " gtags.file 最近的修改事件
 
 function! mycpp#alternateSwitch(bang, cmd) abort
   let file = expand('%')
@@ -223,7 +225,16 @@ function! mycpp#GetProjectFiles()
   if !filereadable(fname)
     return []
   endif
-  return readfile(fname)
+
+  let ftime = getftime(fname)
+  if ftime <= s:files_time
+    return s:cache_files
+  endif
+
+  let files = readfile(fname)
+  let s:cache_files = files
+  let s:files_time = ftime
+  return files
 endfunction
 
 function! s:EchoError(msg)
