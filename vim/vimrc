@@ -83,6 +83,7 @@ set smartindent
 " 打开 cindent，主要体现为函数参数过长时，换行自动缩进
 set cindent
 set cinoptions+=(0,W8
+set cinoptions+=L0 " 输入 std: 的时候禁止缩进, 避免频繁的光标跳动
 
 " 总在 vim 窗口的右下角显示当前光标位置。
 "set ruler
