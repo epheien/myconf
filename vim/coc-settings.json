@@ -60,4 +60,5 @@
     "suggest.noselect": false,
     "suggest.snippetIndicator": "",
     "diagnostic.enable": false,
+    "inlayHint.enable": false,
 }
