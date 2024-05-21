@@ -15,7 +15,10 @@ function! mycpp#alternateSwitch(bang, cmd) abort
   " 不包含路径和扩展的文件名
   let root = fnamemodify(file, ':t:r')
   let directory = fnamemodify(file, ':h')
-  let files = mycpp#GetProjectFiles()
+  let files = v:null
+  if !a:bang
+    let files = mycpp#GetProjectFiles()
+  endif
   let is_header = v:false
   if index(s:source_exts, ext) >= 0
     " source => header
@@ -38,7 +41,7 @@ function! mycpp#alternateSwitch(bang, cmd) abort
     if empty(alt_file)
       continue
     endif
-    if !filereadable(alt_file) && !bufexists(alt_file) && !a:bang
+    if !filereadable(alt_file) && !bufexists(alt_file)
       call s:EchoError("couldn't find ".alt_file)
       return
     elseif empty(a:cmd)
@@ -108,20 +111,24 @@ function! mycpp#FindSource(files, directory, root, ext) abort
     if i > 0
       let tmpfolder = fnamemodify(tmpfolder, ':h')
     endif
-    if tmpfolder == '.'
-      if s:CheckFileExists(v:null, files[0])
-        return files[0]
-      else
-        return ''
-      endif
-    endif
 
     if files is v:null
       let fpath = s:NormPath(printf('%s/%s', tmpfolder, basename))
       if s:CheckFileExists(v:null, fpath)
         return fpath
       endif
+      if tmpfolder == '.'
+        break
+      endif
       continue
+    endif
+
+    if tmpfolder == '.'
+      if s:CheckFileExists(v:null, files[0])
+        return files[0]
+      else
+        return ''
+      endif
     endif
 
     " 从文件列表里面按照正则查找
@@ -176,20 +183,24 @@ function! mycpp#FindHeader(files, directory, root, ext) abort
     if i > 0
       let tmpfolder = fnamemodify(tmpfolder, ':h')
     endif
-    if tmpfolder == '.'
-      if s:CheckFileExists(v:null, files[0])
-        return files[0]
-      else
-        return ''
-      endif
-    endif
 
     if files is v:null
       let fpath = s:NormPath(printf('%s/%s', tmpfolder, basename))
       if s:CheckFileExists(v:null, fpath)
         return fpath
       endif
+      if tmpfolder == '.'
+        break
+      endif
       continue
+    endif
+
+    if tmpfolder == '.'
+      if s:CheckFileExists(v:null, files[0])
+        return files[0]
+      else
+        return ''
+      endif
     endif
 
     " 从文件列表里面按照正则查找
