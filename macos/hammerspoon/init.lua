@@ -6,6 +6,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", function()
   local delay = 10
   hs.alert.show(appName, nil, nil, delay)
   hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
+  hs.alert.show(hs.keycodes.currentSourceID())
 end)
 
 -- hook cmd-w 快捷键的 app
@@ -85,11 +86,25 @@ end
 --  win:minimize()
 --end)
 
+-- 需要使用这种按键方式才能避免各种副作用
+function toggleInputMethod()
+  -- 模拟按下 Ctrl
+  local ctrlDown = hs.eventtap.event.newKeyEvent("ctrl", true):post()
+  -- 模拟按下 Space
+  local spaceDown = hs.eventtap.event.newKeyEvent("space", true):post()
+  -- 模拟松开 Space
+  local spaceUp = hs.eventtap.event.newKeyEvent("space", false):post()
+  -- 模拟松开 Ctrl
+  local ctrlUp = hs.eventtap.event.newKeyEvent("ctrl", false):post()
+  --hs.alert.show("Toggled Input Method")
+end
+
 -- 纳秒级别的时间戳, 基于 hs.timer.absoluteTime()
 -- 这个机制主要是避免短时间连续触发, 导致连续按F18/F19的时候, 一直切换输入法
 local g_lastToEn = 0
 local g_lastToZh = 0
 local g_IMThresh = 1000000000 -- 单位纳秒
+local g_major = 10000 -- 此版本号之后 currentSourceID() 没有任何 BUG
 -- 切换到英文输入法
 function toEnIM()
   local now = hs.timer.absoluteTime()
@@ -101,10 +116,12 @@ function toEnIM()
   end
 
   if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-    if hs.host.operatingSystemVersion().major > 10 then
+    if hs.host.operatingSystemVersion().major >= g_major then
       hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
     else
-      hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+      --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+      --hs.eventtap.keyStroke({"ctrl"}, "space")
+      toggleInputMethod()
     end
     g_lastToEn = now
     g_lastToZh = 0
@@ -125,10 +142,12 @@ function toZhIM()
   if (hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC') then
     -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
     --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
-    if hs.host.operatingSystemVersion().major > 10 then
+    if hs.host.operatingSystemVersion().major >= g_major then
       hs.keycodes.currentSourceID('com.apple.inputmethod.SCIM.ITABC')
     else
-      hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+      --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+      --hs.eventtap.keyStroke({"ctrl"}, "space")
+      toggleInputMethod()
     end
     g_lastToZh = now
     g_lastToEn = 0
