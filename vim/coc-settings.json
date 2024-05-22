@@ -6,7 +6,7 @@
         "enable": false,
         //"completeUnimported": false
     },
-    // 这个插件会导致 clangd 崩溃
+    // NOTE: 已知 Ubuntu 22.04 系统, 14 15 版本会崩溃, 更新到 18 就没有问题
     "clangd": {
         "enabled": true,
         // 禁用自动插入 include 的功能
