@@ -6,6 +6,12 @@
         "enable": false,
         //"completeUnimported": false
     },
+    // NOTE: 已知 Ubuntu 22.04 系统, 14 15 版本会崩溃, 更新到 18 就没有问题
+    "clangd": {
+        "enabled": true,
+        // 禁用自动插入 include 的功能
+        "arguments": ["--header-insertion=never"],
+    },
     "languageserver": {
         // 使用 coc-go 替代: CocInstall coc-go
         // 优点貌似仅仅是(参考上述 coc-go 的优点)
