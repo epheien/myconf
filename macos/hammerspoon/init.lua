@@ -87,11 +87,15 @@ end
 --end)
 
 -- 需要使用这种按键方式才能避免各种副作用
+-- NOTE: 选择“输入法”菜单中的下一个输入法 这个功能在删除再添加输入法后可恢复
 function toggleInputMethod()
-  -- 直接使用 capslock 快速切换中英文
-  local down = hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', true):post()
+  local ctrlDown = hs.eventtap.event.newKeyEvent("F17", true):post()
   hs.timer.usleep(1000)
-  local up = hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', false):post()
+  local spaceDown = hs.eventtap.event.newKeyEvent("F17", false):post()
+  -- 直接使用 capslock 快速切换中英文
+  --local down = hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', true):post()
+  --hs.timer.usleep(1000)
+  --local up = hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', false):post()
 --[[
   -- NOTE: 使用 ctrl-space 快捷键的话, 可能会导致按下左 cmd 的时候弹出表情输入框
   -- 模拟按下 Ctrl
