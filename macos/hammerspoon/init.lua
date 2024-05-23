@@ -121,7 +121,8 @@ local g_lastToZh = 0
 local g_IMThresh = 1000000000 -- 单位纳秒
 local g_major = 10000 -- 此版本号之后 currentSourceID() 没有任何 BUG
 -- 切换到英文输入法
-function toEnIM()
+-- force: 表示使用 currentSourceID() 函数切换
+function toEnIM(force)
   local now = hs.timer.absoluteTime()
   local diff = now - g_lastToEn
   --print("F18", string.format('%f, %f', g_lastToEn, now))
@@ -131,7 +132,7 @@ function toEnIM()
   end
 
   if (hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC') then
-    if hs.host.operatingSystemVersion().major >= g_major then
+    if hs.host.operatingSystemVersion().major >= g_major or force then
       hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
     else
       --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
@@ -252,7 +253,7 @@ function initDisableForApp()
         --print('activated and disableKeybind', applicationName, application:bundleID())
         disableKeybind()
         -- 只在特定 app 启用默认输入法
-        toEnIM()
+        toEnIM(true)
       else
         --print('activated and enableKeyBind', applicationName, application:bundleID())
         enableKeyBind()
