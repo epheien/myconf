@@ -333,5 +333,9 @@ xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
     \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
 " C 文件的 #if 0 段落注释
 
+" 添加字典插件
+nnoremap <silent> <C-f> :call mydict#Search(expand('<cword>'))<CR>
+vnoremap <silent> <C-f> y:call mydict#Search(@")<CR>
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4

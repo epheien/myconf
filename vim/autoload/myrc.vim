@@ -174,6 +174,14 @@ function! myrc#CscopeAdd(name, ...) abort
     endif
 endfunction
 
+function! myrc#CscopeFind(args) abort
+    if has('cscope')
+        exec 'cs find' a:args
+    else
+        exec 'Cs find' a:args
+    endif
+endfunction
+
 function! myrc#AlterSource()
     let l:file = expand("%:t:r")
     let l:ext = expand("%:t:e")
