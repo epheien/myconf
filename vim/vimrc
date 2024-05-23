@@ -901,13 +901,14 @@ endfunction
 "{{{
 set tagcase=match " 标签文件一般是区分大小写的
 let s:cmd = 'cs'
+command -complete=file -nargs=+ CsFind call myrc#CscopeFind(<q-args>)
 if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
     set cscopeverbose
     set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
     set cscopetag
     set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
     "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
-    command! -complete=file -nargs=1 CsAdd :call myrc#CscopeAdd(<f-args>)
+    command! -complete=file -nargs=1 CsAdd call myrc#CscopeAdd(<f-args>)
 else
     let s:cmd = 'Cs'
     nnoremap <silent> <C-]> :Cstag <C-R>=expand("<cword>")<CR><CR>
