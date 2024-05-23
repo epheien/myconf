@@ -1,4 +1,7 @@
-hs.hotkey.bind({"cmd", "ctrl"}, "i", function()
+-- NOTE: hs.hotkey.bind() 的参数需要仔细看文档
+--  - 如果 (mods, key, func), 那么 pressedfn, releasefn, repeatfn 都是 func, 可能会出现奇怪的问题
+--  - 如果 (mods, key, nil, func), 那么 releasefn 为 func, 另外2个是 nil
+hs.hotkey.bind({"cmd", "ctrl"}, "i", nil, function()
   local win = hs.window.focusedWindow()
   local appName = win:application():name()
   local bundleID = win:application():bundleID()
@@ -266,12 +269,12 @@ initDisableForApp()
 enableKeyBind()
 
 -- 切换到英文输入法
-hs.hotkey.bind({}, hs.keycodes.map["f18"], function()
+hs.hotkey.bind({}, hs.keycodes.map["f18"], nil, function()
   toEnIM()
 end)
 
 -- 切换到中文输入法
-hs.hotkey.bind({}, hs.keycodes.map["f19"], function()
+hs.hotkey.bind({}, hs.keycodes.map["f19"], nil, function()
   toZhIM()
 end)
 
@@ -321,7 +324,7 @@ hs.urlevent.bind("resizeWindow", function(eventName, params)
   resizeWindow(op, width, height)
 end)
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", nil, function()
   hs.reload()
 end)
 hs.alert.show("Config of Hammerspoon loaded")
