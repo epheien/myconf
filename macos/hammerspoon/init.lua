@@ -92,12 +92,8 @@ end
 -- 需要使用这种按键方式才能避免各种副作用
 -- NOTE: 选择“输入法”菜单中的下一个输入法 这个功能在删除再添加输入法后可恢复
 function toggleInputMethod()
-  if false then
+  if true then
     -- 使用 capslock 键切换
-    hs.eventtap.event.newKeyEvent("F17", true):post()
-    hs.timer.usleep(1000)
-    hs.eventtap.event.newKeyEvent("F17", false):post()
-    -- 直接使用 capslock 快速切换中英文
     hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', true):post()
     hs.timer.usleep(1000)
     hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', false):post()
