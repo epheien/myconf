@@ -973,7 +973,7 @@ if g:vmode == 0
     Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
     " universal-ctags 6.x.x 版本已经支持 markdown 了, 不再需要这个插件了
     "Plug 'lvht/tagbar-markdown', {'on': 'TagbarToggle'} " 仅支持 UNIX，因为启动脚本为 #!/usr/bin/env php
-    Plug 'rhysd/vim-clang-format', {'on': 'ClangFormat'}
+    Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
 
     " 处理 kitty 背景问题
     if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
