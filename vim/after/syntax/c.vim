@@ -4,6 +4,13 @@
 
 "syntax match mcLineContinue "\\$" contained
 
+" 高亮注释中的 NOTE
+syntax clear cTodo
+syn keyword cTodo TODO FIXME XXX BUG containedin=cCommentGroup contained
+syn keyword cNote NOTE contained
+syn cluster cCommentGroup add=cNote
+hi def link cNote Special
+
 " 高亮宏定义
 syn match mcMacro '^\s*#\s*\(if\|ifdef\|ifndef\|elif\|define\)\s\+\zs\<[a-zA-Z_][a-zA-Z0-9_]*\>\ze\s*' contains=mcMacroFunc containedin=cPreCondit
 hi def link mcMacro Constant
