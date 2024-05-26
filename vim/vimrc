@@ -379,6 +379,8 @@ function s:SetupColorscheme() "{{{
             hi link WinSeparator VertSplit
             hi clear CurSearch
             hi link CurSearch Search
+            hi clear NormalFloat
+            hi link NormalFloat Pmenu
         endif
     endif
 endfunction
