@@ -35,7 +35,7 @@ if [ -n "$ZSH_VERSION" ]; then
     # bash compatible ctrl-w
     unset WORDCHARS
     # 禁用历史共享
-    unsetopt share_history
+    #unsetopt share_history
 
     # Uncomment the following line to disable auto-setting terminal title.
     DISABLE_AUTO_TITLE="true"
@@ -75,6 +75,9 @@ function findn()
 if command -v thefuck &>/dev/null; then
     eval $(thefuck --alias)
 fi
+
+export HOMEBREW_NO_AUTO_UPDATE=true
+export TLDR_AUTO_UPDATE_DISABLED=true
 
 # ======================================
 # nvm 相关配置
