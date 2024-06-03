@@ -1415,6 +1415,19 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 let g:table_mode_corner = '|'
 " ========== clang-format ==========
 let g:clang_format#code_style = 'LLVM'
+let g:clang_format#style_options = {
+    \ 'BinPackArguments': v:false,
+    \ 'BinPackParameters': v:false,
+    \ 'ColumnLimit': 100,
+    \ 'IndentCaseLabels': v:false,
+    \ 'DerivePointerAlignment': v:false,
+    \ 'PointerAlignment': 'Left',
+    \ 'AccessModifierOffset': -4,
+    \ 'IndentWidth': 4,
+    \ 'ReflowComments': v:false,
+    \ 'SortIncludes': v:false,
+    \ 'IncludeBlocks': 'Preserve',
+    \ }
 
 " ========== gitgutter ==========
 if g:vmode == 0
