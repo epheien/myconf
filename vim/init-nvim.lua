@@ -131,7 +131,7 @@ lazysetup('incline', {
       tabline = false,
       winbar = false
     },
-    padding = 1,
+    padding = 0,
     padding_char = " ",
     placement = {
       horizontal = "left",
@@ -155,12 +155,23 @@ lazysetup('incline', {
   render = function(props)
     local filename = vim.api.nvim_eval_statusline('%f', {winid = props.win})['str']
     local mod = vim.api.nvim_eval_statusline('%m%r', {winid = props.win})['str']
+    local active = (vim.api.nvim_tabpage_get_win(0) == props.win)
+    local trail_icon = ' '
+    if vim.fn.OnlyASCII() == 0 then
+      if active then
+        trail_icon = { '', guibg = '#282828', guifg = '#8ac6f2' }
+      else
+        trail_icon = { '', guibg = '#282828', guifg = '#444444' }
+      end
+    end
     if mod ~= '' then
       mod = ' ' .. mod
     end
     return {
+      ' ',
       filename,
       mod,
+      trail_icon,
     }
   end,
 })

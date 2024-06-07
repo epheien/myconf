@@ -20,11 +20,17 @@ function s:IsLinuxOS() "{{{
 endfunction
 "}}}
 " 表示是否仅使用 ASCII 显示
+let s:only_ascii = -1
 function g:OnlyASCII() "{{{
-    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm\|\<Apple_Terminal\|\<kitty\|\<alacritty'
-        return 0
+    if s:only_ascii >= 0
+      return s:only_ascii
     endif
-    return 1
+    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm\|\<Apple_Terminal\|\<kitty'
+        let s:only_ascii = 0
+    else
+        let s:only_ascii = 1
+    endif
+    return s:only_ascii
 endfunction
 "}}}
 function s:joinpath(...) "{{{
@@ -380,9 +386,12 @@ function s:SetupColorscheme() "{{{
         hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
         " 配合 incline
         if has('nvim')
-            hi StatusLine guibg=#969696 guifg=#444444 ctermbg=247 ctermfg=238
+            "hi StatusLine guibg=#969696 guifg=#444444 ctermbg=247 ctermfg=238
+            hi StatusLine guibg=#665c54 guifg=#282828 ctermbg=247 ctermfg=238
             hi default link StatusLine StatusLineNC
-            set statusline=%{trim('')}
+            "set statusline=%{trim('')}
+            set statusline=%!StlDash()
+            "autocmd vimrc WinEnter * call myrc#UpdateStatusline()
         endif
         " 0.10.0 改了很多关于主题的内容, 需要修正以保持和原来的效果一致
         if has('nvim-0.10')
@@ -1111,7 +1120,11 @@ let g:airline_symbols_ascii = 1
 " ## lightline 配置，用了他的高亮机制，显示的内容自己定制
 " 修改主题的 tabline 高亮
 try
-    let s:palette = g:lightline#colorscheme#mywombat#palette
+    if has('nvim')
+        let s:palette = g:lightline#colorscheme#mywombat2#palette
+    else
+        let s:palette = g:lightline#colorscheme#mywombat#palette
+    endif
     let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
     let s:palette.tabline.left = [s:palette.normal.right[1]]
     unlet s:palette
@@ -1126,8 +1139,12 @@ let g:lightline = {
   \ 'component_function': {
   \     'myftm': 'GetFtm',
   \     'myfileinfo': 'GetFI',
+  \     'StlDash' : 'StlDash',
   \ },
 \ }
+if has('nvim')
+    let g:lightline.colorscheme = 'mywombat2'
+endif
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
     \           [ 'filename' ],
@@ -1158,7 +1175,7 @@ let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
 if has('nvim')
     let g:lightline.active.left = []
-    let g:lightline.active.right = []
+    let g:lightline.active.right = [['StlDash']]
     let g:lightline.inactive.left = []
     let g:lightline.inactive.right = []
 endif
@@ -1188,6 +1205,9 @@ function GetTabFile(tabnum)
         return title
     endif
     return lightline#tab#filename(a:tabnum)
+endfunction
+function StlDash(...)
+  return repeat('─', &columns)
 endfunction
 
 " 稍微定制一下 startify 的 header

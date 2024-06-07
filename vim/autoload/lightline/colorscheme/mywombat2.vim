@@ -4,6 +4,8 @@
 " License: MIT License
 " Last Change: 2022/12/23 17:35:35
 " =============================================================================
+let s:winsep = ['#665c54', 241]
+let s:backgroud = [ '#282828', 235 ]
 let s:base03 = [ '#242424', 235 ]
 let s:base023 = [ '#353535 ', 236 ]
 let s:base02 = [ '#444444 ', 238 ]
@@ -22,7 +24,7 @@ let s:cyan = s:blue
 let s:green = [ '#95e454', 119 ]
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 let s:p.normal.left = [ [ s:base02, s:blue ], [ s:base3, s:base01 ] ]
-let s:p.normal.right = [ [ s:base02, s:base0 ], [ s:base1, s:base01 ] ]
+let s:p.normal.right = [ [ s:winsep, s:backgroud ], [ s:base1, s:base01 ] ]
 let s:p.inactive.right = [ [ s:base023, s:base01 ], [ s:base00, s:base02 ] ]
 let s:p.inactive.left =  [ [ s:base1, s:base02 ], [ s:base00, s:base02 ] ]
 let s:p.insert.left = [ [ s:base02, s:green ], [ s:base3, s:base01 ] ]
@@ -37,4 +39,4 @@ let s:p.tabline.right = [ [ s:base2, s:base00 ] ]
 let s:p.normal.error = [ [ s:base03, s:red ] ]
 let s:p.normal.warning = [ [ s:base023, s:yellow ] ]
 
-let g:lightline#colorscheme#mywombat#palette = lightline#colorscheme#flatten(s:p)
+let g:lightline#colorscheme#mywombat2#palette = lightline#colorscheme#flatten(s:p)
