@@ -1048,9 +1048,8 @@ if g:vmode == 0
     "Plug 'carlitux/deoplete-ternjs' " npm install -g tern
 endif
 
-" 自己做了一些小修改
 if has('gui_running') || &t_Co == 256
-    Plug 'epheien/lightline.vim'
+    Plug 'itchyny/lightline.vim'
 endif
 
 " git 相关插件
@@ -1123,18 +1122,16 @@ let g:lightline.active = {
     \           [ 'filename' ],
     \           [ 'fileflags' ],
     \         ],
-    \ 'right': [ [ 'mylineinfo' ],
-    \            [ 'myfileinfo' ],
-    \            [ 'myftm' ],
-    \          ],
     \ }
+let g:lightline.active.right = []
+"let g:lightline.active.right = [['mylineinfo'], ['myfileinfo'], ['myftm']]
 let g:lightline.inactive = {
     \ 'left': [ [ 'filename' ],
     \           [ 'fileflags' ],
     \         ],
-    \ 'right': [ [ 'mylineinfo' ],
-    \            [ 'myfileinfo' ] ],
     \ }
+let g:lightline.inactive.right = []
+"let g:lightline.inactive.right = [['mylineinfo'], ['myfileinfo']]
 let g:lightline.tab = {
     \ 'active': [ 'tabnum', 'mytabfile', 'modified' ],
     \ 'inactive': [ 'tabnum', 'mytabfile', 'modified' ] }
