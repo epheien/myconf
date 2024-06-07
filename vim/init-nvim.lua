@@ -82,6 +82,78 @@ lazysetup('noice', {
   },
 })
 
+lazysetup('incline', {
+  debounce_threshold = {
+    falling = 50,
+    rising = 10
+  },
+  hide = {
+    cursorline = false,
+    focused_win = false,
+    only_win = false
+  },
+  highlight = {
+    groups = {
+      InclineNormal = {
+        guifg = '#282828',
+        guibg = 'Yellow2',
+        ctermfg = '235',
+        ctermbg = '226',
+      },
+      InclineNormalNC = {
+        guifg = '#969696',
+        guibg = '#444444',
+        ctermfg = '247',
+        ctermbg = '238',
+      }
+    }
+  },
+  ignore = {
+    buftypes = {},
+    filetypes = {},
+    floating_wins = true,
+    unlisted_buffers = false,
+    wintypes = {}
+  },
+  render = "basic",
+  window = {
+    margin = {
+      horizontal = 0,
+      vertical = 0
+    },
+    options = {
+      signcolumn = "no",
+      wrap = false
+    },
+    overlap = {
+      borders = true,
+      statusline = true,
+      tabline = false,
+      winbar = false
+    },
+    padding = 1,
+    padding_char = " ",
+    placement = {
+      horizontal = "left",
+      vertical = "bottom"
+    },
+    width = "fit",
+    winhighlight = {
+      active = {
+        EndOfBuffer = "None",
+        Normal = "InclineNormal",
+        Search = "None"
+      },
+      inactive = {
+        EndOfBuffer = "None",
+        Normal = "InclineNormalNC",
+        Search = "None"
+      }
+    },
+    zindex = 50
+  }
+})
+
 function CscopeFind(op, symbol)
   local cscope = require('cscope')
   local ok, res = cscope.cscope_get_result(1, op, symbol, false)

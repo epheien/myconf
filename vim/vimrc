@@ -103,7 +103,11 @@ set cinoptions+=L0 " 输入 std: 的时候禁止缩进, 避免频繁的光标跳
 "   - 行号/最大行号,列号-虚拟列号
 "   - ruler 百分比
 set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fenc}]%)%{GetFtm(0)}%=%(%l/%L,%v%)\ %p
-set laststatus=2
+if has('nvim')
+    set laststatus=3
+else
+    set laststatus=2
+endif
 " (noquote=1)
 function! GetFtm(...) "{{{
     if winwidth(0) < 90
@@ -374,6 +378,12 @@ function s:SetupColorscheme() "{{{
         hi Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE
         hi IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
         hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
+        " 配合 incline
+        if has('nvim')
+            hi StatusLine guibg=#969696 guifg=#444444 ctermbg=247 ctermfg=238
+            hi default link StatusLine StatusLineNC
+            set statusline=%{trim('')}
+        endif
         " 0.10.0 改了很多关于主题的内容, 需要修正以保持和原来的效果一致
         if has('nvim-0.10')
             hi link WinSeparator VertSplit
@@ -1000,6 +1010,7 @@ if g:vmode == 0
             Plug 'dhananjaylatkar/cscope_maps.nvim'
         endif
 
+        Plug 'b0o/incline.nvim'
         Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
         "Plug 'neovim/nvim-lsp'
     endif
@@ -1123,15 +1134,13 @@ let g:lightline.active = {
     \           [ 'fileflags' ],
     \         ],
     \ }
-let g:lightline.active.right = []
-"let g:lightline.active.right = [['mylineinfo'], ['myfileinfo'], ['myftm']]
+let g:lightline.active.right = [['mylineinfo'], ['myfileinfo'], ['myftm']]
 let g:lightline.inactive = {
     \ 'left': [ [ 'filename' ],
     \           [ 'fileflags' ],
     \         ],
     \ }
-let g:lightline.inactive.right = []
-"let g:lightline.inactive.right = [['mylineinfo'], ['myfileinfo']]
+let g:lightline.inactive.right = [['mylineinfo'], ['myfileinfo']]
 let g:lightline.tab = {
     \ 'active': [ 'tabnum', 'mytabfile', 'modified' ],
     \ 'inactive': [ 'tabnum', 'mytabfile', 'modified' ] }
@@ -1147,6 +1156,12 @@ let g:lightline.component.filename = '%f'
 let g:lightline.component.fileflags = '%m%r'
 let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
+if has('nvim')
+    let g:lightline.active.left = []
+    let g:lightline.active.right = []
+    let g:lightline.inactive.left = []
+    let g:lightline.inactive.right = []
+endif
 " ◄► ◀︎▶︎  
 if g:OnlyASCII()
     " 非 Nerd Font
