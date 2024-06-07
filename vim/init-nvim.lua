@@ -151,7 +151,18 @@ lazysetup('incline', {
       }
     },
     zindex = 50
-  }
+  },
+  render = function(props)
+    local filename = vim.api.nvim_eval_statusline('%f', {winid = props.win})['str']
+    local mod = vim.api.nvim_eval_statusline('%m%r', {winid = props.win})['str']
+    if mod ~= '' then
+      mod = ' ' .. mod
+    end
+    return {
+      filename,
+      mod,
+    }
+  end,
 })
 
 function CscopeFind(op, symbol)
