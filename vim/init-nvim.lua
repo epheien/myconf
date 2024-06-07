@@ -96,9 +96,9 @@ lazysetup('incline', {
     groups = {
       InclineNormal = {
         guifg = '#282828',
-        guibg = 'Yellow2',
+        guibg = '#8ac6f2',
         ctermfg = '235',
-        ctermbg = '226',
+        ctermbg = '117',
       },
       InclineNormalNC = {
         guifg = '#969696',
