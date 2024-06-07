@@ -1453,6 +1453,12 @@ if g:vmode == 0
     autocmd vimrc BufReadPost * call s:AutoGitGutter()
 endif
 
+" ========== scrollview ==========
+" macOS iTerm2 色差 (-1, 0, 2)
+" 137 => 136 129 => 129 109 => 111
+highlight ScrollView ctermbg=243 guibg=#89816d
+"highlight link ScrollView PmenuThumb
+
 " 可在启动的时候指定 vim 的窗口尺寸, eg: vim --cmd 'let resize_window=1'
 if get(g:, 'resize_window', 0)
     set lines=45 columns=90
