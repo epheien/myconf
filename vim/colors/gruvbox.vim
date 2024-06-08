@@ -473,6 +473,7 @@ call s:HL('GruvboxYellowSign', s:yellow, s:sign_column, s:invert_signs)
 call s:HL('GruvboxBlueSign', s:blue, s:sign_column, s:invert_signs)
 call s:HL('GruvboxPurpleSign', s:purple, s:sign_column, s:invert_signs)
 call s:HL('GruvboxAquaSign', s:aqua, s:sign_column, s:invert_signs)
+call s:HL('GruvboxOrangeSign', s:orange, s:sign_column, s:invert_signs)
 
 " }}}
 
@@ -530,8 +531,8 @@ call s:HL('IncSearch', s:hls_cursor, s:bg0, s:inverse)
 
 call s:HL('Underlined', s:blue, s:none, s:underline)
 
-call s:HL('StatusLine',   ['#585858', 240], ['#d0d0d0', 252], s:inverse)
-call s:HL('StatusLineNC', ['#444444', 238], ['#969696', 247], s:inverse)
+call s:HL('StatusLine',   s:bg2, s:fg1, s:inverse)
+call s:HL('StatusLineNC', s:bg1, s:fg4, s:inverse)
 
 " The column separating vertically split windows
 call s:HL('VertSplit', s:bg3, s:vert_split)
@@ -906,6 +907,30 @@ hi! link NERDTreeToggleOff GruvboxRed
 
 call s:HL('multiple_cursors_cursor', s:none, s:none, s:inverse)
 call s:HL('multiple_cursors_visual', s:none, s:bg2)
+
+" }}}
+" coc.nvim: {{{
+
+hi! link CocErrorSign GruvboxRedSign
+hi! link CocWarningSign GruvboxOrangeSign
+hi! link CocInfoSign GruvboxYellowSign
+hi! link CocHintSign GruvboxBlueSign
+hi! link CocErrorFloat GruvboxRed
+hi! link CocWarningFloat GruvboxOrange
+hi! link CocInfoFloat GruvboxYellow
+hi! link CocHintFloat GruvboxBlue
+hi! link CocDiagnosticsError GruvboxRed
+hi! link CocDiagnosticsWarning GruvboxOrange
+hi! link CocDiagnosticsInfo GruvboxYellow
+hi! link CocDiagnosticsHint GruvboxBlue
+
+hi! link CocSelectedText GruvboxRed
+hi! link CocCodeLens GruvboxGray
+
+call s:HL('CocErrorHighlight', s:none, s:none, s:undercurl, s:red)
+call s:HL('CocWarningHighlight', s:none, s:none, s:undercurl, s:orange)
+call s:HL('CocInfoHighlight', s:none, s:none, s:undercurl, s:yellow)
+call s:HL('CocHintHighlight', s:none, s:none, s:undercurl, s:blue)
 
 " }}}
 
