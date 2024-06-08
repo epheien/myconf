@@ -4,7 +4,7 @@
 
 -- 插件设置入口, 避免在新环境中出现各种报错
 -- NOTE: vim-plug 和 lazy.nvim 不兼容, 而 packer.nvim 已经停止维护
-function lazysetup(plugin, config)
+local function lazysetup(plugin, config)
   local ok, mod = pcall(require, plugin)
   if not ok then
     --print('ignore lua plugin:', plugin)
@@ -29,25 +29,21 @@ lazysetup('cscope_maps', {
   }
 })
 
-lazysetup('nvim-tree', function()
-  require('config/nvim-tree')
-end)
-
-lazysetup('indent_blankline', {})
-
-lazysetup('telescope', function(mod) mod.setup({
-  defaults = {
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
-    mappings = {
-      i = {
-        --["<Esc>"] = require('telescope.actions').close,
-        ["<C-j>"] = require('telescope.actions').move_selection_next,
-        ["<C-k>"] = require('telescope.actions').move_selection_previous,
+local function setup_telescope()
+  lazysetup('telescope', function(mod) mod.setup({
+    defaults = {
+      -- Default configuration for telescope goes here:
+      -- config_key = value,
+      mappings = {
+        i = {
+          --["<Esc>"] = require('telescope.actions').close,
+          ["<C-j>"] = require('telescope.actions').move_selection_next,
+          ["<C-k>"] = require('telescope.actions').move_selection_previous,
+        }
       }
-    }
-  },
-}) end)
+    },
+  }) end)
+end
 
 lazysetup('noice', {
   cmdline = {
@@ -81,7 +77,6 @@ lazysetup('noice', {
     },
   },
 })
-
 
 lazysetup('incline', {
   debounce_threshold = {
@@ -185,3 +180,48 @@ function CscopeFind(op, symbol)
   end
   return res or {}
 end
+
+-- ======================================================================
+-- 以下开始是 pckr.nvim 管理的插件
+-- ======================================================================
+local function setup_pckr()
+  local plugin = 'pckr'
+  local ok, mod = pcall(require, plugin)
+  if not ok then
+    print('ignore lua plugin:', plugin)
+    return
+  end
+
+  local cmd = require('pckr.loader.cmd')
+  local keys = require('pckr.loader.keys')
+
+  local pckr = require('pckr')
+  pckr.setup({
+    package_root = vim.fn.stdpath('config'),
+    autoinstall = false,
+  })
+
+  require('pckr').add{
+    -- telescope
+    {
+      'nvim-telescope/telescope.nvim',
+      tag = '0.1.8',
+      requires = {'nvim-lua/plenary.nvim'},
+      cond = {cmd('Telescope')},
+      config = function() setup_telescope() end,
+    };
+
+    -- nvim-tree
+    {
+      'nvim-tree/nvim-tree.lua',
+      requires = {'nvim-tree/nvim-web-devicons'},
+      cond = {cmd('NvimTreeOpen')},
+      config = function() require('config/nvim-tree') end,
+    };
+
+    {'stevearc/aerial.nvim', cond = cmd('AerialOpen'), config = function() require('aerial').setup() end};
+    'nvim-treesitter/nvim-treesitter';
+    {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
+  }
+end
+setup_pckr()

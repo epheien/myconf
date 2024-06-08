@@ -1014,22 +1014,22 @@ if g:vmode == 0
     endif
 
     " nvim 专用的插件
+    " 管理原则:
+    "   - Plug 插件能实现懒加载的就用 Plug 管理
+    "   - 无条件加载的插件也用 Plug 管理
+    "   - 其他插件就用 pckr.nvim 管理
     if has('nvim')
-        Plug 'nvim-tree/nvim-web-devicons' " optional
-        Plug 'nvim-tree/nvim-tree.lua', {'on': 'NvimTreeOpen'}
-        Plug 'lukas-reineke/indent-blankline.nvim'
+        " 最基础的 nvim 包管理工具
+        Plug 'lewis6991/pckr.nvim'
+
+        Plug 'b0o/incline.nvim'
         if has('nvim-0.9')
             Plug 'dhananjaylatkar/cscope_maps.nvim'
         endif
 
-        Plug 'nvim-lua/plenary.nvim'
-        Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
-
         Plug 'norcalli/nvim-colorizer.lua', {'on': 'ColorizerToggle'}
-
-        Plug 'b0o/incline.nvim'
+        Plug 'wfxr/minimap.vim', {'on': 'Minimap'}
         Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
-        "Plug 'neovim/nvim-lsp'
     endif
 
     " 自己的插件
