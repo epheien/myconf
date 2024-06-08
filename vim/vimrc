@@ -394,14 +394,6 @@ function s:SetupColorscheme() "{{{
             set statusline=%!StlDash()
             "autocmd vimrc WinEnter * call myrc#UpdateStatusline()
         endif
-        " 0.10.0 改了很多关于主题的内容, 需要修正以保持和原来的效果一致
-        if has('nvim-0.10')
-            hi link WinSeparator VertSplit
-            hi clear CurSearch
-            hi link CurSearch Search
-            hi clear NormalFloat
-            hi link NormalFloat Pmenu
-        endif
     endif
 endfunction
 "}}}

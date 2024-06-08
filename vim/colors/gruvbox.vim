@@ -1434,4 +1434,31 @@ endfunction
 
 " }}}
 
+" nvim compatible -------------------------------------------------------------
+" nvim-0.10.x compatible {{{
+if has('nvim-0.10')
+  function! s:HiLink(src, dst)
+    "execute 'hi clear' a:src
+    execute 'hi! link' a:src a:dst
+  endfunction
+  call s:HiLink('WinSeparator', 'VertSplit')
+  call s:HiLink('CurSearch', 'Search')
+  call s:HiLink('NormalFloat', 'Pmenu')
+  " TODO: WinBar WinBarNC
+  " need to set the highlight group added in version 0.10
+  call s:HiLink('Delimiter', 'Operator')
+  call s:HiLink('@variable', 'Normal')
+  call s:HiLink('Added', 'DiffAdd')
+  call s:HiLink('Changed', 'DiffChange')
+  call s:HiLink('Removed', 'DiffDelete')
+  " TODO:
+  "   QuickFixLine
+  call s:HiLink('DiagnosticError', 'GruvboxRed')
+  call s:HiLink('DiagnosticWarn', 'GruvboxOrange')
+  call s:HiLink('DiagnosticInfo', 'GruvboxYellow')
+  call s:HiLink('DiagnosticHint', 'GruvboxBlue')
+  call s:HiLink('DiagnosticOk', 'GruvboxGreen')
+endif
+" }}}
+
 " vim: set sw=2 ts=2 sts=2 et tw=80 ft=vim fdm=marker:
