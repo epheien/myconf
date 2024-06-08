@@ -808,6 +808,7 @@ if g:OnlyASCII()
     let NERDTreeDirArrowCollapsible = '~'
 endif
 let NERDTreeMinimalUI = 1
+let NERDTreeStatusline = -1
 "}}}
 " ========== NERD commenter ==========
 "{{{
