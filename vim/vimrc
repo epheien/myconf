@@ -25,7 +25,8 @@ function g:OnlyASCII() "{{{
     if s:only_ascii >= 0
       return s:only_ascii
     endif
-    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm\|\<Apple_Terminal\|\<kitty'
+    " 对于现代的终端, 只要设置支持 nerd font 的字体即可支持非 ASCII 模式
+    if has('gui_running') || $TERM_PROGRAM =~# '\V\<iTerm\|\<Apple_Terminal\|\<kitty\|\<alacritty'
         let s:only_ascii = 0
     else
         let s:only_ascii = 1
