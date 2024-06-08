@@ -31,7 +31,8 @@ hi IncSearch    guifg=#b0ffff        guibg=#2050d0
 hi LineNr       guifg=burlywood3     gui=none
 hi ModeMsg      guifg=SkyBlue        gui=none
 hi MoreMsg      guifg=SeaGreen       gui=none
-hi NonText      guifg=cyan           gui=none
+"hi NonText      guifg=cyan           gui=none
+hi NonText      guifg=grey40         gui=none
 hi Question     guifg=springgreen    gui=none
 hi Search       guifg=gray80         guibg=#445599  gui=none
 hi SpecialKey   guifg=cyan           gui=none

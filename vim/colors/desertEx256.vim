@@ -30,7 +30,7 @@ highlight IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
 highlight LineNr guifg=burlywood3 gui=NONE ctermfg=180 cterm=NONE
 highlight ModeMsg guifg=skyblue gui=NONE ctermfg=117 cterm=NONE
 highlight MoreMsg guifg=seagreen gui=NONE ctermfg=29 cterm=NONE
-highlight NonText guifg=cyan gui=NONE ctermfg=51 cterm=NONE
+highlight NonText guifg=grey40 gui=NONE ctermfg=241 cterm=NONE
 highlight Question guifg=springgreen gui=NONE ctermfg=48 cterm=NONE
 highlight Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
 highlight SpecialKey guifg=cyan gui=NONE ctermfg=51 cterm=NONE
