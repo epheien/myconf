@@ -952,7 +952,7 @@ let g:plug_window = 'new'
 " ## vim-plug
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 " NOTE: 对于 nvim, 必须安装 python 模块: pip3 install -U pynvim
-call plug#begin()
+call plug#begin(s:joinpath(s:USERRUNTIME, 'plugged'))
 
 " ssh 环境下, 使用 OSC52 剪切板机制, 仅支持某些终端模拟器
 Plug 'ojroques/vim-oscyank', {'on': 'OSCYank', 'tag': 'v1.0.0'}
