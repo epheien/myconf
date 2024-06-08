@@ -155,9 +155,9 @@ lazysetup('incline', {
     local trail_icon = ' '
     if vim.fn.OnlyASCII() == 0 then
       if active then
-        trail_icon = { '', guibg = '#282828', guifg = '#8ac6f2' }
+        trail_icon = {'', guibg = '#282828', guifg = '#8ac6f2', ctermbg = 235, ctermfg = 117}
       else
-        trail_icon = { '', guibg = '#282828', guifg = '#444444' }
+        trail_icon = {'', guibg = '#282828', guifg = '#444444', ctermbg = 235, ctermfg = 238}
       end
     end
     if mod ~= '' then
