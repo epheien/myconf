@@ -1022,6 +1022,9 @@ if g:vmode == 0
             Plug 'dhananjaylatkar/cscope_maps.nvim'
         endif
 
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+
         Plug 'norcalli/nvim-colorizer.lua'
 
         Plug 'b0o/incline.nvim'
