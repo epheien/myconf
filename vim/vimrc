@@ -1069,7 +1069,8 @@ if g:vmode == 0
 endif
 
 if has('gui_running') || &t_Co == 256
-    Plug 'itchyny/lightline.vim'
+    "Plug 'itchyny/lightline.vim'
+    Plug 'epheien/lightline.vim' " 包含了一些自定义修改
 endif
 
 " git 相关插件
