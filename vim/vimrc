@@ -1025,7 +1025,7 @@ if g:vmode == 0
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 
-        Plug 'norcalli/nvim-colorizer.lua'
+        Plug 'norcalli/nvim-colorizer.lua', {'on': 'ColorizerToggle'}
 
         Plug 'b0o/incline.nvim'
         Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
