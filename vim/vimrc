@@ -959,9 +959,6 @@ Plug 'ojroques/vim-oscyank', {'on': 'OSCYank', 'tag': 'v1.0.0'}
 command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
 command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 
-" 完全懒加载的插件
-Plug 'cespare/vim-toml'
-
 " 0 - 全模式, 1 - 精简模式, 2 - man模式
 if g:vmode == 0
     Plug 'epheien/gruvbox' " 支持了 terminal 颜色
@@ -1025,7 +1022,6 @@ if g:vmode == 0
     endif
 
     " 自己的插件
-    Plug 'epheien/myjl'
     Plug 'epheien/termdbg', {'on': 'Termdbg'}
     Plug 'epheien/videm', {'on': 'VidemOpen'}
 
