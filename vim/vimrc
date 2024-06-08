@@ -790,7 +790,8 @@ let g:tagbar_type_go = {
     \ }
 \ }
 
-nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <nowait> <Leader>t :TagbarToggle<CR>
+nnoremap <nowait> <Leader>f :NvimTreeToggle<CR>
 
 hi TagbarAccessProtected guifg=Magenta ctermfg=Magenta
 hi link TagbarSignature Normal
