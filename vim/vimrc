@@ -394,6 +394,12 @@ function s:SetupColorscheme() "{{{
             set statusline=%!StlDash()
             "autocmd vimrc WinEnter * call myrc#UpdateStatusline()
         endif
+        " tagbar 配色
+        hi! link TagbarAccessPublic GruvboxAqua
+        hi! link TagbarAccessProtected GruvboxPurple
+        hi! link TagbarAccessPrivate GruvboxRed
+        hi! link TagbarSignature Normal
+        hi! link TagbarKind Constant
     endif
 endfunction
 "}}}
@@ -786,9 +792,6 @@ let g:tagbar_type_go = {
 nnoremap <nowait> <Leader>t :TagbarToggle<CR>
 nnoremap <nowait> <Leader>f :NvimTreeToggle<CR>
 
-hi TagbarAccessProtected guifg=Magenta ctermfg=Magenta
-hi link TagbarSignature Normal
-hi link TagbarKind Constant
 "}}}
 " ========== NERDTree ==========
 "{{{
