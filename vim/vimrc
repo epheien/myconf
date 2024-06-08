@@ -389,7 +389,7 @@ function s:SetupColorscheme() "{{{
         if has('nvim')
             "hi StatusLine guibg=#969696 guifg=#444444 ctermbg=247 ctermfg=238
             hi StatusLine guibg=#665c54 guifg=#282828 ctermbg=247 ctermfg=238
-            hi default link StatusLine StatusLineNC
+            hi! link StatusLineNC StatusLine
             "set statusline=%{trim('')}
             set statusline=%!StlDash()
             "autocmd vimrc WinEnter * call myrc#UpdateStatusline()
