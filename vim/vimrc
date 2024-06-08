@@ -987,7 +987,7 @@ if g:vmode == 0
     Plug 'metakirby5/codi.vim', {'on': 'Codi'}
     Plug 'mhinz/vim-startify', {'on': 'Startify'}
     Plug 'kassio/neoterm', {'on': 'Tnew'}
-    Plug 'scrooloose/nerdtree', {'on': 'NERDTree'}
+    Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
     Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
     Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
     " 自己的插件
