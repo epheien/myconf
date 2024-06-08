@@ -82,6 +82,8 @@ lazysetup('noice', {
   },
 })
 
+lazysetup('colorizer', {})
+
 lazysetup('incline', {
   debounce_threshold = {
     falling = 50,

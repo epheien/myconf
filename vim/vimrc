@@ -1019,6 +1019,8 @@ if g:vmode == 0
             Plug 'dhananjaylatkar/cscope_maps.nvim'
         endif
 
+        Plug 'norcalli/nvim-colorizer.lua'
+
         Plug 'b0o/incline.nvim'
         Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
         "Plug 'neovim/nvim-lsp'
