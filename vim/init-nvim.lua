@@ -215,12 +215,12 @@ local function setup_pckr()
     {
       'nvim-tree/nvim-tree.lua',
       requires = {'nvim-tree/nvim-web-devicons'},
-      cond = {cmd('NvimTreeOpen')},
+      cond = {cmd('NvimTreeOpen'), cmd('NvimTreeToggle')},
       config = function() require('config/nvim-tree') end,
     };
 
     {'stevearc/aerial.nvim', cond = cmd('AerialOpen'), config = function() require('aerial').setup() end};
-    'nvim-treesitter/nvim-treesitter';
+    {'nvim-treesitter/nvim-treesitter', cond = cmd('TSBufEnable')};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
   }
 end
