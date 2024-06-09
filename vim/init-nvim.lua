@@ -165,6 +165,7 @@ lazysetup('incline', {
   },
   render = function(props)
     local filename = vim.api.nvim_eval_statusline('%f', {winid = props.win})['str']
+    local mode = {}
     local mod = vim.api.nvim_eval_statusline('%m%r', {winid = props.win})['str']
     local active = (vim.api.nvim_tabpage_get_win(0) == props.win)
     local left_icon = ' '
@@ -177,17 +178,19 @@ lazysetup('incline', {
       if active then
         --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
         trail_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
+        mode = {string.format(' [%s]', vim.fn.mode())}
       else
         --left_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
         trail_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
       end
     end
-    if mod ~= '' then
+    if mod ~= '' and #mode == 0 then
       mod = ' ' .. mod
     end
     return {
       left_icon,
       filename,
+      mode,
       mod,
       trail_icon,
     }
