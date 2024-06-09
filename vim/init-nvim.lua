@@ -104,13 +104,14 @@ local InclineNormal = {
   ctermfg = '235',
   ctermbg = '117',
   --guifg = '#444444',
-  --guibg = '#9999FF',
+  --guibg = '#9999ff',
   --ctermfg = '238',
   --ctermbg = '105',
 }
+vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#9999ff ctermfg=235 ctermbg=105]])
 local function make_mode_display(m)
   --local group = 'LightlineLeft_normal_0'
-  local group = 'MarkWord6'
+  local group = 'InclineNormalMode'
   if m == 'n' then
     -- 用默认值
   elseif m == 'i' then
