@@ -1,4 +1,6 @@
-#! /usr/bin/env python
+#!/usr/bin/env python3
+# NOTE: 不要使用这个脚本的颜色转换功能, 基本全是错的
+#       只使用这个脚本打印256色颜色代码功能, 不加参数直接运行即可
 
 """ Convert values between RGB hex codes and xterm-256 color codes.
 
@@ -318,8 +320,8 @@ def print_all():
         sys.stdout.write("\033[0m  ")
         sys.stdout.write('\033[38;5;%sm%s:%s' % (short, short, rgb))
         sys.stdout.write("\033[0m\n")
-    print "Printed all codes."
-    print "You can translate a hex or 0-255 code by providing an argument."
+    print("Printed all codes.")
+    print("You can translate a hex or 0-255 code by providing an argument.")
 
 def rgb2short(rgb):
     """ Find the closest xterm-256 approximation to the given RGB value.
