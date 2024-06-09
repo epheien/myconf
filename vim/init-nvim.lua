@@ -104,6 +104,9 @@ local InclineNormal = {
   ctermfg = '235',
   ctermbg = '117',
 }
+local function make_mode_display(m)
+  return {string.format(' [%s]', m)}
+end
 lazysetup('incline', {
   debounce_threshold = {
     falling = 50,
@@ -178,7 +181,7 @@ lazysetup('incline', {
       if active then
         --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
         trail_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
-        mode = {string.format(' [%s]', vim.fn.mode())}
+        mode = make_mode_display(vim.fn.mode())
       else
         --left_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
         trail_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
