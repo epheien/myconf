@@ -108,7 +108,7 @@ local InclineNormal = {
   --ctermfg = '238',
   --ctermbg = '105',
 }
-vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#9999ff ctermfg=235 ctermbg=105]])
+vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
 local function make_mode_display(m)
   --local group = 'LightlineLeft_normal_0'
   local group = 'InclineNormalMode'
