@@ -89,6 +89,21 @@ lazysetup('noice', {
   },
 })
 
+-- incline
+local InclineNormalNC = {
+    guifg = '#282828',
+    guibg = '#6a6a6a',
+    --guifg = '#969696',
+    --guibg = '#585858',
+    ctermfg = '235',
+    ctermbg = '242',
+}
+local InclineNormal = {
+  guifg = '#282828',
+  guibg = '#8ac6f2',
+  ctermfg = '235',
+  ctermbg = '117',
+}
 lazysetup('incline', {
   debounce_threshold = {
     falling = 50,
@@ -101,18 +116,8 @@ lazysetup('incline', {
   },
   highlight = {
     groups = {
-      InclineNormal = {
-        guifg = '#282828',
-        guibg = '#8ac6f2',
-        ctermfg = '235',
-        ctermbg = '117',
-      },
-      InclineNormalNC = {
-        guifg = '#969696',
-        guibg = '#444444',
-        ctermfg = '247',
-        ctermbg = '238',
-      }
+      InclineNormal = InclineNormal,
+      InclineNormalNC = InclineNormalNC,
     }
   },
   ignore = {
@@ -164,14 +169,17 @@ lazysetup('incline', {
     local active = (vim.api.nvim_tabpage_get_win(0) == props.win)
     local left_icon = ' '
     local trail_icon = ' '
+    -- 全局的背景色
+    local guibg = '#282828'
+    local ctermbg = 235
     if vim.fn.OnlyASCII() == 0 then
       --    
       if active then
-        --left_icon = {'', guibg = '#282828', guifg = '#8ac6f2', ctermbg = 235, ctermfg = 117}
-        trail_icon = {'', guibg = '#282828', guifg = '#8ac6f2', ctermbg = 235, ctermfg = 117}
+        --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
+        trail_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
       else
-        --left_icon = {'', guibg = '#282828', guifg = '#444444', ctermbg = 235, ctermfg = 238}
-        trail_icon = {'', guibg = '#282828', guifg = '#444444', ctermbg = 235, ctermfg = 238}
+        --left_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
+        trail_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
       end
     end
     if mod ~= '' then
