@@ -1444,6 +1444,7 @@ if has('nvim-0.10')
   call s:HiLink('WinSeparator', 'VertSplit')
   call s:HiLink('CurSearch', 'Search')
   call s:HiLink('NormalFloat', 'Pmenu')
+  call s:HiLink('FloatBorder', 'WinSeparator')
   " TODO: WinBar WinBarNC
   " need to set the highlight group added in version 0.10
   call s:HiLink('Delimiter', 'Operator')
