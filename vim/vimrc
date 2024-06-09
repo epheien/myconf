@@ -354,6 +354,7 @@ endif
 
 " 颜色方案
 " https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
+" 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
 function s:SetupColorscheme() "{{{
     let colors_name = 'default'
     " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
