@@ -353,6 +353,7 @@ if !has('gui_running')
 endif
 
 " 颜色方案
+" https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
 function s:SetupColorscheme() "{{{
     let colors_name = 'default'
     " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
