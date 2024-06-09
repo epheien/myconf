@@ -30,19 +30,30 @@ lazysetup('cscope_maps', {
 })
 
 local function setup_telescope()
-  lazysetup('telescope', function(mod) mod.setup({
-    defaults = {
-      -- Default configuration for telescope goes here:
-      -- config_key = value,
-      mappings = {
-        i = {
-          --["<Esc>"] = require('telescope.actions').close,
-          ["<C-j>"] = require('telescope.actions').move_selection_next,
-          ["<C-k>"] = require('telescope.actions').move_selection_previous,
-        }
+  local opts = {
+    -- Default configuration for telescope goes here:
+    -- config_key = value,
+    mappings = {
+      i = {
+        ["<Esc>"] = require('telescope.actions').close,
+        ["<C-j>"] = require('telescope.actions').move_selection_next,
+        ["<C-k>"] = require('telescope.actions').move_selection_previous,
       }
     },
-  }) end)
+    sorting_strategy = "ascending",
+    layout_config = {
+      prompt_position = 'top',
+    },
+  }
+  lazysetup('telescope', function(mod)
+    mod.setup({
+      --defaults = require('telescope.themes').get_dropdown(opts),
+      defaults = opts,
+    }) 
+  end)
+  --vim.cmd([[hi! link TelescopeBorder WinSeparator]])
+  vim.api.nvim_set_hl(0, 'TelescopeBorder', {link = 'WinSeparator', force = true})
+  vim.api.nvim_set_hl(0, 'TelescopeTitle', {link = 'Title', force = true})
 end
 
 lazysetup('noice', {
