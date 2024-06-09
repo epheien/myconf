@@ -111,7 +111,6 @@ lazysetup('incline', {
     unlisted_buffers = false,
     wintypes = {}
   },
-  render = "basic",
   window = {
     margin = {
       horizontal = 0,
@@ -152,11 +151,15 @@ lazysetup('incline', {
     local filename = vim.api.nvim_eval_statusline('%f', {winid = props.win})['str']
     local mod = vim.api.nvim_eval_statusline('%m%r', {winid = props.win})['str']
     local active = (vim.api.nvim_tabpage_get_win(0) == props.win)
+    local left_icon = ' '
     local trail_icon = ' '
     if vim.fn.OnlyASCII() == 0 then
+      --    
       if active then
+        --left_icon = {'', guibg = '#282828', guifg = '#8ac6f2', ctermbg = 235, ctermfg = 117}
         trail_icon = {'', guibg = '#282828', guifg = '#8ac6f2', ctermbg = 235, ctermfg = 117}
       else
+        --left_icon = {'', guibg = '#282828', guifg = '#444444', ctermbg = 235, ctermfg = 238}
         trail_icon = {'', guibg = '#282828', guifg = '#444444', ctermbg = 235, ctermfg = 238}
       end
     end
@@ -164,7 +167,7 @@ lazysetup('incline', {
       mod = ' ' .. mod
     end
     return {
-      ' ',
+      left_icon,
       filename,
       mod,
       trail_icon,
