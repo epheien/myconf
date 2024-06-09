@@ -103,9 +103,33 @@ local InclineNormal = {
   guibg = '#8ac6f2',
   ctermfg = '235',
   ctermbg = '117',
+  --guifg = '#444444',
+  --guibg = '#9999FF',
+  --ctermfg = '238',
+  --ctermbg = '105',
 }
 local function make_mode_display(m)
-  return {string.format(' [%s]', m)}
+  --local group = 'LightlineLeft_normal_0'
+  local group = 'MarkWord6'
+  if m == 'n' then
+    -- 用默认值
+  elseif m == 'i' then
+    group = 'LightlineLeft_insert_0'
+  elseif m == 't' then
+    group = 'LightlineLeft_terminal_0'
+  elseif m == 'v' or m == 'V' then
+    group = 'LightlineLeft_visual_0'
+  elseif m == 's' or m == 'S' then
+    group = 'LightlineLeft_select_0'
+  elseif m == 'R' then
+    group = 'LightlineLeft_replace_0'
+  else
+    -- 兜底用默认值
+  end
+  return {
+    string.format(' %s ', m),
+    group = group,
+  }
 end
 lazysetup('incline', {
   debounce_threshold = {
@@ -173,6 +197,7 @@ lazysetup('incline', {
     local active = (vim.api.nvim_tabpage_get_win(0) == props.win)
     local left_icon = ' '
     local trail_icon = ' '
+    local mode_padding = ''
     -- 全局的背景色
     local guibg = '#282828'
     local ctermbg = 235
@@ -182,18 +207,20 @@ lazysetup('incline', {
         --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
         trail_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
         mode = make_mode_display(vim.fn.mode())
+        if #mode ~= 0 then mode_padding = ' '; left_icon = '' end
       else
         --left_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
         trail_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
       end
     end
-    if mod ~= '' and #mode == 0 then
+    if mod ~= '' then
       mod = ' ' .. mod
     end
     return {
       left_icon,
-      filename,
       mode,
+      mode_padding,
+      filename,
       mod,
       trail_icon,
     }
