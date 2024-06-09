@@ -1436,6 +1436,11 @@ endif
 highlight ScrollView ctermbg=243 guibg=#89816d
 "highlight link ScrollView PmenuThumb
 
+" ========== easymotion ==========
+let g:EasyMotion_smartcase = &smartcase
+nnoremap f <Plug>(easymotion-f)
+nnoremap F <Plug>(easymotion-F)
+
 " 可在启动的时候指定 vim 的窗口尺寸, eg: vim --cmd 'let resize_window=1'
 if get(g:, 'resize_window', 0)
     set lines=45 columns=90
