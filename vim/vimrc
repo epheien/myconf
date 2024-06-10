@@ -564,7 +564,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap ; :
 nnoremap <silent> gq :call myrc#close()<CR>
-nnoremap Q gq
+"nnoremap Q gq " nvim 的 Q 命令含义以及改了, 但是未能在 vim 同等实现
 " stty -ixon
 nnoremap <silent> <C-s> :update<CR>
 nnoremap T :tag<CR>
