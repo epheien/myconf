@@ -1007,7 +1007,7 @@ if g:vmode == 0
         "Plug 'ryanoasis/vim-devicons'
     endif
 
-    " nvim 专用的插件
+    " nvim 专用插件
     " 管理原则:
     "   - Plug 插件能实现懒加载的就用 Plug 管理
     "   - 无条件加载的插件也用 Plug 管理
@@ -1025,6 +1025,10 @@ if g:vmode == 0
         Plug 'norcalli/nvim-colorizer.lua', {'on': 'ColorizerToggle'}
         Plug 'wfxr/minimap.vim', {'on': 'Minimap'}
         Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
+    else
+    " vim 专用插件
+        " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
+        Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
     endif
 
     " 本地插件
