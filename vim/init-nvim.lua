@@ -56,7 +56,6 @@ local function setup_telescope()
       },
     }) 
   end)
-  --vim.cmd([[hi! link TelescopeBorder WinSeparator]])
   vim.api.nvim_set_hl(0, 'TelescopeBorder', {link = 'WinSeparator', force = true})
   vim.api.nvim_set_hl(0, 'TelescopeTitle', {link = 'Title', force = true})
 end
