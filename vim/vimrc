@@ -616,10 +616,19 @@ if exists(':tmap')
     endif
 endif
 
-nnoremap <silent> \f :Leaderf file<CR>
-nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
-nnoremap <silent> \b :Leaderf buffer<CR>
-nnoremap <silent> \t :Leaderf bufTag<CR>
+
+if has('nvim')
+    nnoremap <silent> \f :Telescope find_files<CR>
+    nnoremap <silent> \e :Telescope command_history<CR>
+    nnoremap <silent> \b :Telescope buffers<CR>
+    nnoremap <silent> \t :Telescope current_buffer_fuzzy_find<CR>
+    nnoremap <silent> \T :Telescope tags<CR>
+else
+    nnoremap <silent> \f :Leaderf file<CR>
+    nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
+    nnoremap <silent> \b :Leaderf buffer<CR>
+    nnoremap <silent> \t :Leaderf bufTag<CR>
+endif
 
 "=======================================
 " 命令行模式，包括搜索时

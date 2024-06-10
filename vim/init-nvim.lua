@@ -49,6 +49,11 @@ local function setup_telescope()
     mod.setup({
       --defaults = require('telescope.themes').get_dropdown(opts),
       defaults = opts,
+      pickers = {
+        tags = {
+          only_sort_tags = true,
+        },
+      },
     }) 
   end)
   --vim.cmd([[hi! link TelescopeBorder WinSeparator]])
