@@ -590,9 +590,10 @@ function! myrc#disable_oscyank() abort
     let s:enable_oscyank = v:false
 endfunction
 
+" clipboard yank
 function! myrc#cby() abort
-    if (exists('$SSH_CLIENT') || s:enable_oscyank) && exists(':OSCYank')
-        OSCYank
+    if (exists('$SSH_TTY') || s:enable_oscyank) && exists(':OSCYankVisual')
+        OSCYankVisual
         return
     endif
     let cmd = myrc#yankcmd()
@@ -602,8 +603,9 @@ function! myrc#cby() abort
     call system(cmd, getreg('"'))
 endfunction
 
+" clipboard paste
 function! myrc#cbp() abort
-    if (exists('$SSH_CLIENT') || s:enable_oscyank) && exists(':OSCYank')
+    if (exists('$SSH_TTY') || s:enable_oscyank) && exists(':OSCYankVisual')
         return ''
     endif
     let cmd = myrc#pastecmd()

@@ -970,7 +970,7 @@ let g:plug_window = 'new'
 call plug#begin(s:joinpath(s:USERRUNTIME, 'plugged'))
 
 " ssh 环境下, 使用 OSC52 剪切板机制, 仅支持某些终端模拟器
-Plug 'ojroques/vim-oscyank', {'on': 'OSCYank', 'tag': 'v1.0.0'}
+Plug 'ojroques/vim-oscyank', {'on': 'OSCYankVisual'}
 command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
 command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 
