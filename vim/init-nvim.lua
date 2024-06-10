@@ -56,38 +56,58 @@ local function setup_telescope()
   vim.api.nvim_set_hl(0, 'TelescopeTitle', {link = 'Title', force = true})
 end
 
-lazysetup('noice', {
-  cmdline = {
-    format = {
-      help = false,
-      lua = false,
-      filter = false,
-      --search_down = { icon = "/ ⌄" },
-      --search_up = { icon = "? ⌃" },
+-- noice setup {{{
+local function setup_noice()
+  lazysetup('noice', {
+    views = {
+      align = 'message-left',
+      position = {
+        col = 0,
+      }
     },
-  },
-  messages = {
-    --enabled = false, -- false 会使用 cmdline, 避免闪烁
-    view = 'mini',
-    view_error = 'mini',
-    view_warn = 'mini',
-    view_history = 'popup',
-  },
-  commands = {
-    history = {
-      view = 'popup',
-    },
-  },
-  format = {
-    level = {
-      icons = {
-        error = "✖",
-        warn = "▼",
-        info = "●",
+    cmdline_popup = {
+      position = {
+        row = 5,
+        col = "00%",
+      },
+      size = {
+        width = 60,
+        height = "auto",
       },
     },
-  },
-})
+    cmdline = {
+      format = {
+        help = false,
+        lua = false,
+        filter = false,
+        --search_down = { icon = "/ ⌄" },
+        --search_up = { icon = "? ⌃" },
+      },
+    },
+    messages = {
+      --enabled = false, -- false 会使用 cmdline, 避免闪烁
+      view = 'mini',
+      view_error = 'mini',
+      view_warn = 'mini',
+      view_history = 'popup',
+    },
+    commands = {
+      history = {
+        view = 'popup',
+      },
+    },
+    format = {
+      level = {
+        icons = {
+          error = "✖",
+          warn = "▼",
+          info = "●",
+        },
+      },
+    },
+  })
+end
+-- }}}
 
 -- incline setup {{{
 local InclineNormalNC = {
@@ -301,7 +321,7 @@ local function setup_pckr()
     autoinstall = false,
   })
 
-  require('pckr').add{
+  local plugins = {
     -- telescope
     {
       'nvim-telescope/telescope.nvim',
@@ -322,7 +342,19 @@ local function setup_pckr()
     {'stevearc/aerial.nvim', cond = cmd('AerialOpen'), config = function() require('aerial').setup() end};
     {'nvim-treesitter/nvim-treesitter', cond = cmd('TSBufEnable')};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
+
   }
+
+  -- noice
+  --if vim.fn.has('nvim-0.10') == 1 then
+  --  table.insert(plugins, {
+  --    "folke/noice.nvim",
+  --    requires = {'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify'},
+  --    config = setup_noice,
+  --  })
+  --end
+
+  pckr.add(plugins)
 end
 setup_pckr()
 
