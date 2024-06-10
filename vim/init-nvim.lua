@@ -108,25 +108,68 @@ local InclineNormal = {
   --ctermfg = '238',
   --ctermbg = '105',
 }
-vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
+--vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
+vim.api.nvim_set_hl(0, 'InclineNormalMode', {fg='#282828', bg='#E0E000', ctermfg=235, ctermbg=184})
+local mode_table = {
+  ['n']      = 'NORMAL',
+  ['no']     = 'O-PENDING',
+  ['nov']    = 'O-PENDING',
+  ['noV']    = 'O-PENDING',
+  ['no\22'] = 'O-PENDING',
+  ['niI']    = 'NORMAL',
+  ['niR']    = 'NORMAL',
+  ['niV']    = 'NORMAL',
+  ['nt']     = 'NORMAL',
+  ['ntT']    = 'NORMAL',
+  ['v']      = 'VISUAL',
+  ['vs']     = 'VISUAL',
+  ['V']      = 'V-LINE',
+  ['Vs']     = 'V-LINE',
+  ['\22']   = 'V-BLOCK',
+  ['\22s']  = 'V-BLOCK',
+  ['s']      = 'SELECT',
+  ['S']      = 'S-LINE',
+  ['\19']   = 'S-BLOCK',
+  ['i']      = 'INSERT',
+  ['ic']     = 'INSERT',
+  ['ix']     = 'INSERT',
+  ['R']      = 'REPLACE',
+  ['Rc']     = 'REPLACE',
+  ['Rx']     = 'REPLACE',
+  ['Rv']     = 'V-REPLACE',
+  ['Rvc']    = 'V-REPLACE',
+  ['Rvx']    = 'V-REPLACE',
+  ['c']      = 'COMMAND',
+  ['cv']     = 'EX',
+  ['ce']     = 'EX',
+  ['r']      = 'REPLACE',
+  ['rm']     = 'MORE',
+  ['r?']     = 'CONFIRM',
+  ['!']      = 'SHELL',
+  ['t']      = 'TERMINAL',
+}
+-- FIXME: 高亮组需要自己初始化
 local function make_mode_display(m)
   --local group = 'LightlineLeft_normal_0'
   local group = 'InclineNormalMode'
+  local mode = mode_table[m]
   if m == 'n' then
     -- 用默认值
-  elseif m == 'i' then
+  elseif mode == 'INSERT' then
     group = 'LightlineLeft_insert_0'
-  elseif m == 't' then
+  elseif mode == 'TERMINAL' then
     group = 'LightlineLeft_terminal_0'
-  elseif m == 'v' or m == 'V' then
+  elseif mode == 'VISUAL' or mode == 'V-LINE' or mode == 'V-BLOCK' then
     group = 'LightlineLeft_visual_0'
-  elseif m == 's' or m == 'S' then
+  elseif mode == 'SELECT' or mode == 'S-LINE' or mode == 'S-BLOCK' then
     group = 'LightlineLeft_select_0'
-  elseif m == 'R' then
+  elseif mode == 'REPLACE' or mode == 'V-REPLACE' then
     group = 'LightlineLeft_replace_0'
   else
     -- 兜底用默认值
   end
+  -- 生成需要用到的高亮组
+  vim.cmd('silent! call lightline#highlight()')
   return {
     string.format(' %s ', m),
     group = group,
