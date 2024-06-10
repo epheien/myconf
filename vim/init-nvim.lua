@@ -89,7 +89,7 @@ lazysetup('noice', {
   },
 })
 
--- incline
+-- incline setup {{{
 local InclineNormalNC = {
     guifg = '#282828',
     guibg = '#6a6a6a',
@@ -270,6 +270,7 @@ lazysetup('incline', {
     }
   end,
 })
+-- }}}
 
 function CscopeFind(op, symbol)
   local cscope = require('cscope')
@@ -324,3 +325,6 @@ local function setup_pckr()
   }
 end
 setup_pckr()
+
+------------------------------------------------------------------------------
+-- vim:set fdm=marker fen fdl=0:
