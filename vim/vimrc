@@ -688,6 +688,7 @@ imap <C-n> <Down>
 " ============================================================================
 " ========== pathogen ==========
 "{{{
+" 激活 bundle 目录的插件
 call pathogen#infect()
 "}}}
 " ========== tagbar ==========
@@ -1123,9 +1124,6 @@ let g:lightline = {
   \     'StlDash' : 'StlDash',
   \ },
 \ }
-if has('nvim')
-    let g:lightline.colorscheme = 'mywombat2'
-endif
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
     \           [ 'filename' ],
@@ -1154,12 +1152,6 @@ let g:lightline.component.filename = '%f'
 let g:lightline.component.fileflags = '%m%r'
 let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
 let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
-if has('nvim')
-    let g:lightline.active.left = []
-    let g:lightline.active.right = [['StlDash']]
-    let g:lightline.inactive.left = []
-    let g:lightline.inactive.right = []
-endif
 " ◄► ◀︎▶︎  
 if g:OnlyASCII()
     " 非 Nerd Font
@@ -1190,6 +1182,15 @@ endfunction
 function StlDash(...)
   return repeat('─', &columns)
 endfunction
+" nvim 使用 incline 替代, lightline 仅用与辅助
+if has('nvim')
+    let g:lightline.colorscheme = 'mywombat2'
+    let g:lightline.active.left = []
+    let g:lightline.active.right = [['StlDash']]
+    let g:lightline.inactive.left = []
+    let g:lightline.inactive.right = []
+    let g:lightline.separator = { 'left': '', 'right': '' }
+endif
 
 " 稍微定制一下 startify 的 header
 let g:startify_custom_header = [
