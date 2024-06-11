@@ -294,6 +294,7 @@ lazysetup('incline', {
 
     -- 简单地添加 ruler 信息
     local ruler = vim.api.nvim_eval_statusline(' %l/%L:%v ', {winid = props.win})['str']
+    ruler = ' │' .. ruler
     table.insert(result, ruler)
 
     table.insert(result, trail_icon)
