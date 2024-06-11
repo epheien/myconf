@@ -623,6 +623,7 @@ if has('nvim')
     nnoremap <silent> \b :Telescope buffers<CR>
     nnoremap <silent> \t :Telescope current_buffer_fuzzy_find<CR>
     nnoremap <silent> \T :Telescope tags<CR>
+    nnoremap <silent> \/ :Telescope current_buffer_fuzzy_find<CR>
 else
     nnoremap <silent> \f :Leaderf file<CR>
     nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
