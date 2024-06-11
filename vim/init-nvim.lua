@@ -61,6 +61,8 @@ local function setup_telescope()
   end)
   vim.api.nvim_set_hl(0, 'TelescopeBorder', {link = 'WinSeparator', force = true})
   vim.api.nvim_set_hl(0, 'TelescopeTitle', {link = 'Title', force = true})
+  -- telescope 的 undo 插件
+  require("telescope").load_extension("undo")
 end
 
 -- noice setup {{{
@@ -346,7 +348,7 @@ local function setup_pckr()
     {
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
-      requires = {'nvim-lua/plenary.nvim'},
+      requires = {'nvim-lua/plenary.nvim', 'debugloop/telescope-undo.nvim'},
       cond = {cmd('Telescope')},
       config = function() setup_telescope() end,
     };
