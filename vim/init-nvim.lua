@@ -135,8 +135,6 @@ local InclineNormal = {
   --ctermfg = '238',
   --ctermbg = '105',
 }
---vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
-vim.api.nvim_set_hl(0, 'InclineNormalMode', {fg='#282828', bg='#E0E000', ctermfg=235, ctermbg=184})
 local mode_table = {
   ['n']      = 'NORMAL',
   ['no']     = 'O-PENDING',
@@ -175,28 +173,36 @@ local mode_table = {
   ['!']      = 'SHELL',
   ['t']      = 'TERMINAL',
 }
--- FIXME: 高亮组需要自己初始化
+-- 高亮组初始化
+local function setup_statusline_hlgroup()
+  --vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
+  vim.api.nvim_set_hl(0, 'InclineNormalMode', {fg='#282828', bg='#E0E000', ctermfg=235, ctermbg=184})
+  vim.cmd([[hi! IncelineInsertMode ctermfg=235 ctermbg=119 guibg=#95e454]])
+  vim.cmd([[hi! IncelineTerminalMode ctermfg=235 ctermbg=119 guibg=#95e454]])
+  vim.cmd([[hi! IncelineVisualMode ctermfg=235 ctermbg=216 guibg=#f2c68a]])
+  vim.cmd([[hi! IncelineSelectMode ctermfg=235 ctermbg=216 guibg=#f2c68a]])
+  vim.cmd([[hi! IncelineReplaceMode ctermfg=236 ctermbg=203 guifg=#353535 guibg=#e5786d]])
+end
 local function make_mode_display(m)
-  --local group = 'LightlineLeft_normal_0'
   local group = 'InclineNormalMode'
   local mode = mode_table[m]
   if m == 'n' then
     -- 用默认值
   elseif mode == 'INSERT' then
-    group = 'LightlineLeft_insert_0'
+    group = 'IncelineInsertMode'
   elseif mode == 'TERMINAL' then
-    group = 'LightlineLeft_terminal_0'
+    group = 'IncelineTerminalMode'
   elseif mode == 'VISUAL' or mode == 'V-LINE' or mode == 'V-BLOCK' then
-    group = 'LightlineLeft_visual_0'
+    group = 'IncelineVisualMode'
   elseif mode == 'SELECT' or mode == 'S-LINE' or mode == 'S-BLOCK' then
-    group = 'LightlineLeft_select_0'
+    group = 'IncelineSelectMode'
   elseif mode == 'REPLACE' or mode == 'V-REPLACE' then
-    group = 'LightlineLeft_replace_0'
+    group = 'IncelineReplaceMode'
   else
     -- 兜底用默认值
   end
   -- 生成需要用到的高亮组
-  vim.cmd('silent! call lightline#highlight()')
+  setup_statusline_hlgroup()
   return {
     string.format(' %s ', m),
     group = group,
