@@ -981,9 +981,9 @@ if g:vmode == 0
     Plug 'yianwillis/vimcdoc' " 中文文档
     Plug 'epheien/gruvbox' " 支持了 terminal 颜色
     Plug 'easymotion/vim-easymotion'
-    Plug 'epheien/vim-gutentags'
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
+    Plug 'epheien/vim-gutentags' " TODO: 需要一个好的懒加载方案
 
     " 新增语法支持
     Plug 'posva/vim-vue'
@@ -1365,7 +1365,7 @@ function! s:ShowDocumentation()
 endfunction
 " ========== smartim by hammerspoon ==========
 "{{{
-if g:vmode == 0
+if g:vmode == 0 && has('mac')
     function! s:job_start(cmd)
         if has('nvim')
             return jobstart(a:cmd)
@@ -1376,6 +1376,7 @@ if g:vmode == 0
     " 可使用 system 来同步, 只要 hammerspoon 足够快就没问题
     augroup smartim
         autocmd!
+        " NOTE: 这个 VimEnter 事件比较耗时, 但是为了使用方便, 还是要用
         autocmd VimEnter    * call s:job_start('open -g hammerspoon://toEnIM')
         autocmd VimLeavePre * call s:job_start('open -g hammerspoon://toEnIM')
         autocmd InsertLeave * call s:job_start('open -g hammerspoon://toEnIM')
