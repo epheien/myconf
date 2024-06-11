@@ -38,6 +38,10 @@ local function setup_telescope()
         ["<Esc>"] = require('telescope.actions').close,
         ["<C-j>"] = require('telescope.actions').move_selection_next,
         ["<C-k>"] = require('telescope.actions').move_selection_previous,
+        ["<C-l>"] = false,
+        ["<C-u>"] = false,
+        ["<C-b>"] = require('telescope.actions').preview_scrolling_up,
+        ["<C-f>"] = require('telescope.actions').preview_scrolling_down,
       }
     },
     sorting_strategy = "ascending",
