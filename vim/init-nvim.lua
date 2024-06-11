@@ -53,6 +53,9 @@ local function setup_telescope()
         tags = {
           only_sort_tags = true,
         },
+        current_buffer_tags = {
+          only_sort_tags = true,
+        },
       },
     }) 
   end)
