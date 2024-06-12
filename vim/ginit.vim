@@ -15,7 +15,13 @@ elseif has('win32') || has('win64')
     GuiFont! Microsoft YaHei Mono:h11
 endif
 
-set guicursor&
+if get(g:, 'neovide')
+    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+        \,sm:block-blinkwait175-blinkoff150-blinkon175
+else
+    set guicursor&
+endif
 
 " gui 的工作目录总是 /, 需要改过来
 cd ~
