@@ -1410,7 +1410,7 @@ command! -nargs=+ Dict call mydict#Search(<q-args>)
 " 兼容 markdown 表格格式
 let g:table_mode_corner = '|'
 " ========== clang-format ==========
-let g:clang_format#code_style = 'LLVM'
+let g:clang_format#code_style = 'Google'
 let g:clang_format#style_options = {
     \ 'BinPackArguments': v:false,
     \ 'BinPackParameters': v:false,
