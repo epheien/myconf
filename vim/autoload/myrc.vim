@@ -7,6 +7,17 @@ let s:loaded = 1
 let s:gtags_files_dict = {}
 let s:enable_oscyank = v:false
 
+" 初始化本脚本的依赖项
+function! s:init() abort
+    " tabline 高亮, 参考的是 lightline 的 wombat 主题配色
+    hi! MyTabLineSel  ctermfg=238 ctermbg=117 guifg=#444444 guibg=#8ac6f2
+    hi! MyTabLine ctermfg=247 ctermbg=240 guifg=#969696 guibg=#585858
+    hi! MyTabLineFill ctermfg=240 ctermbg=238 guifg=#585858 guibg=#444444
+    hi! MyTabLineClose ctermfg=248 ctermbg=242 guifg=#a8a8a8 guibg=#666666
+endfunction
+
+call s:init()
+
 " 副本函数，为了懒加载，容许一定量的副本函数
 function s:IsWindowsOS()
     return has("win32") || has("win64")
@@ -754,6 +765,56 @@ function! myrc#LogSetup() abort
     setl termguicolors
     setl nowrap cursorline
     setl cc=
+endfunction
+
+function! myrc#MyTabLine() abort
+    let s = ''
+    let nr = tabpagenr()
+    for i in range(tabpagenr('$'))
+        let active = (i + 1 == nr)
+        " 选择高亮
+        if active
+          let s ..= '%#MyTabLineSel#'
+        else
+          let s ..= '%#MyTabLine#'
+        endif
+
+        " 设置标签页号 (用于鼠标点击)
+        let s ..= ' %' .. (i + 1) .. 'T'
+
+        " MyTabLabel() 提供标签
+        let s ..= printf('%%{myrc#MyTabLabel(%d, %d)} ', i + 1, active)
+    endfor
+
+    " 最后一个标签页之后用 TabLineFill 填充并复位标签页号
+    let s ..= '%#MyTabLineFill#%T'
+
+    " 右对齐用于关闭当前标签页的标签
+    if tabpagenr('$') > 1
+        let s ..= '%=%#MyTabLineClose#%999X X '
+    endif
+
+    return s
+endfunction
+
+function! s:tab_filename(n) abort
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    let _ = expand('#'.buflist[winnr - 1].':t')
+    return _ !=# '' ? _ : '[No Name]'
+endfunction
+
+function! s:tab_modified(n) abort
+    let winnr = tabpagewinnr(a:n)
+    return gettabwinvar(a:n, winnr, '&modified') ? '+' : (gettabwinvar(a:n, winnr, '&modifiable') ? '' : '-')
+endfunction
+
+function myrc#MyTabLabel(n, active)
+    let _ = []
+    call add(_, a:n)
+    call add(_, s:tab_filename(a:n))
+    call add(_, s:tab_modified(a:n))
+    return join(filter(_, 'v:val !=# ""'), ' ')
 endfunction
 
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et

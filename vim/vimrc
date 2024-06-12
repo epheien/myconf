@@ -389,8 +389,7 @@ function s:SetupColorscheme() "{{{
         hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
         " 配合 incline
         if has('nvim')
-            "hi StatusLine guibg=#969696 guifg=#444444 ctermbg=247 ctermfg=238
-            hi StatusLine guibg=#665c54 guifg=#282828 ctermbg=247 ctermfg=238
+            hi! StatusLine guibg=#665c54 guifg=#282828 gui=reverse ctermbg=241 ctermfg=235 cterm=reverse
             hi! link StatusLineNC StatusLine
             "set statusline=%{trim('')}
             set statusline=%!StlDash()
@@ -1070,10 +1069,11 @@ if g:vmode == 0
     Plug 'Shougo/neosnippet-snippets'
 endif
 
-if has('gui_running') || &t_Co == 256
+if (has('gui_running') || &t_Co == 256) && !has('nvim')
     "Plug 'itchyny/lightline.vim'
-    " 这个插件在 nvim 仅用到 tabline 功能, statusline 功能不用了, 待完全优化掉
     Plug 'epheien/lightline.vim' " 包含了一些自定义修改
+else
+    set tabline=%!myrc#MyTabLine() " 使用自定义的简易 tabline, 减少依赖
 endif
 
 " git 相关插件
