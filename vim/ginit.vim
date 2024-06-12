@@ -26,6 +26,8 @@ if get(g:, 'neovide')
         "inoremap <silent> <D-v> <C-r>=myrc#prepIpaste()<CR><C-r>"<C-r>=myrc#postIpaste()<CR>
         imap <D-v> <C-v>
     endif
+    let g:gutentags_ctags_executable = expand('~/bin/ctags')
+    let g:tagbar_ctags_bin = expand('~/bin/ctags')
 else
     set guicursor&
 endif
