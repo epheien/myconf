@@ -627,6 +627,17 @@ function! myrc#cbp() abort
     return ''
 endfunction
 
+function! myrc#prepIpaste() abort
+    let s:bak_paste = &paste
+    set paste
+    return ''
+endfunction
+
+function! myrc#postIpaste() abort
+    let &paste = s:bak_paste
+    return ''
+endfunction
+
 function! myrc#_paste()
     call feedkeys("\<C-r>\"", 'n')
     return ''

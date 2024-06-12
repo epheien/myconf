@@ -19,9 +19,13 @@ if get(g:, 'neovide')
     set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
         \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
         \,sm:block-blinkwait175-blinkoff150-blinkon175
-    map <D-v> <C-v>
-    cmap <D-v> <C-v>
-    imap <D-v> <C-v>
+    if has('mac')
+        map <D-v> <C-v>
+        cmap <D-v> <C-v>
+        tmap <D-v> <C-v>
+        "inoremap <silent> <D-v> <C-r>=myrc#prepIpaste()<CR><C-r>"<C-r>=myrc#postIpaste()<CR>
+        imap <D-v> <C-v>
+    endif
 else
     set guicursor&
 endif
