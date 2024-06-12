@@ -374,6 +374,8 @@ local function setup_pckr()
     {'nvim-treesitter/nvim-treesitter', cond = cmd('TSBufEnable')};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
 
+    -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
+    {'stevearc/oil.nvim', cond = cmd('Oil'), config = function() require('oil').setup() end};
   }
 
   -- noice
