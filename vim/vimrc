@@ -132,6 +132,7 @@ function! GetFtm(...) "{{{
     endif
 endfunction
 "}}}
+let StlDash = {-> repeat('─', &columns)} " 一条横线
 
 " 在 vim 窗口右下角，标尺的右边显示未完成的命令
 set showcmd
@@ -1115,98 +1116,99 @@ if has('nvim')
 endif
 
 " ## lightline 配置，用了他的高亮机制，显示的内容自己定制
-" 修改主题的 tabline 高亮
-try
-    if has('nvim')
-        let s:palette = g:lightline#colorscheme#mywombat2#palette
-    else
-        let s:palette = g:lightline#colorscheme#mywombat#palette
-    endif
-    let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
-    let s:palette.tabline.left = [s:palette.normal.right[1]]
-    unlet s:palette
-catch
-endtry
-let g:lightline = {
-  \ 'colorscheme': 'mywombat',
-  \ 'enable': {
-  \     'statusline': 1,
-  \     'tabline': 1,
-  \ },
-  \ 'component_function': {
-  \     'myftm': 'GetFtm',
-  \     'myfileinfo': 'GetFI',
-  \     'StlDash' : 'StlDash',
-  \ },
-\ }
-let g:lightline.active = {
-    \ 'left': [ [ 'mode', 'paste' ],
-    \           [ 'filename' ],
-    \           [ 'fileflags' ],
-    \         ],
-    \ }
-let g:lightline.active.right = [['mylineinfo'], ['myfileinfo'], ['myftm']]
-let g:lightline.inactive = {
-    \ 'left': [ [ 'filename' ],
-    \           [ 'fileflags' ],
-    \         ],
-    \ }
-let g:lightline.inactive.right = [['mylineinfo'], ['myfileinfo']]
-let g:lightline.tab = {
-    \ 'active': [ 'tabnum', 'mytabfile', 'modified' ],
-    \ 'inactive': [ 'tabnum', 'mytabfile', 'modified' ] }
-let g:lightline.tab_component_function = {
-    \ 'mytabfile': 'GetTabFile',
-    \ 'filename': 'lightline#tab#filename',
-    \ 'modified': 'lightline#tab#modified',
-    \ 'readonly': 'lightline#tab#readonly',
-    \ 'tabnum': 'lightline#tab#tabnum',
-    \ }
-let g:lightline.component = {}
-let g:lightline.component.filename = '%f'
-let g:lightline.component.fileflags = '%m%r'
-let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
-let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
-" ◄► ◀︎▶︎  
-if g:OnlyASCII()
-    " 非 Nerd Font
-    "let g:lightline.separator = { 'left': '►', 'right': '◄' }
-    "let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
-else
-    let g:lightline.separator = { 'left': '', 'right': '' }
-    let g:lightline.tabline_separator = { 'left': '', 'right': '' }
-    let g:lightline.tabline_subseparator = { 'left': '', 'right': '' }
-endif
-let g:lightline.subseparator = { 'left': '', 'right': '' }
-if g:lightline.enable.statusline
-    set noshowmode
-endif
-function GetFI()
-    let ff = &ff
-    let ft = empty(&ft) ? 'n/a' : &ft
-    let fenc = empty(&fenc) ? &enc : &fenc
-    return join([ff, fenc, ft], ' ')
+function s:setup_lightline() "{{{
+  " 修改主题的 tabline 高亮
+  try
+      if has('nvim')
+          let s:palette = g:lightline#colorscheme#mywombat2#palette
+      else
+          let s:palette = g:lightline#colorscheme#mywombat#palette
+      endif
+      let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
+      let s:palette.tabline.left = [s:palette.normal.right[1]]
+      unlet s:palette
+  catch
+  endtry
+  let g:lightline = {
+    \ 'colorscheme': 'mywombat',
+    \ 'enable': {
+    \     'statusline': 1,
+    \     'tabline': 1,
+    \ },
+    \ 'component_function': {
+    \     'myftm': 'GetFtm',
+    \     'myfileinfo': 'GetFI',
+    \     'StlDash' : 'StlDash',
+    \ },
+  \ }
+  let g:lightline.active = {
+      \ 'left': [ [ 'mode', 'paste' ],
+      \           [ 'filename' ],
+      \           [ 'fileflags' ],
+      \         ],
+      \ }
+  let g:lightline.active.right = [['mylineinfo'], ['myfileinfo'], ['myftm']]
+  let g:lightline.inactive = {
+      \ 'left': [ [ 'filename' ],
+      \           [ 'fileflags' ],
+      \         ],
+      \ }
+  let g:lightline.inactive.right = [['mylineinfo'], ['myfileinfo']]
+  let g:lightline.tab = {
+      \ 'active': [ 'tabnum', 'mytabfile', 'modified' ],
+      \ 'inactive': [ 'tabnum', 'mytabfile', 'modified' ] }
+  let g:lightline.tab_component_function = {
+      \ 'mytabfile': 'GetTabFile',
+      \ 'filename': 'lightline#tab#filename',
+      \ 'modified': 'lightline#tab#modified',
+      \ 'readonly': 'lightline#tab#readonly',
+      \ 'tabnum': 'lightline#tab#tabnum',
+      \ }
+  let g:lightline.component = {}
+  let g:lightline.component.filename = '%f'
+  let g:lightline.component.fileflags = '%m%r'
+  let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
+  let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
+  " ◄► ◀︎▶︎  
+  if g:OnlyASCII()
+      " 非 Nerd Font
+      "let g:lightline.separator = { 'left': '►', 'right': '◄' }
+      "let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
+  else
+      let g:lightline.separator = { 'left': '', 'right': '' }
+      let g:lightline.tabline_separator = { 'left': '', 'right': '' }
+      let g:lightline.tabline_subseparator = { 'left': '', 'right': '' }
+  endif
+  let g:lightline.subseparator = { 'left': '', 'right': '' }
+  if g:lightline.enable.statusline
+      set noshowmode
+  endif
+  function GetFI()
+      let ff = &ff
+      let ft = empty(&ft) ? 'n/a' : &ft
+      let fenc = empty(&fenc) ? &enc : &fenc
+      return join([ff, fenc, ft], ' ')
+  endfunction
+  function GetTabFile(tabnum)
+      let title = gettabvar(a:tabnum, 'title', '')
+      if title !=# ''
+          return title
+      endif
+      return lightline#tab#filename(a:tabnum)
+  endfunction
+  " nvim 使用 incline 替代, lightline 仅用与辅助
+  if has('nvim')
+      let g:lightline.colorscheme = 'mywombat2'
+      let g:lightline.active.left = []
+      let g:lightline.active.right = [['StlDash']]
+      let g:lightline.inactive.left = []
+      let g:lightline.inactive.right = []
+      let g:lightline.separator = { 'left': '', 'right': '' }
+  endif
 endfunction
-function GetTabFile(tabnum)
-    let title = gettabvar(a:tabnum, 'title', '')
-    if title !=# ''
-        return title
-    endif
-    return lightline#tab#filename(a:tabnum)
-endfunction
-function StlDash(...)
-  return repeat('─', &columns)
-endfunction
-" nvim 使用 incline 替代, lightline 仅用与辅助
-if has('nvim')
-    let g:lightline.colorscheme = 'mywombat2'
-    let g:lightline.active.left = []
-    let g:lightline.active.right = [['StlDash']]
-    let g:lightline.inactive.left = []
-    let g:lightline.inactive.right = []
-    let g:lightline.separator = { 'left': '', 'right': '' }
-endif
-
+"}}}
+" NOTE: g:plugs 是 plug.vim 插件导出的变量, 但是没有文档, 看源码得出的
+if has_key(g:plugs, 'lightline.vim') | call s:setup_lightline() | endif
 " 稍微定制一下 startify 的 header
 let g:startify_custom_header = [
     \ '        __________       ______ ___                  _____            ',
