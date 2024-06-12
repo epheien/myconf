@@ -228,6 +228,7 @@ local g_disableApps = {
   'goneovim',
   'kitty',
   'Alacritty',
+  'Neovide',
 }
 
 local g_disableApps_dict = {}
