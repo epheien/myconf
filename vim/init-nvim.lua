@@ -285,17 +285,17 @@ function setup_incline()
       -- 全局的背景色
       local guibg = '#282828'
       local ctermbg = 235
-      if vim.fn.OnlyASCII() == 0 then
-        --    
-        if active then
-          --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
-          trail_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
-          mode = make_mode_display(vim.fn.mode())
-          if #mode ~= 0 then mode_padding = ' '; left_icon = '' end
-        else
-          --left_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
-          trail_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
-        end
+      --    
+      local trail_glyph = ''
+      if vim.fn.OnlyASCII() ~= 0 then trail_glyph = '' end
+      if active then
+        --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
+        trail_icon = {trail_glyph, guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
+        mode = make_mode_display(vim.fn.mode())
+        if #mode ~= 0 then mode_padding = ' '; left_icon = '' end
+      else
+        --left_icon = {'', guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
+        trail_icon = {trail_glyph, guibg = guibg, guifg = InclineNormalNC.guibg, ctermbg = ctermbg, ctermfg = InclineNormalNC.ctermbg}
       end
       if mod ~= '' then
         mod = ' ' .. mod
