@@ -14,6 +14,10 @@ elseif has('win32') || has('win64')
     GuiLinespace -1
     GuiFont! Microsoft YaHei Mono:h11
 endif
+
 set guicursor&
+
+" gui 的工作目录总是 /, 需要改过来
+cd ~
 
 " vim:set fdm=marker fen fdl=0 sw=4 sts=-1 et:
