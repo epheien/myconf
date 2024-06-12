@@ -28,6 +28,9 @@ if get(g:, 'neovide')
     endif
     let g:gutentags_ctags_executable = expand('~/bin/ctags')
     let g:tagbar_ctags_bin = expand('~/bin/ctags')
+    " 修正一些常用的 <M- 快捷键问题
+    " FIXME: <M-n> 无法实现
+    let g:neovide_input_macos_option_key_is_meta = 'only_left'
 else
     set guicursor&
 endif
