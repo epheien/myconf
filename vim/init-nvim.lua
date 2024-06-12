@@ -4,7 +4,7 @@
 
 -- 插件设置入口, 避免在新环境中出现各种报错
 -- NOTE: vim-plug 和 lazy.nvim 不兼容, 而 packer.nvim 已经停止维护
-local function lazysetup(plugin, config)
+local function lazysetup(plugin, config) -- {{{
   local ok, mod = pcall(require, plugin)
   if not ok then
     --print('ignore lua plugin:', plugin)
@@ -16,9 +16,10 @@ local function lazysetup(plugin, config)
     mod.setup(config)
   end
 end
+-- }}}
 
 -- NOTE: Plug 管理的插件需要放到 lazy 初始化之前
-lazysetup('cscope_maps', {
+lazysetup('cscope_maps', { --{{{
   disable_maps = true,
   skip_input_prompt = false,
   prefix = '',
@@ -28,8 +29,9 @@ lazysetup('cscope_maps', {
     skip_picker_for_single_result = true
   }
 })
+--}}}
 
-local function setup_telescope()
+local function setup_telescope() -- {{{
   local opts = {
     -- Default configuration for telescope goes here:
     -- config_key = value,
@@ -68,9 +70,9 @@ local function setup_telescope()
   -- telescope 的 undo 插件
   require("telescope").load_extension("undo")
 end
+--}}}
 
--- noice setup {{{
-local function setup_noice()
+local function setup_noice() -- {{{
   lazysetup('noice', {
     views = {
       align = 'message-left',
@@ -318,6 +320,17 @@ function setup_incline()
 end
 -- }}}
 setup_incline()
+
+local function setup_lualine() -- {{{
+  local lualine = require('lualine')
+  local opts = {
+    sections = {},
+    tabline = {
+    },
+  }
+  lualine.setup(opts)
+end
+-- }}}
 
 function CscopeFind(op, symbol)
   local cscope = require('cscope')
