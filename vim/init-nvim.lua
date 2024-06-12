@@ -332,15 +332,6 @@ local function setup_lualine() -- {{{
 end
 -- }}}
 
-function CscopeFind(op, symbol)
-  local cscope = require('cscope')
-  local ok, res = cscope.cscope_get_result(1, op, symbol, false)
-  if not ok then
-    return {}
-  end
-  return res or {}
-end
-
 -- ======================================================================
 -- 以下开始是 pckr.nvim 管理的插件
 -- ======================================================================
