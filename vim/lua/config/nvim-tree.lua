@@ -112,6 +112,11 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts('Toggle Hidden'))
   vim.keymap.del('n', 'C', opts('Toggle Git Clean'))
   vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+
+  -- 关键的窗口内定位快捷键不能被占用
+  vim.keymap.del('n', 'H', opts('Toggle Filter: Dotfiles'))
+  vim.keymap.del('n', 'M', opts('Toggle Filter: No Bookmark'))
+  vim.keymap.del('n', 'L', opts('Toggle Group Empty'))
 end
 
 local nvim_tree_opts = {
