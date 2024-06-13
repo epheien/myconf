@@ -983,7 +983,9 @@ if g:vmode == 0
     Plug 'easymotion/vim-easymotion'
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
-    Plug 'epheien/vim-gutentags' " TODO: 需要一个好的懒加载方案
+
+    command GutentagsSetup call plug#load('vim-gutentags') | call gutentags#setup_gutentags()
+    Plug 'epheien/vim-gutentags', {'on': 'GutentagsSetup'}
 
     " 新增语法支持
     Plug 'posva/vim-vue'
