@@ -62,6 +62,10 @@ local function setup_telescope() -- {{{
         current_buffer_tags = {
           only_sort_tags = true,
         },
+        find_files = {
+          no_ignore = true,
+          no_ignore_parent = true,
+        },
       },
     }) 
   end)
