@@ -17,7 +17,7 @@ endif
 
 if get(g:, 'neovide')
     set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+        \,a:blinkwait500-blinkoff500-blinkon500-Cursor/lCursor
         \,sm:block-blinkwait175-blinkoff150-blinkon175
     " 经过逐像素对比, 0.84 在 macOS 12.7.5 (MacBook Pro) 上效果和 iTerm 一致
     set guifont=SFMono\ Nerd\ Font:h12:w-0.84
