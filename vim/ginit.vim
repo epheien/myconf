@@ -29,8 +29,11 @@ if get(g:, 'neovide')
     let g:gutentags_ctags_executable = expand('~/bin/ctags')
     let g:tagbar_ctags_bin = expand('~/bin/ctags')
     " 修正一些常用的 <M- 快捷键问题
-    " FIXME: <M-n> 无法实现
-    let g:neovide_input_macos_option_key_is_meta = 'only_left'
+    " FIXME: <M-n> 无法实现, 已确认为 bug, 待修复, 当前版本使用临时方案
+    function s:LazySetupNeovide(...)
+        let g:neovide_input_macos_option_key_is_meta = 'only_left'
+    endfunc
+    call timer_start(200, 's:LazySetupNeovide')
 else
     set guicursor&
 endif
