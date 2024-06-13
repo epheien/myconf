@@ -131,9 +131,10 @@ local nvim_tree_opts = {
   },
   filters = {
     dotfiles = true,
+    git_ignored = false,
   },
   trash = {
-    cmd = "trash"
+    cmd = "trash",
   },
   actions = {
     open_file = {
