@@ -149,6 +149,9 @@ local nvim_tree_opts = {
         picker = vim.fn['myrc#GetWindowIdForNvimTreeToOpen'],
       },
     },
+    change_dir = {
+      enable = false,
+    },
   },
   on_attach = my_on_attach,
 }
