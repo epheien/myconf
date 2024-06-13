@@ -364,7 +364,8 @@ local function setup_pckr()
 
     -- nvim-tree
     {
-      'nvim-tree/nvim-tree.lua',
+      --'nvim-tree/nvim-tree.lua',
+      'epheien/nvim-tree.lua',
       requires = {'nvim-tree/nvim-web-devicons'},
       cond = {cmd('NvimTreeOpen'), cmd('NvimTreeToggle')},
       config = function() require('config/nvim-tree') end,
