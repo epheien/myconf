@@ -19,6 +19,7 @@ if get(g:, 'neovide')
     set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
         \,a:blinkwait500-blinkoff500-blinkon500-Cursor/lCursor
         \,sm:block-blinkwait175-blinkoff150-blinkon175
+    let s:guicursor = &guicursor
     " 经过逐像素对比, 0.84 在 macOS 12.7.5 (MacBook Pro) 上效果和 iTerm 一致
     set guifont=SFMono\ Nerd\ Font:h12:w-0.84
     if has('mac')
@@ -36,6 +37,8 @@ if get(g:, 'neovide')
         let g:neovide_input_macos_option_key_is_meta = 'only_left'
     endfunc
     call timer_start(200, 's:LazySetupNeovide')
+    autocmd FocusGained * let &guicursor = s:guicursor
+    autocmd FocusLost * set guicursor=a:Cursor/lCursor
 else
     set guicursor&
 endif
