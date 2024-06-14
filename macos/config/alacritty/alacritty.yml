@@ -202,7 +202,7 @@ font:
   #builtin_box_drawing: true
 
 # If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night)
 colors:
@@ -210,6 +210,10 @@ colors:
   #primary:
   #  background: '#1d1f21'
   #  foreground: '#c5c8c6'
+
+  primary:
+    foreground: '#ebdbb2'
+    background: '#282828'
 
     # Bright and dim foreground colors
     #
@@ -321,6 +325,27 @@ colors:
   #  magenta: '#c397d8'
   #  cyan:    '#70c0b1'
   #  white:   '#eaeaea'
+
+  normal:
+    black:   '#272727'
+    red:     '#cc231c'
+    green:   '#989719'
+    yellow:  '#d79920'
+    blue:    '#448488'
+    magenta: '#b16185'
+    cyan:    '#689d69'
+    white:   '#a89983'
+
+  # Bright colors
+  bright:
+    black:   '#928378'
+    red:     '#fb4833'
+    green:   '#b8ba25'
+    yellow:  '#fabc2e'
+    blue:    '#83a597'
+    magenta: '#d3859a'
+    cyan:    '#8ec07b'
+    white:   '#ebdbb2'
 
   # Dim colors
   #
