@@ -1010,7 +1010,9 @@ if g:vmode == 0
     Plug 'epheien/videm', {'on': 'VidemOpen'}
 
     " 处理 kitty 背景问题
-    if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
+    " NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
+    "if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
+    if $TERM_PROGRAM =~# '\V\<Apple_Terminal'
         Plug 'epheien/bg.nvim'
     endif
 
