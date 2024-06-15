@@ -4,34 +4,34 @@
 
 ### CTRL 系列
 
-| nmap   | 功能     | 原版     |
-|--------|----------|----------|
-| CTRL-A |          | 数字增大 |
-| CTRL-B |          | 向后滚屏 |
-| CTRL-C | 复制     |          |
-| CTRL-D | 向下滚屏 |          |
-| CTRL-E |          |          |
-| CTRL-F | 查词     | 向前滚屏 |
-| CTRL-G | 略       |          |
-| CTRL-H | 窗口移动 |          |
-| CTRL-I | 前跳     |          |
-| CTRL-J | 窗口移动 |          |
-| CTRL-K | 窗口移动 |          |
-| CTRL-L | 窗口移动 |          |
-| CTRL-M | 重复命令 | <CR>     |
-| CTRL-N | 注释     |          |
-| CTRL-O | 回跳     |          |
-| CTRL-P | 调试打印 |          |
-| CTRL-Q | 可视模式 |          |
-| CTRL-R | 重做     |          |
-| CTRL-S | 保存     |          |
-| CTRL-T | 回跳tag  |          |
-| CTRL-U | 向上滚屏 |          |
-| CTRL-V | 复制     |          |
-| CTRL-W | 窗口控制 |          |
-| CTRL-X |          | 数字减少 |
-| CTRL-Y |          | 向上滚动 |
-| CTRL-Z | 后台挂起 |          |
+| nmap   | 功能       | 原版     |
+|--------|------------|----------|
+| CTRL-A |            | 数字增大 |
+| CTRL-B | <<可用>>   | 向后滚屏 |
+| CTRL-C | 复制       |          |
+| CTRL-D | 向下滚半屏 |          |
+| CTRL-E |            | 向下滚动 |
+| CTRL-F | 查词       | 向前滚屏 |
+| CTRL-G | 略         |          |
+| CTRL-H | 窗口移动   |          |
+| CTRL-I | 前跳       |          |
+| CTRL-J | 窗口移动   |          |
+| CTRL-K | 窗口移动   |          |
+| CTRL-L | 窗口移动   |          |
+| CTRL-M | 重复命令   | <CR>     |
+| CTRL-N | 注释       |          |
+| CTRL-O | 回跳       |          |
+| CTRL-P | <<可用>>   |          |
+| CTRL-Q | 可视模式   |          |
+| CTRL-R | 重做       |          |
+| CTRL-S | 保存       |          |
+| CTRL-T | 回跳tag    |          |
+| CTRL-U | 向上滚半屏 |          |
+| CTRL-V | 粘贴       |          |
+| CTRL-W | 窗口控制   |          |
+| CTRL-X |            | 数字减少 |
+| CTRL-Y |            | 向上滚动 |
+| CTRL-Z | 后台挂起   |          |
 
 ### Shift 模式和纯字母
 
