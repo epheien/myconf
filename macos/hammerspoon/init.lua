@@ -95,7 +95,7 @@ function toggleInputMethod()
   if true then
     -- 使用 capslock 键切换
     hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', true):post()
-    hs.timer.usleep(1000)
+    hs.timer.usleep(10000)
     hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', false):post()
   else
     -- NOTE: 使用 ctrl-space 快捷键的话, 可能会导致按下左 cmd 的时候弹出表情输入框
