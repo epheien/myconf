@@ -32,4 +32,13 @@ function g:ItermGruvboxDarkTheme()
     let g:terminal_color_7 = '#a89983'
     let g:terminal_color_15 = '#ebdbb2'
 endfunction
+
+" 跟 iTerm2 实际效果还是有区别, 考虑用其他主题
+function! g:BrightenBoldText() abort
+    for i in range(8)
+        let tmp = g:terminal_color_{i}
+        let g:terminal_color_{i} = g:terminal_color_{i+8}
+        let g:terminal_color_{i+8} = tmp
+    endfor
+endfunction
 ```
