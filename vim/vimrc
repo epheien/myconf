@@ -851,7 +851,7 @@ function! s:MouseMark() "{{{2
         execute "normal! \<2-LeftMouse>"
         return
     endif
-    exec "normal \<Plug>MarkSet"
+    call feedkeys("\<Plug>MarkSet")
 endfunction
 "}}}2
 let g:mwIgnoreCase = 0
