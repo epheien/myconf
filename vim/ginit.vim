@@ -30,7 +30,8 @@ if get(g:, 'neovide')
         imap <D-v> <C-v>
     endif
     let g:gutentags_ctags_executable = expand('~/bin/ctags')
-    let g:tagbar_ctags_bin = expand('~/bin/ctags')
+    let g:tagbar_ctags_bin = g:gutentags_ctags_executable
+    let g:Lf_Ctags = g:gutentags_ctags_executable
     " 修正一些常用的 <M- 快捷键问题
     " FIXME: <M-n> 无法实现, 已确认为 bug, 待修复, 当前版本使用临时方案
     function s:LazySetupNeovide(...)
