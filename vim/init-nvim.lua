@@ -348,7 +348,7 @@ local function setup_pckr()
   end
 
   local cmd = require('pckr.loader.cmd')
-  local keys = require('pckr.loader.keys')
+  local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
 
   local pckr = require('pckr')
   pckr.setup({
@@ -370,7 +370,7 @@ local function setup_pckr()
     {
       --'nvim-tree/nvim-tree.lua',
       'epheien/nvim-tree.lua',
-      requires = {'nvim-tree/nvim-web-devicons'},
+      requires = {'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim'},
       cond = {cmd('NvimTreeOpen'), cmd('NvimTreeToggle')},
       config = function() require('config/nvim-tree') end,
     };
