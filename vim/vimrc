@@ -1047,11 +1047,16 @@ if g:vmode == 0
     endif
 
     " 本地插件
+    call s:Plug('common')
+    call s:Plug('securemodelines')
     call s:Plug('nerdcommenter')
-    call s:Plug('jsonfmt', {'on': 'JsonFmt'})
     call s:Plug('vim-repeat')
     call s:Plug('vim-signature')
     call s:Plug('mymark')
+    call s:Plug('vim-solidity')
+    call s:Plug('json5', {'for': 'json5'})
+    call s:Plug('python-syntax', {'for': 'python'})
+    call s:Plug('jsonfmt', {'on': 'JsonFmt'})
     call s:Plug('colorizer', {'on': 'UpdateColor'})
     call s:Plug('colorsel', {'on': 'ColorSel'})
     call s:Plug('visincr', {'on': 'I'})
