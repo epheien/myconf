@@ -619,9 +619,11 @@ endif
 
 if has('nvim')
     nnoremap <silent> \f :Telescope find_files<CR>
-    nnoremap <silent> \e :Telescope command_history<CR>
+    "nnoremap <silent> \e :Telescope command_history<CR>
+    nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
     nnoremap <silent> \b :Telescope buffers<CR>
-    nnoremap <silent> \t :Telescope current_buffer_tags<CR>
+    "nnoremap <silent> \t :Telescope current_buffer_tags<CR>
+    nnoremap <silent> \t :Leaderf bufTag<CR>
     nnoremap <silent> \T :Telescope tags<CR>
     nnoremap <silent> \/ :Telescope current_buffer_fuzzy_find<CR>
 else
