@@ -154,7 +154,15 @@ local nvim_tree_opts = {
     },
   },
   on_attach = my_on_attach,
+
+  -- 试验性的功能
+  experimental = {
+    open = {
+      relative_path = true,
+    },
+  },
 }
+
 if vim.fn.OnlyASCII() ~= 0 then
   nvim_tree_opts.renderer.icons = {
     symlink_arrow = ' -> ',
@@ -173,4 +181,3 @@ if vim.fn.OnlyASCII() ~= 0 then
 end
 
 require("nvim-tree").setup(nvim_tree_opts)
-vim.keymap.set('n', '<Leader>e', require('nvim-tree.api').tree.toggle)
