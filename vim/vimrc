@@ -1028,7 +1028,8 @@ if g:vmode == 0
     "   - 其他插件就用 pckr.nvim 管理
     if has('nvim')
         " 最基础的 nvim 包管理工具
-        Plug 'lewis6991/pckr.nvim'
+        "Plug 'lewis6991/pckr.nvim'
+        Plug 'epheien/pckr.nvim'
 
         Plug 'dstein64/nvim-scrollview'
         Plug 'b0o/incline.nvim'
