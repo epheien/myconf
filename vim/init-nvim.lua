@@ -376,7 +376,7 @@ local function setup_pckr()
     };
 
     {'stevearc/aerial.nvim', cond = cmd('AerialOpen'), config = function() require('aerial').setup() end};
-    {'nvim-treesitter/nvim-treesitter', cond = cmd('TSBufEnable')};
+    {'nvim-treesitter/nvim-treesitter', cond = {cmd('TSBufToggle')}};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
