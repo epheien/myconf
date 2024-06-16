@@ -1048,7 +1048,6 @@ if g:vmode == 0
 
     " 本地插件
     call s:Plug('common')
-    call s:Plug('securemodelines')
     call s:Plug('nerdcommenter')
     call s:Plug('vim-repeat')
     call s:Plug('vim-signature')
