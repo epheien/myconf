@@ -185,6 +185,11 @@ local mode_table = {
   ['!']      = 'SHELL',
   ['t']      = 'TERMINAL',
 }
+local function slim_mode(mode)
+  local dash_pos = mode:find("-")
+  if not dash_pos then return mode:sub(1, 1) end
+  return mode:sub(1, 1) .. mode:sub(dash_pos + 1, dash_pos + 1)
+end
 local function make_mode_display(m)
   local group = 'InclineNormalMode'
   local mode = mode_table[m]
@@ -204,7 +209,7 @@ local function make_mode_display(m)
     -- 兜底用默认值
   end
   return {
-    string.format(' %s ', m),
+    string.format(' %s ', slim_mode(mode)),
     group = group,
   }
 end
@@ -212,11 +217,11 @@ function setup_incline()
   -- 生成需要用到的高亮组
   --vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
   vim.api.nvim_set_hl(0, 'InclineNormalMode', {fg='#282828', bg='#E0E000', ctermfg=235, ctermbg=184})
-  vim.cmd([[hi! IncelineInsertMode ctermfg=235 ctermbg=119 guibg=#95e454]])
-  vim.cmd([[hi! IncelineTerminalMode ctermfg=235 ctermbg=119 guibg=#95e454]])
-  vim.cmd([[hi! IncelineVisualMode ctermfg=235 ctermbg=216 guibg=#f2c68a]])
-  vim.cmd([[hi! IncelineSelectMode ctermfg=235 ctermbg=216 guibg=#f2c68a]])
-  vim.cmd([[hi! IncelineReplaceMode ctermfg=236 ctermbg=203 guifg=#353535 guibg=#e5786d]])
+  vim.cmd([[hi! IncelineInsertMode ctermfg=235 ctermbg=119 guifg=#282828 guibg=#95e454]])
+  vim.cmd([[hi! IncelineTerminalMode ctermfg=235 ctermbg=119 guifg=#282828 guibg=#95e454]])
+  vim.cmd([[hi! IncelineVisualMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
+  vim.cmd([[hi! IncelineSelectMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
+  vim.cmd([[hi! IncelineReplaceMode ctermfg=235 ctermbg=203 guifg=#282828 guibg=#e5786d]])
   -- set noshowmode
   vim.o.showmode = false
   lazysetup('incline', {
