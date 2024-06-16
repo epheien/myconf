@@ -381,6 +381,13 @@ local function setup_pckr()
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
     {'stevearc/oil.nvim', cond = cmd('Oil'), config = function() require('oil').setup() end};
+
+    {
+      'neoclide/coc.nvim', 
+      branch = 'release',
+      cond = cmd('CocStart'),
+      requires = {'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets'},
+    };
   }
 
   -- noice

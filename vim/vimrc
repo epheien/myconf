@@ -1062,17 +1062,13 @@ if g:vmode == 0
     "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
     if has('nvim')
-        Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
+        "Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
+        "Plug 'Shougo/neosnippet.vim'
+        "Plug 'Shougo/neosnippet-snippets'
     else
         let g:apc_enable_tab = 0
         let g:apc_enable_ft = {'*': 1}
-        " vim 下面不使用 rplugin, 因为初始化实在太慢了
-        "Plug 'Shougo/deoplete.nvim'
-        "Plug 'roxma/nvim-yarp'
-        "Plug 'roxma/vim-hug-neovim-rpc'
     endif
-    Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets'
 endif
 
 if (has('gui_running') || &t_Co == 256) && !has('nvim')
