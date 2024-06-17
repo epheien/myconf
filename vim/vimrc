@@ -983,7 +983,6 @@ if g:vmode == 0
     Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
     Plug 'yianwillis/vimcdoc' " 中文文档
     Plug 'epheien/gruvbox' " 支持了 terminal 颜色
-    Plug 'easymotion/vim-easymotion'
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
 
@@ -995,6 +994,7 @@ if g:vmode == 0
     Plug 'vobornik/vim-mql4'
     "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
 
+    Plug 'easymotion/vim-easymotion', {'on': ['<Plug>(easymotion-f)', '<Plug>(easymotion-F)']}
     Plug 'sunaku/vim-dasht', {'on': 'Dasht'}
     Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
     Plug 'Yggdroot/LeaderF', {'on': 'Leaderf'}
