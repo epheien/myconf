@@ -825,6 +825,9 @@ let NERDTreeStatusline = -1
 "{{{
 let NERDMenuMode = 0
 let g:NERDCreateDefaultMappings = 0
+let g:NERDCustomDelimiters = {
+    \ 'python': {'left': '#'},
+    \ }
 "let NERDSpaceDelims = 1
 nmap <C-n> <Plug>NERDCommenterToggle<Down>
 xmap <C-n> <plug>NERDCommenterToggle
