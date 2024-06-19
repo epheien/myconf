@@ -1404,7 +1404,7 @@ endif
 command VGtagsInit call myrc#VGtagsInit()
 
 " ========== termdbg ==========
-if g:vmode == 0
+if g:vmode == 0 && v:false
     nnoremap <silent> <M-p> :exec 'TSendCommand p' expand('<cword>')<CR>
     vnoremap <silent> <M-p> y:exec 'TSendCommand p' @"<CR>
     nnoremap <silent> <M-n> :TNext<CR>
