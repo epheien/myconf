@@ -948,7 +948,7 @@ if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支�
     command! -complete=file -nargs=1 CsAdd call myrc#CscopeAdd(<f-args>)
 else
     let s:cmd = 'Cs'
-    nnoremap <silent> <C-]> :Cstag <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <silent> <C-]> :call myrc#Cstag()<CR>
 endif
 " cscope_maps 插件
 exec printf('nnoremap <silent> <C-\>s :%s find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)

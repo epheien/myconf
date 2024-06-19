@@ -828,4 +828,12 @@ function myrc#MyTabLabel(n, active)
     return join(filter(_, 'v:val !=# ""'), ' ')
 endfunction
 
+function myrc#Cstag() abort
+  if &filetype == "help"
+      execute "normal! \<C-]>"
+      return
+  endif
+  execute "Cstag" expand("<cword>")
+endfunction
+
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et
