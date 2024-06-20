@@ -18,17 +18,18 @@ local function lazysetup(plugin, config) -- {{{
 end
 -- }}}
 
--- NOTE: Plug 管理的插件需要放到 lazy 初始化之前
-lazysetup('cscope_maps', { --{{{
-  disable_maps = true,
-  skip_input_prompt = false,
-  prefix = '',
-  cscope = {
-    db_file = './GTAGS',
-    exec = 'gtags-cscope',
-    skip_picker_for_single_result = true
-  }
-})
+local function setup_cscope_maps() --{{{
+  lazysetup('cscope_maps', {
+    disable_maps = true,
+    skip_input_prompt = false,
+    prefix = '',
+    cscope = {
+      db_file = './GTAGS',
+      exec = 'gtags-cscope',
+      skip_picker_for_single_result = true
+    }
+  })
+end
 --}}}
 
 local function setup_telescope() -- {{{
@@ -393,6 +394,8 @@ local function setup_pckr()
       cond = cmd('CocStart'),
       requires = {'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets'},
     };
+
+    {'dhananjaylatkar/cscope_maps.nvim', cond = {cmd('Cs'), cmd('Cstag')}, config = setup_cscope_maps};
   }
 
   -- noice

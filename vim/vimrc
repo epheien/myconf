@@ -1040,9 +1040,6 @@ if g:vmode == 0
 
         Plug 'dstein64/nvim-scrollview'
         Plug 'b0o/incline.nvim'
-        if has('nvim-0.9')
-            Plug 'dhananjaylatkar/cscope_maps.nvim'
-        endif
 
         Plug 'norcalli/nvim-colorizer.lua', {'on': 'ColorizerToggle'}
         Plug 'wfxr/minimap.vim', {'on': 'Minimap'}
