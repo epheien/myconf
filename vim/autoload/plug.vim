@@ -61,6 +61,8 @@ let g:loaded_plug = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
+" cmd => [plug_name, ...]
+let s:plug_cmd = {}
 let s:plug_src = 'https://github.com/junegunn/vim-plug.git'
 let s:plug_tab = get(s:, 'plug_tab', -1)
 let s:plug_buf = get(s:, 'plug_buf', -1)
@@ -307,6 +309,14 @@ function! s:lazy(plug, opt)
         \  len(s:glob(s:rtp(a:plug), 'after/plugin')))
 endfunction
 
+function! s:complete(ArgLead, CmdLine, CursorPos) abort
+  let cmd = split(a:CmdLine, '\s\+')[0]
+  let cmd = substitute(cmd, '!*$', '', '')
+  execute 'delcommand' cmd
+  call plug#load(s:plug_cmd[cmd])
+  return getcompletion(cmd .. ' ' .. a:ArgLead, 'cmdline')
+endfunction
+
 function! plug#end()
   if !exists('g:plugs')
     return s:err('plug#end() called without calling plug#begin() first')
@@ -347,6 +357,8 @@ function! plug#end()
             call s:assoc(lod.cmd, cmd, name)
           endif
           call add(s:triggers[name].cmd, cmd)
+          if !has_key(s:plug_cmd, cmd) | let s:plug_cmd[cmd] = [] | endif
+          call add(s:plug_cmd[cmd], name)
         else
           call s:err('Invalid `on` option: '.cmd.
           \ '. Should start with an uppercase letter or `<Plug>`.')
@@ -371,8 +383,9 @@ function! plug#end()
   endfor
 
   for [cmd, names] in items(lod.cmd)
+    "\ 'command! -nargs=* -range -bang -complete=file %s call s:lod_cmd(%s, "<bang>", <line1>, <line2>, <q-args>, %s)',
     execute printf(
-    \ 'command! -nargs=* -range -bang -complete=file %s call s:lod_cmd(%s, "<bang>", <line1>, <line2>, <q-args>, %s)',
+    \ 'command! -nargs=* -range -bang -complete=customlist,s:complete %s call s:lod_cmd(%s, "<bang>", <line1>, <line2>, <q-args>, %s)',
     \ cmd, string(cmd), string(names))
   endfor
 
