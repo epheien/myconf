@@ -989,9 +989,6 @@ if g:vmode == 0
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
 
-    command GutentagsSetup call plug#load('vim-gutentags') | call gutentags#setup_gutentags()
-    Plug 'epheien/vim-gutentags', {'on': 'GutentagsSetup'}
-
     " 新增语法支持
     Plug 'posva/vim-vue'
     Plug 'vobornik/vim-mql4'

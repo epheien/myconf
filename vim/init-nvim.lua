@@ -355,6 +355,7 @@ local function setup_pckr()
 
   local cmd = require('pckr.loader.cmd')
   local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
+  local event = require('pckr.loader.event')
 
   local pckr = require('pckr')
   pckr.setup({
@@ -396,6 +397,7 @@ local function setup_pckr()
     };
 
     {'dhananjaylatkar/cscope_maps.nvim', cond = {cmd('Cs'), cmd('Cstag')}, config = setup_cscope_maps};
+    {'epheien/vim-gutentags', cond = event({'BufReadPre'}), requires = {'dhananjaylatkar/cscope_maps.nvim'}};
   }
 
   -- noice
