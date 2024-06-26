@@ -1365,7 +1365,9 @@ autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 " Show hover when provider exists, fallback to vim's builtin behavior.
 nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
 function! s:ShowDocumentation()
-    if exists('g:did_coc_loaded') && CocAction('hasProvider', 'hover')
+    if has('nvim-0.10') && luaeval('#vim.lsp.get_clients({bufnr=vim.fn.bufnr()})') > 0
+        lua vim.lsp.buf.hover()
+    elseif exists('g:did_coc_loaded') && CocAction('hasProvider', 'hover')
         call CocActionAsync('definitionHover')
     else
         call feedkeys('K', 'in')
