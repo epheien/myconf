@@ -390,7 +390,7 @@ local function setup_pckr()
     {'stevearc/oil.nvim', cond = cmd('Oil'), config = function() require('oil').setup() end};
 
     {
-      'neoclide/coc.nvim', 
+      'neoclide/coc.nvim',
       branch = 'release',
       cond = cmd('CocStart'),
       requires = {'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets'},
