@@ -1,4 +1,5 @@
 {
+    // vim:set ft=json5:
     // coc-go
     // 优点: nvim ~/a.go 的时候, 不会有报错信息
     // 缺点: 不能使用 go install 的 gopls, 而且可能会对 go 的版本有要求
@@ -67,4 +68,5 @@
     "suggest.snippetIndicator": "",
     "diagnostic.enable": false,
     "inlayHint.enable": false,
+    "coc.source.neosnippet.priority": 50, // 数值越高越优先
 }
