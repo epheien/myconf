@@ -282,7 +282,7 @@ function setup_incline()
           Search = "None"
         }
       },
-      zindex = 50
+      zindex = 1, -- 最小的 zindex, 以避免遮盖其他窗口
     },
     render = function(props)
       local filename = vim.api.nvim_eval_statusline('%f', {winid = props.win})['str']
