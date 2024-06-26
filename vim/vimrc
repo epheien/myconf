@@ -1354,7 +1354,7 @@ endfunction
 "}}}
 
 " ========== neosnippet ==========
-let g:neosnippet#snippets_directory = [expand('~/.vim/snip')]
+let g:neosnippet#snippets_directory = [expand('~/.vim/snippets')]
 
 " ========== coc.nvim ==========
 " CocInstall coc-neosnippet
