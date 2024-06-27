@@ -415,17 +415,7 @@ local function setup_pckr()
     {
       "neovim/nvim-lspconfig",
       cond = event({'FileType', 'BufReadPre'}),
-      config = function()
-        local lspconfig = require('lspconfig')
-        lspconfig.pyright.setup({})
-        lspconfig.lua_ls.setup({})
-        lua=vim.diagnostic.config({signs = false})
-        lua=vim.diagnostic.config({underline = false})
-        -- Hide all semantic highlights
-        for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-          vim.api.nvim_set_hl(0, group, {})
-        end
-      end,
+      config = function() require('config/nvim-lspconfig') end,
       requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
     };
 
