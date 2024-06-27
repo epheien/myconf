@@ -353,34 +353,8 @@ if !has('gui_running')
     endif
 endif
 
-" 颜色方案
-" https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
-" 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
-function s:SetupColorscheme() "{{{
-    let colors_name = 'default'
-    " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
-    let g:gitgutter_override_sign_column_highlight = 1
-    if has('gui_running')   " gui 的情况下
-        set background=dark
-        try
-            colorscheme gruvbox
-            let colors_name = 'gruvbox'
-        catch /^Vim\%((\a\+)\)\=:E185:/
-            echomsg 'colorscheme gruvbox fail, fallback to desertEx'
-            colorscheme desertEx
-        endtry
-    elseif &t_Co == 256     " 支持 256 色的话
-        set background=dark
-        try
-            colorscheme gruvbox
-            let colors_name = 'gruvbox'
-        catch /^Vim\%((\a\+)\)\=:E185:/
-            echomsg 'colorscheme gruvbox fail, fallback to desertEx'
-            colorscheme desertEx256
-        endtry
-    else
-    endif
-    if colors_name ==# 'gruvbox'
+function s:SetupColorschemePost(...) "{{{
+    if g:colors_name ==# 'gruvbox'
         " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
         hi! link String Constant
         " 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
@@ -388,20 +362,53 @@ function s:SetupColorscheme() "{{{
         hi Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE
         hi IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
         hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
-        " 配合 incline
-        if has('nvim')
-            hi! StatusLine guibg=#665c54 guifg=#282828 gui=reverse ctermbg=241 ctermfg=235 cterm=reverse
-            hi! link StatusLineNC StatusLine
-            "set statusline=%{trim('')}
-            set statusline=%!StlDash()
-            "autocmd vimrc WinEnter * call myrc#UpdateStatusline()
-        endif
         " tagbar 配色
         hi! link TagbarAccessPublic GruvboxAqua
         hi! link TagbarAccessProtected GruvboxPurple
         hi! link TagbarAccessPrivate GruvboxRed
         hi! link TagbarSignature Normal
         hi! link TagbarKind Constant
+    endif
+    " 配合 incline
+    if has('nvim')
+        "hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
+        let normalHl = nvim_get_hl(0, {'name': 'Normal', 'link': v:false})
+        let winSepHl = nvim_get_hl(0, {'name': 'WinSeparator', 'link': v:false})
+        let fg = printf('#%06x', get(winSepHl, get(winSepHl, 'reverse') ? 'bg' : 'fg'))
+        let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
+        let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg')
+        let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
+        "hi! StatusLine guifg=#665c54 guibg=#282828 gui=NONE ctermfg=241 ctermbg=235 cterm=NONE
+        call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
+        hi! link StatusLineNC StatusLine
+        set statusline=%!StlDash()
+    endif
+endfunction
+"}}}
+autocmd vimrc ColorScheme * call s:SetupColorschemePost(expand("<afile>"), expand("<amatch>"))
+
+" 颜色方案
+" https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
+" 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
+function s:SetupColorscheme() "{{{
+    " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
+    let g:gitgutter_override_sign_column_highlight = 1
+    if has('gui_running')   " gui 的情况下
+        set background=dark
+        try
+            colorscheme gruvbox
+        catch
+            echomsg 'colorscheme gruvbox fail, fallback to desertEx'
+            colorscheme desertEx
+        endtry
+    elseif &t_Co == 256     " 支持 256 色的话
+        set background=dark
+        try
+            colorscheme gruvbox
+        catch
+            echomsg 'colorscheme gruvbox fail, fallback to desertEx'
+            colorscheme desertEx256
+        endtry
     endif
 endfunction
 "}}}
