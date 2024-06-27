@@ -197,4 +197,3 @@ local opts = {
 }
 
 M.setup(opts)
-
