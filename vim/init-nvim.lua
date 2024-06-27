@@ -214,7 +214,7 @@ local function make_mode_display(m)
     group = group,
   }
 end
-function setup_incline()
+local function setup_incline()
   -- 生成需要用到的高亮组
   --vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
   vim.api.nvim_set_hl(0, 'InclineNormalMode', {fg='#282828', bg='#E0E000', ctermfg=235, ctermbg=184})
@@ -347,7 +347,7 @@ end
 -- ======================================================================
 local function setup_pckr()
   local plugin = 'pckr'
-  local ok, mod = pcall(require, plugin)
+  local ok, pckr = pcall(require, plugin)
   if not ok then
     print('ignore lua plugin:', plugin)
     return
@@ -357,7 +357,6 @@ local function setup_pckr()
   local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
   local event = require('pckr.loader.event')
 
-  local pckr = require('pckr')
   pckr.setup({
     package_root = vim.fn.stdpath('config'),
     autoinstall = false,
@@ -430,7 +429,7 @@ local function setup_pckr()
         'rafamadriz/friendly-snippets',
         --'garymjr/nvim-snippets',
       },
-      cond = event('InsertEnter'),
+      cond = event({'InsertEnter'}),
       --cond = cmd('CmpStatus'),
       config = function()
         require('config/nvim-cmp')
