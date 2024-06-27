@@ -378,7 +378,6 @@ function s:SetupColorschemePost(...) "{{{
         let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
         let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg')
         let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
-        "hi! StatusLine guifg=#665c54 guibg=#282828 gui=NONE ctermfg=241 ctermbg=235 cterm=NONE
         call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
         hi! link StatusLineNC StatusLine
         set statusline=%!StlDash()
