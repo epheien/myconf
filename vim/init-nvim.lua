@@ -401,7 +401,7 @@ local function setup_pckr()
 
     {
       'ray-x/lsp_signature.nvim',
-      cond = keys('n', '<Plug>lsp_signature', '<Nop>'),
+      cond = keys('n', '<Plug>lsp-signature'),
       config = function()
         require('lsp_signature').setup({
           handler_opts = { border = "single" },
@@ -428,6 +428,7 @@ local function setup_pckr()
         'hrsh7th/cmp-vsnip',
         'hrsh7th/vim-vsnip',
         'rafamadriz/friendly-snippets',
+        --'garymjr/nvim-snippets',
       },
       cond = event('InsertEnter'),
       --cond = cmd('CmpStatus'),
