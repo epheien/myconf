@@ -1469,8 +1469,8 @@ endif
 " ========== scrollview ==========
 " macOS iTerm2 色差 (-1, 0, 2)
 " 137 => 136 129 => 129 109 => 111
-highlight ScrollView ctermbg=243 guibg=#89816d
-"highlight link ScrollView PmenuThumb
+"highlight ScrollView ctermbg=243 guibg=#89816d
+highlight link ScrollView PmenuThumb
 
 " ========== easymotion ==========
 let g:EasyMotion_smartcase = &smartcase
