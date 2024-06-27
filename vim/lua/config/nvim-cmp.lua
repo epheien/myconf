@@ -13,9 +13,12 @@ local opts = {
   mapping = cmp.mapping.preset.insert({
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-3),
+    ['<C-f>'] = cmp.mapping.scroll_docs(3),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'buffer' },
     { name = 'path' },
     { name = 'vsnip' },
     --{ name = 'nvim_lsp_signature_help' },
