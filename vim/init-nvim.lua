@@ -398,6 +398,50 @@ local function setup_pckr()
 
     {'dhananjaylatkar/cscope_maps.nvim', cond = {cmd('Cs'), cmd('Cstag')}, config = setup_cscope_maps};
     {'epheien/vim-gutentags', cond = event({'BufReadPre'}), requires = {'dhananjaylatkar/cscope_maps.nvim'}};
+
+    {
+      'ray-x/lsp_signature.nvim',
+      cond = keys('n', '<Plug>lsp_signature', '<Nop>'),
+      config = function()
+        require('lsp_signature').setup({
+          handler_opts = { border = "single" },
+          max_width = 80,
+          floating_window_off_x = -1,
+          zindex = 2,
+        })
+      end,
+    };
+
+    {
+      "neovim/nvim-lspconfig",
+      cond = event({'FileType', 'BufReadPre'}),
+      config = function()
+        local lspconfig = require('lspconfig')
+        lspconfig.pyright.setup({})
+        lspconfig.lua_ls.setup({})
+        lua=vim.diagnostic.config({signs = false})
+        lua=vim.diagnostic.config({underline = false})
+      end,
+      requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
+    };
+
+    {
+      'hrsh7th/nvim-cmp',
+      requires = {
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-vsnip',
+        'hrsh7th/vim-vsnip',
+        'rafamadriz/friendly-snippets',
+      },
+      cond = event('InsertEnter'),
+      --cond = cmd('CmpStatus'),
+      config = function()
+        require('config/nvim-cmp')
+      end,
+    };
+
   }
 
   -- noice
