@@ -190,7 +190,10 @@ local opts = {
   },
   completion = {
     completeopt = 'menuone,noinsert',
-    --keyword_length = 2, -- 设置为 2 后, snip 会失效
+    -- NOTE: 长度 > 1 可有效避免有些时候无法补全的问题
+    -- 例如 f<补全>, 后续打字都是 f 触发的补全, 可能导致无法补全 fread
+    -- 设为 2 可有效避免这种问题, 但不彻底 (coc.nvim 也有类似的问题)
+    keyword_length = 2,
   },
   experimental = {
     --ghost_text = 'Comment', -- 在文本中间补全的时候会造成文本晃动, 关掉
