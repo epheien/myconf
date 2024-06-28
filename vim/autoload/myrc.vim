@@ -849,7 +849,9 @@ function! myrc#SuperTab()
     elseif (getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.'
         return "\<C-x>\<C-o>"
     else
-        if exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
+        if exists('*luasnip#expand_or_jumpable') && luasnip#expand_or_jumpable()
+            call feedkeys("\<Plug>luasnip-expand-or-jump")
+        elseif exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
             call feedkeys("\<Plug>(neosnippet_expand_or_jump)")
         elseif exists('g:did_coc_loaded') && coc#expandableOrJumpable()
             call coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
@@ -860,6 +862,17 @@ function! myrc#SuperTab()
                 return "\<C-x>\<C-n>"
             endif
         endif
+    endif
+    return ''
+endfunction
+
+function myrc#ShiftTab()
+    if pumvisible()
+        call feedkeys("\<C-p>", 'n')
+    elseif exists('*luasnip#expand_or_jumpable') && luasnip#expand_or_jumpable()
+        lua require('luasnip').jump(-1)
+    else
+        call feedkeys("\<Tab>", 'n')
     endif
     return ''
 endfunction

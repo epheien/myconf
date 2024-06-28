@@ -1308,7 +1308,7 @@ endif
 "{{{
 " 需要把 completeopt 设置为 menuone
 inoremap <silent> <Tab> <C-r>=myrc#SuperTab()<CR>
-inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<Tab>"
+inoremap <silent> <S-Tab> <C-r>=myrc#ShiftTab()<CR>
 
 "}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
