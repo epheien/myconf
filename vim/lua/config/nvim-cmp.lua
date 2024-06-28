@@ -197,7 +197,8 @@ local opts = {
   },
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      require('luasnip').lsp_expand(args.body)
+      --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
       --M.expand(args.body)
     end,
   },
@@ -220,7 +221,8 @@ local opts = {
     },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'vsnip' },
+    { name = 'luasnip' },
+    --{ name = 'vsnip' },
     --{ name = 'snippets' },
   }, {
     { name = 'buffer' },
@@ -228,9 +230,18 @@ local opts = {
   }),
 }
 
+-- load friendly-snippets
+require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load({paths = {vim.fn.stdpath('config') .. '/snippets'}})
+
 vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', {link = 'SpecialChar'})
 vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', {link = 'SpecialChar'})
 vim.api.nvim_set_hl(0, 'CmpItemMenu', {link = 'String'})
 vim.api.nvim_set_hl(0, 'CmpItemKind', {link = 'Identifier'})
+
+vim.cmd([[
+snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
+snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
+]])
 
 M.setup(opts)
