@@ -158,7 +158,34 @@ function M.create_undo()
   end
 end
 
+local lspkind = require('lspkind')
 local opts = {
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      -- can also be a function to dynamically calculate max width such as 
+      -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+      maxwidth = 50,
+      -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      ellipsis_char = '...',
+      -- show labelDetails in menu. Disabled by default
+      show_labelDetails = true,
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization.
+      -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        if entry.source.name == 'nvim_lsp' and string.sub(vim_item.abbr, 1, 1) == ' ' then
+          vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
+        end
+        if not vim_item.menu then
+          vim_item.menu = entry.source.name -- menu 显示源名称
+        end
+        return vim_item
+      end
+    })
+  },
   completion = {
     completeopt = 'menuone,noinsert',
     --keyword_length = 2, -- 设置为 2 后, snip 会失效
