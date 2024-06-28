@@ -162,9 +162,7 @@ local lspkind = require('lspkind')
 local opts = {
   formatting = {
     format = lspkind.cmp_format({
-      -- NOTE: 不能缺失 kind 字段, 否则会条目无法再次显示的问题
-      -- 例如 a.cpp, 补全 fread, 第二次就无法补全了
-      mode = 'symbol_text',
+      mode = 'text',
       -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       -- can also be a function to dynamically calculate max width such as 
       -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,

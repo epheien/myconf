@@ -6,6 +6,7 @@ local server_exts = {
   clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
   lua_ls = {'lua'},
   pyright = {'py'},
+  gopls = {'go'},
 }
 
 local already_setup = {}
