@@ -1,72 +1,45 @@
 local lspconfig = require('lspconfig')
 
-local already_setup = {}
-
-local ext_map = {
-  cpp = 'clangd',
-  lua = 'lua_ls',
-  py = 'pyright',
+-- lsp server 对应的扩展名, 不存在就不会启动 lsp
+-- TODO: 可以切换为 FileType 驱动, 需要在事件处理回调再次触发一次事件
+local server_exts = {
+  clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+  lua_ls = {'lua'},
+  pyright = {'py'},
 }
+
+local already_setup = {}
+local ext_to_server = {}
 
 -- 扩展名映射到 lsp 服务器名称
 local function ext_to_lsp_server(ext)
-  return ext_map[ext]
+  if #ext_to_server == 0 then
+    for server, exts in pairs(server_exts) do
+      for _, e in ipairs(exts) do
+        ext_to_server[e] = server
+      end
+    end
+  end
+  return ext_to_server[ext]
 end
 
--- TODO: setup() 的懒加载
-local lsp_setup = function(event)
-  local ext = vim.fn.fnamemodify(event.file, ':e')
-  local server = ext_to_lsp_server(ext)
-  if not server then
+local function _lsp_setup(server)
+  if not server or already_setup[server] then
     return
   end
-  if server == 'pyright' and not already_setup[server] then
-    already_setup[server] = true
-    lspconfig.pyright.setup({})
-  elseif server == 'lua_ls' and not already_setup[server] then
-    already_setup[server] = true
-    lspconfig.lua_ls.setup({
-      on_init = function(client)
-        local path = client.workspace_folders[1].name
-        if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
-          return
-        end
-
-        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-          runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT'
-          },
-          -- Make the server aware of Neovim runtime files
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              vim.env.VIMRUNTIME
-              -- Depending on the usage, you might want to add additional paths here.
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
-            }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
-          }
-        })
-      end,
-      settings = {
-        Lua = {}
-      }
-    })
-  elseif server == 'clangd' and not already_setup[server] then
-    already_setup[server] = true
-    lspconfig.clangd.setup({
-      cmd = {
-        'clangd',
-        '--header-insertion=never', -- NOTE: 添加这个选项后, '•' 前缀变成了 ' ', 需要自己过滤掉
-        --'--header-insertion-decorators',
-      },
-    })
+  already_setup[server] = true
+  local ok, opts = pcall(require, 'config/lsp/'..server)
+  if not ok then
+    opts = {}
   end
+  lspconfig[server].setup(opts)
 end
+
+local lsp_setup = function(event)
+  local ext = vim.fn.fnamemodify(event.file, ':e')
+  _lsp_setup(ext_to_lsp_server(ext))
+end
+
 vim.diagnostic.config({signs = false})
 vim.diagnostic.config({underline = false})
 -- Hide all semantic highlights
