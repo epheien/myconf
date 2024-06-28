@@ -193,7 +193,7 @@ local opts = {
     --keyword_length = 2, -- 设置为 2 后, snip 会失效
   },
   experimental = {
-    ghost_text = 'Comment',
+    --ghost_text = 'Comment', -- 在文本中间补全的时候会造成文本晃动, 关掉
   },
   snippet = {
     expand = function(args)
