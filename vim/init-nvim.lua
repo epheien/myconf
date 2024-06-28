@@ -402,10 +402,11 @@ local function setup_pckr()
 
   -- 暂时只在 macOS 试验性地使用 nvim-cmp 和 nvim-lspconfig
   if vim.fn.has('mac') then
+    -- 事件顺序: BufReadPre => FileType => BufReadPost
     local mac_plugins = {
       {
         "neovim/nvim-lspconfig",
-        cond = event({'FileType', 'BufReadPre'}),
+        cond = event({'BufReadPre'}),
         config = function() require('config/nvim-lspconfig') end,
         requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
       };
