@@ -2,7 +2,11 @@ local lspconfig = require('lspconfig')
 lspconfig.pyright.setup({})
 lspconfig.lua_ls.setup({})
 lspconfig.clangd.setup({
-  cmd = {'clangd', '--header-insertion=never'},
+  cmd = {
+    '/Users/eph/.local/share/nvim/mason/bin/clangd',
+    '--header-insertion=never', -- NOTE: 添加这个选项后, '•' 前缀变成了 ' ', 需要自己过滤掉
+    --'--header-insertion-decorators',
+  },
 })
 vim.diagnostic.config({signs = false})
 vim.diagnostic.config({underline = false})
