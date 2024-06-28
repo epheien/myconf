@@ -836,4 +836,32 @@ function myrc#Cstag() abort
   execute "Cstag" expand("<cword>")
 endfunction
 
+" 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则
+" 触发 <c-x>xxx 系列补全
+function! myrc#SuperTab()
+    let preChar = getline('.')[col('.') - 2]
+    if exists('g:did_coc_loaded') && coc#pum#visible()
+        return coc#pum#next(1)
+    elseif pumvisible()
+        return "\<C-n>"
+    elseif preChar == '' || preChar =~ '\s'
+        return "\<Tab>"
+    elseif (getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.'
+        return "\<C-x>\<C-o>"
+    else
+        if exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
+            call feedkeys("\<Plug>(neosnippet_expand_or_jump)")
+        elseif exists('g:did_coc_loaded') && coc#expandableOrJumpable()
+            call coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
+        else
+            if &ft ==# 'c' || &ft ==# 'cpp'
+                return "\<C-n>"
+            else
+                return "\<C-x>\<C-n>"
+            endif
+        endif
+    endif
+    return ''
+endfunction
+
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et

@@ -1307,37 +1307,9 @@ endif
 " ========== SimpleSuperTab ==========
 "{{{
 " 需要把 completeopt 设置为 menuone
-inoremap <silent> <Tab> <C-r>=<SID>SuperTab()<CR>
+inoremap <silent> <Tab> <C-r>=myrc#SuperTab()<CR>
 inoremap <silent> <expr> <S-Tab> pumvisible()?"\<C-p>":"\<Tab>"
 
-" 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则
-" 触发 <c-x>xxx 系列补全
-function! s:SuperTab() "{{{2
-    let preChar = getline('.')[col('.') - 2]
-    if exists('g:did_coc_loaded') && coc#pum#visible()
-        return coc#pum#next(1)
-    elseif pumvisible()
-        return "\<C-n>"
-    elseif preChar == '' || preChar =~ '\s'
-        return "\<Tab>"
-    elseif (getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.'
-        return "\<C-x>\<C-o>"
-    else
-        if exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
-            call feedkeys("\<Plug>(neosnippet_expand_or_jump)")
-        elseif exists('g:did_coc_loaded') && coc#expandableOrJumpable()
-            call coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
-        else
-            if &ft ==# 'c' || &ft ==# 'cpp'
-                return "\<C-n>"
-            else
-                return "\<C-x>\<C-n>"
-            endif
-        endif
-    endif
-    return ''
-endfunction
-"}}}2
 "}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
 "{{{
