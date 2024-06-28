@@ -33,7 +33,7 @@ lspconfig.lua_ls.setup({
 })
 lspconfig.clangd.setup({
   cmd = {
-    '/Users/eph/.local/share/nvim/mason/bin/clangd',
+    'clangd',
     '--header-insertion=never', -- NOTE: 添加这个选项后, '•' 前缀变成了 ' ', 需要自己过滤掉
     --'--header-insertion-decorators',
   },
