@@ -163,6 +163,9 @@ local opts = {
     completeopt = 'menuone,noinsert',
     --keyword_length = 2, -- 设置为 2 后, snip 会失效
   },
+  experimental = {
+    ghost_text = 'Comment',
+  },
   snippet = {
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
