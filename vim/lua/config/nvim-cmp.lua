@@ -162,11 +162,13 @@ local lspkind = require('lspkind')
 local opts = {
   formatting = {
     format = lspkind.cmp_format({
-      mode = 'symbol', -- show only symbol annotations
+      -- NOTE: 不能缺失 kind 字段, 否则会条目无法再次显示的问题
+      -- 例如 a.cpp, 补全 fread, 第二次就无法补全了
+      mode = 'symbol_text',
       -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       -- can also be a function to dynamically calculate max width such as 
       -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-      maxwidth = 50,
+      maxwidth = 40,
       -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
       ellipsis_char = '...',
       -- show labelDetails in menu. Disabled by default
