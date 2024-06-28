@@ -144,7 +144,9 @@ function M.setup(opts)
   cmp.setup(opts)
 
   cmp.event:on('confirm_done', function (event)
-    M.auto_brackets(event.entry)
+    if vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
+      M.auto_brackets(event.entry)
+    end
   end)
   cmp.event:on("menu_opened", function(event)
     M.add_missing_snippet_docs(event.window)
