@@ -226,4 +226,9 @@ local opts = {
   }),
 }
 
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', {link = 'SpecialChar'})
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', {link = 'SpecialChar'})
+vim.api.nvim_set_hl(0, 'CmpItemMenu', {link = 'String'})
+vim.api.nvim_set_hl(0, 'CmpItemKind', {link = 'Identifier'})
+
 M.setup(opts)
