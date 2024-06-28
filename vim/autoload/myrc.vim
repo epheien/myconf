@@ -839,17 +839,22 @@ endfunction
 " 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则
 " 触发 <c-x>xxx 系列补全
 function! myrc#SuperTab()
+    " BUG: vim 脚本的绑定无法获取到正确的值, 用 vim.api.nvim_set_keymap 的方式才能正常
+    "echomsg luaeval("require('cmp').visible()")
     let preChar = getline('.')[col('.') - 2]
     if exists('g:did_coc_loaded') && coc#pum#visible()
-        return coc#pum#next(1)
+        call coc#pum#_navigate(1, 1)
     elseif pumvisible()
-        return "\<C-n>"
+        call feedkeys("\<C-n>", 'n')
     elseif preChar == '' || preChar =~ '\s'
-        return "\<Tab>"
+        call feedkeys("\<Tab>", 'n')
     elseif (getline('.')[col('.') - 3] == '-' && preChar == '>') || preChar == '.'
-        return "\<C-x>\<C-o>"
+        call feedkeys("\<C-x>\<C-o>", 'n')
     else
-        if exists('*luasnip#expand_or_jumpable') && luasnip#expand_or_jumpable()
+        " BUG: 必须用 lua vim.api.nvim_set_keymap 的方式才能正常工作
+        if exists(':CmpStatus') == 2 && luaeval("require('cmp').visible()")
+            call feedkeys("\<Down>")
+        elseif exists('*luasnip#expand_or_jumpable') && luasnip#expand_or_jumpable()
             call feedkeys("\<Plug>luasnip-expand-or-jump")
         elseif exists('*neosnippet#expandable_or_jumpable') && neosnippet#expandable_or_jumpable()
             call feedkeys("\<Plug>(neosnippet_expand_or_jump)")
@@ -857,9 +862,9 @@ function! myrc#SuperTab()
             call coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
         else
             if &ft ==# 'c' || &ft ==# 'cpp'
-                return "\<C-n>"
+                call feedkeys("\<C-n>", 'n')
             else
-                return "\<C-x>\<C-n>"
+                call feedkeys("\<C-x>\<C-n>", 'n')
             endif
         endif
     endif
@@ -867,7 +872,9 @@ function! myrc#SuperTab()
 endfunction
 
 function myrc#ShiftTab()
-    if pumvisible()
+    if exists(':CmpStatus') == 2 && luaeval("require('cmp').visible()")
+        call feedkeys("\<Up>")
+    elseif pumvisible()
         call feedkeys("\<C-p>", 'n')
     elseif exists('*luasnip#expand_or_jumpable') && luasnip#expand_or_jumpable()
         lua require('luasnip').jump(-1)
