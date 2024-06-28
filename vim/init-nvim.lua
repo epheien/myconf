@@ -398,46 +398,50 @@ local function setup_pckr()
     {'dhananjaylatkar/cscope_maps.nvim', cond = {cmd('Cs'), cmd('Cstag')}, config = setup_cscope_maps};
     {'epheien/vim-gutentags', cond = event({'BufReadPre'}), requires = {'dhananjaylatkar/cscope_maps.nvim'}};
 
-    {
-      'ray-x/lsp_signature.nvim',
-      cond = keys('n', '<Plug>lsp-signature'),
-      config = function()
-        require('lsp_signature').setup({
-          handler_opts = { border = "single" },
-          max_width = 80,
-          floating_window_off_x = -1,
-          zindex = 2,
-        })
-      end,
-    };
-
-    {
-      "neovim/nvim-lspconfig",
-      cond = event({'FileType', 'BufReadPre'}),
-      config = function() require('config/nvim-lspconfig') end,
-      requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
-    };
-
-    {
-      'hrsh7th/nvim-cmp',
-      requires = {
-        'hrsh7th/cmp-nvim-lsp',
-        'onsails/lspkind.nvim',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-vsnip',
-        'hrsh7th/vim-vsnip',
-        'rafamadriz/friendly-snippets',
-        --'garymjr/nvim-snippets',
-      },
-      cond = event({'InsertEnter'}),
-      --cond = cmd('CmpStatus'),
-      config = function()
-        require('config/nvim-cmp')
-      end,
-    };
-
   }
+
+  -- 暂时只在 macOS 试验性地使用 nvim-cmp 和 nvim-lspconfig
+  if vim.fn.has('mac') then
+    local mac_plugins = {
+      {
+        "neovim/nvim-lspconfig",
+        cond = event({'FileType', 'BufReadPre'}),
+        config = function() require('config/nvim-lspconfig') end,
+        requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
+      };
+      {
+        'hrsh7th/nvim-cmp',
+        requires = {
+          'hrsh7th/cmp-nvim-lsp',
+          'onsails/lspkind.nvim',
+          'hrsh7th/cmp-buffer',
+          'hrsh7th/cmp-path',
+          'hrsh7th/cmp-vsnip',
+          'hrsh7th/vim-vsnip',
+          'rafamadriz/friendly-snippets',
+          --'garymjr/nvim-snippets',
+        },
+        cond = event({'InsertEnter'}),
+        --cond = cmd('CmpStatus'),
+        config = function()
+          require('config/nvim-cmp')
+        end,
+      };
+      {
+        'ray-x/lsp_signature.nvim',
+        cond = keys('n', '<Plug>lsp-signature'),
+        config = function()
+          require('lsp_signature').setup({
+            handler_opts = { border = "single" },
+            max_width = 80,
+            floating_window_off_x = -1,
+            zindex = 2,
+          })
+        end,
+      };
+    }
+    vim.list_extend(plugins, mac_plugins)
+  end
 
   -- noice
   --if vim.fn.has('nvim-0.10') == 1 then
