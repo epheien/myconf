@@ -162,6 +162,8 @@ end
 
 local lspkind = require('lspkind')
 local opts = {
+  -- 需要自动补全函数扩招的文件类型
+  auto_brackets = { 'python', 'lua' },
   preselect = cmp.PreselectMode.None,
   window = {
     completion = {
