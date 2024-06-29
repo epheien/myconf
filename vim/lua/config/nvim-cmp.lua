@@ -161,6 +161,37 @@ function M.create_undo()
 end
 
 local lspkind = require('lspkind')
+local lspkind_opts
+lspkind_opts = {
+  mode = 'symbol',
+  -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+  -- can also be a function to dynamically calculate max width such as 
+  -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+  maxwidth = 40,
+  -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+  ellipsis_char = '...',
+  -- show labelDetails in menu. Disabled by default
+  show_labelDetails = true,
+
+  -- The function below will be called before any actual modifications from lspkind
+  -- so that you can provide more controls on popup customization.
+  -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+  before = function (entry, vim_item)
+    lspkind_opts.maxwidth = vim.fn.mode() == 'i' and 40 or nil
+    if entry.source.name == 'nvim_lsp' and string.sub(vim_item.abbr, 1, 1) == ' ' then
+      vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
+    end
+    --if vim_item.word == 'fread' then
+      --print(vim.inspect(vim.tbl_keys(entry)))
+      --vim.fn.writefile(vim.fn.split(vim.json.encode(entry), '\n'), 'a.log')
+      --print(vim.inspect(vim_item))
+    --end
+    if not vim_item.menu then
+      vim_item.menu = string.format('[%s]', entry.source.name) -- menu 显示源名称
+    end
+    return vim_item
+  end
+}
 local opts = {
   -- 需要自动补全函数扩招的文件类型
   auto_brackets = { 'python', 'lua' },
@@ -171,30 +202,7 @@ local opts = {
     },
   },
   formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol',
-      -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      -- can also be a function to dynamically calculate max width such as 
-      -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-      maxwidth = 40,
-      -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-      ellipsis_char = '...',
-      -- show labelDetails in menu. Disabled by default
-      show_labelDetails = true,
-
-      -- The function below will be called before any actual modifications from lspkind
-      -- so that you can provide more controls on popup customization.
-      -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      before = function (entry, vim_item)
-        if entry.source.name == 'nvim_lsp' and string.sub(vim_item.abbr, 1, 1) == ' ' then
-          vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
-        end
-        if not vim_item.menu then
-          vim_item.menu = string.format('[%s]', entry.source.name) -- menu 显示源名称
-        end
-        return vim_item
-      end
-    })
+    format = lspkind.cmp_format(lspkind_opts)
   },
   completion = {
     completeopt = 'menuone,noinsert',
