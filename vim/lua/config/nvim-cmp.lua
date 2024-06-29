@@ -217,6 +217,7 @@ local opts = {
     ['<C-b>'] = cmp.mapping.scroll_docs(-3),
     ['<C-f>'] = cmp.mapping.scroll_docs(3),
   }),
+  -- NOTE: 同一个 source 不能出现在不同分组, 会重名, 导致 group_index 值错误
   sources = cmp.config.sources({
     {
       name = 'nvim_lsp',
@@ -252,4 +253,23 @@ snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
 snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
 ]])
 
+-- nvim-cmp setup
 M.setup(opts)
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+  completion = {
+    completeopt = 'menuone,noinsert,noselect',
+    keyword_length = 1,
+  },
+  mapping = cmp.mapping.preset.cmdline({
+    --['<C-j>'] = cmp.mapping.select_next_item(),
+    --['<C-k>'] = cmp.mapping.select_prev_item(),
+  }),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})

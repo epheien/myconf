@@ -418,6 +418,7 @@ local function setup_pckr()
           'onsails/lspkind.nvim',
           'hrsh7th/cmp-buffer',
           'hrsh7th/cmp-path',
+          'hrsh7th/cmp-cmdline',
           --'hrsh7th/vim-vsnip',
           --'hrsh7th/cmp-vsnip',
           'L3MON4D3/LuaSnip',
@@ -425,7 +426,7 @@ local function setup_pckr()
           'rafamadriz/friendly-snippets',
           --'garymjr/nvim-snippets',
         },
-        cond = event({'InsertEnter'}),
+        cond = {event({'InsertEnter'}), keys('n', ';', ':')},
         --cond = cmd('CmpStatus'),
         config = function()
           require('config/nvim-cmp')
