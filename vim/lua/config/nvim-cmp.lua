@@ -274,8 +274,26 @@ cmp.setup.cmdline(':', {
     keyword_length = 1,
   },
   mapping = cmp.mapping.preset.cmdline({
-    --['<C-j>'] = cmp.mapping.select_next_item(),
-    --['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = function(fallback) fallback() end,
+    ['<C-p>'] = function(fallback) fallback() end,
+    ['<C-j>'] = {
+      c = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end,
+    },
+    ['<C-k>'] = {
+      c = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end,
+    },
   }),
   sources = cmp.config.sources({
     { name = 'path' }
