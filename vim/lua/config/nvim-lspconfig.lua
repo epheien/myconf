@@ -94,7 +94,11 @@ local function _lsp_setup(server)
   if not ok then
     opts = {}
   end
-  local capabilities = default_capabilities()
+  local capabilities = vim.tbl_deep_extend(
+    'force',
+    {},
+    --vim.lsp.protocol.make_client_capabilities(),
+    default_capabilities())
   opts = vim.tbl_deep_extend('force', opts, {
     capabilities = capabilities,
   })
