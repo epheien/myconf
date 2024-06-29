@@ -127,9 +127,9 @@ end
 
 ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
 function M.setup(opts)
-  for _, source in ipairs(opts.sources) do
-    source.group_index = source.group_index or 1
-  end
+  --for _, source in ipairs(opts.sources) do
+  --  source.group_index = source.group_index or 1
+  --end
 
   local parse = require("cmp.utils.snippet").parse
   require("cmp.utils.snippet").parse = function(input)
@@ -229,9 +229,6 @@ local opts = {
     { name = 'luasnip' },
     --{ name = 'vsnip' },
     --{ name = 'snippets' },
-  }, {
-    { name = 'buffer' },
-    { name = 'path' },
   }),
 }
 
