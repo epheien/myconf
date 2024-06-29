@@ -162,6 +162,7 @@ end
 
 local lspkind = require('lspkind')
 local opts = {
+  preselect = cmp.PreselectMode.None,
   formatting = {
     format = lspkind.cmp_format({
       mode = 'text',
@@ -220,7 +221,8 @@ local opts = {
           return false
         end
         return true
-      end
+      end,
+      keyword_length = 2, -- 可单独兜底设置
     },
     { name = 'buffer' },
     { name = 'path' },
