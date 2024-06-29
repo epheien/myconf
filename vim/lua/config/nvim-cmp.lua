@@ -215,13 +215,14 @@ local opts = {
   sources = cmp.config.sources({
     {
       name = 'nvim_lsp',
-      entry_filter = function (entry, ctx)
-        -- ignore lsp snippets
-        if entry:get_kind() == 15 then
-          return false
-        end
-        return true
-      end,
+      -- lsp setup 的时候传入 capabilities 参数即可正常使用 lsp 的 snippets
+      --entry_filter = function (entry, ctx)
+      --  -- ignore lsp snippets
+      --  if entry:get_kind() == 15 then
+      --    return false
+      --  end
+      --  return true
+      --end,
       keyword_length = 2, -- 可单独兜底设置
     },
     { name = 'buffer' },
