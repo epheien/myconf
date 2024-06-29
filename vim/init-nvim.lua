@@ -411,7 +411,8 @@ local function setup_pckr()
         requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
       };
       {
-        'hrsh7th/nvim-cmp',
+        --'hrsh7th/nvim-cmp',
+        'epheien/nvim-cmp', -- 使用自己的版本
         requires = {
           'hrsh7th/cmp-nvim-lsp',
           'onsails/lspkind.nvim',
