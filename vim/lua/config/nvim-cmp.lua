@@ -163,9 +163,14 @@ end
 local lspkind = require('lspkind')
 local opts = {
   preselect = cmp.PreselectMode.None,
+  window = {
+    completion = {
+      maxwidth = 60,
+    },
+  },
   formatting = {
     format = lspkind.cmp_format({
-      mode = 'text',
+      mode = 'symbol',
       -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       -- can also be a function to dynamically calculate max width such as 
       -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
@@ -183,7 +188,7 @@ local opts = {
           vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
         end
         if not vim_item.menu then
-          vim_item.menu = entry.source.name -- menu 显示源名称
+          vim_item.menu = string.format('[%s]', entry.source.name) -- menu 显示源名称
         end
         return vim_item
       end
