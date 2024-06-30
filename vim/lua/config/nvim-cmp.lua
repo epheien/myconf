@@ -276,6 +276,12 @@ M.setup(opts)
 
 -- `:` cmdline setup.
 cmp.setup.cmdline(':', {
+  window = {
+    completion = {
+      border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
+      winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel,Search:None',
+    },
+  },
   completion = {
     completeopt = 'menuone,noinsert,noselect',
     keyword_length = 1,
