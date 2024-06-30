@@ -215,6 +215,13 @@ local opts = {
   experimental = {
     --ghost_text = 'Comment', -- 在文本中间补全的时候会造成文本晃动, 关掉
   },
+  matcher = {
+    name = 'fzy',
+  },
+  matching = {
+    --disallow_partial_fuzzy_matching = false, -- default: true
+    --disallow_symbol_nonprefix_matching = false, -- default: true
+  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -300,6 +307,9 @@ cmp.setup.cmdline(':', {
   }, {
     { name = 'cmdline' }
   }),
+  matcher = {
+    name = 'fzy',
+  },
   matching = {
     -- NOTE: 需要全部关闭才能保证进入真正的 fuzzy match 流程
     -- TODO: 作为一个可选的临时可用性解决方案, 最终方案是换 fuzzy matcher 算法
