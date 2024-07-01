@@ -884,4 +884,9 @@ function myrc#ShiftTab()
     return ''
 endfunction
 
+" 上下文弹出菜单(鼠标右键菜单), 快捷键一般为 <C-p>
+function myrc#ContextPopup()
+    popup PopUp
+endfunction
+
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et
