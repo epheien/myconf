@@ -457,6 +457,48 @@ local function setup_pckr()
   --  })
   --end
 
+  -- dap setup
+  table.insert(plugins, {
+    "rcarriga/nvim-dap-ui",
+    requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+    cond = cmd('DapuiToggle'),
+    config = function()
+      require('dapui').setup()
+      vim.api.nvim_create_user_command('DapuiToggle', function() require('dapui').toggle() end, {})
+    end,
+  })
+  table.insert(plugins, {
+    'mfussenegger/nvim-dap',
+    config = function()
+      vim.api.nvim_create_user_command('DapHover', function() require"dap.ui.widgets".hover() end, {})
+    end
+  })
+  -- NOTE: 需要调试 nvim lua 的话, 这个插件必须在调试实例无条件加载
+  local osv_cond = cmd('DapLuaRunThis')
+  if os.getenv('NVIM_DEBUG_LUA') then
+    osv_cond = nil
+  end
+  table.insert(plugins, {
+    'jbyuki/one-small-step-for-vimkind',
+    requires = {'mfussenegger/nvim-dap'},
+    cond = osv_cond,
+    config = function()
+      local dap = require"dap"
+      dap.configurations.lua = {
+        {
+          type = 'nlua',
+          request = 'attach',
+          name = "Attach to running Neovim instance",
+        }
+      }
+      dap.adapters.nlua = function(callback, config)
+        callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+      end
+      vim.fn.setenv('NVIM_DEBUG_LUA', 1) -- 设置环境变量让 run_this 正常工作
+      vim.api.nvim_create_user_command('DapLuaRunThis', function() require"osv".run_this() end, {})
+    end
+  })
+
   pckr.add(plugins)
 end
 setup_pckr()
