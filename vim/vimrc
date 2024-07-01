@@ -492,7 +492,7 @@ if has('nvim')
 endif
 
 " <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
-nnoremap <silent> <CR> :call myrc#RepeatCommand()<CR>
+nnoremap <silent> <CR> :call myrc#MyEnter()<CR>
 
 " 可设置窗口标题的命令
 command -nargs=+ Title set title | let &titlestring = <q-args>

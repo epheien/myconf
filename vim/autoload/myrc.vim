@@ -314,8 +314,8 @@ endfunction
 "}}}2
 
 let s:last_repeat = 0
-func myrc#RepeatCommand()
-    if &buftype =~# '\<quickfix\>'
+func myrc#MyEnter()
+    if &buftype =~# '\<quickfix\>' || !empty(getcmdwintype())
         exec "normal! \<CR>"
         return
     endif
