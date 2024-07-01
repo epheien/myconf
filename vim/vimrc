@@ -169,10 +169,7 @@ filetype plugin indent on
 set number
 
 " 标号栏
-try
-    set signcolumn=number
-catch
-endtry
+"silent! set signcolumn=number
 
 " 设定文件编码类型，彻底解决中文编码问题
 if !has('nvim')
