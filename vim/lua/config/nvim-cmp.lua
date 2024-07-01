@@ -274,8 +274,7 @@ snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
 -- nvim-cmp setup
 M.setup(opts)
 
--- `:` cmdline setup.
-cmp.setup.cmdline(':', {
+local cmdline_opts = {
   window = {
     completion = {
       border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
@@ -323,4 +322,18 @@ cmp.setup.cmdline(':', {
     -- input = '-cmp', word = 'nvim-cmp', 此选项为 true 时, 无法匹配, 否则可匹配
     disallow_symbol_nonprefix_matching = false, -- default: true
   }
-})
+}
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', cmdline_opts)
+
+cmp.setup.cmdline('/', vim.tbl_deep_extend('force', cmdline_opts, {
+  sources = {
+    { name = 'buffer' }
+  },
+}))
+
+cmp.setup.cmdline('?', vim.tbl_deep_extend('force', cmdline_opts, {
+  sources = {
+    { name = 'buffer' }
+  },
+}))
