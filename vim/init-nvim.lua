@@ -510,7 +510,7 @@ local create_help_floatwin = function()
     vim.api.nvim_buf_set_option(bufid, "buftype", "help")
     help_winid = vim.api.nvim_open_win(bufid, false, {
       relative = 'editor',
-      row = 0,
+      row = 1,
       col = 0,
       width = vim.o.columns,
       height = math.floor(vim.o.lines / 2),
