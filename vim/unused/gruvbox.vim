@@ -1452,7 +1452,7 @@ if has('nvim-0.10')
   call s:HL('WinBarNC', s:fg3, s:bg1)
   " need to set the highlight group added in version 0.10
   call s:HiLink('Delimiter', 'Operator')
-  call s:HiLink('@variable', 'Normal')
+  call s:HL('@variable', s:fg1)
   call s:HiLink('Added', 'DiffAdd')
   call s:HiLink('Changed', 'DiffChange')
   call s:HiLink('Removed', 'DiffDelete')
