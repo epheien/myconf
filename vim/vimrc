@@ -372,6 +372,7 @@ function s:SetupColorschemePost(...) "{{{
         hi! link TagbarAccessPrivate GruvboxRed
         hi! link TagbarSignature Normal
         hi! link TagbarKind Constant
+        hi! link CurSearch Search
     endif
     " 配合 incline
     if has('nvim')
