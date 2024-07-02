@@ -521,5 +521,41 @@ local function setup_pckr()
 end
 setup_pckr()
 
+-- floating window for :help
+local help_winid = -1
+local create_help_floatwin = function()
+  if not vim.api.nvim_win_is_valid(help_winid) then
+    local bufid = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_option(bufid, "bufhidden", "wipe") -- 会被 :h 覆盖掉
+    vim.api.nvim_buf_set_option(bufid, "buftype", "help")
+    print(vim.api.nvim_buf_get_option(bufid, 'bufhidden'))
+    help_winid = vim.api.nvim_open_win(bufid, false, {
+      relative = 'editor',
+      row = 0,
+      col = 0,
+      width = vim.o.columns,
+      height = math.floor(vim.o.lines / 2),
+      border = 'rounded',
+    })
+    -- BUG: 使用 vim.fn.setwinvar 的话不能正常工作, 而下面的 API 就正常
+    vim.api.nvim_win_set_option(help_winid, 'winhighlight', 'Normal:Normal')
+  end
+  vim.fn.win_gotoid(help_winid)
+end
+vim.keymap.set('c', '<CR>', function()
+  local line = vim.fn.getcmdline()
+  local ok, parsed = pcall(vim.api.nvim_parse_cmd, line, {})
+  if ok and parsed.cmd == 'help' then
+    create_help_floatwin()
+  end
+  -- fallback
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'cn', false)
+end, {silent = true})
+vim.keymap.set('n', '<F1>', function()
+  create_help_floatwin()
+  vim.cmd('help')
+end)
+vim.keymap.set('i', "<F1>", "<Nop>")
+
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:
