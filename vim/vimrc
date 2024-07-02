@@ -999,6 +999,8 @@ if g:vmode == 0
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
 
+    Plug 'tweekmonster/helpful.vim', {'on': 'HelpfulVersion'} " 获取特性加入/删除的具体版本
+
     " 新增语法支持
     Plug 'posva/vim-vue'
     Plug 'vobornik/vim-mql4'
