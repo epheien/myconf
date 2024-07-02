@@ -1,8 +1,3 @@
-" 0 - 全模式, 1 - 精简模式, 2 - man模式
-if !exists('g:vmode')
-    let g:vmode = 0
-endif
-
 " ============================================================================
 " 基本设定
 " ============================================================================
@@ -992,102 +987,98 @@ Plug 'ojroques/vim-oscyank', {'on': 'OSCYankVisual'}
 command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
 command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 
-" 0 - 全模式, 1 - 精简模式, 2 - man模式(未使用)
-if g:vmode == 0
-    Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
-    Plug 'yianwillis/vimcdoc' " 中文文档
-    Plug 'asins/vim-dict'
-    Plug 'tpope/vim-surround'
+Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
+Plug 'yianwillis/vimcdoc' " 中文文档
+Plug 'asins/vim-dict'
+Plug 'tpope/vim-surround'
 
-    Plug 'tweekmonster/helpful.vim', {'on': 'HelpfulVersion'} " 获取特性加入/删除的具体版本
+Plug 'tweekmonster/helpful.vim', {'on': 'HelpfulVersion'} " 获取特性加入/删除的具体版本
 
-    " 新增语法支持
-    Plug 'posva/vim-vue'
-    Plug 'vobornik/vim-mql4'
-    "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
+" 新增语法支持
+Plug 'posva/vim-vue'
+Plug 'vobornik/vim-mql4'
+"Plug 'othree/yajs.vim' " 增强的 js 语法高亮
 
-    Plug 'easymotion/vim-easymotion', {'on': ['<Plug>(easymotion-f)', '<Plug>(easymotion-F)']}
-    Plug 'sunaku/vim-dasht', {'on': 'Dasht'}
-    Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
-    Plug 'Yggdroot/LeaderF', {'on': 'Leaderf'}
-    Plug 'mbbill/undotree', {'on': 'UndotreeShow'}
-    Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
-    Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
-    Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
-    Plug 'metakirby5/codi.vim', {'on': 'Codi'}
-    Plug 'mhinz/vim-startify', {'on': 'Startify'}
-    Plug 'kassio/neoterm', {'on': 'Tnew'}
-    Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
-    Plug 'preservim/nerdcommenter', {'on': '<Plug>NERDCommenterToggle'}
-    Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
-    Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
-    " 自己的插件
-    Plug 'epheien/termdbg', {'on': 'Termdbg'}
-    Plug 'epheien/videm', {'on': 'VidemOpen'}
+Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
+Plug 'easymotion/vim-easymotion', {'on': ['<Plug>(easymotion-f)', '<Plug>(easymotion-F)']}
+Plug 'sunaku/vim-dasht', {'on': 'Dasht'}
+Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
+Plug 'Yggdroot/LeaderF', {'on': 'Leaderf'}
+Plug 'mbbill/undotree', {'on': 'UndotreeShow'}
+Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
+Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
+Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
+Plug 'metakirby5/codi.vim', {'on': 'Codi'}
+Plug 'mhinz/vim-startify', {'on': 'Startify'}
+Plug 'kassio/neoterm', {'on': 'Tnew'}
+Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter', {'on': '<Plug>NERDCommenterToggle'}
+Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
+Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
+" 自己的插件
+Plug 'epheien/termdbg', {'on': 'Termdbg'}
+Plug 'epheien/videm', {'on': 'VidemOpen'}
 
-    " 处理 kitty 背景问题
-    " NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
-    "if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
-    if $TERM_PROGRAM =~# '\V\<Apple_Terminal'
-        Plug 'epheien/bg.nvim'
-    endif
-
-    if !g:OnlyASCII()
-        "Plug 'Xuyuanp/nerdtree-git-plugin'
-        "Plug 'ryanoasis/vim-devicons'
-    endif
-
-    " nvim 专用插件
-    " 管理原则:
-    "   - Plug 插件能实现懒加载的就用 Plug 管理
-    "   - 无条件加载的插件也用 Plug 管理
-    "   - 其他插件就用 pckr.nvim 管理
-    if has('nvim')
-        " 最基础的 nvim 包管理工具
-        "Plug 'lewis6991/pckr.nvim'
-        Plug 'epheien/pckr.nvim'
-
-        " 基础配色
-        Plug 'ellisonleao/gruvbox.nvim'
-
-        Plug 'dstein64/nvim-scrollview'
-        Plug 'b0o/incline.nvim'
-
-        Plug 'norcalli/nvim-colorizer.lua', {'on': 'ColorizerToggle'}
-        Plug 'wfxr/minimap.vim', {'on': 'Minimap'}
-        Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
-    else
-    " vim 专用插件
-        " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
-        Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-        Plug 'epheien/gruvbox' " 支持了 terminal 颜色
-    endif
-
-    " 本地插件
-    call s:Plug('common')
-    call s:Plug('vim-repeat') " autoload
-    call s:Plug('vim-signature') " TODO
-    call s:Plug('mymark', {'on': ['<Plug>MarkSet', '<Plug>MarkAllClear']})
-    call s:Plug('json5', {'for': 'json5'})
-    call s:Plug('python-syntax', {'for': 'python'})
-    call s:Plug('jsonfmt', {'on': 'JsonFmt'})
-    call s:Plug('colorizer', {'on': 'UpdateColor'})
-    call s:Plug('colorsel', {'on': 'ColorSel'})
-    call s:Plug('visincr', {'on': 'I'})
+" 处理 kitty 背景问题
+" NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
+"if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
+if $TERM_PROGRAM =~# '\V\<Apple_Terminal'
+    Plug 'epheien/bg.nvim'
 endif
 
+if !g:OnlyASCII()
+    "Plug 'Xuyuanp/nerdtree-git-plugin'
+    "Plug 'ryanoasis/vim-devicons'
+endif
+
+" nvim 专用插件
+" 管理原则:
+"   - Plug 插件能实现懒加载的就用 Plug 管理
+"   - 无条件加载的插件也用 Plug 管理
+"   - 其他插件就用 pckr.nvim 管理
+if has('nvim')
+    " 最基础的 nvim 包管理工具
+    "Plug 'lewis6991/pckr.nvim'
+    Plug 'epheien/pckr.nvim'
+
+    " 基础配色
+    Plug 'ellisonleao/gruvbox.nvim'
+
+    Plug 'dstein64/nvim-scrollview'
+    Plug 'b0o/incline.nvim'
+
+    Plug 'norcalli/nvim-colorizer.lua', {'on': 'ColorizerToggle'}
+    Plug 'wfxr/minimap.vim', {'on': 'Minimap'}
+    Plug 'sakhnik/nvim-gdb', {'do': ':UpdateRemotePlugins', 'on': 'GdbStart'}
+else
+" vim 专用插件
+    " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
+    Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+    Plug 'epheien/gruvbox' " 支持了 terminal 颜色
+endif
+
+" 本地插件
+call s:Plug('common')
+call s:Plug('vim-repeat') " autoload
+call s:Plug('vim-signature') " TODO
+call s:Plug('mymark', {'on': ['<Plug>MarkSet', '<Plug>MarkAllClear']})
+call s:Plug('json5', {'for': 'json5'})
+call s:Plug('python-syntax', {'for': 'python'})
+call s:Plug('jsonfmt', {'on': 'JsonFmt'})
+call s:Plug('colorizer', {'on': 'UpdateColor'})
+call s:Plug('colorsel', {'on': 'ColorSel'})
+call s:Plug('visincr', {'on': 'I'})
+
 " 代码补全相关插件
-if g:vmode == 0
-    "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-    Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
-    if has('nvim')
-        "Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
-        "Plug 'Shougo/neosnippet.vim'
-        "Plug 'Shougo/neosnippet-snippets'
-    else
-        let g:apc_enable_tab = 0
-        let g:apc_enable_ft = {'*': 1}
-    endif
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
+if has('nvim')
+    "Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
+    "Plug 'Shougo/neosnippet.vim'
+    "Plug 'Shougo/neosnippet-snippets'
+else
+    let g:apc_enable_tab = 0
+    let g:apc_enable_ft = {'*': 1}
 endif
 
 if (has('gui_running') || &t_Co == 256) && !has('nvim')
@@ -1370,7 +1361,7 @@ function! s:ShowDocumentation()
 endfunction
 " ========== smartim by hammerspoon ==========
 "{{{
-if g:vmode == 0 && has('mac')
+if has('mac')
     function! s:job_start(cmd)
         if has('nvim')
             return jobstart(a:cmd)
@@ -1396,7 +1387,7 @@ endif
 command VGtagsInit call myrc#VGtagsInit()
 
 " ========== termdbg ==========
-if g:vmode == 0 && v:false
+if v:false
     nnoremap <silent> <M-p> :exec 'TSendCommand p' expand('<cword>')<CR>
     vnoremap <silent> <M-p> y:exec 'TSendCommand p' @"<CR>
     nnoremap <silent> <M-n> :TNext<CR>
@@ -1428,28 +1419,26 @@ let g:clang_format#style_options = {
     \ }
 
 " ========== gitgutter ==========
-if g:vmode == 0
-    let g:gitgutter_diff_args = '--ignore-cr-at-eol'
-    if !has('gui_running')
-        let g:gitgutter_terminal_reports_focus = 0
-    endif
-    autocmd vimrc BufWritePost * call s:GitGutter()
-    func s:GitGutter()
-        if exists(':GitGutter') == 2
-            GitGutter
-        endif
-    endfunc
-
-    func s:AutoGitGutter()
-        if globpath('.', '.git') != '' || filereadable('.gitignore')
-            try
-                GitGutterEnable
-            catch
-            endtry
-        endif
-    endfunc
-    autocmd vimrc BufReadPost * call s:AutoGitGutter()
+let g:gitgutter_diff_args = '--ignore-cr-at-eol'
+if !has('gui_running')
+    let g:gitgutter_terminal_reports_focus = 0
 endif
+autocmd vimrc BufWritePost * call s:GitGutter()
+func s:GitGutter()
+    if exists(':GitGutter') == 2
+        GitGutter
+    endif
+endfunc
+
+func s:AutoGitGutter()
+    if globpath('.', '.git') != '' || filereadable('.gitignore')
+        try
+            GitGutterEnable
+        catch
+        endtry
+    endif
+endfunc
+autocmd vimrc BufReadPost * call s:AutoGitGutter()
 
 " ========== scrollview ==========
 " macOS iTerm2 色差 (-1, 0, 2)
