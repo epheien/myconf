@@ -324,7 +324,7 @@ end
 -- ======================================================================
 -- 以下开始是 pckr.nvim 管理的插件
 -- ======================================================================
-local function setup_pckr()
+local function setup_pckr() -- {{{
   local plugin = 'pckr'
   local ok, pckr = pcall(require, plugin)
   if not ok then
@@ -498,9 +498,10 @@ local function setup_pckr()
 
   pckr.add(plugins)
 end
+-- }}}
 setup_pckr()
 
--- floating window for :help
+-- floating window for :help {{{
 local help_winid = -1
 local create_help_floatwin = function()
   if not vim.api.nvim_win_is_valid(help_winid) then
@@ -535,6 +536,7 @@ vim.keymap.set('n', '<F1>', function()
   vim.cmd('help')
 end)
 vim.keymap.set('i', "<F1>", "<Nop>")
+-- }}}
 
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:
