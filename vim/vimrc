@@ -995,7 +995,6 @@ command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 if g:vmode == 0
     Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
     Plug 'yianwillis/vimcdoc' " 中文文档
-    Plug 'epheien/gruvbox' " 支持了 terminal 颜色
     Plug 'asins/vim-dict'
     Plug 'tpope/vim-surround'
 
@@ -1045,6 +1044,9 @@ if g:vmode == 0
         "Plug 'lewis6991/pckr.nvim'
         Plug 'epheien/pckr.nvim'
 
+        " 基础配色
+        Plug 'ellisonleao/gruvbox.nvim'
+
         Plug 'dstein64/nvim-scrollview'
         Plug 'b0o/incline.nvim'
 
@@ -1055,6 +1057,7 @@ if g:vmode == 0
     " vim 专用插件
         " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
         Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+        Plug 'epheien/gruvbox' " 支持了 terminal 颜色
     endif
 
     " 本地插件
