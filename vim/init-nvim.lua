@@ -79,6 +79,29 @@ end
 
 local function setup_noice() -- {{{
   lazysetup('noice', {
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+    presets = {
+      bottom_search = true, -- use a classic bottom cmdline for search
+      command_palette = true, -- position the cmdline and popupmenu together
+      long_message_to_split = true, -- long messages will be sent to a split
+      inc_rename = false, -- enables an input dialog for inc-rename.nvim
+      lsp_doc_border = false, -- add a border to hover docs and signature help
+    },
+    lsp = {
+      signature = {
+        enabled = false,
+      }
+    },
+    popupmenu = {
+      enabled = false,
+    },
+    notify = {
+      enabled = false,
+    },
     views = {
       align = 'message-left',
       position = {
@@ -96,6 +119,7 @@ local function setup_noice() -- {{{
       },
     },
     cmdline = {
+      enabled = true,
       format = {
         help = false,
         lua = false,
@@ -105,7 +129,7 @@ local function setup_noice() -- {{{
       },
     },
     messages = {
-      --enabled = false, -- false 会使用 cmdline, 避免闪烁
+      enabled = true, -- false 会使用 cmdline, 可避免闪烁
       view = 'mini',
       view_error = 'mini',
       view_warn = 'mini',
