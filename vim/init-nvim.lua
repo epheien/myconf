@@ -461,7 +461,7 @@ local function setup_pckr()
     "epheien/eagle.nvim",
     cond = cmd('MouseHover'),
     config = function()
-      vim.keymap.del('n', '<MouseMove>')
+      --vim.keymap.del('n', '<MouseMove>')
       vim.o.mousemoveevent = true
       require("eagle").setup({
         --title = ' Mouse Hover ',
