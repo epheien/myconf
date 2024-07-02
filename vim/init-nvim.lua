@@ -358,7 +358,7 @@ local function setup_pckr() -- {{{
     {
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
-      requires = {'nvim-lua/plenary.nvim', 'debugloop/telescope-undo.nvim'},
+      requires = {'nvim-lua/plenary.nvim', 'debugloop/telescope-undo.nvim', 'nvim-tree/nvim-web-devicons'},
       cond = {cmd('Telescope')},
       config = function() require('config/telescope') end,
     };
