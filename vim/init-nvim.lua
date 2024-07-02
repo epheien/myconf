@@ -457,6 +457,24 @@ local function setup_pckr()
   --  })
   --end
 
+  table.insert(plugins, {
+    "epheien/eagle.nvim",
+    cond = cmd('MouseHover'),
+    config = function()
+      vim.keymap.del('n', '<MouseMove>')
+      vim.o.mousemoveevent = true
+      require("eagle").setup({
+        --title = ' Mouse Hover ',
+        border = 'rounded',
+        normal_group = 'Normal',
+        detect_idle_timer = 100,
+        callback = require('config.mouse_hover').callback,
+        --show_lsp_info = false,
+      })
+      vim.api.nvim_create_user_command('MouseHover', '', {})
+    end
+  })
+
   -- dap setup
   table.insert(plugins, {
     "rcarriga/nvim-dap-ui",
