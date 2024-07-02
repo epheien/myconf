@@ -508,7 +508,6 @@ local create_help_floatwin = function()
     local bufid = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_option(bufid, "bufhidden", "wipe") -- 会被 :h 覆盖掉
     vim.api.nvim_buf_set_option(bufid, "buftype", "help")
-    print(vim.api.nvim_buf_get_option(bufid, 'bufhidden'))
     help_winid = vim.api.nvim_open_win(bufid, false, {
       relative = 'editor',
       row = 0,
@@ -526,11 +525,15 @@ vim.keymap.set('c', '<CR>', function()
   local line = vim.fn.getcmdline()
   local ok, parsed = pcall(vim.api.nvim_parse_cmd, line, {})
   if ok and parsed.cmd == 'help' then
-    create_help_floatwin()
+    vim.schedule(function()
+      create_help_floatwin()
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'cn', false)
+    end)
+    return ''
   end
   -- fallback
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'cn', false)
-end, {silent = true})
+  return '<CR>'
+end, {silent = true, expr = true})
 vim.keymap.set('n', '<F1>', function()
   create_help_floatwin()
   vim.cmd('help')
