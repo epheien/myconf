@@ -262,7 +262,7 @@ inoremap <2-MiddleMouse> <Nop>
 inoremap <3-MiddleMouse> <Nop>
 inoremap <4-MiddleMouse> <Nop>
 " 上下文菜单, 慢慢完善
-nnoremap <silent> <RightRelease> :call myrc#ContextPopup()<CR>
+nnoremap <silent> <RightRelease> :call myrc#ContextPopup(1)<CR>
 nnoremap <silent> <C-p> :call myrc#ContextPopup()<CR>
 
 " 全能补全禁止预览
