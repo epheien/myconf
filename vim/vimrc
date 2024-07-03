@@ -721,7 +721,7 @@ call pathogen#infect()
 if has('nvim') "{{{
     " 写成一行, 避免默认的语法解释出现奇怪的问题
     silent! lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false},
-        \ terminal_colors=vim.fn.has('gui_running')})
+        \ terminal_colors=vim.fn.has('gui_running')==1})
 endif
 "}}}
 
