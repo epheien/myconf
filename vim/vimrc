@@ -1058,7 +1058,7 @@ if has('nvim')
     Plug 'epheien/pckr.nvim'
 
     " 基础配色, 但不在这里加载, 因为时机有点晚
-    Plug 'ellisonleao/gruvbox.nvim', {'on', '<Plug>(gruvbox-placeholder)'}
+    Plug 'ellisonleao/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 
     Plug 'dstein64/nvim-scrollview'
     Plug 'b0o/incline.nvim'
