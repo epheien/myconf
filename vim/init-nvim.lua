@@ -500,7 +500,8 @@ local function setup_pckr() -- {{{
     'lewis6991/gitsigns.nvim',
     cond = cmd('Gitsigns'),
     config = function()
-      require('gitsigns').setup({
+      local gitsigns = require('gitsigns')
+      gitsigns.setup({
         signs = {
           add          = { text = '┃' },
           change       = { text = '┃' },
@@ -510,6 +511,8 @@ local function setup_pckr() -- {{{
           untracked    = { text = '┆' },
         },
       })
+      vim.keymap.set('n', ']c', function() gitsigns.nav_hunk('next', {wrap = false}) end)
+      vim.keymap.set('n', '[c', function() gitsigns.nav_hunk('prev', {wrap = false}) end)
     end
   })
   pckr.add(plugins)

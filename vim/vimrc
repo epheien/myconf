@@ -1070,6 +1070,9 @@ else
 " vim 专用插件
     " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+    Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
+    Plug 'jreybert/vimagit', {'on': 'Magit'}
+    Plug 'lambdalisue/gina.vim', {'on': 'Gina'}
 endif
 
 " 本地插件
@@ -1104,11 +1107,8 @@ else
 endif
 
 " git 相关插件
-Plug 'tpope/vim-fugitive', {'on': ['Gstatus', 'Gblame']}
-Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
 Plug 'junegunn/gv.vim', {'on': 'GV'}
-Plug 'jreybert/vimagit', {'on': 'Magit'}
-Plug 'lambdalisue/gina.vim', {'on': 'Gina'}
+Plug 'tpope/vim-fugitive', {'on': ['Gstatus', 'Gblame']}
 
 call plug#end()
 " ####
