@@ -370,6 +370,15 @@ function s:SetupColorschemePost(...) "{{{
         hi! link CurSearch Search
         hi! link FloatBorder WinSeparator
         hi! link SpecialKey Special
+        hi! SignColumn guibg=NONE ctermbg=NONE
+        " GitGutter
+        hi! link GitGutterAdd GruvboxGreen
+        hi! link GitGutterChange GruvboxAqua
+        hi! link GitGutterDelete GruvboxRed
+        hi! link GitGutterChangeDelete GruvboxYellow
+        " Signature
+        hi! link SignatureMarkText   GruvboxBlue
+        hi! link SignatureMarkerText GruvboxPurple
     endif
     " 配合 incline
     if has('nvim')
@@ -1059,7 +1068,7 @@ if has('nvim')
     Plug 'epheien/pckr.nvim'
 
     " 基础配色
-    Plug 'ellisonleao/gruvbox.nvim'
+    "Plug 'ellisonleao/gruvbox.nvim'
 
     Plug 'dstein64/nvim-scrollview'
     Plug 'b0o/incline.nvim'
@@ -1454,7 +1463,9 @@ func s:AutoGitGutter()
         endtry
     endif
 endfunc
-autocmd vimrc BufReadPost * call s:AutoGitGutter()
+if !has('nvim')
+    autocmd vimrc BufReadPost * call s:AutoGitGutter()
+endif
 
 " ========== scrollview ==========
 " macOS iTerm2 色差 (-1, 0, 2)
