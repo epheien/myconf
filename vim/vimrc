@@ -408,16 +408,16 @@ function s:SetupColorscheme(colors_name) "{{{
         try
             exec 'colorscheme' a:colors_name
         catch
-            echomsg 'colorscheme ' .. a:colors_name .. ' failed, fallback to desertEx'
-            colorscheme desertEx
+            echomsg 'colorscheme ' .. a:colors_name .. ' failed, fallback to gruvbox-origin'
+            colorscheme gruvbox-origin
         endtry
     elseif &t_Co == 256     " 支持 256 色的话
         set background=dark
         try
             exec 'colorscheme' a:colors_name
         catch
-            echomsg 'colorscheme ' .. a:colors_name .. ' failed, fallback to desertEx'
-            colorscheme desertEx256
+            echomsg 'colorscheme ' .. a:colors_name .. ' failed, fallback to gruvbox-origin'
+            colorscheme gruvbox-origin
         endtry
     endif
 endfunction
@@ -721,7 +721,6 @@ call pathogen#infect()
 if has('nvim') "{{{
     " 写成一行, 避免默认的语法解释出现奇怪的问题
     lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false}})
-    colorscheme gruvbox
 endif
 "}}}
 
@@ -1254,7 +1253,9 @@ let g:codi#interpreters = {
        \ },
    \ }
 
-if !has('nvim')
+if has('nvim')
+    set termguicolors | call s:SetupColorscheme('gruvbox')
+else
     call s:SetupColorscheme('gruvbox-origin')
 endif
 
