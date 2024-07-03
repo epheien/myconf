@@ -280,6 +280,7 @@ snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
 M.setup(opts)
 
 local cmdline_opts = {
+  enabled = true,
   window = {
     completion = {
       border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
