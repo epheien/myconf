@@ -515,6 +515,27 @@ local function setup_pckr() -- {{{
       vim.keymap.set('n', '[c', function() gitsigns.nav_hunk('prev', {wrap = false}) end)
     end
   })
+
+  table.insert(plugins, {
+    'epheien/flirt.nvim',
+    cond = event('BufWinEnter'),
+    config = function()
+      local flirt = require('flirt')
+      flirt.setup({
+        override_open = false,
+        close_command = nil,
+        default_move_mappings = false,
+      })
+      -- 浮动窗口不能用鼠标拖选了
+      vim.keymap.set('n', '<LeftDrag>', function()
+        if vim.fn.win_gettype() == "popup" then
+          vim.schedule(flirt.on_drag)
+        else
+          return '<LeftDrag>'
+        end
+      end, { silent = true, expr = true })
+    end
+  })
   pckr.add(plugins)
 end
 -- }}}
