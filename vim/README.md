@@ -1,6 +1,10 @@
 ## Requirements
     pip3 install pynvim
 
+## TODO
+- [ ] 支持鼠标拖动浮动窗口
+- [ ] nvim-cmp 以及 cmp-cmdline 插件在命令行粘贴命令的时候, 好像有性能问题
+
 ## 参考资料
 
 ### iTerm 的 gruvbox-dark 主题配色
