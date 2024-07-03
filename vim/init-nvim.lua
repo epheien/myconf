@@ -416,7 +416,7 @@ local function setup_pckr() -- {{{
         cond = keys('n', '<Plug>lsp-signature'),
         config = function()
           require('lsp_signature').setup({
-            handler_opts = { border = "single" },
+            handler_opts = { border = nil },
             max_width = 80,
             floating_window_off_x = -1,
             zindex = 2,
