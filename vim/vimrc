@@ -720,7 +720,7 @@ call pathogen#infect()
 " 设置 nvim 主题
 if has('nvim') "{{{
     " 写成一行, 避免默认的语法解释出现奇怪的问题
-    lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false}})
+    silent! lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false}})
 endif
 "}}}
 
