@@ -405,7 +405,7 @@ local function setup_pckr() -- {{{
           'rafamadriz/friendly-snippets',
           --'garymjr/nvim-snippets',
         },
-        cond = {event({'InsertEnter'}), keys('n', ';', ':'), keys('n', '/'), keys('n', '?')},
+        cond = {event({'InsertEnter'}), keys('n', ';', ':'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable')},
         --cond = cmd('CmpStatus'),
         config = function()
           require('config/nvim-cmp')

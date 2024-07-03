@@ -2,6 +2,8 @@ local cmp = require('cmp')
 
 local M = {}
 
+local enabled = true
+
 ---@alias Placeholder {n:number, text:string}
 
 ---@param snippet string
@@ -193,6 +195,9 @@ lspkind_opts = {
   end
 }
 local opts = {
+  enabled = function()
+    return enabled
+  end,
   -- 需要自动补全函数扩招的文件类型
   auto_brackets = { 'python', 'lua' },
   preselect = cmp.PreselectMode.None,
@@ -337,3 +342,21 @@ cmp.setup.cmdline('?', vim.tbl_deep_extend('force', cmdline_opts, {
     { name = 'buffer' }
   },
 }))
+
+vim.api.nvim_create_user_command('CmpToggle', function()
+  if enabled then
+    enabled = false
+    vim.api.nvim_notify('nvim-cmp disabled', vim.log.levels.INFO, {})
+  else
+    enabled = true
+    vim.api.nvim_notify('nvim-cmp enabled', vim.log.levels.INFO, {})
+  end
+end, {})
+
+vim.api.nvim_create_user_command('CmpDisable', function()
+  enabled = false
+end, {})
+
+vim.api.nvim_create_user_command('CmpEnable', function()
+  enabled = true
+end, {})
