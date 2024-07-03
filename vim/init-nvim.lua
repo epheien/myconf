@@ -18,18 +18,6 @@ local function lazysetup(plugin, config) -- {{{
 end
 -- }}}
 
-lazysetup('gruvbox', {
-  bold = true,
-  italic = {
-    strings = false,
-    emphasis = false,
-    comments = false,
-    operators = false,
-    folds = false,
-  },
-})
-vim.cmd("silent! colorscheme gruvbox")
-
 local function setup_cscope_maps() --{{{
   lazysetup('cscope_maps', {
     disable_maps = true,

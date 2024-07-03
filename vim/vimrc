@@ -706,11 +706,26 @@ imap <C-n> <Down>
 " ============================================================================
 " 插件设置
 " ============================================================================
-" ========== pathogen ==========
-"{{{
-" 激活 bundle 目录的插件
+" 激活 bundle 目录的插件, 优先于 Plug
 call pathogen#infect()
+" 设置 nvim 主题
+if has('nvim') "{{{
+    lua << EOF
+require('gruvbox').setup({
+  bold = true,
+  italic = {
+    strings = false,
+    emphasis = false,
+    comments = false,
+    operators = false,
+    folds = false,
+  },
+})
+EOF
+    colorscheme gruvbox
+endif
 "}}}
+
 " ========== tagbar ==========
 "{{{
 let g:tagbar_compact = 1
