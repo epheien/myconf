@@ -581,5 +581,34 @@ end)
 vim.keymap.set('i', "<F1>", "<Nop>")
 -- }}}
 
+-- 手动修正 Alacritty 终端模拟器鼠标点击时, 光标仍然闪烁的问题
+local inited_on_key = false
+local setup_on_key = function()
+  if inited_on_key then
+    return
+  end
+  inited_on_key = true
+  local prs = vim.keycode("<LeftMouse>")
+  local rel = vim.keycode("<LeftRelease>")
+  local cursor_blinkon_opt = { "n-v-c:block", "i-ci-ve:ver25", "r-cr:hor20", "o:hor50",
+    "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor", "sm:block-blinkwait175-blinkoff150-blinkon175" }
+  local cursor_blinkoff_opt = { "n-v-c:block", "i-ci-ve:ver25", "r-cr:hor20", "o:hor50",
+    "a:Cursor/lCursor", "sm:block-blinkwait175-blinkoff150-blinkon175" }
+  vim.on_key(function(k)
+    if k == prs then
+      vim.opt.guicursor = cursor_blinkoff_opt
+    elseif k == rel then
+      vim.opt.guicursor = cursor_blinkon_opt
+    end
+  end)
+end
+vim.api.nvim_create_user_command('FixMouseClick', function()
+  setup_on_key()
+end, {nargs = 0})
+-- 暂时所知仅 Alacritty 需要修正
+if os.getenv('TERM_PROGRAM') == 'alacritty' then
+  setup_on_key()
+end
+
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:

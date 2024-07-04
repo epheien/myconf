@@ -300,9 +300,6 @@ if !has('gui_running')
             \n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,
             \a:Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
         CursorBlinkEnable
-        if $TERM_PROGRAM ==# 'alacritty' " alacritty 不闪烁, 因为用鼠标点的时候总闪烁
-            CursorBlinkDisable
-        endif
         if $TERM_PROGRAM =~# '\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty'
             set termguicolors
         endif
