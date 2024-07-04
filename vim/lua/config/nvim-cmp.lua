@@ -345,8 +345,8 @@ local cmdline_opts = {
     keyword_length = 1,
   },
   mapping = cmp.mapping.preset.cmdline({
-    ['<C-n>'] = function(fallback) fallback() end,
-    ['<C-p>'] = function(fallback) fallback() end,
+    ['<C-n>'] = cmp.config.disable,
+    ['<C-p>'] = cmp.config.disable,
     ['<C-j>'] = {
       c = function(fallback)
         if cmp.visible() then
