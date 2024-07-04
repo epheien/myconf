@@ -928,7 +928,7 @@ inoremap <expr> ; <SID>i_Semicolon_plus()
 inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
 
 " 补全模式下的映射
-inoremap <expr> <CR> (pumvisible() ? "\<C-r>=myrc#complete_confirm()\<CR>" : "\<CR>")
+inoremap <silent> <CR> <C-r>=myrc#SmartEnter()<CR>
 
 function! s:i_Semicolon_plus() "{{{
     let sLine = getline('.')

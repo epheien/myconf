@@ -550,14 +550,19 @@ function! myrc#restore_ei(...) abort
     return ''
 endfunction
 
-function! myrc#complete_confirm() abort
-    if exists('g:did_coc_loaded')
-        return coc#_select_confirm()
+function! myrc#SmartEnter() abort
+    if exists(':CmpStatus') == 2 && luaeval("require('cmp').visible()")
+        lua require('cmp').confirm({select = false, behavior = require('cmp').ConfirmBehavior.Insert})
+    elseif exists('g:did_coc_loaded') && coc#pum#visible()
+        call coc#pum#select_confirm()
+    elseif pumvisible()
+        let s:bak_ei = &ei
+        set ei=all
+        call feedkeys("\<C-y>", 'n')
+        call timer_start(0, "myrc#restore_ei")
+    else
+        call feedkeys("\<CR>", 'n')
     endif
-    let s:bak_ei = &ei
-    set ei=all
-    call feedkeys("\<C-y>", 'n')
-    call timer_start(0, "myrc#restore_ei")
     return ''
 endfunction
 
