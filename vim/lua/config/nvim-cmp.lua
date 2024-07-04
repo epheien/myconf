@@ -300,7 +300,9 @@ vim.keymap.set('i', '<Up>', '', {
 
 vim.keymap.set('i', '<C-e>', '', {
   callback = function()
-    if cmp.visible() then
+    if vim.fn.pumvisible() ~= 0 then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-e>', true, true, true), 'n', false)
+    elseif cmp.visible() then -- NOTE: cmp.visible() 包含了 pumvisible()
       cmp.abort()
     elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
       vim.fn['coc#pum#close']('cancel')
