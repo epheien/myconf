@@ -7,7 +7,7 @@ local inited = {}
 local server_exts = {
   clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto', 'h', 'hpp', 'cc', 'hh', 'cxx', 'hxx' },
   lua_ls = {'lua'},
-  pyright = {'py'},
+  pyright = {'py', 'python'},
   gopls = {'go'},
 }
 
