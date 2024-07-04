@@ -275,7 +275,7 @@ vim.keymap.set('i', '<Down>', '', {
     elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
       vim.fn['coc#pum#_navigate'](1, 0)
     else
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'cn', false)
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'in', false)
     end
   end,
   noremap = true,
@@ -290,7 +290,22 @@ vim.keymap.set('i', '<Up>', '', {
     elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
       vim.fn['coc#pum#_navigate'](0, 0)
     else
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'cn', false)
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'in', false)
+    end
+  end,
+  noremap = true,
+  silent = true,
+  --expr = true,
+})
+
+vim.keymap.set('i', '<C-e>', '', {
+  callback = function()
+    if cmp.visible() then
+      cmp.abort()
+    elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
+      vim.fn['coc#pum#close']('cancel')
+    else
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<End>', true, true, true), 'in', false)
     end
   end,
   noremap = true,
