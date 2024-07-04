@@ -1464,6 +1464,7 @@ endif
 " 137 => 136 129 => 129 109 => 111
 "highlight ScrollView ctermbg=243 guibg=#89816d
 highlight link ScrollView PmenuThumb
+let scrollview_auto_mouse = v:false
 
 " ========== easymotion ==========
 let g:EasyMotion_smartcase = &smartcase
