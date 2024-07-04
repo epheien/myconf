@@ -234,12 +234,12 @@ local opts = {
       --M.expand(args.body)
     end,
   },
-  mapping = cmp.mapping.preset.insert({
+  mapping = {
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ['<CR>'] = M.confirm({ select = true }),
+    --['<CR>'] = M.confirm({ select = true }),
     ['<C-b>'] = cmp.mapping.scroll_docs(-3),
     ['<C-f>'] = cmp.mapping.scroll_docs(3),
-  }),
+  },
   -- NOTE: 同一个 source 不能出现在不同分组, 会重名, 导致 group_index 值错误
   sources = cmp.config.sources({
     {
@@ -261,6 +261,42 @@ local opts = {
     --{ name = 'snippets' },
   }),
 }
+
+vim.api.nvim_set_keymap('i', '<CR>', '', {
+  callback = vim.fn['myrc#SmartEnter'],
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set('i', '<Down>', '', {
+  callback = function()
+    if cmp.visible() then
+      cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+    elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
+      vim.fn['coc#pum#_navigate'](1, 0)
+    else
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'cn', false)
+    end
+  end,
+  noremap = true,
+  silent = true,
+  --expr = true,
+})
+
+vim.keymap.set('i', '<Up>', '', {
+  callback = function()
+    if cmp.visible() then
+      cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+    elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
+      vim.fn['coc#pum#_navigate'](0, 0)
+    else
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'cn', false)
+    end
+  end,
+  noremap = true,
+  silent = true,
+  --expr = true,
+})
 
 -- load friendly-snippets
 require("luasnip.loaders.from_vscode").lazy_load()
