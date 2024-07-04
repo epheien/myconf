@@ -3,7 +3,7 @@ local lspconfig = require('lspconfig')
 -- lsp server 对应的扩展名, 不存在就不会启动 lsp
 -- TODO: 可以切换为 FileType 驱动, 需要在事件处理回调再次触发一次事件
 local server_exts = {
-  clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+  clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto', 'h', 'hpp', 'cc', 'hh', 'cxx', 'hxx' },
   lua_ls = {'lua'},
   pyright = {'py'},
   gopls = {'go'},
