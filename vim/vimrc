@@ -1488,5 +1488,18 @@ if has('nvim-0.8.0')
     exec 'source' s:joinpath(s:USERRUNTIME, 'init-nvim.lua')
 endif
 
+" macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
+" 但好消息是可以用映射修正这个问题
+if has('mac') || exists('$SSH_TTY')
+  imap ， ,
+  imap ； ;
+  imap 。 .
+  imap ？ ?
+  imap 【 [
+  imap 】 ]
+  imap （ (
+  imap ） )
+endif
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 sw=4 sts=-1 et
