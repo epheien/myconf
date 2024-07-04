@@ -24,9 +24,9 @@ function M.snippet_preview(snippet)
     return vim.lsp._snippet_grammar.parse(snippet)
   end)
   return ok and tostring(parsed)
-    or M.snippet_replace(snippet, function(placeholder)
-      return M.snippet_preview(placeholder.text)
-    end):gsub("%$0", "")
+      or M.snippet_replace(snippet, function(placeholder)
+        return M.snippet_preview(placeholder.text)
+      end):gsub("%$0", "")
 end
 
 -- This function replaces nested placeholders in a snippet with LSP placeholders.
@@ -116,7 +116,7 @@ function M.expand(snippet)
     ok = pcall(vim.snippet.expand, fixed)
 
     local msg = ok and "Failed to parse snippet,\nbut was able to fix it automatically."
-      or ("Failed to parse snippet.\n" .. err)
+        or ("Failed to parse snippet.\n" .. err)
     print(msg)
     print(snippet)
   end
@@ -145,7 +145,7 @@ function M.setup(opts)
   local cmp = require("cmp")
   cmp.setup(opts)
 
-  cmp.event:on('confirm_done', function (event)
+  cmp.event:on('confirm_done', function(event)
     if vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
       M.auto_brackets(event.entry)
     end
@@ -167,7 +167,7 @@ local lspkind_opts
 lspkind_opts = {
   mode = 'symbol',
   -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-  -- can also be a function to dynamically calculate max width such as 
+  -- can also be a function to dynamically calculate max width such as
   -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
   maxwidth = 40,
   -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
@@ -178,15 +178,15 @@ lspkind_opts = {
   -- The function below will be called before any actual modifications from lspkind
   -- so that you can provide more controls on popup customization.
   -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-  before = function (entry, vim_item)
+  before = function(entry, vim_item)
     lspkind_opts.maxwidth = vim.fn.mode() == 'i' and 40 or nil
     if entry.source.name == 'nvim_lsp' and string.sub(vim_item.abbr, 1, 1) == ' ' then
       vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
     end
     --if vim_item.word == 'fread' then
-      --print(vim.inspect(vim.tbl_keys(entry)))
-      --vim.fn.writefile(vim.fn.split(vim.json.encode(entry), '\n'), 'a.log')
-      --print(vim.inspect(vim_item))
+    --  print(vim.inspect(vim.tbl_keys(entry)))
+    --  vim.fn.writefile(vim.fn.split(vim.json.encode(entry), '\n'), 'a.log')
+    --  print(vim.inspect(vim_item))
     --end
     if not vim_item.menu then
       vim_item.menu = string.format('[%s]', entry.source.name) -- menu 显示源名称
@@ -300,12 +300,12 @@ vim.keymap.set('i', '<Up>', '', {
 
 -- load friendly-snippets
 require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load({paths = {vim.fn.stdpath('config') .. '/snippets'}})
+require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
 
-vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', {link = 'SpecialChar'})
-vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', {link = 'SpecialChar'})
-vim.api.nvim_set_hl(0, 'CmpItemMenu', {link = 'String'})
-vim.api.nvim_set_hl(0, 'CmpItemKind', {link = 'Identifier'})
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { link = 'SpecialChar' })
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'SpecialChar' })
+vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'String' })
+vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Identifier' })
 
 vim.cmd([[
 snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
@@ -319,7 +319,7 @@ local cmdline_opts = {
   enabled = true,
   window = {
     completion = {
-      border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
       winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel,Search:None',
     },
   },
@@ -360,7 +360,7 @@ local cmdline_opts = {
   matching = {
     -- NOTE: 需要全部关闭才能保证进入真正的 fuzzy match 流程
     -- TODO: 作为一个可选的临时可用性解决方案, 最终方案是换 fuzzy matcher 算法
-    disallow_partial_fuzzy_matching = false, -- default: true
+    disallow_partial_fuzzy_matching = false,    -- default: true
     -- input = '-cmp', word = 'nvim-cmp', 此选项为 true 时, 无法匹配, 否则可匹配
     disallow_symbol_nonprefix_matching = false, -- default: true
   }
