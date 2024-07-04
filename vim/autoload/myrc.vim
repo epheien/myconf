@@ -877,10 +877,10 @@ function! myrc#SuperTab()
 endfunction
 
 function myrc#ShiftTab()
-    if exists(':CmpStatus') == 2 && luaeval("require('cmp').visible()")
-        call feedkeys("\<Up>")
-    elseif pumvisible()
+    if pumvisible()
         call feedkeys("\<C-p>", 'n')
+    elseif exists(':CmpStatus') == 2 && luaeval("require('cmp').visible()")
+        call feedkeys("\<Up>")
     elseif exists('*luasnip#expand_or_jumpable') && luasnip#expand_or_jumpable()
         lua require('luasnip').jump(-1)
     else
