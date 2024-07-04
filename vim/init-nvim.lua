@@ -385,7 +385,7 @@ local function setup_pckr() -- {{{
     local mac_plugins = {
       {
         "neovim/nvim-lspconfig",
-        cond = event({'BufReadPre'}),
+        cond = event({'FileType'}), -- 这里 BufReadPre 先载入, 配置用 FileType 触发
         config = function() require('config/nvim-lspconfig') end,
         requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
       };
