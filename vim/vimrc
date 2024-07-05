@@ -108,7 +108,7 @@ set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fenc}]%)%{GetFtm(0)}%=%(%l/%L,%v%)\
 if has('nvim')
     set laststatus=3
 else
-    set laststatus=2
+    set laststatus=2 fillchars-=vert:\| fillchars+=vert:│
 endif
 " (noquote=1)
 function! GetFtm(...) "{{{
