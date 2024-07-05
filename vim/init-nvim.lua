@@ -548,11 +548,13 @@ local create_help_floatwin = function()
     local bufid = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_option(bufid, "bufhidden", "wipe") -- 会被 :h 覆盖掉
     vim.api.nvim_buf_set_option(bufid, "buftype", "help")
+    local width = math.min(vim.o.columns, 86)
+    col = math.floor((vim.o.columns - width) / 2)
     help_winid = vim.api.nvim_open_win(bufid, false, {
       relative = 'editor',
       row = 1,
-      col = 0,
-      width = vim.o.columns,
+      col = col,
+      width = width,
       height = math.floor(vim.o.lines / 2),
       border = 'rounded',
     })
