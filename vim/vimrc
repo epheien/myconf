@@ -391,7 +391,8 @@ function s:SetupColorschemePost(...) "{{{
         let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
         call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
         hi! link StatusLineNC StatusLine
-        set statusline=%!StlDash()
+        "set statusline=%!StlDash()
+        set statusline=─ fillchars+=stl:─,stlnc:─
     endif
 endfunction
 "}}}
