@@ -66,15 +66,15 @@ local function make_mode_display(m)
   if m == 'n' then
     -- 用默认值
   elseif mode == 'INSERT' then
-    group = 'IncelineInsertMode'
+    group = 'InclineInsertMode'
   elseif mode == 'TERMINAL' then
-    group = 'IncelineTerminalMode'
+    group = 'InclineTerminalMode'
   elseif mode == 'VISUAL' or mode == 'V-LINE' or mode == 'V-BLOCK' then
-    group = 'IncelineVisualMode'
+    group = 'InclineVisualMode'
   elseif mode == 'SELECT' or mode == 'S-LINE' or mode == 'S-BLOCK' then
-    group = 'IncelineSelectMode'
+    group = 'InclineSelectMode'
   elseif mode == 'REPLACE' or mode == 'V-REPLACE' then
-    group = 'IncelineReplaceMode'
+    group = 'InclineReplaceMode'
   else
     -- 兜底用默认值
   end
@@ -88,11 +88,11 @@ local function setup_incline()
   -- 生成需要用到的高亮组
   --vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
   vim.api.nvim_set_hl(0, 'InclineNormalMode', {fg='#282828', bg='#E0E000', ctermfg=235, ctermbg=184})
-  vim.cmd([[hi! IncelineInsertMode ctermfg=235 ctermbg=119 guifg=#282828 guibg=#95e454]])
-  vim.cmd([[hi! IncelineTerminalMode ctermfg=235 ctermbg=119 guifg=#282828 guibg=#95e454]])
-  vim.cmd([[hi! IncelineVisualMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
-  vim.cmd([[hi! IncelineSelectMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
-  vim.cmd([[hi! IncelineReplaceMode ctermfg=235 ctermbg=203 guifg=#282828 guibg=#e5786d]])
+  vim.cmd([[hi! InclineInsertMode ctermfg=235 ctermbg=119 guifg=#282828 guibg=#95e454]])
+  vim.cmd([[hi! InclineTerminalMode ctermfg=235 ctermbg=119 guifg=#282828 guibg=#95e454]])
+  vim.cmd([[hi! InclineVisualMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
+  vim.cmd([[hi! InclineSelectMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
+  vim.cmd([[hi! InclineReplaceMode ctermfg=235 ctermbg=203 guifg=#282828 guibg=#e5786d]])
   -- set noshowmode
   vim.o.showmode = false
   require('incline').setup({
