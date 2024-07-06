@@ -462,6 +462,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {callback = setup_status_line_highlig
 vim.opt.laststatus = 2
 vim.opt.showmode = false
 vim.opt.statusline = '%!v:lua.MyStatusLine()'
+-- :pwd<CR> 的时候会不及时刷新, 所以需要添加这个自动命令
+vim.api.nvim_create_autocmd('ModeChanged', { callback = function() vim.cmd.redrawstatus() end })
 -- }}}
 
 ------------------------------------------------------------------------------
