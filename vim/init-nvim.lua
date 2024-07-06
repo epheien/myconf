@@ -180,6 +180,7 @@ local function setup_pckr() -- {{{
   local plugins = {
     {
       'nvim-lualine/lualine.nvim',
+      cond = keys('n', '<Plug>lualine'),
       config = function()
         vim.opt.laststatus = 2
         vim.opt.showmode = false
@@ -435,7 +436,7 @@ end)
 vim.keymap.set('i', "<F1>", "<Nop>")
 -- }}}
 
--- 手动修正 Alacritty 终端模拟器鼠标点击时, 光标仍然闪烁的问题
+-- 手动修正 Alacritty 终端模拟器鼠标点击时, 光标仍然闪烁的问题 {{{
 local inited_on_key = false
 local setup_on_key = function()
   if inited_on_key then
@@ -463,6 +464,57 @@ end, {nargs = 0})
 if os.getenv('TERM_PROGRAM') == 'alacritty' then
   setup_on_key()
 end
+-- }}}
+
+-- MyStatusLine, 简易实现以提高载入速度 {{{
+local function create_reverse_hl(name)
+  local opts = vim.api.nvim_get_hl(0, { name = name })
+  if vim.tbl_isempty(opts) then
+    return false
+  end
+  opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true })
+  vim.api.nvim_set_hl(0, name .. 'Reverse', opts)
+  return true
+end
+
+local function setup_status_line_highlight_group()
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#E0E000', ctermfg = 235, ctermbg = 184 })
+  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#282828', bg = '#6a6a6a', ctermfg = 235, ctermbg = 242 })
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119 })
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216 })
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203 })
+  create_reverse_hl('MyStlNormal')
+  create_reverse_hl('MyStlNormalNC')
+end
+
+local stl_hl_map = {
+  I = 'MyStlInsertMode',
+  T = 'MyStlInsertMode',
+  V = 'MyStlVisualMode',
+  S = 'MyStlVisualMode',
+  R = 'MyStlReplaceMode',
+}
+function MyStatusLine()
+  local mode = vim.api.nvim_get_mode().mode:upper()
+  local active = vim.g.statusline_winid == vim.fn.win_getid()
+  local trail_glyph = ''
+  if active then
+    local mode_group = stl_hl_map[mode] or 'MyStlNormalMode'
+    return ('%#' .. mode_group .. '# ' .. mode ..
+      ' %#MyStlNormal# %f │ %l/%L,%v %#MyStlNormalReverse#'
+      .. trail_glyph .. '%#StatusLine#')
+  else
+    return '%#MyStlNormalNC# %f │ %l/%L,%v %#MyStlNormalNCReverse#' .. trail_glyph .. '%#StatusLineNC#'
+  end
+end
+
+-- init MyStatusLine
+setup_status_line_highlight_group()
+vim.opt.laststatus = 2
+vim.opt.showmode = false
+vim.opt.statusline = '%!v:lua.MyStatusLine()'
+-- }}}
 
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:
