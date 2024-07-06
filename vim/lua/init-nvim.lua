@@ -446,13 +446,14 @@ function MyStatusLine()
   local mode = vim.api.nvim_get_mode().mode:upper()
   local active = vim.g.statusline_winid == vim.fn.win_getid()
   local trail_glyph = ''
+  local mod = vim.o.modified and ' [+]' or ''
   if active then
     local mode_group = stl_hl_map[mode] or 'MyStlNormalMode'
     return ('%#' .. mode_group .. '# ' .. mode ..
-      ' %#MyStlNormal# %f │ %l/%L,%v %#MyStlNormalReverse#'
+      ' %#MyStlNormal# %f' .. mod .. ' │ %l/%L,%v %#MyStlNormalReverse#'
       .. trail_glyph .. '%#StatusLine#')
   else
-    return '%#MyStlNormalNC# %f │ %l/%L,%v %#MyStlNormalNCReverse#' .. trail_glyph .. '%#StatusLineNC#'
+    return '%#MyStlNormalNC# %f' .. mod .. ' │ %l/%L,%v %#MyStlNormalNCReverse#' .. trail_glyph .. '%#StatusLineNC#'
   end
 end
 
