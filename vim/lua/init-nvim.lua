@@ -172,6 +172,11 @@ local function setup_pckr() -- {{{
 
     {'sakhnik/nvim-gdb', run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart')};
 
+    {
+      "hedyhli/outline.nvim",
+      cond = cmd('Outline'),
+      config = function() require('config/outline') end,
+    },
   }
 
   if true then
