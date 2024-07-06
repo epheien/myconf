@@ -181,11 +181,7 @@ local function setup_pckr() -- {{{
     {
       'nvim-lualine/lualine.nvim',
       cond = keys('n', '<Plug>lualine'),
-      config = function()
-        vim.opt.laststatus = 2
-        vim.opt.showmode = false
-        setup_lualine()
-      end
+      config = function() require('config/lualine') end,
     };
 
     -- telescope
