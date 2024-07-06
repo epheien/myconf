@@ -261,6 +261,7 @@ local function setup_pckr() -- {{{
   })
   table.insert(plugins, {
     'mfussenegger/nvim-dap',
+    cond = cmd('DapToggleBreakpoint'),
     config = function()
       vim.api.nvim_create_user_command('DapHover', function() require"dap.ui.widgets".hover() end, {})
     end
