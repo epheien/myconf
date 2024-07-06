@@ -122,7 +122,7 @@ local function setup_lualine() -- {{{
     inactive = { b = { fg = '#282828', bg = '#6a6a6a' } },
   }
   local location = function()
-    return vim.api.nvim_eval_statusline(' %l/%L,%v ', {winid = vim.fn.win_getid()})['str']
+    return vim.api.nvim_eval_statusline('%l/%L,%v', {winid = vim.fn.win_getid()})['str']
   end
   local opts = {
     options = {
