@@ -308,7 +308,6 @@ local function setup_incline()
   })
 end
 -- }}}
-setup_incline()
 
 local function setup_lualine() -- {{{
   local lualine = require('lualine')
@@ -376,6 +375,8 @@ local function setup_pckr() -- {{{
 
     {'dhananjaylatkar/cscope_maps.nvim', cond = {cmd('Cs'), cmd('Cstag')}, config = setup_cscope_maps};
     {'epheien/vim-gutentags', cond = event({'BufReadPre'}), requires = {'dhananjaylatkar/cscope_maps.nvim'}};
+
+    {'sakhnik/nvim-gdb', run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart')};
 
   }
 
@@ -536,6 +537,11 @@ local function setup_pckr() -- {{{
       end, { silent = true, expr = true })
     end
   })
+
+  table.insert(plugins, { 'b0o/incline.nvim', config = setup_incline })
+  table.insert(plugins, { 'dstein64/nvim-scrollview' })
+  table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cond = cmd('ColorizerToggle') })
+
   pckr.add(plugins)
 end
 -- }}}
