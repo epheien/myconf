@@ -470,6 +470,14 @@ vim.opt.showmode = false
 vim.opt.statusline = '%!v:lua.MyStatusLine()'
 -- :pwd<CR> 的时候会不及时刷新, 所以需要添加这个自动命令
 vim.api.nvim_create_autocmd('ModeChanged', { callback = function() vim.cmd.redrawstatus() end })
+-- 修正 quickfix 窗口的状态栏
+vim.api.nvim_create_autocmd('BufReadPost', {
+  callback = function()
+    if vim.opt_local.statusline:get() ~= '' then
+      vim.opt_local.statusline = ''
+    end
+  end
+})
 -- }}}
 
 -- 增强 <C-g> 显示的信息 {{{
