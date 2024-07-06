@@ -105,10 +105,9 @@ set cinoptions+=L0 " 输入 std: 的时候禁止缩进, 避免频繁的光标跳
 "   - 行号/最大行号,列号-虚拟列号
 "   - ruler 百分比
 set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fenc}]%)%{GetFtm(0)}%=%(%l/%L,%v%)\ %p
-if has('nvim')
-    set laststatus=3
-else
-    set laststatus=2 fillchars-=vert:\| fillchars+=vert:│
+set laststatus=2
+if !has('nvim')
+    set fillchars-=vert:\| fillchars+=vert:│
 endif
 " (noquote=1)
 function! GetFtm(...) "{{{
