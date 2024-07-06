@@ -410,6 +410,7 @@ func myrc#popup(lines, width, height, ...)
             \ 'col': 0,
             \ 'width': a:width,
             \ 'height': a:height,
+            \ 'zindex': 199,
             \ }
     let enter = 1
     " @ 创建一个 popup 窗口
