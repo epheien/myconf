@@ -174,8 +174,7 @@ local function setup_pckr() -- {{{
 
   }
 
-  -- 暂时只在 macOS 试验性地使用 nvim-cmp 和 nvim-lspconfig
-  if vim.fn.has('mac') == 1 then
+  if true then
     -- 事件顺序: BufReadPre => FileType => BufReadPost
     local mac_plugins = {
       {
