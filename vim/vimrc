@@ -1478,7 +1478,7 @@ if get(g:, 'gonvim_running', 0)
 endif
 
 if has('nvim-0.8.0')
-    exec 'source' s:joinpath(s:USERRUNTIME, 'init-nvim.lua')
+    lua require('init-nvim')
 endif
 
 " macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
