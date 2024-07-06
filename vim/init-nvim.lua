@@ -507,6 +507,7 @@ end
 
 -- init MyStatusLine
 setup_status_line_highlight_group()
+vim.api.nvim_create_autocmd('ColorScheme', {callback = setup_status_line_highlight_group})
 vim.opt.laststatus = 2
 vim.opt.showmode = false
 vim.opt.statusline = '%!v:lua.MyStatusLine()'
