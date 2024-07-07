@@ -157,8 +157,10 @@ local nvim_tree_opts = {
 
   -- 试验性的功能
   experimental = {
-    open = {
-      relative_path = true,
+    actions = {
+      open_file = {
+        relative_path = true,
+      },
     },
   },
 }
