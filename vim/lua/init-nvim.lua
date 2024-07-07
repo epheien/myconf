@@ -500,7 +500,7 @@ vim.keymap.set('n', '<C-g>', function()
   if vim.o.fileencoding ~= '' then
     table.insert(msg_list, string.format('[%s]', vim.o.fileencoding))
   end
-  if fname ~= '' then
+  if fname ~= '' and vim.fn.filereadable(fname) == 1 then
     table.insert(msg_list, vim.fn.strftime("%Y-%m-%d %H:%M:%S", vim.fn.getftime(fname)))
   end
   vim.cmd.echo(vim.fn.string(vim.fn.join(msg_list, ' ')))
