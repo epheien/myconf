@@ -88,7 +88,7 @@ set cinoptions+=(0,W8
 set cinoptions+=L0 " 输入 std: 的时候禁止缩进, 避免频繁的光标跳动
 
 " 总在 vim 窗口的右下角显示当前光标位置。
-"set ruler
+set ruler rulerformat=%l/%L,%v
 " 用 statusline 模拟
 "set statusline=%<%f\ %h%m%r%=%-13.(%l,%c%V%)\ %P
 " 显示了以下信息:
