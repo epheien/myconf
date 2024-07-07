@@ -449,7 +449,8 @@ local stl_hl_map = {
 }
 function MyStatusLine()
   local mode = vim.api.nvim_get_mode().mode:upper()
-  local active = vim.g.statusline_winid == vim.fn.win_getid()
+  --local active = vim.g.statusline_winid == vim.fn.win_getid()
+  local active = tonumber(vim.g.actual_curwin) == vim.fn.win_getid()
   local trail_glyph = ''
   local mod = vim.o.modified and ' [+]' or ''
   if active then
@@ -467,7 +468,7 @@ setup_status_line_highlight_group()
 vim.api.nvim_create_autocmd('ColorScheme', {callback = setup_status_line_highlight_group})
 vim.opt.laststatus = 2
 vim.opt.showmode = false
-vim.opt.statusline = '%!v:lua.MyStatusLine()'
+vim.opt.statusline = '%{%v:lua.MyStatusLine()%}'
 -- :pwd<CR> 的时候会不及时刷新, 所以需要添加这个自动命令
 vim.api.nvim_create_autocmd('ModeChanged', { callback = function() vim.cmd.redrawstatus() end })
 -- 修正 quickfix 窗口的状态栏
