@@ -1490,6 +1490,7 @@ if has('mac') || exists('$SSH_TTY')
   imap 。 .
   imap ： :
   imap ？ ?
+  imap ！ !
   imap 【 [
   imap 】 ]
   imap （ (
