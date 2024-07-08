@@ -421,7 +421,10 @@ end
 
 -- MyStatusLine, 简易实现以提高载入速度 {{{
 local function create_reverse_hl(name)
-  local opts = vim.api.nvim_get_hl(0, { name = name })
+  local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
+  if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = name .. 'Reverse' })) then
+    return false -- 已存在的话就忽略
+  end
   if vim.tbl_isempty(opts) then
     return false
   end
@@ -430,7 +433,7 @@ local function create_reverse_hl(name)
   return true
 end
 
-local function setup_status_line_highlight_group()
+local function status_line_theme_mywombat()
   vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#E0E000', ctermfg = 235, ctermbg = 184 })
   vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
   vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#282828', bg = '#6a6a6a', ctermfg = 235, ctermbg = 242 })
@@ -465,8 +468,9 @@ function MyStatusLine()
 end
 
 -- init MyStatusLine
-setup_status_line_highlight_group()
-vim.api.nvim_create_autocmd('ColorScheme', {callback = setup_status_line_highlight_group})
+local mystl_theme = status_line_theme_mywombat
+mystl_theme()
+vim.api.nvim_create_autocmd('ColorScheme', {callback = mystl_theme})
 vim.opt.laststatus = 2
 vim.opt.showmode = false
 vim.opt.statusline = '%{%v:lua.MyStatusLine()%}'
