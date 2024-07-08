@@ -452,13 +452,17 @@ local stl_hl_map = {
   R = 'MyStlReplaceMode',
 }
 function MyStatusLine()
-  local mode = vim.api.nvim_get_mode().mode:upper()
+  local m = vim.api.nvim_get_mode().mode
+  local mode = 'NORMAL'
+  if m ~= 'n' then
+    mode = require('config/mystl').mode_table[m] or m:upper()
+  end
   --local active = vim.g.statusline_winid == vim.fn.win_getid()
   local active = tonumber(vim.g.actual_curwin) == vim.fn.win_getid()
   local trail_glyph = ''
   local mod = vim.o.modified and ' [+]' or ''
   if active then
-    local mode_group = stl_hl_map[mode] or 'MyStlNormalMode'
+    local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
     return ('%#' .. mode_group .. '# ' .. mode ..
       ' %#MyStlNormal# %f' .. mod .. ' │ %l/%L,%v %#MyStlNormalReverse#'
       .. trail_glyph .. '%#StatusLine#')
