@@ -1485,16 +1485,22 @@ endif
 " macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
 " 但好消息是可以用映射修正这个问题
 if has('mac') || exists('$SSH_TTY')
-  imap ， ,
-  imap ； ;
-  imap 。 .
-  imap ： :
-  imap ？ ?
-  imap ！ !
-  imap 【 [
-  imap 】 ]
-  imap （ (
-  imap ） )
+    let keymaps = {
+        \'，': ',',
+        \'；': ';',
+        \'。': '.',
+        \'：': ':',
+        \'？': '?',
+        \'！': '!',
+        \'【': '[',
+        \'】': ']',
+        \'（': '(',
+        \'）': ')',
+        \}
+    for [lhs, rhs] in items(keymaps)
+        exec 'imap' lhs rhs
+        exec 'tmap' lhs rhs
+    endfor
 endif
 
 " ----------------------------------------------------------------------------
