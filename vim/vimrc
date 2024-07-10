@@ -1014,7 +1014,6 @@ Plug 'tpope/vim-surround'
 Plug 'tweekmonster/helpful.vim', {'on': 'HelpfulVersion'} " 获取特性加入/删除的具体版本
 
 " 新增语法支持
-Plug 'posva/vim-vue'
 Plug 'vobornik/vim-mql4'
 "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
 
@@ -1062,6 +1061,7 @@ if has('nvim')
     Plug 'ellisonleao/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 else
 " vim 专用插件
+    Plug 'posva/vim-vue'
     " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
     Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
