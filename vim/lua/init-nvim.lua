@@ -153,7 +153,7 @@ local function setup_pckr() -- {{{
       config = function() require('config/nvim-tree') end,
     };
 
-    {'stevearc/aerial.nvim', cond = cmd('AerialOpen'), config = function() require('aerial').setup() end};
+    {'stevearc/aerial.nvim', cond = cmd('AerialToggle'), config = function() require('config/aerial') end};
     {'nvim-treesitter/nvim-treesitter', cond = {cmd('TSBufToggle')}};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
 
