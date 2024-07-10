@@ -1067,14 +1067,14 @@ else
     Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
     Plug 'jreybert/vimagit', {'on': 'Magit'}
     Plug 'lambdalisue/gina.vim', {'on': 'Gina'}
+    call s:Plug('vim-signature') " TODO
+    call s:Plug('json5', {'for': 'json5'})
 endif
 
 " 本地插件
 call s:Plug('common')
 call s:Plug('vim-repeat') " autoload
-call s:Plug('vim-signature') " TODO
 call s:Plug('mymark', {'on': ['<Plug>MarkSet', '<Plug>MarkAllClear']})
-call s:Plug('json5', {'for': 'json5'})
 call s:Plug('python-syntax', {'for': 'python'})
 call s:Plug('jsonfmt', {'on': 'JsonFmt'})
 call s:Plug('colorizer', {'on': 'UpdateColor'})
