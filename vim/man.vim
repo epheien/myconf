@@ -57,7 +57,7 @@ filetype plugin indent on
 "set vb t_vb=
 
 " 显示行号
-set number
+set nonumber
 
 " 设定文件编码类型，彻底解决中文编码问题
 let &termencoding=&encoding
@@ -87,6 +87,8 @@ set expandtab
 
 " 长行不能完全显示时显示当前屏幕能显示的部分，长行不能完全显示时显示 @
 set display=lastline
+
+set laststatus=0
 
 " 上下为跨屏幕一行
 noremap <silent> k gk
@@ -177,20 +179,24 @@ set complete=.,t,w,b,k
 " 切换时隐藏缓冲而不是提示已修改未保存
 set hidden
 
-" 显示 80 字符右边距的实现，需要 7.3 以上版本
-if version >= 703
-    set cc=81
-endif
-
 " 设置 session 文件保存的信息
 " (缺省: "blank,buffers,curdir,folds,help,options,tabpages,winsize")
 set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winsize,resize
 
+set background=dark
 " 颜色方案
 if has('gui_running')   " gui 的情况下
-    colorscheme desertEx
+    if has('nvim')
+        colorscheme gruvbox-origin
+    else
+        colorscheme desertex
+    endif
 elseif &t_Co == 256     " 支持 256 色的话
-    colorscheme desertEx256
+    if has('nvim')
+        colorscheme gruvbox-origin
+    else
+        colorscheme desertex
+    endif
 elseif $TERM ==# "xterm"
     colorscheme default
 else
@@ -277,6 +283,7 @@ if exists(':tmap')
     tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
 endif
 nnoremap ; :
+nmap <silent> gq q
 "nnoremap <C-a> ggVG
 nnoremap <C-Tab> :bnext<CR>
 nnoremap <S-Tab> :bNext<CR>
