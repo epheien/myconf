@@ -337,6 +337,14 @@ local function setup_pckr() -- {{{
     end
   })
 
+  table.insert(plugins, {
+    'j-hui/fidget.nvim',
+    cond = event('BufReadPre'),
+    config = function()
+      require('fidget').setup()
+    end
+  })
+
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('config/incline') })
   table.insert(plugins, { 'dstein64/nvim-scrollview' })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cond = cmd('ColorizerToggle') })
