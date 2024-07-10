@@ -128,8 +128,10 @@ scrolling:
   #multiplier: 3
 
 # Font configuration
-# 如果字体太粗的话，执行以下命令并重启app
+# 如果字体太粗的话，执行以下命令并重启 app
 # defaults write org.alacritty AppleFontSmoothing -int 0
+# 如果想要较粗的字体的话, 执行以下命令并重启 app
+# defaults write org.alacritty AppleFontSmoothing -int 1
 font:
   # Normal (roman) font face
   normal:
