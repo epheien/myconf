@@ -1248,7 +1248,7 @@ let g:codi#interpreters = {
        \ },
    \ }
 
-if has('nvim')
+if has('nvim') && $TERM_PROGRAM !=# 'Apple_Terminal'
     set termguicolors | call s:SetupColorscheme('gruvbox')
 else
     call s:SetupColorscheme('gruvbox-origin')
@@ -1496,6 +1496,7 @@ if has('mac') || exists('$SSH_TTY')
         \   '】': ']',
         \   '（': '(',
         \   '）': ')',
+        \   '·': '`',
         \}
     for [lhs, rhs] in items(keymaps)
         exec 'imap' lhs rhs
