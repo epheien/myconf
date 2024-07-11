@@ -10,10 +10,10 @@ let s:enable_oscyank = v:false
 " 初始化本脚本的依赖项
 function! s:init() abort
     " tabline 高亮, gruvbox 主题
-    hi! MyTabLineSel  ctermfg=235 ctermbg=246 guifg=#282828 guibg=#a89984
-    hi! MyTabLine ctermfg=246 ctermbg=239 guifg=#a89984 guibg=#504945
-    hi! MyTabLineFill ctermbg=237 guibg=#3c3836
-    hi! MyTabLineClose ctermfg=235 ctermbg=208 guifg=#282828 guibg=#fe8019
+    hi! MyTabLineSel    ctermfg=235 ctermbg=246 guifg=#282828 guibg=#a89984
+    hi! MyTabLineNotSel ctermfg=246 ctermbg=239 guifg=#a89984 guibg=#504945
+    hi! MyTabLineFill   ctermbg=237 guibg=#3c3836
+    hi! MyTabLineClose  ctermfg=235 ctermbg=208 guifg=#282828 guibg=#fe8019
 endfunction
 
 call s:init()
@@ -793,7 +793,7 @@ function! myrc#MyTabLine() abort
         if active
           let s ..= '%#MyTabLineSel#'
         else
-          let s ..= '%#MyTabLine#'
+          let s ..= '%#MyTabLineNotSel#'
         endif
 
         " 设置标签页号 (用于鼠标点击)
