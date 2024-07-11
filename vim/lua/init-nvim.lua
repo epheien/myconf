@@ -467,11 +467,13 @@ local function status_line_theme_mywombat()
 end
 
 local stl_hl_map = {
-  I = 'MyStlInsertMode',
-  T = 'MyStlInsertMode',
-  V = 'MyStlVisualMode',
-  S = 'MyStlVisualMode',
-  R = 'MyStlReplaceMode',
+  I       = 'MyStlInsertMode',
+  T       = 'MyStlInsertMode',
+  V       = 'MyStlVisualMode',
+  S       = 'MyStlVisualMode',
+  R       = 'MyStlReplaceMode',
+  ['\22'] = 'MyStlVisualMode',
+  ['\19'] = 'MyStlVisualMode',
 }
 function MyStatusLine()
   local m = vim.api.nvim_get_mode().mode
