@@ -10,7 +10,8 @@ let s:enable_oscyank = v:false
 " 初始化本脚本的依赖项
 function! s:init() abort
     " tabline 高亮, 参考的是 lightline 的 wombat 主题配色
-    hi! MyTabLineSel  ctermfg=238 ctermbg=117 guifg=#444444 guibg=#8ac6f2
+    "hi! MyTabLineSel  ctermfg=238 ctermbg=117 guifg=#444444 guibg=#8ac6f2
+    hi! MyTabLineSel  ctermfg=235 ctermbg=248 guifg=#282828 guibg=#a8a8a8
     hi! MyTabLine ctermfg=247 ctermbg=240 guifg=#969696 guibg=#585858
     hi! MyTabLineFill ctermfg=240 ctermbg=238 guifg=#585858 guibg=#444444
     hi! MyTabLineClose ctermfg=248 ctermbg=242 guifg=#a8a8a8 guibg=#666666

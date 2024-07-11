@@ -444,7 +444,7 @@ end
 
 local function status_line_theme_mywombat()
   vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
-  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#a89984', ctermfg = 235, ctermbg = 246 })
+  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#a8a8a8', ctermfg = 235, ctermbg = 248 })
   vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#282828', bg = '#6a6a6a', ctermfg = 235, ctermbg = 242 })
   vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119 })
   vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216 })
