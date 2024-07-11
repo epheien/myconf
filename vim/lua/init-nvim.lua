@@ -429,7 +429,8 @@ end
 -- }}}
 
 -- MyStatusLine, 简易实现以提高载入速度 {{{
-local function create_reverse_hl(name)
+local function create_transitional_hl(left, right)
+  local name = left
   local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
   if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = name .. 'Reverse' })) then
     return false -- 已存在的话就忽略
@@ -437,7 +438,8 @@ local function create_reverse_hl(name)
   if vim.tbl_isempty(opts) then
     return false
   end
-  opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true, fg='#282828' })
+  local right_opts = vim.api.nvim_get_hl(0, { name = right, link = false })
+  opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true, fg = right_opts.bg or 'NONE' })
   vim.api.nvim_set_hl(0, name .. 'Reverse', opts)
   return true
 end
@@ -449,8 +451,8 @@ local function status_line_theme_gruvbox()
   vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#83a598' }) -- 235 109
   vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#fe8019' }) -- 235 208
   vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#8ec07c' }) -- 235 108
-  create_reverse_hl('MyStlNormal')
-  create_reverse_hl('MyStlNormalNC')
+  create_transitional_hl('MyStlNormal', 'Normal')
+  create_transitional_hl('MyStlNormalNC', 'Normal')
 end
 
 local function status_line_theme_mywombat()
@@ -460,8 +462,8 @@ local function status_line_theme_mywombat()
   vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119 })
   vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216 })
   vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203 })
-  create_reverse_hl('MyStlNormal')
-  create_reverse_hl('MyStlNormalNC')
+  create_transitional_hl('MyStlNormal', 'Normal')
+  create_transitional_hl('MyStlNormalNC', 'Normal')
 end
 
 local stl_hl_map = {
