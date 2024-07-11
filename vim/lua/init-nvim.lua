@@ -437,9 +437,20 @@ local function create_reverse_hl(name)
   if vim.tbl_isempty(opts) then
     return false
   end
-  opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true })
+  opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true, fg='#282828' })
   vim.api.nvim_set_hl(0, name .. 'Reverse', opts)
   return true
+end
+
+local function status_line_theme_gruvbox()
+  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#a89984', bg = '#504945' }) -- 246 239
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#7c6f64', bg = '#3c3836' }) -- 243 237
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#a89984' }) -- 235 246
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#83a598' }) -- 235 109
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#fe8019' }) -- 235 208
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#8ec07c' }) -- 235 108
+  create_reverse_hl('MyStlNormal')
+  create_reverse_hl('MyStlNormalNC')
 end
 
 local function status_line_theme_mywombat()
@@ -481,7 +492,7 @@ function MyStatusLine()
 end
 
 -- init MyStatusLine
-local mystl_theme = status_line_theme_mywombat
+local mystl_theme = status_line_theme_gruvbox
 mystl_theme()
 vim.api.nvim_create_autocmd('ColorScheme', {callback = mystl_theme})
 vim.opt.laststatus = 2
