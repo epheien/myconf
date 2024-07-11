@@ -12,7 +12,7 @@ function! s:init() abort
     " tabline 高亮, gruvbox 主题
     hi! MyTabLineSel    ctermfg=235 ctermbg=246 guifg=#282828 guibg=#a89984
     hi! MyTabLineNotSel ctermfg=246 ctermbg=239 guifg=#a89984 guibg=#504945
-    hi! MyTabLineFill   ctermbg=237 guibg=#3c3836
+    hi! MyTabLineFill   ctermbg=237 guibg=#3c3836 " 原版是 235 #282828
     hi! MyTabLineClose  ctermfg=235 ctermbg=208 guifg=#282828 guibg=#fe8019
 endfunction
 
