@@ -423,7 +423,8 @@ vim.api.nvim_create_user_command('FixMouseClick', function()
 end, {nargs = 0})
 -- 暂时所知仅 Alacritty 需要修正
 local TERM_PROGRAM = os.getenv('TERM_PROGRAM')
-if TERM_PROGRAM == 'alacritty' or TERM_PROGRAM == 'tmux' then
+if not (TERM_PROGRAM == 'kitty' or TERM_PROGRAM == 'iTerm' or
+      TERM_PROGRAM == 'Apple_Terminal' or vim.fn.has('gui_running') == 1) then
   setup_on_key()
 end
 -- }}}
