@@ -348,8 +348,17 @@ local function setup_pckr() -- {{{
 
   table.insert(plugins, { 'kshenoy/vim-signature', cond = event("BufReadPre") })
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('config/incline') })
-  table.insert(plugins, { 'dstein64/nvim-scrollview' })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cond = cmd('ColorizerToggle') })
+
+  table.insert(plugins, {
+    'dstein64/nvim-scrollview',
+    config = function()
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
+    end
+  })
 
   pckr.add(plugins)
 end
