@@ -638,8 +638,9 @@ endif
 
 if has('nvim')
     nnoremap <silent> \f :Telescope find_files<CR>
-    nnoremap <silent> \e :Telescope command_history<CR>
-    "nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
+    "nnoremap <silent> \e :Telescope command_history<CR>
+    " Leaderf 的实现更好用, 因为同样的匹配的时候, 最近的命令更优先
+    nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
     nnoremap <silent> \b :Telescope buffers<CR>
     "nnoremap <silent> \t :Telescope current_buffer_tags<CR>
     nnoremap <silent> \t :Leaderf bufTag<CR>
