@@ -1059,7 +1059,7 @@ if has('nvim')
     " 最基础的 nvim 包管理工具
     Plug 'epheien/pckr.nvim'
     " 基础配色, 但不在这里加载, 因为时机有点晚
-    Plug 'ellisonleao/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
+    Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 else
 " vim 专用插件
     Plug 'posva/vim-vue'
