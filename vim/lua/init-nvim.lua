@@ -360,6 +360,36 @@ local function setup_pckr() -- {{{
     end
   })
 
+  table.insert(plugins, {
+    'folke/edgy.nvim',
+    config = function()
+      vim.opt.splitkeep = "screen"
+      require('edgy').setup({
+        close_when_all_hidden = false,
+        wo = {
+          statusline = '─',
+        },
+        left = {
+          {
+            ft = 'NvimTree',
+            pinned = true,
+            open = 'NvimTreeOpen',
+          },
+          {
+            ft = "tagbar",
+            open = "TagbarOpen",
+          },
+          {
+            title = function() return 'Outline' end,
+            ft = "Outline",
+            open = "OutlineOpen",
+          },
+        },
+      })
+      vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
+    end
+  })
+
   pckr.add(plugins)
 end
 -- }}}
