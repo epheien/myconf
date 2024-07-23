@@ -311,6 +311,9 @@ local function setup_pckr() -- {{{
           changedelete = { text = '~' },
           untracked    = { text = '┆' },
         },
+        preview_config = {
+          border = { "", "", "", { " ", 'NormalFloat' }, "", "", "", { " ", 'NormalFloat' } },
+        },
       })
       vim.keymap.set('n', ']c', function() gitsigns.nav_hunk('next', {wrap = false}) end)
       vim.keymap.set('n', '[c', function() gitsigns.nav_hunk('prev', {wrap = false}) end)
