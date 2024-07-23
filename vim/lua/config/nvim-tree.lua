@@ -117,6 +117,7 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', 'H', opts('Toggle Filter: Dotfiles'))
   vim.keymap.del('n', 'M', opts('Toggle Filter: No Bookmark'))
   vim.keymap.del('n', 'L', opts('Toggle Group Empty'))
+  vim.keymap.del('n', '-', opts('Up'))
 end
 
 local nvim_tree_opts = {
