@@ -11,6 +11,8 @@ local opts = {
     goto_location = { '<CR>', '<2-LeftMouse>' },
     fold_all = 'zM',
     unfold_all = 'zR',
+    down_and_jump = {},
+    up_and_jump = {},
   },
 }
 

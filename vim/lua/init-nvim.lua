@@ -174,7 +174,7 @@ local function setup_pckr() -- {{{
 
     {
       "hedyhli/outline.nvim",
-      cond = cmd('Outline'),
+      cond = {cmd('Outline'), cmd('OutlineOpen')},
       config = function() require('config/outline') end,
     },
   }
