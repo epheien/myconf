@@ -518,7 +518,8 @@ vim.api.nvim_create_autocmd('ModeChanged', { callback = function() vim.cmd.redra
 -- 修正 quickfix 窗口的状态栏
 vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function()
-    if vim.opt_local.statusline:get() ~= '' then
+    local stl = vim.opt_local.statusline:get()
+    if stl ~= '' and stl ~= '─' then
       vim.opt_local.statusline = ''
     end
   end
