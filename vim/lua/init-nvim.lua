@@ -393,6 +393,14 @@ local function setup_pckr() -- {{{
     end
   })
 
+  table.insert(plugins, {
+    'rbong/vim-flog',
+    requires = {
+      'tpope/vim-fugitive',
+    },
+    cond = cmd('Flog'),
+  })
+
   pckr.add(plugins)
 end
 -- }}}

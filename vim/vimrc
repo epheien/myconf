@@ -1068,6 +1068,11 @@ else
     Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
     Plug 'jreybert/vimagit', {'on': 'Magit'}
     Plug 'lambdalisue/gina.vim', {'on': 'Gina'}
+
+    " git 相关插件
+    Plug 'junegunn/gv.vim', {'on': 'GV'}
+    Plug 'tpope/vim-fugitive', {'on': ['Gstatus', 'Gblame']}
+
     call s:Plug('vim-signature') " TODO
     call s:Plug('json5', {'for': 'json5'})
 endif
@@ -1100,10 +1105,6 @@ if (has('gui_running') || &t_Co == 256) && !has('nvim')
 else
     set tabline=%!myrc#MyTabLine() " 使用自定义的简易 tabline, 减少依赖
 endif
-
-" git 相关插件
-Plug 'junegunn/gv.vim', {'on': 'GV'}
-Plug 'tpope/vim-fugitive', {'on': ['Gstatus', 'Gblame']}
 
 call plug#end()
 " ####
