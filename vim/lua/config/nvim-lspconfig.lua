@@ -114,7 +114,8 @@ local lsp_setup = function(event)
   end
   inited[ext] = true
   _lsp_setup(ext_to_lsp_server(ext))
-  --vim.api.nvim_exec_autocmds(event.event, {buffer = event.buf, modeline = false})
+  -- 必须重发一次 autocmd, 否则 lspconfig 无法正确工作
+  vim.api.nvim_exec_autocmds(event.event, {buffer = event.buf, modeline = false})
 end
 
 vim.diagnostic.config({signs = false})
