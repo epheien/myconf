@@ -419,8 +419,8 @@ local help_winid = -1
 local create_help_floatwin = function()
   if not vim.api.nvim_win_is_valid(help_winid) then
     local bufid = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_option(bufid, "bufhidden", "wipe") -- 会被 :h 覆盖掉
-    vim.api.nvim_buf_set_option(bufid, "buftype", "help")
+    vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = bufid }) -- 会被 :h 覆盖掉
+    vim.api.nvim_set_option_value("buftype", "help", { buf = bufid })
     local width = math.min(vim.o.columns, 100)
     local col = math.floor((vim.o.columns - width) / 2)
     help_winid = vim.api.nvim_open_win(bufid, false, {
@@ -432,7 +432,7 @@ local create_help_floatwin = function()
       border = 'rounded',
     })
     -- BUG: 使用 vim.fn.setwinvar 的话不能正常工作, 而下面的 API 就正常
-    vim.api.nvim_win_set_option(help_winid, 'winhighlight', 'Normal:Normal')
+    vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal', { win = help_winid })
   end
   vim.fn.win_gotoid(help_winid)
 end
