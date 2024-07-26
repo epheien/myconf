@@ -65,7 +65,8 @@ export MANPATH="$__coreutils/libexec/gnuman:$MANPATH"
 # use vim as MANPAGER
 if [ -f "$HOME/.vim/man.vim" ]; then
     if command -v nvim >/dev/null 2>&1; then
-        export MANPAGER="env MAN_PN=1 nvim -u ~/.vim/man.vim -M -c Man! -"
+        #export MANPAGER="env MAN_PN=1 nvim -u ~/.vim/man.vim -M -c Man! -"
+        export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M -c MANPAGER -"
     else
         export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M -c MANPAGER -"
     fi
