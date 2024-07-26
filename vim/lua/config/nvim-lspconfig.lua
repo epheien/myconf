@@ -3,12 +3,12 @@ local lspconfig = require('lspconfig')
 local inited = {}
 
 -- lsp server 对应的扩展名, 不存在就不会启动 lsp
--- TODO: 可以切换为 FileType 驱动, 需要在事件处理回调再次触发一次事件
+-- ext 事实为 filetype, 已经优化为使用文件类型映射到 lsp
 local server_exts = {
-  clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto', 'h', 'hpp', 'cc', 'hh', 'cxx', 'hxx' },
-  lua_ls = {'lua'},
-  pyright = {'py', 'python'},
-  gopls = {'go'},
+  clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+  lua_ls = { 'lua' },
+  pyright = { 'python' },
+  gopls = { 'go' },
 }
 
 local already_setup = {}
@@ -108,14 +108,13 @@ local function _lsp_setup(server)
 end
 
 local lsp_setup = function(event)
-  --local ext = vim.fn.fnamemodify(event.file, ':e')
   local ext = event.match
   if inited[ext] then
     return
   end
   inited[ext] = true
   _lsp_setup(ext_to_lsp_server(ext))
-  vim.api.nvim_exec_autocmds(event.event, {buffer = event.buf, modeline = false})
+  --vim.api.nvim_exec_autocmds(event.event, {buffer = event.buf, modeline = false})
 end
 
 vim.diagnostic.config({signs = false})
@@ -125,4 +124,4 @@ for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
   vim.api.nvim_set_hl(0, group, {})
 end
 
-vim.api.nvim_create_autocmd('FileType', { callback = lsp_setup; })
+vim.api.nvim_create_autocmd('FileType', { callback = lsp_setup })
