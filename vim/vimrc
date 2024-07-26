@@ -1429,6 +1429,7 @@ let g:clang_format#style_options = {
     \ 'ReflowComments': v:false,
     \ 'SortIncludes': v:false,
     \ 'IncludeBlocks': 'Preserve',
+    \ 'SpacesBeforeTrailingComments': 1,
     \ }
 
 " ========== gitgutter ==========
