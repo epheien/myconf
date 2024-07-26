@@ -401,6 +401,14 @@ local function setup_pckr() -- {{{
     cond = cmd('Flog'),
   })
 
+  table.insert(plugins, {
+    'williamboman/mason.nvim',
+    cond = cmd('Mason'),
+    config = function () require('mason').setup() end,
+  })
+  -- 手动更新 PATH, 避免载入 mason.nvim
+  vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin' .. ':' .. vim.env.PATH
+
   pckr.add(plugins)
 end
 -- }}}
