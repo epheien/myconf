@@ -41,7 +41,6 @@ end
 -- from lazyvim
 ---@param entry cmp.Entry
 function M.auto_brackets(entry)
-  local cmp = require("cmp")
   local Kind = cmp.lsp.CompletionItemKind
   local item = entry:get_completion_item()
   if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
@@ -58,7 +57,6 @@ end
 -- The documentation is a preview of the snippet.
 ---@param window cmp.CustomEntriesView|cmp.NativeEntriesView
 function M.add_missing_snippet_docs(window)
-  local cmp = require("cmp")
   local Kind = cmp.lsp.CompletionItemKind
   local entries = window:get_entries()
   for _, entry in ipairs(entries) do
@@ -75,9 +73,7 @@ function M.add_missing_snippet_docs(window)
 end
 
 function M.visible()
-  ---@module 'cmp'
-  local cmp = package.loaded["cmp"]
-  return cmp and cmp.core.view:visible()
+  return cmp.core.view:visible()
 end
 
 -- This is a better implementation of `cmp.confirm`:
@@ -86,7 +82,6 @@ end
 -- This function is both faster and more reliable.
 ---@param opts? {select: boolean, behavior: cmp.ConfirmBehavior}
 function M.confirm(opts)
-  local cmp = require("cmp")
   opts = vim.tbl_extend("force", {
     select = true,
     behavior = cmp.ConfirmBehavior.Insert,
@@ -142,7 +137,6 @@ function M.setup(opts)
     return M.snippet_preview(input)
   end
 
-  local cmp = require("cmp")
   cmp.setup(opts)
 
   cmp.event:on('confirm_done', function(event)
