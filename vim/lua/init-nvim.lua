@@ -272,14 +272,10 @@ local function setup_pckr() -- {{{
     end
   })
   -- NOTE: 需要调试 nvim lua 的话, 这个插件必须在调试实例无条件加载
-  local osv_cond = cmd('DapLuaRunThis')
-  if os.getenv('NVIM_DEBUG_LUA') then
-    osv_cond = nil
-  end
   table.insert(plugins, {
     'jbyuki/one-small-step-for-vimkind',
     requires = {'mfussenegger/nvim-dap'},
-    cond = osv_cond,
+    cond = os.getenv('NVIM_DEBUG_LUA') and nil or cmd('DapLuaRunThis'),
     config = function()
       local dap = require"dap"
       dap.configurations.lua = {
