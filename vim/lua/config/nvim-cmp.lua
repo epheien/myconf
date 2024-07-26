@@ -254,7 +254,22 @@ local opts = {
       --end,
       keyword_length = 2, -- 可单独兜底设置
     },
-    { name = 'buffer' },
+    {
+      name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+            if byte_size <= 1024 * 1024 then -- 1 MiB max
+              bufs[buf] = true
+            end
+          end
+          return vim.tbl_keys(bufs)
+        end
+      },
+    },
     { name = 'path' },
     { name = 'luasnip' },
     --{ name = 'vsnip' },
@@ -385,15 +400,29 @@ local cmdline_opts = {
 -- `:` cmdline setup.
 cmp.setup.cmdline(':', cmdline_opts)
 
+local search_buffer_source = {
+  name = 'buffer',
+  option = {
+    get_bufnrs = function()
+      local buf = vim.api.nvim_get_current_buf()
+      local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+      if byte_size > 1024 * 1024 then -- 1 MiB max
+        return {}
+      end
+      return { buf }
+    end
+  },
+}
+
 cmp.setup.cmdline('/', vim.tbl_deep_extend('force', cmdline_opts, {
   sources = {
-    { name = 'buffer' }
+    search_buffer_source,
   },
 }))
 
 cmp.setup.cmdline('?', vim.tbl_deep_extend('force', cmdline_opts, {
   sources = {
-    { name = 'buffer' }
+    search_buffer_source,
   },
 }))
 
