@@ -531,14 +531,14 @@ local stl_hl_map = {
   ['\22'] = 'MyStlVisualMode',
   ['\19'] = 'MyStlVisualMode',
 }
+local mode_table = require('config/mystl').mode_table
 function MyStatusLine()
   local m = vim.api.nvim_get_mode().mode
   local mode = 'NORMAL'
   if m ~= 'n' then
-    mode = require('config/mystl').mode_table[m] or m:upper()
+    mode = mode_table[m] or m:upper()
   end
-  --local active = vim.g.statusline_winid == vim.fn.win_getid()
-  local active = tonumber(vim.g.actual_curwin) == vim.fn.win_getid()
+  local active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
   local trail_glyph = ''
   local mod = vim.o.modified and ' [+]' or ''
   if active then
