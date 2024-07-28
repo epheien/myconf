@@ -190,7 +190,11 @@ lspkind_opts = {
 }
 local opts = {
   enabled = function()
-    return enabled
+    local disabled = false
+    disabled = disabled or (vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt')
+    disabled = disabled or (vim.fn.reg_recording() ~= '')
+    disabled = disabled or (vim.fn.reg_executing() ~= '')
+    return not disabled and enabled
   end,
   -- 需要自动补全函数扩招的文件类型
   auto_brackets = { 'python', 'lua' },
