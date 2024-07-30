@@ -183,4 +183,11 @@ if vim.fn.OnlyASCII() ~= 0 then
   }
 end
 
+-- 每个窗口记录上一个窗口, 以实现保存窗口跳转历史
+vim.api.nvim_create_autocmd('WinEnter', {
+  callback = function()
+    vim.api.nvim_win_set_var(0, 'prev_winid', vim.fn.win_getid(vim.fn.winnr('#')))
+  end
+})
+
 require("nvim-tree").setup(nvim_tree_opts)

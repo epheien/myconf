@@ -730,6 +730,9 @@ endfunction
 " 可用 - 即可用其他窗口替换本窗口而不会令本窗口的内容消失
 function! s:IsWindowUsable(nWinNr) "{{{2
     let nWinNr = a:nWinNr
+    if empty(nWinNr)
+        return 0
+    endif
     " 特殊窗口，如特殊缓冲类型的窗口、预览窗口
     let bIsSpecialWindow = getwinvar(nWinNr, '&buftype') !=# ''
                 \|| getwinvar(nWinNr, '&previewwindow')
@@ -772,6 +775,10 @@ function! myrc#GetWindowIdForNvimTreeToOpen() abort
     let prev_winnr = winnr('#')
     if s:IsWindowUsable(prev_winnr)
         return win_getid(prev_winnr)
+    endif
+    let prev_prev_winid = getwinvar(prev_winnr, 'prev_winid')
+    if s:IsWindowUsable(prev_prev_winid)
+        return prev_prev_winid
     endif
     let nr = s:GetFirstUsableWinNr()
     if nr != -1
