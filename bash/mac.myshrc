@@ -60,6 +60,8 @@ PATH="/usr/local/opt/mysql-client/bin:$PATH"
 PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 # gopath
 PATH="$PATH:$HOME/go/bin"
+# luarocks
+PATH="$PATH:$HOME/.luarocks/bin"
 
 export MANPATH="$__coreutils/libexec/gnuman:$MANPATH"
 # use vim as MANPAGER
