@@ -877,8 +877,10 @@ function! s:MouseMark() "{{{2
         return
     endif
     let c = getline('.')[col('.')-1]
-    if c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}'
-            \   || &buftype ==# 'quickfix'
+    if &buftype ==# 'quickfix'
+        call myrc#MyEnter()
+        return
+    elseif c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}'
         execute "normal! \<2-LeftMouse>"
         return
     endif
