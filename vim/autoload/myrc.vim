@@ -321,7 +321,21 @@ endfunction
 
 let s:last_repeat = 0
 func myrc#MyEnter()
-    if &buftype =~# '\<quickfix\>' || !empty(getcmdwintype())
+    if &buftype ==# 'quickfix'
+        " 智能寻找一个可用的窗口
+        let winid = myrc#GetWindowIdForQuickfixToOpen()
+        if winid != 0
+            " 通过改变上一个窗口来控制 quickfix 打开的窗口
+            let bak_ei = &ei
+            set eventignore=all
+            call win_gotoid(winid)
+            let &ei = bak_ei
+            noautocmd wincmd p
+            exec "normal! \<CR>"
+        endif
+        exec "normal! \<CR>"
+        return
+    elseif !empty(getcmdwintype())
         exec "normal! \<CR>"
         return
     endif
@@ -727,7 +741,7 @@ function! s:BufInWinCount(nBufNr) "{{{2
 endfunction
 
 " 判断窗口是否可用
-" 可用 - 即可用其他窗口替换本窗口而不会令本窗口的内容消失
+" 可用 - 即可用其他 buffer 替换本窗口而不会令本窗口原来的 buffer 的内容消失
 function! s:IsWindowUsable(nWinNr) "{{{2
     let nWinNr = a:nWinNr
     if empty(nWinNr)
@@ -788,10 +802,26 @@ function! myrc#GetWindowIdForNvimTreeToOpen() abort
     let width = luaeval("require('nvim-tree').config.view.width")
     if &columns > width + 1
         exec 'rightbelow' (&columns - (width + 1)) 'vnew'
-        echomsg win_getid()
         return win_getid()
     endif
     " 返回 0 的话, nvim-tree 会按照自己逻辑新建一个可用窗口
+    return 0
+endfunction
+
+function! myrc#GetWindowIdForQuickfixToOpen() abort
+    let prev_winnr = winnr('#')
+    if s:IsWindowUsable(prev_winnr)
+        return win_getid(prev_winnr)
+    endif
+    let prev_prev_winid = getwinvar(prev_winnr, 'prev_winid')
+    if s:IsWindowUsable(prev_prev_winid)
+        return prev_prev_winid
+    endif
+    let nr = s:GetFirstUsableWinNr()
+    if nr != -1
+        return win_getid(nr)
+    endif
+    " 当前仅剩下当前窗口或没有可用的窗口了
     return 0
 endfunction
 
