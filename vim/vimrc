@@ -1029,7 +1029,6 @@ Plug 'mbbill/undotree', {'on': 'UndotreeShow'}
 Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
 Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
-Plug 'metakirby5/codi.vim', {'on': 'Codi'}
 Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'kassio/neoterm', {'on': 'Tnew'}
 Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
@@ -1242,15 +1241,6 @@ let g:startify_custom_header = [
     \ '        /_____/  _  .___//_/ /_/   /____/     _____/ /_/  /_/ /_/ /_/ ',
     \ '                 /_/                                                  ',
     \ ]
-
-" python3 的 readline 会生成历史文件(~/.python_history-01234.tmp), 退出的时候需要清理掉
-let g:codi#interpreters = {
-   \ 'python': {
-       \ 'bin': 'python3',
-       \ 'prompt': '^\(>>>\|\.\.\.\) ',
-       \ 'quitcmd': "import readline; readline.clear_history();",
-       \ },
-   \ }
 
 if has('nvim') && $TERM_PROGRAM !=# 'Apple_Terminal'
     set termguicolors | call s:SetupColorscheme('gruvbox')
