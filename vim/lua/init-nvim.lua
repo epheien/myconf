@@ -435,14 +435,16 @@ end
 vim.keymap.set('c', '<CR>', function()
   local line = vim.fn.getcmdline()
   local ok, parsed = pcall(vim.api.nvim_parse_cmd, line, {})
-  if ok and parsed.cmd == 'help' then
+  if not ok then
+    return '<CR>'
+  end
+  if parsed.cmd == 'help' then
     vim.schedule(function()
       create_help_floatwin()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'cn', false)
     end)
     return ''
   end
-  -- fallback
   return '<CR>'
 end, {silent = true, expr = true})
 vim.keymap.set('n', '<F1>', function()
