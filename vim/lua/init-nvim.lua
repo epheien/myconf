@@ -444,6 +444,14 @@ vim.keymap.set('c', '<CR>', function()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'cn', false)
     end)
     return ''
+  elseif parsed.cmd == 'make' then -- 替换 make 命令为 AsyncRun make
+    --vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Home>AsyncRun <End><CR>', true, true, true), 'cn', false)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-c>', true, true, true), 'cn', false)
+    vim.schedule(function()
+      vim.cmd('AsyncRun ' .. line) -- NOTE: 设置 g:asyncrun_open > 0 以自动打开 qf
+      --vim.cmd.echo(vim.fn.string(':' .. line))
+    end)
+    return ''
   end
   return '<CR>'
 end, {silent = true, expr = true})

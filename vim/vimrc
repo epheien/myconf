@@ -1115,6 +1115,7 @@ call plug#end()
 let g:gruvbox_italic = 0 " gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
 let g:gruvbox_bold = 1 " gruvbox 主题的粗体设置
 let g:mkdp_auto_close = 0 " markdown-preview 禁止自动关闭
+let g:asyncrun_open = 5 " asyncrun 自动打开 quickfix
 
 if has('nvim')
     autocmd vimrc VimEnter * ++once set helplang=
