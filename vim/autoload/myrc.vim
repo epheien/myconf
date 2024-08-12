@@ -331,7 +331,6 @@ func myrc#MyEnter()
             call win_gotoid(winid)
             let &ei = bak_ei
             noautocmd wincmd p
-            exec "normal! \<CR>"
         endif
         exec "normal! \<CR>"
         return
