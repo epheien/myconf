@@ -909,8 +909,8 @@ key_bindings:
   #- { key: H,              mods: Command,                    action: Hide                  }
   #- { key: H,              mods: Command|Alt,                action: HideOtherApplications }
   #- { key: M,              mods: Command,                    action: Minimize              }
-  #- { key: Q,              mods: Command,                    action: Quit                  }
-  # cmd-w => ctrl-d
+  # cmd-w/cmd-q => ctrl-d
+  - { key: Q,              mods: Command,                    chars: "\x04"                  }
   - { key: W,              mods: Command,                    chars: "\x04"                  }
   #- { key: N,              mods: Command,                    action: CreateNewWindow       }
   #- { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
