@@ -1395,10 +1395,10 @@ command VGtagsInit call myrc#VGtagsInit()
 " ========== termdbg ==========
 nnoremap <silent> <C-p> :exec 'TSendCommand p' expand('<cword>')<CR>
 vnoremap <silent> <C-p> y:exec 'TSendCommand p' @"<CR>
-if v:false
-    nnoremap <silent> <M-n> :TNext<CR>
-    nnoremap <silent> <M-s> :TStep<CR>
-endif
+" 快捷键来自 vscode 的调试器
+nnoremap <silent> <F9> :TToggleBreak<CR>
+nnoremap <silent> <F10> :TNext<CR>
+nnoremap <silent> <F11> :TStep<CR>
 
 " ========== mydict ==========
 nnoremap <silent> <C-f> :call mydict#Search(expand('<cword>'))<CR>
