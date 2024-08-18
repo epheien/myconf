@@ -257,7 +257,7 @@ inoremap <3-MiddleMouse> <Nop>
 inoremap <4-MiddleMouse> <Nop>
 " 上下文菜单, 慢慢完善
 nnoremap <silent> <RightRelease> :call myrc#ContextPopup(1)<CR>
-nnoremap <silent> <C-p> :call myrc#ContextPopup()<CR>
+"nnoremap <silent> <C-p> :call myrc#ContextPopup()<CR>
 
 " 全能补全禁止预览
 set completeopt=menuone
@@ -1393,9 +1393,9 @@ endif
 command VGtagsInit call myrc#VGtagsInit()
 
 " ========== termdbg ==========
+nnoremap <silent> <C-p> :exec 'TSendCommand p' expand('<cword>')<CR>
+vnoremap <silent> <C-p> y:exec 'TSendCommand p' @"<CR>
 if v:false
-    nnoremap <silent> <M-p> :exec 'TSendCommand p' expand('<cword>')<CR>
-    vnoremap <silent> <M-p> y:exec 'TSendCommand p' @"<CR>
     nnoremap <silent> <M-n> :TNext<CR>
     nnoremap <silent> <M-s> :TStep<CR>
 endif
