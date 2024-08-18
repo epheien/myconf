@@ -406,6 +406,17 @@ endfunc
 
 let s:popup_winid = 0
 let s:popup_orig_pos = []
+let s:default_border = [
+    \   [ '', 'NormalFloat' ],
+    \   [ '', 'NormalFloat' ],
+    \   [ '', 'NormalFloat' ],
+    \   [ ' ', 'NormalFloat' ],
+    \   [ '', 'NormalFloat' ],
+    \   [ '', 'NormalFloat' ],
+    \   [ '', 'NormalFloat' ],
+    \   [ ' ', 'NormalFloat' ],
+    \ ]
+
 " autoclose=1
 func myrc#popup(lines, width, height, ...)
     if !has('nvim')
@@ -426,9 +437,10 @@ func myrc#popup(lines, width, height, ...)
     let options = {
             \ 'relative': 'cursor',
             \ 'row': 1,
-            \ 'col': 0,
+            \ 'col': -1,
             \ 'width': a:width,
             \ 'height': a:height,
+            \ 'border': s:default_border,
             \ 'zindex': 199,
             \ }
     let enter = 1
@@ -439,7 +451,7 @@ func myrc#popup(lines, width, height, ...)
     " @ 设置窗口信息，添加内容
     enew
     call setwinvar(winid, '&wrap', 0)
-    call setwinvar(winid, '&winhighlight', 'Normal:Pmenu,CursorLine:PmenuSel')
+    call setwinvar(winid, '&winhighlight', 'Normal:NormalFloat,CursorLine:PmenuSel')
     " 以下两场产生一个临时窗口，关闭即清空
     setlocal bufhidden=wipe colorcolumn= nobuflisted nocursorcolumn nocursorline
     setlocal nolist nonumber norelativenumber nospell noswapfile matchpairs=
