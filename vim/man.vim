@@ -189,13 +189,13 @@ if has('gui_running')   " gui 的情况下
     if has('nvim')
         colorscheme gruvbox-origin
     else
-        colorscheme desertex
+        colorscheme desertEx
     endif
 elseif &t_Co == 256     " 支持 256 色的话
     if has('nvim')
         colorscheme gruvbox-origin
     else
-        colorscheme desertex
+        colorscheme desertEx
     endif
 elseif $TERM ==# "xterm"
     colorscheme default
