@@ -405,6 +405,14 @@ local function setup_pckr() -- {{{
   -- 手动更新 PATH, 避免载入 mason.nvim
   vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin' .. ':' .. vim.env.PATH
 
+  -- NOTE: 官方不推荐使用懒加载的方式, 容易出现奇怪的问题
+  table.insert(plugins, {
+    'andymass/vim-matchup',
+    config = function()
+      vim.g.matchup_matchparen_offscreen = {}
+    end
+  })
+
   pckr.add(plugins)
 end
 -- }}}
