@@ -194,7 +194,7 @@ local function setup_pckr() -- {{{
         requires = {
           'hrsh7th/cmp-nvim-lsp',
           'onsails/lspkind.nvim',
-          'hrsh7th/cmp-buffer',
+          --'hrsh7th/cmp-buffer',
           'hrsh7th/cmp-path',
           'epheien/cmp-cmdline',
           --'hrsh7th/vim-vsnip',
