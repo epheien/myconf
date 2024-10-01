@@ -295,7 +295,7 @@ local function setup_pckr() -- {{{
 
   table.insert(plugins, {
     'lewis6991/gitsigns.nvim',
-    cond = cmd('Gitsigns'),
+    cond = event('FileType'),
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup({
