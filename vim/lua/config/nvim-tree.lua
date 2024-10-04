@@ -118,6 +118,9 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', 'M', opts('Toggle Filter: No Bookmark'))
   vim.keymap.del('n', 'L', opts('Toggle Group Empty'))
   vim.keymap.del('n', '-', opts('Up'))
+
+  -- 不使用的快捷键, 避免混淆/误操作
+  vim.keymap.del('n', 'u', opts(''))
 end
 
 local nvim_tree_opts = {
