@@ -368,6 +368,9 @@ local function setup_pckr() -- {{{
         wo = {
           statusline = '─',
         },
+        animate = {
+          enabled = false,
+        },
         left = {
           {
             ft = 'NvimTree',
