@@ -416,6 +416,21 @@ local function setup_pckr() -- {{{
     end
   })
 
+  table.insert(plugins, {
+    'nvchad/menu',
+    config = function()
+      local callback = function(mouse)
+        return function()
+          local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
+          require("menu").open(options, { mouse = mouse, border = false })
+        end
+      end
+      vim.keymap.set("n", "<RightRelease>", callback(true), {})
+      vim.keymap.set("n", "Z", callback(false), { nowait = true })
+    end,
+    requires = { 'nvchad/volt' },
+  })
+
   pckr.add(plugins)
 end
 -- }}}
