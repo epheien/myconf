@@ -421,6 +421,10 @@ local function setup_pckr() -- {{{
     config = function()
       local callback = function(mouse)
         return function()
+          local menu_exists = #require("menu.state").bufids > 0
+          if menu_exists then
+            return
+          end
           local options = vim.bo.ft == "NvimTree" and "nvimtree" or "mydef"
           require("menu").open(options, { mouse = mouse, border = false })
         end
