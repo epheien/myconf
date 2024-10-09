@@ -419,6 +419,7 @@ local function setup_pckr() -- {{{
 
   table.insert(plugins, {
     'nvchad/menu',
+    cond = { keys('n', 'Z'), keys('n', '<RightRelease>') },
     config = function()
       local callback = function(mouse)
         return function()
@@ -432,6 +433,7 @@ local function setup_pckr() -- {{{
       end
       vim.keymap.set("n", "<RightRelease>", callback(true), {})
       vim.keymap.set("n", "Z", callback(false), { nowait = true })
+      vim.o.mousemodel = 'extend'
     end,
     requires = { 'nvchad/volt' },
   })
