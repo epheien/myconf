@@ -1,0 +1,6 @@
+{
+    "function() | end": {
+        "prefix": "fun",
+        "body": ["function()", "\t$1", "end"]
+    }
+}
