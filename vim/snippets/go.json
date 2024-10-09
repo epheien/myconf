@@ -1,0 +1,7 @@
+{
+    "if err != nil { return }": {
+        "prefix": "ifee",
+        "body": "if err != nil {\n\treturn\n}\n$1",
+        "description": "Snippet for if err != nil { return } |"
+    }
+}

@@ -208,6 +208,7 @@ local function setup_pckr() -- {{{
         --cond = cmd('CmpStatus'),
         config = function()
           require('config/nvim-cmp')
+          require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
           vim.keymap.set('n', ';', ':')
         end,
       };
