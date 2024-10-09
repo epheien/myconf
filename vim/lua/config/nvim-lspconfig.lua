@@ -4,11 +4,13 @@ local inited = {}
 
 -- lsp server 对应的扩展名, 不存在就不会启动 lsp
 -- ext 事实为 filetype, 已经优化为使用文件类型映射到 lsp
+-- key 对应于 nvim-lspconfig 的模块名称, value 对应于文件类型
 local server_exts = {
   clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
   lua_ls = { 'lua' },
   pyright = { 'python' },
   gopls = { 'go' },
+  cmake = { 'cmake' },
 }
 
 local already_setup = {}
