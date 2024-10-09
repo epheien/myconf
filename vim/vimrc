@@ -1312,13 +1312,8 @@ endif
 " ========== SimpleSuperTab ==========
 "{{{
 " 需要把 completeopt 设置为 menuone
-if has('nvim')
-    lua vim.api.nvim_set_keymap('i', '<Tab>', '', {callback=vim.fn['myrc#SuperTab'], noremap=true, silent=true})
-    lua vim.api.nvim_set_keymap('i', '<S-Tab>', '', {callback=vim.fn['myrc#ShiftTab'], noremap=true, silent=true})
-else
-    inoremap <silent> <Tab> <C-r>=myrc#SuperTab()<CR>
-    inoremap <silent> <S-Tab> <C-r>=myrc#ShiftTab()<CR>
-endif
+inoremap <silent> <Tab> <C-r>=myrc#SuperTab()<CR>
+inoremap <silent> <S-Tab> <C-r>=myrc#ShiftTab()<CR>
 
 "}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
