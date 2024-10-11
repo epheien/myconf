@@ -14,6 +14,9 @@ local opts = {
     down_and_jump = {},
     up_and_jump = {},
   },
+  symbol_folding = {
+    autofold_depth = 2;
+  },
 }
 
 outline.setup(opts)
