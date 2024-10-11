@@ -645,6 +645,8 @@ if has('nvim')
     "nnoremap <silent> \t :Telescope current_buffer_tags<CR>
     nnoremap <silent> \t :Leaderf bufTag<CR>
     nnoremap <silent> \T :Telescope tags<CR>
+    " gtags => g
+    nnoremap <silent> \g :Telescope tags<CR>
     nnoremap <silent> \/ :Telescope current_buffer_fuzzy_find<CR>
 else
     nnoremap <silent> \f :Leaderf file<CR>
