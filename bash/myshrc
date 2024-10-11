@@ -76,6 +76,11 @@ if command -v thefuck &>/dev/null; then
     eval $(thefuck --alias)
 fi
 
+# wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
+if [ -e "$HOME/bin/z.lua" ]; then
+    eval "$(lua ~/bin/z.lua  --init zsh)"
+fi
+
 export HOMEBREW_NO_AUTO_UPDATE=true
 export TLDR_AUTO_UPDATE_DISABLED=true
 
