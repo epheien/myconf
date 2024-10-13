@@ -893,17 +893,17 @@ function myrc#MyTabLabel(n, active)
 endfunction
 
 function myrc#Cstag() abort
-  if &filetype == "help"
-      execute "normal! \<C-]>"
-      return
-  endif
-  let cword = expand('<cword>')
-  " 优先使用 tag 跳转然后再用 cstag
-  try
-      execute 'normal!' "g\<C-]>"
-  catch
-      execute "Cstag" cword
-  endtry
+    if &filetype == "help"
+        exec "normal! \<C-]>"
+        return
+    endif
+    let cword = expand('<cword>')
+    " 优先使用 tag 跳转然后再用 cstag
+    try
+        exec 'tjump' cword
+    catch
+        exec "Cstag" cword
+    endtry
 endfunction
 
 " 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则
