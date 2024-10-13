@@ -900,7 +900,11 @@ function myrc#Cstag() abort
     let cword = expand('<cword>')
     " 优先使用 tag 跳转然后再用 cstag
     try
-        exec 'tjump' cword
+        if &tagfunc ==# 'v:lua.vim.lsp.tagfunc'
+            exec 'normal' "g\<C-]>"
+        else
+            exec 'tjump' cword
+        endif
     catch
         exec "Cstag" cword
     endtry
