@@ -16,7 +16,12 @@ if [ -n "$ZSH_VERSION" ]; then
     #PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
     #PROMPT="%B%{\$fg[red]%}%n@%{\$fg[blue]%}%m%b ${PROMPT}"
     # ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") '
+    PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    if [ -n "$SSH_TTY" ]; then
+        PROMPT='%(?:%{$fg_bold[yellow]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") '
+        PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    fi
     # enable color support of ls and also add handy aliases
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
@@ -35,7 +40,7 @@ if [ -n "$ZSH_VERSION" ]; then
     # bash compatible ctrl-w
     unset WORDCHARS
     # 禁用历史共享
-    #unsetopt share_history
+    unsetopt share_history
 
     # Uncomment the following line to disable auto-setting terminal title.
     DISABLE_AUTO_TITLE="true"
@@ -78,7 +83,11 @@ fi
 
 # wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
 if [ -e "$HOME/bin/z.lua" ]; then
-    eval "$(lua ~/bin/z.lua  --init zsh)"
+    if [ -n "$ZSH_VERSION" ]; then
+        eval "$(lua ~/bin/z.lua  --init zsh)"
+    else
+        eval "$(lua ~/bin/z.lua  --init bash)"
+    fi
 fi
 
 export HOMEBREW_NO_AUTO_UPDATE=true
