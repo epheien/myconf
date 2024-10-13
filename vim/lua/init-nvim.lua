@@ -363,7 +363,7 @@ local function setup_pckr() -- {{{
   table.insert(plugins, {
     'folke/edgy.nvim',
     config = function()
-      vim.opt.splitkeep = "screen"
+      --vim.opt.splitkeep = "screen"
       require('edgy').setup({
         close_when_all_hidden = false,
         wo = {
