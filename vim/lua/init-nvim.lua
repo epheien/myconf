@@ -425,7 +425,12 @@ local function setup_pckr() -- {{{
         return function()
           local menu_exists = #require("menu.state").bufids > 0
           if menu_exists then
-            return
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].filetype == "NvMenu" then
+                vim.api.nvim_win_close(win, true)
+              end
+            end
           end
           local options = vim.bo.ft == "NvimTree" and "nvimtree" or "mydef"
           require("menu").open(options, { mouse = mouse, border = false })
