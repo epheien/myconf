@@ -328,6 +328,7 @@ endfunction
 " Set / clear matches in all windows.
 function! s:MarkScope( indices, expr )
 	let l:currentWinNr = winnr()
+	let l:pos = getpos('.')
 
 	" By entering a window, its height is potentially increased from 0 to 1 (the
 	" minimum for the current window). To avoid any modification, save the window
@@ -336,11 +337,13 @@ function! s:MarkScope( indices, expr )
 
 	noautocmd keepjumps windo call s:MarkMatch(a:indices, a:expr)
 	execute l:currentWinNr . 'wincmd w'
+	call setpos('.', l:pos)
 	silent! execute l:originalWindowLayout
 endfunction
 " Update matches in all windows.
 function! mark#UpdateScope()
 	let l:currentWinNr = winnr()
+	let l:pos = getpos('.')
 
 	" By entering a window, its height is potentially increased from 0 to 1 (the
 	" minimum for the current window). To avoid any modification, save the window
@@ -349,6 +352,7 @@ function! mark#UpdateScope()
 
 	noautocmd keepjumps windo call mark#UpdateMark()
 	execute l:currentWinNr . 'wincmd w'
+	call setpos('.', l:pos)
 	silent! execute l:originalWindowLayout
 endfunction
 
