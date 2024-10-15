@@ -592,6 +592,10 @@ nnoremap T :tag<CR>
 nnoremap ' `
 nnoremap ` '
 
+" quickfix 跳转
+nnoremap <silent> ]q :cn<CR>
+nnoremap <silent> [q :cp<CR>
+
 " 终端模拟器键位绑定
 if exists(':tmap')
     " NOTE: 由于终端的转义特性，<Esc> 的识别依赖于延时，所以如果映射了这个按键
