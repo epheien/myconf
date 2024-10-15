@@ -901,7 +901,8 @@ function myrc#Cstag() abort
     " 优先使用 tag 跳转然后再用 cstag
     try
         if &tagfunc ==# 'v:lua.vim.lsp.tagfunc'
-            exec 'normal' "g\<C-]>"
+            " 只能这样做, 舍弃了 Cstag 的 fallback 功能
+            call feedkeys("g\<C-]>", 'n')
         else
             exec 'tjump' cword
         endif
