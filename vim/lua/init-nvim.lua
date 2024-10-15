@@ -181,7 +181,13 @@ local function setup_pckr() -- {{{
     {
       'altermo/ultimate-autopair.nvim',
       cond = event({'InsertEnter', 'CmdlineEnter'}),
-      config = function() require('ultimate-autopair').setup({}) end,
+      config = function()
+        require('ultimate-autopair').setup({
+          cr = {
+            enable = false,
+          },
+        })
+      end,
     };
   }
 
