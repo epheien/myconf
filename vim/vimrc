@@ -1429,6 +1429,7 @@ let g:clang_format#style_options = {
     \ 'IncludeBlocks': 'Preserve',
     \ 'SpacesBeforeTrailingComments': 1,
     \ 'AllowShortFunctionsOnASingleLine': 'Empty',
+    \ 'AllowShortIfStatementsOnASingleLine': v:false,
     \ }
 
 " ========== gitgutter ==========
