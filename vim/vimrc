@@ -925,11 +925,14 @@ command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 command -nargs=0 CleanSpaces silent! %s/\s\+$//g | noh | normal! ``
 
 " 括号自动补全. 为了性能, 直接禁用闭合检查
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap <expr> " (&filetype == "vim") ? "\"" : "\"\"\<Left>"
-inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
+" 仅 vim 适用, nvim 使用 ultimate-autopair.nvim 插件实现
+if !has('nvim')
+    inoremap ( ()<Left>
+    inoremap [ []<Left>
+    inoremap { {}<Left>
+    inoremap <expr> " (&filetype == "vim") ? "\"" : "\"\"\<Left>"
+    inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
+endif
 
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()

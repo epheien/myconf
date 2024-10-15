@@ -176,7 +176,13 @@ local function setup_pckr() -- {{{
       "hedyhli/outline.nvim",
       cond = {cmd('Outline'), cmd('OutlineOpen')},
       config = function() require('config/outline') end,
-    },
+    };
+
+    {
+      'altermo/ultimate-autopair.nvim',
+      cond = event({'InsertEnter', 'CmdlineEnter'}),
+      config = function() require('ultimate-autopair').setup({}) end,
+    };
   }
 
   if true then
