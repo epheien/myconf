@@ -7,6 +7,15 @@ let s:source_exts = ['c', 'cpp', 'cxx', 'cc']
 let s:cache_files = []
 let s:files_time = 0 " gtags.file 最近的修改事件
 
+" 往前寻找没有匹配的 {, 直到找到最外层为止, 但是排除 `namespace xxx {`
+function! mycpp#BlockJumpPrev() abort
+  let pos = searchpairpos('{', '', '}', 'bWnr', 'getline(".") =~# "^\\s*namespace\\s" ')
+  if pos[0] > 0
+    normal! m'
+    call cursor(pos)
+  endif
+endfunction
+
 function! mycpp#alternateSwitch(bang, cmd) abort
   let file = expand('%')
   if empty(file)
