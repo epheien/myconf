@@ -179,13 +179,11 @@ local function setup_pckr() -- {{{
     };
 
     {
-      'altermo/ultimate-autopair.nvim',
+      'windwp/nvim-autopairs',
       cond = event({'InsertEnter', 'CmdlineEnter'}),
       config = function()
-        require('ultimate-autopair').setup({
-          cr = {
-            enable = false,
-          },
+        require('nvim-autopairs').setup({
+          map_cr = false,
         })
       end,
     };
