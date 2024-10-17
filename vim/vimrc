@@ -938,6 +938,13 @@ if !has('nvim')
     inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
 endif
 
+cnoremap ( ()<Left>
+cnoremap [ []<Left>
+cnoremap { {}<Left>
+cnoremap " ""<Left>
+cnoremap ' ''<Left>
+cnoremap <expr> <BS> <SID>c_BS_plus()
+
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
 inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
@@ -955,6 +962,15 @@ function! s:i_Semicolon_plus() "{{{
 endfunction
 "}}}
 function! IfPair(char1,char2) "{{{
+    " 命令行模式
+    if mode() =~# '^c'
+        if getcmdline()[getcmdpos() - 2] == a:char1 && getcmdline()[getcmdpos() - 1] == a:char2
+            return 1
+        else
+            return 0
+        endif
+    endif
+
     if getline('.')[col('.') - 2] == a:char1 && getline('.')[col('.') - 1] == a:char2
         return 1
     else
@@ -963,6 +979,14 @@ function! IfPair(char1,char2) "{{{
 endfunction
 "}}}
 function! s:i_BS_plus() "{{{
+    if IfPair('(',')') || IfPair('[',']') || IfPair('{', '}')
+        return "\<DEL>\<BS>"
+    else
+        return "\<BS>"
+    endif
+endfunction
+"}}}
+function! s:c_BS_plus() "{{{
     if IfPair('(',')') || IfPair('[',']') || IfPair('{', '}')
         return "\<DEL>\<BS>"
     else
