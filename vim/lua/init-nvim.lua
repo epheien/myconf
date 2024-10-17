@@ -185,6 +185,7 @@ local function setup_pckr() -- {{{
         require('nvim-autopairs').setup({
           map_cr = false,
         })
+        require('config/nvim-autopairs')
       end,
     };
   }
