@@ -861,7 +861,7 @@ let g:NERDCustomDelimiters = {
     \ 'python': {'left': '#'},
     \ }
 "let NERDSpaceDelims = 1
-nmap <silent> <C-n> <Plug>NERDCommenterToggle:call feedkeys("\<lt>Down>", 'n')<CR>
+nmap <silent> <C-n> <Plug>NERDCommenterToggle<Down>
 xmap <silent> <C-n> <plug>NERDCommenterToggle
 "}}}
 " ========== pydiction ==========
