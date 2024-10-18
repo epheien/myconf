@@ -681,6 +681,9 @@ vnoremap <silent> <C-s> <C-c>:update<CR>
 "vnoremap x "+x
 vnoremap $ $h
 
+" 仅选择模式
+snoremap <BS> <BS>i
+
 "=======================================
 " 可视模式
 "=======================================
