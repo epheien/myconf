@@ -1,4 +1,6 @@
 local cmp = require('cmp')
+local keymap = require("cmp.utils.keymap")
+local feedkeys = require("cmp.utils.feedkeys")
 
 local M = {}
 
@@ -76,6 +78,10 @@ function M.visible()
   return cmp.core.view:visible()
 end
 
+local keymap_cinkeys = function(expr)
+  return string.format(keymap.t("<Cmd>setlocal cinkeys=%s<CR>"), expr and vim.fn.escape(expr, "| \t\\") or "")
+end
+
 -- This is a better implementation of `cmp.confirm`:
 --  * check if the completion menu is visible without waiting for running sources
 --  * create an undo point before confirming
@@ -89,7 +95,11 @@ function M.confirm(opts)
   return function(fallback)
     if cmp.core.view:visible() or vim.fn.pumvisible() == 1 then
       M.create_undo()
-      if cmp.confirm(opts) then
+      -- https://github.com/hrsh7th/nvim-cmp/issues/1035 的临时解决方案, 不完美
+      feedkeys.call(keymap_cinkeys(), "n")
+      local rc = cmp.confirm(opts) -- 返回 true 表示成功, false 表示失败
+      feedkeys.call(keymap_cinkeys(vim.bo.cinkeys), "n")
+      if rc then
         return
       end
     end
