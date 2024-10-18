@@ -93,6 +93,7 @@ function M.confirm(opts)
         return
       end
     end
+    fallback = fallback or function() end
     return fallback()
   end
 end
@@ -439,3 +440,5 @@ end, {})
 vim.api.nvim_create_user_command('CmpEnable', function()
   enabled = true
 end, {})
+
+return M

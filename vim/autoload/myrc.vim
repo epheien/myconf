@@ -593,7 +593,8 @@ function! myrc#SmartEnter() abort
             call timer_start(0, "myrc#restore_ei")
         endif
     elseif exists(':CmpStatus') == 2 && luaeval("require('cmp').visible()")
-        lua require('cmp').confirm({select = false, behavior = require('cmp').ConfirmBehavior.Insert})
+        "lua require('cmp').confirm({select = false, behavior = require('cmp').ConfirmBehavior.Insert})
+        lua require('config/nvim-cmp').confirm({select = false, behavior = require('cmp').ConfirmBehavior.Insert})()
     elseif exists('g:did_coc_loaded') && coc#pum#visible()
         call coc#pum#select_confirm()
     else
