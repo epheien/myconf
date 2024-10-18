@@ -337,10 +337,8 @@ vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'SpecialChar' })
 vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'String' })
 vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Identifier' })
 
-vim.cmd([[
-snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
-snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
-]])
+vim.keymap.set('s', '<Tab>', function() require('luasnip').jump(1) end, { silent = true })
+vim.keymap.set('s', '<S-Tab>', function() require('luasnip').jump(-1) end, { silent = true })
 
 -- nvim-cmp setup
 M.setup(opts)
