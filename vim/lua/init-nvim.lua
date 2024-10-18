@@ -380,6 +380,12 @@ local function setup_pckr() -- {{{
         wo = {
           statusline = '─',
         },
+        options = {
+          left = { size = 40 },
+          bottom = { size = 10 },
+          right = { size = 30 },
+          top = { size = 10 },
+        },
         animate = {
           enabled = false,
         },
