@@ -311,6 +311,9 @@ local function setup_pckr() -- {{{
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup({
+        watch_gitdir = {
+          enable = false,
+        },
         signs = {
           add          = { text = '┃' },
           change       = { text = '┃' },
