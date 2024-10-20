@@ -384,7 +384,7 @@ local function setup_pckr() -- {{{
           statusline = '─',
         },
         options = {
-          left = { size = 40 },
+          left = { size = 36 },
           bottom = { size = 10 },
           right = { size = 30 },
           top = { size = 10 },
