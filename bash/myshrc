@@ -147,7 +147,7 @@ if command -v thefuck &>/dev/null; then
 fi
 
 # wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
-if [ -x ~/bin/z.lua ]; then
+if [ -e ~/bin/z.lua ]; then
     eval "$(lua ~/bin/z.lua --init $(basename $SHELL))"
 fi
 
