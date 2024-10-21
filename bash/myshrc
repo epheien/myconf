@@ -46,6 +46,7 @@ if [ -n "$ZSH_VERSION" ]; then
     }
 else
     # XXX bash shell
+    true
 fi
 
 if [ -d /proc/ ]; then
