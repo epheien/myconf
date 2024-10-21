@@ -24,7 +24,7 @@ ln -s ../.vim ~/.config/nvim
 ln -s myconf/tmux/tmux.conf ../.tmux.conf
 
 ln -s myconf/bash/inputrc ../.inputrc
-ln -s myconf/bash/mac.myshrc ../.myshrc
+ln -s myconf/bash/myshrc ../.myshrc
 
 # hammerspoon
 mkdir -p ~/.hammerspoon

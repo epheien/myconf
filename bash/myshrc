@@ -11,11 +11,7 @@ else
 fi
 
 if [ -n "$ZSH_VERSION" ]; then
-    # original
-    #PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
-    #PROMPT="%{$fg[green]%}%n@%{$fg[blue]%}%m%{$reset_color%} ${PROMPT}"
-    #PROMPT="%B%{\$fg[red]%}%n@%{\$fg[blue]%}%m%b ${PROMPT}"
-    # ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+    # XXX zsh shell
     PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") '
     PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
     if [ -n "$SSH_TTY" ]; then
@@ -48,50 +44,41 @@ if [ -n "$ZSH_VERSION" ]; then
     function precmd () {
         print -Pn - '\e]0;%1~\a'
     }
+else
+    # XXX bash shell
+fi
+
+if [ -d /proc/ ]; then
+    # on Linux
+    alias eng="export LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
+    alias zhong="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
+else
+    # on macOS
+    # gnu coreutils, ls, pwd, etc.
+    __coreutils=/usr/local/opt/coreutils
+    [ -d $__coreutils ] || __coreutils=/opt/homebrew/opt/coreutils
+    PATH="$__coreutils/libexec/gnubin:$PATH"
+    PATH="$HOME/node/bin:$PATH"
+    PATH="/usr/local/opt/mysql-client/bin:$PATH"
+    # gnu-tar
+    PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+    # gopath
+    PATH="$PATH:$HOME/go/bin"
+    # luarocks
+    PATH="$PATH:$HOME/.luarocks/bin"
+    unset __coreutils
+
+    export MANPATH="$__coreutils/libexec/gnuman:$MANPATH"
+    export LANG="zh_CN.UTF-8"
+    alias diff="diff --color=auto"
+    # macOS 的 zcat 和 Linux 下的行为不一致，用 gzcat 替代
+    alias zcat=gzcat
 fi
 
 # use vim as MANPAGER
-if [ -f "$HOME/.vim/man.vim" ]; then
-    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M +MANPAGER -c 'set nonu' -"
+if [ command -v vim &>/dev/null -a -f "$HOME/.vim/man.vim" ]; then
+    export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M -c MANPAGER -"
 fi
-
-# 这是避免 git diff 无输出的时候仍然需要交互的问题, 默认值是: LESS=-R
-unset LESS
-# 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
-unset VIMRUNTIME
-unset VIM
-unset MYVIMRC
-
-if [ -f "$HOME/.shalias" ]; then
-    source "$HOME/.shalias"
-fi
-
-alias eng="export LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
-alias zhong="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
-
-function findn()
-{
-    [ $# -eq 0 ] && return 0
-    find . -iname "*$1*"
-    return $?
-}
-
-# fuck 命令
-if command -v thefuck &>/dev/null; then
-    eval $(thefuck --alias)
-fi
-
-# wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
-if [ -e "$HOME/bin/z.lua" ]; then
-    if [ -n "$ZSH_VERSION" ]; then
-        eval "$(lua ~/bin/z.lua  --init zsh)"
-    else
-        eval "$(lua ~/bin/z.lua  --init bash)"
-    fi
-fi
-
-export HOMEBREW_NO_AUTO_UPDATE=true
-export TLDR_AUTO_UPDATE_DISABLED=true
 
 # ======================================
 # nvm 相关配置
@@ -140,5 +127,35 @@ elif [ -d "$HOME/.nvm/versions/node" ]; then
     unset output
 fi
 # ======================================
+
+export HOMEBREW_NO_AUTO_UPDATE=true
+export TLDR_AUTO_UPDATE_DISABLED=true
+
+unset LESS
+# 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
+unset VIMRUNTIME
+unset VIM
+unset MYVIMRC
+
+if [ -f "$HOME/.shalias" ]; then
+    source "$HOME/.shalias"
+fi
+
+# fuck 命令
+if command -v thefuck &>/dev/null; then
+    eval $(thefuck --alias)
+fi
+
+# wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
+if [ -x ~/bin/z.lua ]; then
+    eval "$(lua ~/bin/z.lua --init $(basename $SHELL))"
+fi
+
+function findn()
+{
+    [ $# -eq 0 ] && return 0
+    find . -iname "*$1*"
+    return $?
+}
 
 # vi:set et sts=4 ft=sh:
