@@ -16,6 +16,10 @@ function! mycpp#BlockJumpPrev() abort
   endif
 endfunction
 
+" 如果有 gtags.files, 那么在列表中尽最大努力去找
+" 否则, 在硬盘依次查找以下几个位置(相对于原文件路径):
+"   - ./
+"   - ../(include|src)/
 function! mycpp#alternateSwitch(bang, cmd) abort
   let file = expand('%')
   if empty(file)
@@ -244,7 +248,8 @@ endfunction
 function! mycpp#GetProjectFiles()
   let fname = 'gtags.files'
   if !filereadable(fname)
-    return []
+    " 没有可用的文件, 那么就 fallback 到裸切换
+    return v:null
   endif
 
   let ftime = getftime(fname)
