@@ -438,6 +438,7 @@ local function setup_pckr() -- {{{
   vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin' .. ':' .. vim.env.PATH
 
   -- NOTE: 官方不推荐使用懒加载的方式, 容易出现奇怪的问题
+  -- TODO: 想办法实现懒加载
   table.insert(plugins, {
     'andymass/vim-matchup',
     config = function()
