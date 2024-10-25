@@ -188,6 +188,14 @@ local function setup_pckr() -- {{{
         require('config/nvim-autopairs')
       end,
     };
+
+    {
+      'fei6409/log-highlight.nvim',
+      cond = event('BufReadPre', '*.log'),
+      config = function()
+          require('log-highlight').setup()
+      end,
+    }
   }
 
   if true then
