@@ -190,7 +190,7 @@ local function setup_pckr() -- {{{
     };
 
     {
-      'fei6409/log-highlight.nvim',
+      'epheien/log-highlight.nvim',
       cond = event('BufReadPre', '*.log'),
       config = function()
           require('log-highlight').setup()
