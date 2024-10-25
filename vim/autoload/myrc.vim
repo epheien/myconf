@@ -841,6 +841,7 @@ function! myrc#LogSetup() abort
     setl termguicolors
     setl nowrap cursorline
     setl cc=
+    silent! setf log
 endfunction
 
 function! myrc#MyTabLine() abort
