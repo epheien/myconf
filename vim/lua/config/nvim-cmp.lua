@@ -422,12 +422,18 @@ local search_buffer_source = {
 }
 
 cmp.setup.cmdline('/', vim.tbl_deep_extend('force', cmdline_opts, {
+  matcher = {
+    name = 'fzy',
+  },
   sources = {
     search_buffer_source,
   },
 }))
 
 cmp.setup.cmdline('?', vim.tbl_deep_extend('force', cmdline_opts, {
+  matcher = {
+    name = 'fzy',
+  },
   sources = {
     search_buffer_source,
   },
