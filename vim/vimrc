@@ -1455,9 +1455,9 @@ let g:clang_format#style_options = {
     \ 'ReflowComments': v:false,
     \ 'SortIncludes': v:true,
     \ 'IncludeBlocks': 'Preserve',
-    \ 'SpacesBeforeTrailingComments': 1,
     \ 'AllowShortFunctionsOnASingleLine': 'Empty',
     \ 'AllowShortIfStatementsOnASingleLine': v:false,
+    \ 'SpacesBeforeTrailingComments': 1,
     \ }
 
 " ========== gitgutter ==========
