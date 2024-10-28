@@ -102,7 +102,9 @@ local function _lsp_setup(server)
     'force',
     {},
     --vim.lsp.protocol.make_client_capabilities(),
-    default_capabilities())
+    default_capabilities({
+      snippetSupport = false,
+    }))
   opts = vim.tbl_deep_extend('force', opts, {
     capabilities = capabilities,
   })
