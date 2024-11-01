@@ -13,16 +13,25 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", nil, function()
 end)
 
 local g_last_clipboard_content = ''
+g_clipboard_history_file = io.open(os.getenv('HOME') .. '/.clipboard_history', 'a')
 local cbwatcher = hs.pasteboard.watcher.new(function(str)
+  --print('clipboard changed: ', string.format('"%s"', str))
   if str == 'toEnIM()' then
     toEnIM()
-    --hs.pasteboard.setContents(g_last_clipboard_content)
     return
   end
-  --print('clipboard changed: ', string.format('"%s"', str))
-  --g_last_clipboard_content = str
+  if str ~= g_last_clipboard_content then
+      g_clipboard_history_file:write(str)
+      g_clipboard_history_file:write("\n")
+  end
+  g_last_clipboard_content = str
 end)
 cbwatcher:start()
+
+local flush_timer = hs.timer.new(60, function()
+  g_clipboard_history_file:flush()
+end)
+flush_timer:start()
 
 -- hook cmd-w 快捷键的 app
 local hookApps = {
