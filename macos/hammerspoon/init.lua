@@ -16,11 +16,11 @@ local g_last_clipboard_content = ''
 local cbwatcher = hs.pasteboard.watcher.new(function(str)
   if str == 'toEnIM()' then
     toEnIM()
-    hs.pasteboard.setContents(g_last_clipboard_content)
+    --hs.pasteboard.setContents(g_last_clipboard_content)
     return
   end
   --print('clipboard changed: ', string.format('"%s"', str))
-  g_last_clipboard_content = str
+  --g_last_clipboard_content = str
 end)
 cbwatcher:start()
 
