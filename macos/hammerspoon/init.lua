@@ -12,6 +12,18 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", nil, function()
   hs.alert.show(hs.keycodes.currentSourceID())
 end)
 
+local g_last_clipboard_content = ''
+local cbwatcher = hs.pasteboard.watcher.new(function(str)
+  if str == 'toEnIM()' then
+    toEnIM()
+    hs.pasteboard.setContents(g_last_clipboard_content)
+    return
+  end
+  --print('clipboard changed: ', string.format('"%s"', str))
+  g_last_clipboard_content = str
+end)
+cbwatcher:start()
+
 -- hook cmd-w 快捷键的 app
 local hookApps = {
   '终端',
