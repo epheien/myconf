@@ -13,6 +13,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", nil, function()
 end)
 
 local g_last_clipboard_content = ''
+local g_clipboard_history_write_ts = 0
 g_clipboard_history_file = io.open(os.getenv('HOME') .. '/.clipboard_history', 'a')
 local cbwatcher = hs.pasteboard.watcher.new(function(str)
   --print('clipboard changed: ', string.format('"%s"', str))
@@ -23,13 +24,18 @@ local cbwatcher = hs.pasteboard.watcher.new(function(str)
   if str ~= g_last_clipboard_content then
       g_clipboard_history_file:write(str)
       g_clipboard_history_file:write("\n")
+      g_clipboard_history_write_ts = hs.timer.absoluteTime()
   end
   g_last_clipboard_content = str
 end)
 cbwatcher:start()
 
-local flush_timer = hs.timer.new(60, function()
-  g_clipboard_history_file:flush()
+local g_clipboard_history_flush_ts = 0
+local flush_timer = hs.timer.new(10, function()
+  if g_clipboard_history_write_ts > g_clipboard_history_flush_ts then
+    g_clipboard_history_file:flush()
+    g_clipboard_history_flush_ts = hs.timer.absoluteTime()
+  end
 end)
 flush_timer:start()
 
