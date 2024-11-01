@@ -643,6 +643,11 @@ function! myrc#disable_oscyank() abort
     let s:enable_oscyank = v:false
 endfunction
 
+function! myrc#OSCYank(str) abort
+    call plug#load('vim-oscyank')
+    call OSCYank(a:str)
+endfunction
+
 " clipboard yank
 function! myrc#cby() abort
     if (exists('$SSH_TTY') || s:enable_oscyank) && exists(':OSCYankVisual')
