@@ -14,7 +14,7 @@ end)
 
 local g_last_clipboard_content = ''
 local g_clipboard_history_write_ts = 0
-g_clipboard_history_file = io.open(os.getenv('HOME') .. '/.clipboard_history', 'a')
+local g_clipboard_history_file = io.open(os.getenv('HOME') .. '/.clipboard_history', 'a')
 local cbwatcher = hs.pasteboard.watcher.new(function(str)
   --print('clipboard changed: ', string.format('"%s"', str))
   if str == 'toEnIM()' then
