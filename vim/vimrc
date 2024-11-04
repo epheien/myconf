@@ -1470,6 +1470,7 @@ let g:clang_format#style_options = {
 " ========== gitgutter ==========
 let g:gitgutter_sign_added = '┃'
 let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_modified_removed = '~'
 let g:gitgutter_diff_args = '--ignore-cr-at-eol'
 if !has('gui_running')
     let g:gitgutter_terminal_reports_focus = 0
