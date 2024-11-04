@@ -332,7 +332,17 @@ local function setup_pckr() -- {{{
   })
 
   -- NOTE: signs 的配置必须在载入前执行才能生效, 放到了 vimrc
-  table.insert(plugins, { 'airblade/vim-gitgutter', cond = event('FileType') });
+  table.insert(plugins, {
+    'airblade/vim-gitgutter',
+    cond = event('FileType'),
+    config = function()
+      vim.api.nvim_create_autocmd('InsertLeave', {
+        callback = function()
+          vim.cmd('GitGutter')
+        end
+      })
+    end
+  });
 
   table.insert(plugins, {
     'epheien/flirt.nvim',
