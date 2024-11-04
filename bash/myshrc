@@ -38,10 +38,11 @@ if [ -n "$ZSH_VERSION" ]; then
     # 禁用历史共享
     unsetopt share_history
 
+    # Uncomment the following line to disable auto-setting terminal title.
+    # NOTE: 不禁用这个功能会导致在 tmux 里面的 nvim 的 terminal 有奇怪的行为
+    DISABLE_AUTO_TITLE="true"
     # 设置标题栏
     if [[ "${TERM_PROGRAM}" == "alacritty" ]]; then
-        # Uncomment the following line to disable auto-setting terminal title.
-        DISABLE_AUTO_TITLE="true"
         precmd()
         {
             # output on which level (%L) this shell is running on.
@@ -50,7 +51,7 @@ if [ -n "$ZSH_VERSION" ]; then
             # "print" must be used here; echo cannot handle prompt expansions (%L)
             print -Pn "\e]0;zsh[%L] %~\a"
         }
-    
+
         preexec()
         {
             # output current executed command with parameters
