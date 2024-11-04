@@ -315,20 +315,12 @@ local function setup_pckr() -- {{{
 
   table.insert(plugins, {
     'lewis6991/gitsigns.nvim',
-    cond = event('FileType'),
+    cond = cmd('Gitsigns'),
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup({
         watch_gitdir = {
           enable = false,
-        },
-        signs = {
-          add          = { text = '┃' },
-          change       = { text = '┃' },
-          delete       = { text = '_' },
-          topdelete    = { text = '‾' },
-          changedelete = { text = '~' },
-          untracked    = { text = '┆' },
         },
         preview_config = {
           border = { "", "", "", { " ", 'NormalFloat' }, "", "", "", { " ", 'NormalFloat' } },
@@ -338,6 +330,9 @@ local function setup_pckr() -- {{{
       vim.keymap.set('n', '[c', function() gitsigns.nav_hunk('prev', {wrap = false}) end)
     end
   })
+
+  -- NOTE: signs 的配置必须在载入前执行才能生效, 放到了 vimrc
+  table.insert(plugins, { 'airblade/vim-gitgutter', cond = event('FileType') });
 
   table.insert(plugins, {
     'epheien/flirt.nvim',
