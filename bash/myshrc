@@ -58,6 +58,8 @@ if [ -n "$ZSH_VERSION" ]; then
             echo -en "\e]0;${1}\a"
         }
     fi
+    # command not found handler
+    [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
 else
     # XXX bash shell
     true
