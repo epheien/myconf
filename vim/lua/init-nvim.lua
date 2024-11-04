@@ -222,6 +222,7 @@ local function setup_pckr() -- {{{
           'saadparwaiz1/cmp_luasnip',
           'rafamadriz/friendly-snippets',
           --'garymjr/nvim-snippets',
+          'windwp/nvim-autopairs',
         },
         cond = {event({'InsertEnter'}), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable')},
         --cond = cmd('CmpStatus'),
@@ -229,6 +230,7 @@ local function setup_pckr() -- {{{
           require('config/nvim-cmp')
           require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
           vim.keymap.set('n', ';', ':')
+          require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
         end,
       };
       {
