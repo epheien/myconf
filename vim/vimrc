@@ -1050,7 +1050,7 @@ Plug 'ojroques/vim-oscyank', {'on': 'OSCYankVisual'}
 command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
 command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
 if !empty($SSH_TTY)
-    autocmd InsertLeave * call myrc#OSCYank('toEnIM()')
+    autocmd InsertLeave * silent call myrc#OSCYank('toEnIM()')
 endif
 
 Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
