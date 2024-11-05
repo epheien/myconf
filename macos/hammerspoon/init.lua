@@ -288,6 +288,8 @@ function initDisableForApp()
   g_watchers['ok'] = watcher
 end
 
+-- 仅打印 warning 以上的 hotkey 日志
+hs.hotkey.setLogLevel(2)
 initDisableForApp()
 enableKeyBind()
 
