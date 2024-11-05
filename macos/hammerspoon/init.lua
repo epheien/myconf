@@ -15,7 +15,7 @@ end)
 local g_last_clipboard_content = ''
 local g_clipboard_history_write_ts = 0
 local g_clipboard_history_file = io.open(os.getenv('HOME') .. '/.clipboard_history', 'a')
-local cbwatcher = hs.pasteboard.watcher.new(function(str)
+clipboard_watcher = hs.pasteboard.watcher.new(function(str)
   --print('clipboard changed: ', string.format('"%s"', str))
   if str == 'toEnIM()' then
     toEnIM()
@@ -28,16 +28,16 @@ local cbwatcher = hs.pasteboard.watcher.new(function(str)
   end
   g_last_clipboard_content = str
 end)
-cbwatcher:start()
+clipboard_watcher:start()
 
 local g_clipboard_history_flush_ts = 0
-local flush_timer = hs.timer.new(10, function()
+clipboard_history_flush_timer = hs.timer.new(10, function()
   if g_clipboard_history_write_ts > g_clipboard_history_flush_ts then
     g_clipboard_history_file:flush()
     g_clipboard_history_flush_ts = hs.timer.absoluteTime()
   end
 end)
-flush_timer:start()
+clipboard_history_flush_timer:start()
 
 -- hook cmd-w 快捷键的 app
 local hookApps = {
