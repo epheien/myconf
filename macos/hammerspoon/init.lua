@@ -21,7 +21,7 @@ clipboard_watcher = hs.pasteboard.watcher.new(function(str)
     toEnIM()
     return
   end
-  if str ~= g_last_clipboard_content then
+  if str ~= g_last_clipboard_content and str then
     -- 最多保存 1000 个字符, 避免文件膨胀过快
     g_clipboard_history_file:write(string.sub(str, 1, 1000))
     g_clipboard_history_file:write("\n")
