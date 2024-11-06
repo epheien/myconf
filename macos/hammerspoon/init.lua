@@ -19,6 +19,8 @@ clipboard_watcher = hs.pasteboard.watcher.new(function(str)
   --print('clipboard changed: ', string.format('"%s"', str))
   if str == 'toEnIM()' then
     toEnIM()
+    -- 恢复为之前的内容; 会再次进入这个函数
+    hs.pasteboard.setContents(g_last_clipboard_content)
     return
   end
   if str ~= g_last_clipboard_content and str then
