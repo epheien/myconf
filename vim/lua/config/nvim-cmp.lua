@@ -207,8 +207,8 @@ local opts = {
     disabled = disabled or (vim.fn.reg_executing() ~= '')
     return not disabled and enabled
   end,
-  -- 需要自动补全函数扩招的文件类型
-  auto_brackets = { 'python', 'lua' },
+  -- 需要自动补全函数扩展的文件类型
+  auto_brackets = { 'python', 'lua', 'c', 'cpp' },
   preselect = cmp.PreselectMode.None,
   window = {
     completion = {
