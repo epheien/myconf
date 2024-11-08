@@ -221,7 +221,7 @@ noremap <silent> j gj
 set wrap
 " 按词绕行
 "set linebreak
-" 回绕行的前导符号
+" 回绕行的前导符号, 可选字符: ↪\ 
 "set showbreak=<-->
 " 光标上下需要保留的行数，滚动时用
 "set scrolloff=3
@@ -443,7 +443,9 @@ if !&diff
     set list
 endif
 if has('gui_running') || &t_Co == 256
-    set listchars=tab:▸\ ,eol:¬
+    " 可选的字符: ¬ ⏎
+    " tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+    set listchars=tab:→\ ,eol:¬
     "set listchars+=space:⋅
 else
     set listchars=tab:\ \ 
