@@ -208,7 +208,7 @@ local opts = {
     return not disabled and enabled
   end,
   -- 需要自动补全函数扩展的文件类型
-  auto_brackets = { 'python', 'lua', 'c', 'cpp' },
+  auto_brackets = { 'python', 'lua', 'c', 'cpp', 'go' },
   preselect = cmp.PreselectMode.None,
   window = {
     completion = {
