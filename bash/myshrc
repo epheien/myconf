@@ -93,7 +93,7 @@ else
 fi
 
 # use vim as MANPAGER
-if [ command -v vim &>/dev/null -a -f "$HOME/.vim/man.vim" ]; then
+if command -v vim &>/dev/null && [ -f "$HOME/.vim/man.vim" ]; then
     export MANPAGER="env MAN_PN=1 vim -u ~/.vim/man.vim --not-a-term -M -c MANPAGER -"
 fi
 
