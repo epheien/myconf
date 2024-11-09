@@ -315,23 +315,24 @@ local function setup_pckr() -- {{{
     end
   })
 
-  table.insert(plugins, {
-    'lewis6991/gitsigns.nvim',
-    cond = cmd('Gitsigns'),
-    config = function()
-      local gitsigns = require('gitsigns')
-      gitsigns.setup({
-        watch_gitdir = {
-          enable = false,
-        },
-        preview_config = {
-          border = { "", "", "", { " ", 'NormalFloat' }, "", "", "", { " ", 'NormalFloat' } },
-        },
-      })
-      vim.keymap.set('n', ']c', function() gitsigns.nav_hunk('next', {wrap = false}) end)
-      vim.keymap.set('n', '[c', function() gitsigns.nav_hunk('prev', {wrap = false}) end)
-    end
-  })
+  -- gitsigns 有严重的性能问题, 严重影响 lazygit 的使用体验, 暂时不用
+  --table.insert(plugins, {
+  --  'lewis6991/gitsigns.nvim',
+  --  cond = cmd('Gitsigns'),
+  --  config = function()
+  --    local gitsigns = require('gitsigns')
+  --    gitsigns.setup({
+  --      watch_gitdir = {
+  --        enable = false,
+  --      },
+  --      preview_config = {
+  --        border = { "", "", "", { " ", 'NormalFloat' }, "", "", "", { " ", 'NormalFloat' } },
+  --      },
+  --    })
+  --    vim.keymap.set('n', ']c', function() gitsigns.nav_hunk('next', {wrap = false}) end)
+  --    vim.keymap.set('n', '[c', function() gitsigns.nav_hunk('prev', {wrap = false}) end)
+  --  end
+  --})
 
   -- NOTE: signs 的配置必须在载入前执行才能生效, 放到了 vimrc
   table.insert(plugins, {
@@ -433,7 +434,7 @@ local function setup_pckr() -- {{{
     requires = {
       'tpope/vim-fugitive',
     },
-    cond = cmd('Flog'),
+    cond = { cmd('Flog'), cmd('Git') },
   })
 
   table.insert(plugins, {
