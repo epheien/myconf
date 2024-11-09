@@ -1118,7 +1118,7 @@ else
 
     " git 相关插件
     Plug 'junegunn/gv.vim', {'on': 'GV'}
-    Plug 'tpope/vim-fugitive', {'on': ['Gstatus', 'Gblame']}
+    Plug 'tpope/vim-fugitive', {'on': 'Git'}
 
     call s:Plug('vim-signature') " TODO
     call s:Plug('json5', {'for': 'json5'})
