@@ -608,6 +608,17 @@ local function status_line_theme_mywombat()
   vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203, bold = true })
   create_transitional_hl('MyStlNormal', 'Normal')
   create_transitional_hl('MyStlNormalNC', 'Normal')
+
+  -- gruvbox.nvim 的这几个配色要覆盖掉
+  local names = { 'GruvboxRedSign', 'GruvboxGreenSign', 'GruvboxYellowSign', 'GruvboxBlueSign', 'GruvboxPurpleSign',
+    'GruvboxAquaSign', 'GruvboxOrangeSign' }
+  for _, name in ipairs(names) do
+    local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
+    if not vim.tbl_isempty(opts) then
+      opts.bg = nil
+      vim.api.nvim_set_hl(0, name, opts)
+    end
+  end
 end
 
 local stl_hl_map = {
