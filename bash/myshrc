@@ -86,7 +86,8 @@ else
     unset __coreutils
 
     export MANPATH="$__coreutils/libexec/gnuman:$MANPATH"
-    export LANG="zh_CN.UTF-8"
+    export LANG="en_US.UTF-8"
+    export LC_ALL="en_US.UTF-8"
     alias diff="diff --color=auto"
     # macOS 的 zcat 和 Linux 下的行为不一致，用 gzcat 替代
     alias zcat=gzcat
