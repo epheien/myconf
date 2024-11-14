@@ -1456,6 +1456,7 @@ let g:clang_format#code_style = 'llvm'
 " NOTE: 不能指定 IndentWidth 和 UseTab, 因为插件自动设置了, 重复设置会出错!
 let g:clang_format#style_options = {
     "\ 'IndentWidth': 4,
+    \ 'AlwaysBreakTemplateDeclarations': v:true,
     \ 'BinPackArguments': v:false,
     \ 'BinPackParameters': v:false,
     \ 'ColumnLimit': 100,
