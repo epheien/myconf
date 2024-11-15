@@ -154,7 +154,7 @@ local function setup_pckr() -- {{{
     };
 
     {'stevearc/aerial.nvim', cond = cmd('AerialToggle'), config = function() require('config/aerial') end};
-    {'nvim-treesitter/nvim-treesitter', cond = {cmd('TSBufToggle'), event('BufReadPre')}};
+    --{'nvim-treesitter/nvim-treesitter', cond = {cmd('TSBufToggle'), event('BufReadPre')}};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
