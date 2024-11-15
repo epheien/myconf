@@ -185,9 +185,10 @@ lspkind_opts = {
   -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
   before = function(entry, vim_item)
     lspkind_opts.maxwidth = vim.fn.mode() == 'i' and 40 or nil
-    if entry.source.name == 'nvim_lsp' and string.sub(vim_item.abbr, 1, 1) == ' ' then
-      vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
-    end
+    -- clangd 添加 --header-insertion-decorators=false 彻底解决这个问题
+    --if entry.source.name == 'nvim_lsp' and string.sub(vim_item.abbr, 1, 1) == ' ' then
+    --  vim_item.abbr = string.gsub(vim_item.abbr, '^%s+', '')
+    --end
     --if vim_item.word == 'fread' then
     --  print(vim.inspect(vim.tbl_keys(entry)))
     --  vim.fn.writefile(vim.fn.split(vim.json.encode(entry), '\n'), 'a.log')
