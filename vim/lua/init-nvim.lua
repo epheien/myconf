@@ -196,6 +196,32 @@ local function setup_pckr() -- {{{
         require('log-highlight').setup()
       end,
     };
+
+    -- TODO: 需要实现 BlinkDisable, 现阶段启用后就无法禁用了
+    {
+      'saghen/blink.cmp',
+      tag = '0.5.1',
+      requires = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
+      cond = cmd("BlinkEnable"),
+      config = function()
+        require('blink.cmp').setup({
+          keymap = {
+            preset = 'enter',
+            ['<C-e>'] = { 'hide', 'fallback' },
+            ['<CR>'] = { 'select_and_accept', 'fallback' },
+          },
+          accept = {
+            auto_brackets = {
+              enabled = true,
+            }
+          }
+        })
+        -- dummy, TODO
+        vim.api.nvim_create_user_command('BlinkEnable', function() end, {})
+        -- 启用 blink.cmp 的话就禁用掉 nvim-cmp 的编辑文本补全
+        vim.cmd('CmpDisable')
+      end
+    }
   }
 
   if true then
