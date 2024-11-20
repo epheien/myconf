@@ -49,7 +49,7 @@ if [ -n "$ZSH_VERSION" ]; then
             # append the current directory (%~), substitute home directories with a tilde.
             # "\a" bell (man 1 echo)
             # "print" must be used here; echo cannot handle prompt expansions (%L)
-            print -Pn "\e]0;zsh[%L] %~\a"
+            print -Pn "\e]0;zsh %~\a"
         }
 
         preexec()
