@@ -582,6 +582,7 @@ function! myrc#restore_ei(...) abort
     return ''
 endfunction
 
+" 插入模式的 smart enter
 function! myrc#SmartEnter() abort
     if pumvisible()
         let s:bak_ei = &ei
