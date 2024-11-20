@@ -972,4 +972,35 @@ function myrc#ContextPopup(...)
     exec cmd 'PopUp'
 endfunction
 
+let s:status_refresh_timer = -1
+function s:RefreshStatusTables(fname, bufid, ...) abort
+    if bufwinid(a:bufid) < 0
+        call timer_stop(s:status_refresh_timer)
+        let s:status_refresh_timer = -1
+        return
+    endif
+    exec printf('py3 vim.buffers[%d][:] = render_status("%s")', a:bufid, a:fname)
+endfunction
+function myrc#RefreshStatusTables(interval, fname, ...) abort
+    if s:status_refresh_timer != -1
+        echohl WarningMsg
+        echo "timer is already running"
+        echohl NONE
+        return
+    endif
+    exec 'py3file' stdpath('config') .. '/python/status.py'
+    let bufid = get(a:000, 0) ? a:000[0] : bufnr()
+    call nvim_set_option_value('buftype', 'nofile', {'buf': bufid})
+    call nvim_set_option_value('swapfile', v:false, {'buf': bufid})
+    call nvim_set_option_value('bufhidden', 'wipe', {'buf': bufid})
+    call nvim_set_option_value('undolevels', 100, {'buf': bufid})
+    call nvim_set_option_value('wrap', v:false, {'win': bufwinid(bufid)})
+    call nvim_set_option_value('buflisted', v:false, {'buf': bufid})
+    call nvim_set_option_value('colorcolumn', '', {'win': bufwinid(bufid)})
+    call nvim_set_option_value('list', v:false, {'win': bufwinid(bufid)})
+    call nvim_set_option_value('cursorline', v:true, {'win': bufwinid(bufid)})
+    let s:status_refresh_timer = timer_start(a:interval,
+        \ function('s:RefreshStatusTables', [a:fname, bufid]), {'repeat': -1})
+endfunction
+
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et

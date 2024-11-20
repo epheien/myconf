@@ -484,6 +484,8 @@ command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
 " log view
 command -nargs=0 LogSetup call myrc#LogSetup()
 
+command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
+
 " user PATH
 if $PATH !~ expand('~/bin')
     let $PATH .= ':' . expand('~/bin')
