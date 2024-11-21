@@ -69,8 +69,8 @@ if [ -d /proc/ ]; then
     # on Linux
     alias eng="export LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
     alias zhong="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
-    # pip install kitcat
-    export MPLBACKEND='kitcat'
+    # pip install kitcat; tmux 环境下的支持不完善
+    [ -z "$TMUX" ] && export MPLBACKEND='kitcat'
 else
     # on macOS
     # gnu coreutils, ls, pwd, etc.
