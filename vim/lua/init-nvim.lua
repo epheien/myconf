@@ -221,7 +221,19 @@ local function setup_pckr() -- {{{
         -- 启用 blink.cmp 的话就禁用掉 nvim-cmp 的编辑文本补全
         vim.cmd('CmpDisable')
       end
-    }
+    };
+
+    {
+      "3rd/image.nvim",
+      cond = { event({'BufReadPre', 'InsertEnter', 'FileType'}), cmd('ImageRender') },
+      config = function()
+        require("image").setup({
+          processor = 'magick_cli',
+          max_height_window_percentage = 100,
+        })
+        vim.api.nvim_create_user_command('ImageRender', function() end, {})
+      end
+    };
   }
 
   if true then
