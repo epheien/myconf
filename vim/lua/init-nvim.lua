@@ -425,6 +425,8 @@ local function setup_pckr() -- {{{
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
+      vim.api.nvim_set_hl(0, 'ScrollViewHover', { link = 'PmenuSel' })
+      vim.api.nvim_set_hl(0, 'ScrollViewRestricted', { link = 'ScrollView' })
     end
   })
 
