@@ -69,6 +69,8 @@ if [ -d /proc/ ]; then
     # on Linux
     alias eng="export LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8"
     alias zhong="export LANGUAGE=zh_CN.UTF-8 LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8"
+    # 在 kitty 终端下直接显示 matplotlib 的图片: pip install matplotlib-backend-kitty
+    export MPLBACKEND='module://matplotlib-backend-kitty'
 else
     # on macOS
     # gnu coreutils, ls, pwd, etc.
