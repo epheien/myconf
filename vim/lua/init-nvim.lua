@@ -225,7 +225,7 @@ local function setup_pckr() -- {{{
 
     {
       "3rd/image.nvim",
-      cond = { event({'BufReadPre', 'InsertEnter', 'FileType'}), cmd('ImageRender') },
+      cond = { event({ 'BufReadPre', 'InsertEnter' }), cmd('ImageRender') },
       config = function()
         require("image").setup({
           processor = 'magick_cli',
