@@ -200,7 +200,7 @@ local function setup_pckr() -- {{{
     -- TODO: 需要实现 BlinkDisable, 现阶段启用后就无法禁用了
     {
       'saghen/blink.cmp',
-      tag = '0.5.1',
+      tag = 'v0.5.1',
       requires = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
       cond = cmd("BlinkEnable"),
       config = function()
