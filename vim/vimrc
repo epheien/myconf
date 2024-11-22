@@ -591,7 +591,14 @@ nnoremap ; :
 nnoremap <silent> gq :call myrc#close()<CR>
 "nnoremap Q gq " nvim 的 Q 命令含义以及改了, 但是未能在 vim 同等实现
 " stty -ixon
-nnoremap <silent> <C-s> :update<CR>
+func s:nmap_ctrl_s()
+    if get(g:, 'termdbg_running')
+        TStep
+    else
+        update
+    endif
+endfunc
+nnoremap <silent> <C-s> :call <SID>nmap_ctrl_s()<CR>
 nnoremap T :tag<CR>
 
 " 交换 ' 和 `，因为 ` 比 ' 常用但太远
@@ -874,7 +881,16 @@ let g:NERDCustomDelimiters = {
     \ 'python': {'left': '#'},
     \ }
 "let NERDSpaceDelims = 1
-nnoremap <silent> <C-n> :call plug#load('nerdcommenter') <Bar> call nerdcommenter#Comment("n", "Toggle") <Bar> call feedkeys("\<lt>Down>")<CR>
+func s:nmap_ctrl_n()
+    if get(g:, 'termdbg_running')
+        TNext
+    else
+        call plug#load('nerdcommenter')
+        call nerdcommenter#Comment("n", "Toggle")
+        call feedkeys("\<Down>")
+    endif
+endfunc
+nnoremap <silent> <C-n> :call <SID>nmap_ctrl_n()<CR>
 xmap <silent> <C-n> <plug>NERDCommenterToggle
 "}}}
 " ========== pydiction ==========
