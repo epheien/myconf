@@ -1085,7 +1085,6 @@ Plug 'vobornik/vim-mql4'
 "Plug 'othree/yajs.vim' " 增强的 js 语法高亮
 
 Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
-Plug 'easymotion/vim-easymotion', {'on': ['<Plug>(easymotion-f)', '<Plug>(easymotion-F)']}
 Plug 'sunaku/vim-dasht', {'on': 'Dasht'}
 Plug 'yuratomo/w3m.vim', {'on': 'W3m'}
 Plug 'Yggdroot/LeaderF', {'on': 'Leaderf'}
@@ -1527,11 +1526,6 @@ endif
 "highlight ScrollView ctermbg=243 guibg=#89816d
 highlight link ScrollView PmenuThumb
 let scrollview_auto_mouse = v:false
-
-" ========== easymotion ==========
-let g:EasyMotion_smartcase = &smartcase
-nnoremap f <Plug>(easymotion-f)
-nnoremap F <Plug>(easymotion-F)
 
 " 可在启动的时候指定 vim 的窗口尺寸, eg: vim --cmd 'let resize_window=1'
 if get(g:, 'resize_window', 0)
