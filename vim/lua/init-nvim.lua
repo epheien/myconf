@@ -552,6 +552,9 @@ vim.keymap.set('c', '<CR>', function()
     return '<CR>'
   end
   local line = vim.fn.getcmdline()
+  if string.sub(line, 1, 1) == ' ' then -- 如果命令有前导的空格, 那么就 bypass
+    return '<CR>'
+  end
   local ok, parsed = pcall(vim.api.nvim_parse_cmd, line, {})
   if not ok then
     return '<CR>'
@@ -568,6 +571,12 @@ vim.keymap.set('c', '<CR>', function()
     vim.schedule(function()
       vim.cmd('AsyncRun ' .. line) -- NOTE: 设置 g:asyncrun_open > 0 以自动打开 qf
       --vim.cmd.echo(vim.fn.string(':' .. line))
+    end)
+    return ''
+  elseif parsed.cmd == 'terminal' then -- terminal 命令替换为 Terminal
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-c>', true, true, true), 'cn', false)
+    vim.schedule(function()
+      vim.cmd('T' .. string.sub(line, 2)) -- NOTE: 设置 g:asyncrun_open > 0 以自动打开 qf
     end)
     return ''
   end
