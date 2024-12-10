@@ -236,56 +236,54 @@ local function setup_pckr() -- {{{
     };
   }
 
-  if true then
-    -- 事件顺序: BufReadPre => FileType => BufReadPost
-    local mac_plugins = {
-      {
-        "neovim/nvim-lspconfig",
-        cond = event({'FileType'}),
-        config = function() require('config/nvim-lspconfig') end,
-        requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
-      };
-      {
-        --'hrsh7th/nvim-cmp',
-        'epheien/nvim-cmp', -- 使用自己的版本
-        requires = {
-          'hrsh7th/cmp-nvim-lsp',
-          'onsails/lspkind.nvim',
-          'epheien/cmp-buffer',
-          'hrsh7th/cmp-path',
-          'epheien/cmp-cmdline',
-          --'hrsh7th/vim-vsnip',
-          --'hrsh7th/cmp-vsnip',
-          'L3MON4D3/LuaSnip',
-          'saadparwaiz1/cmp_luasnip',
-          'rafamadriz/friendly-snippets',
-          --'garymjr/nvim-snippets',
-          --'windwp/nvim-autopairs',
-        },
-        cond = {event({'InsertEnter'}), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable')},
-        --cond = cmd('CmpStatus'),
-        config = function()
-          require('config/nvim-cmp')
-          require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
-          vim.keymap.set('n', ';', ':')
-          --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
-        end,
-      };
-      {
-        'ray-x/lsp_signature.nvim',
-        cond = keys('n', '<Plug>lsp-signature'),
-        config = function()
-          require('lsp_signature').setup({
-            handler_opts = { border = nil },
-            max_width = 80,
-            floating_window_off_x = -1,
-            zindex = 2,
-          })
-        end,
-      };
-    }
-    vim.list_extend(plugins, mac_plugins)
-  end
+  -- 事件顺序: BufReadPre => FileType => BufReadPost
+  local cmp_plugins = {
+    {
+      "neovim/nvim-lspconfig",
+      cond = event({'FileType'}),
+      config = function() require('config/nvim-lspconfig') end,
+      requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
+    };
+    {
+      --'hrsh7th/nvim-cmp',
+      'epheien/nvim-cmp', -- 使用自己的版本
+      requires = {
+        'hrsh7th/cmp-nvim-lsp',
+        'onsails/lspkind.nvim',
+        'epheien/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'epheien/cmp-cmdline',
+        --'hrsh7th/vim-vsnip',
+        --'hrsh7th/cmp-vsnip',
+        'L3MON4D3/LuaSnip',
+        'saadparwaiz1/cmp_luasnip',
+        'rafamadriz/friendly-snippets',
+        --'garymjr/nvim-snippets',
+        --'windwp/nvim-autopairs',
+      },
+      cond = {event({'InsertEnter'}), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable')},
+      --cond = cmd('CmpStatus'),
+      config = function()
+        require('config/nvim-cmp')
+        require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
+        vim.keymap.set('n', ';', ':')
+        --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
+      end,
+    };
+    {
+      'ray-x/lsp_signature.nvim',
+      cond = keys('n', '<Plug>lsp-signature'),
+      config = function()
+        require('lsp_signature').setup({
+          handler_opts = { border = nil },
+          max_width = 80,
+          floating_window_off_x = -1,
+          zindex = 2,
+        })
+      end,
+    };
+  }
+  vim.list_extend(plugins, cmp_plugins)
 
   -- noice
   --if vim.fn.has('nvim-0.10') == 1 then
