@@ -222,18 +222,6 @@ local function setup_pckr() -- {{{
         vim.cmd('CmpDisable')
       end
     };
-
-    {
-      "3rd/image.nvim",
-      cond = { event({ 'BufReadPre', 'InsertEnter' }), cmd('ImageRender') },
-      config = function()
-        require("image").setup({
-          processor = 'magick_cli',
-          max_height_window_percentage = 100,
-        })
-        vim.api.nvim_create_user_command('ImageRender', function() end, {})
-      end
-    };
   }
 
   -- 事件顺序: BufReadPre => FileType => BufReadPost
@@ -293,6 +281,20 @@ local function setup_pckr() -- {{{
   --    config = setup_noice,
   --  })
   --end
+
+  if vim.fn.has('gui_running') ~= 1 then
+    table.insert(plugins, {
+      "3rd/image.nvim",
+      cond = { event({ 'BufReadPre', 'InsertEnter' }), cmd('ImageRender') },
+      config = function()
+        require("image").setup({
+          processor = 'magick_cli',
+          max_height_window_percentage = 100,
+        })
+        vim.api.nvim_create_user_command('ImageRender', function() end, {})
+      end
+    })
+  end
 
   table.insert(plugins, {
     "epheien/eagle.nvim",
