@@ -976,8 +976,7 @@ endfunction
 let s:status_refresh_timer = -1
 function s:RefreshStatusTables(fname, bufid, ...) abort
     if bufwinid(a:bufid) < 0
-        call timer_stop(s:status_refresh_timer)
-        let s:status_refresh_timer = -1
+        call myrc#StopRefreshStatusTables()
         return
     endif
     exec printf('py3 vim.buffers[%d][:] = render_status("%s")', a:bufid, a:fname)
@@ -1009,6 +1008,7 @@ function myrc#RefreshStatusTables(fname, ...) abort
     call nvim_set_option_value('filetype', 'status_table', {'buf': bufid})
     let s:status_refresh_timer = timer_start(interval,
         \ function('s:RefreshStatusTables', [a:fname, bufid]), {'repeat': -1})
+    autocmd BufUnload <buffer=abuf> call myrc#StopRefreshStatusTables()
 endfunction
 
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et
