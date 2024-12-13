@@ -458,4 +458,34 @@ vim.api.nvim_create_user_command('CmpEnable', function()
   enabled = true
 end, {})
 
+-- https://github.com/L3MON4D3/LuaSnip/issues/747
+-- 即修正按 <Tab> 的时候, 避免 <Tab> 乱跳
+-- TODO: 使用 <Tab> 触发以避免出现性能问题
+local ls = require('luasnip')
+vim.api.nvim_create_autocmd('CursorMovedI', {
+  pattern = '*',
+  callback = function(ev)
+    if not ls.session
+        or ls.session.jump_active
+        or not ls.session.current_nodes[ev.buf]
+    then
+      return
+    end
+
+    local current_node = ls.session.current_nodes[ev.buf]
+    local current_start, current_end = current_node:get_buf_position()
+    current_start[1] = current_start[1] + 1 -- (1, 0) indexed
+    current_end[1] = current_end[1] + 1 -- (1, 0) indexed
+    local cursor = vim.api.nvim_win_get_cursor(0)
+
+    if cursor[1] < current_start[1]
+      or cursor[1] > current_end[1]
+      or cursor[2] < current_start[2]
+      or cursor[2] > current_end[2]
+    then
+      ls.unlink_current()
+    end
+  end
+})
+
 return M
