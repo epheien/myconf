@@ -982,15 +982,21 @@ function s:RefreshStatusTables(fname, bufid, ...) abort
     endif
     exec printf('py3 vim.buffers[%d][:] = render_status("%s")', a:bufid, a:fname)
 endfunction
-function myrc#RefreshStatusTables(interval, fname, ...) abort
+function myrc#StopRefreshStatusTables()
+    call timer_stop(s:status_refresh_timer)
+    let s:status_refresh_timer = -1
+endfunc
+" (fname, interval=1000, bufid=bufnr())
+function myrc#RefreshStatusTables(fname, ...) abort
     if s:status_refresh_timer != -1
         echohl WarningMsg
         echo "timer is already running"
         echohl NONE
         return
     endif
+    let interval = get(a:000, 0, 1000)
+    let bufid = get(a:000, 1, bufnr())
     exec 'py3file' stdpath('config') .. '/python/status.py'
-    let bufid = get(a:000, 0) ? a:000[0] : bufnr()
     call nvim_set_option_value('buftype', 'nofile', {'buf': bufid})
     call nvim_set_option_value('swapfile', v:false, {'buf': bufid})
     call nvim_set_option_value('bufhidden', 'wipe', {'buf': bufid})
@@ -1001,7 +1007,7 @@ function myrc#RefreshStatusTables(interval, fname, ...) abort
     call nvim_set_option_value('list', v:false, {'win': bufwinid(bufid)})
     call nvim_set_option_value('cursorline', v:true, {'win': bufwinid(bufid)})
     call nvim_set_option_value('filetype', 'status_table', {'buf': bufid})
-    let s:status_refresh_timer = timer_start(a:interval,
+    let s:status_refresh_timer = timer_start(interval,
         \ function('s:RefreshStatusTables', [a:fname, bufid]), {'repeat': -1})
 endfunction
 
