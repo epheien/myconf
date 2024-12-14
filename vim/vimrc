@@ -442,7 +442,7 @@ set ttimeoutlen=50
 if !&diff
     set list
 endif
-if has('gui_running') || &t_Co == 256
+if (has('gui_running') || &t_Co == 256) && has('nvim')
     " 可选的字符: ¬ ⏎
     " tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
     set listchars=tab:→\ ,eol:¬
