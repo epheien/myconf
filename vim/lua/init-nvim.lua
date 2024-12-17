@@ -753,5 +753,13 @@ vim.keymap.set('n', '<C-g>', function()
 end)
 -- }}}
 
+-- 默认使用 treesitter 的文件类型
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'c', 'vim' },
+  callback = function()
+    vim.treesitter.start()
+  end
+})
+
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:
