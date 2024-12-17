@@ -125,8 +125,15 @@ end
 vim.diagnostic.config({signs = false})
 vim.diagnostic.config({underline = false})
 -- Hide all semantic highlights
-for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-  vim.api.nvim_set_hl(0, group, {})
-end
+--for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+--  vim.api.nvim_set_hl(0, group, {})
+--end
+-- disable semantic token
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+});
 
 vim.api.nvim_create_autocmd('FileType', { callback = lsp_setup })
