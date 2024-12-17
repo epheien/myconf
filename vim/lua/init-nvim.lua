@@ -520,6 +520,35 @@ local function setup_pckr() -- {{{
     requires = { 'nvchad/volt' },
   })
 
+  -- 在 nvim 内直接预览 markdown, 效果凑合可用
+  table.insert(plugins, {
+    "OXY2DEV/markview.nvim",
+    cond = event("FileType", "markdown"),
+    config = function()
+      require('markview').setup({
+        --initial_state = false,
+        code_blocks = {
+          sign = false,
+        },
+        headings = {
+          heading_1 = {
+            sign = "",
+          },
+          heading_2 = {
+            sign = "",
+          },
+          heading_3 = {
+            sign = "",
+          },
+        },
+      })
+    end,
+    requires = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
+  })
+
   pckr.add(plugins)
 end
 -- }}}
