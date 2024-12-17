@@ -1,3 +1,5 @@
+# Vim / Neovim Configuration
+
 ## Requirements
     pip3 install pynvim
 
@@ -9,7 +11,7 @@
 ## 参考资料
 
 ### iTerm 的 gruvbox-dark 主题配色
-```vimscript
+```vim
 function g:ItermGruvboxDarkTheme()
     " iTerm2 的 gruvbox-dark 主题
     " 但是一般勾选"Brighten bold text", 颜色就跟这个不一致了
