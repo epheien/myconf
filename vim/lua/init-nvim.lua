@@ -290,6 +290,8 @@ local function setup_pckr() -- {{{
         require("image").setup({
           processor = 'magick_cli',
           max_height_window_percentage = 100,
+          editor_only_render_when_focused = true,
+          tmux_show_only_in_active_window = true,
         })
         vim.api.nvim_create_user_command('ImageRender', function() end, {})
       end
