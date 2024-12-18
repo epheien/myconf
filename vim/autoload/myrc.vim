@@ -320,6 +320,7 @@ endfunction
 "}}}2
 
 let s:last_repeat = 0
+" 普通模式 <CR>
 func myrc#MyEnter()
     if &buftype ==# 'quickfix'
         " 智能寻找一个可用的窗口
@@ -582,7 +583,7 @@ function! myrc#restore_ei(...) abort
     return ''
 endfunction
 
-" 插入模式的 smart enter
+" 插入模式 <CR>
 function! myrc#SmartEnter() abort
     if pumvisible()
         let s:bak_ei = &ei
@@ -919,8 +920,8 @@ function myrc#Cstag() abort
     endtry
 endfunction
 
-" 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则
-" 触发 <c-x>xxx 系列补全
+" 插入模式 <Tab>
+" 有补全引擎工作的时候, 就补全或者展开snippet(片段), 否则 触发 <c-x>xxx 系列补全
 function! myrc#SuperTab()
     " BUG: vim 脚本的绑定无法获取到正确的值, 用 vim.api.nvim_set_keymap 的方式才能正常
     "echomsg luaeval("require('cmp').visible()")
@@ -954,6 +955,7 @@ function! myrc#SuperTab()
     return ''
 endfunction
 
+" 插入模式 <S-Tab>
 function myrc#ShiftTab()
     if pumvisible()
         call feedkeys("\<C-p>", 'n')
