@@ -551,6 +551,30 @@ local function setup_pckr() -- {{{
     },
   })
 
+  table.insert(plugins, {
+    'folke/todo-comments.nvim',
+    cond = event('FileType'),
+    config = function()
+      require('todo-comments').setup({
+        signs = false,
+        highlight = {
+          pattern = [[.*<(KEYWORDS)>\s*]], -- vim regex with prefix '\v\C'
+        },
+        search = {
+          pattern = [[\b(KEYWORDS)\b]], -- ripgrep regex
+        },
+      })
+      local keywords = { "TODO", "FIXME", }
+      vim.keymap.set("n", "]t", function()
+        require("todo-comments").jump_next({ keywords = keywords })
+      end, { desc = "Next todo comment" })
+      vim.keymap.set("n", "[t", function()
+        require("todo-comments").jump_prev({ keywords = keywords })
+      end, { desc = "Prev todo comment" })
+    end,
+    requires = { 'nvim-lua/plenary.nvim' },
+  })
+
   pckr.add(plugins)
 end
 -- }}}
