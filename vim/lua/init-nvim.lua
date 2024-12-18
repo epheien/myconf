@@ -730,6 +730,9 @@ local function status_line_theme_mywombat()
       vim.api.nvim_set_hl(0, name, opts)
     end
   end
+  -- 修改 treesiter 部分配色
+  vim.api.nvim_set_hl(0, '@variable', {})
+  vim.api.nvim_set_hl(0, '@constructor', { link = '@function' })
 end
 
 local stl_hl_map = {
