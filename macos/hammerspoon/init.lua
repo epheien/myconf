@@ -23,24 +23,25 @@ clipboard_watcher = hs.pasteboard.watcher.new(function(str)
     hs.pasteboard.setContents(g_last_clipboard_content)
     return
   end
-  if str ~= g_last_clipboard_content and str then
-    -- 最多保存 1000 个字符, 避免文件膨胀过快
-    g_clipboard_history_file:write(string.sub(str, 1, 1000))
-    g_clipboard_history_file:write("\n")
-    g_clipboard_history_write_ts = hs.timer.absoluteTime()
-  end
+  -- 不再实现剪切板历史, 使用 Alfred 的剪切板历史即可
+  --if str ~= g_last_clipboard_content and str then
+  --  -- 最多保存 1000 个字符, 避免文件膨胀过快
+  --  g_clipboard_history_file:write(string.sub(str, 1, 1000))
+  --  g_clipboard_history_file:write("\n")
+  --  g_clipboard_history_write_ts = hs.timer.absoluteTime()
+  --end
   g_last_clipboard_content = str
 end)
 clipboard_watcher:start()
 
-local g_clipboard_history_flush_ts = 0
-clipboard_history_flush_timer = hs.timer.new(10, function()
-  if g_clipboard_history_write_ts > g_clipboard_history_flush_ts then
-    g_clipboard_history_file:flush()
-    g_clipboard_history_flush_ts = hs.timer.absoluteTime()
-  end
-end)
-clipboard_history_flush_timer:start()
+--local g_clipboard_history_flush_ts = 0
+--clipboard_history_flush_timer = hs.timer.new(10, function()
+--  if g_clipboard_history_write_ts > g_clipboard_history_flush_ts then
+--    g_clipboard_history_file:flush()
+--    g_clipboard_history_flush_ts = hs.timer.absoluteTime()
+--  end
+--end)
+--clipboard_history_flush_timer:start()
 
 -- hook cmd-w 快捷键的 app
 local hookApps = {
