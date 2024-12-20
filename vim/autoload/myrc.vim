@@ -902,7 +902,7 @@ function myrc#MyTabLabel(n, active)
 endfunction
 
 function myrc#Cstag() abort
-    if &filetype == "help"
+    if &filetype == "help" || &filetype == 'man'
         exec "normal! \<C-]>"
         return
     endif
