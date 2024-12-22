@@ -123,6 +123,8 @@ end
 -- 需要使用这种按键方式才能避免各种副作用
 -- NOTE: 选择“输入法”菜单中的下一个输入法 这个功能在删除再添加输入法后可恢复
 function toggleInputMethod()
+  --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
+  --hs.eventtap.keyStroke({"ctrl"}, "space")
   if true then
     -- 使用 capslock 键切换
     hs.eventtap.event.newSystemKeyEvent('CAPS_LOCK', true):post()
@@ -147,6 +149,10 @@ local g_lastToEn = 0
 local g_lastToZh = 0
 local g_IMThresh = 1000000000 -- 单位纳秒
 local g_major = 10000 -- 此版本号之后 currentSourceID() 没有任何 BUG
+-- com.apple.inputmethod.SCIM.ITABC       - 自带输入法
+-- com.sogou.inputmethod.sogou.pinyin     - 搜狗输入法
+-- com.tencent.inputmethod.wetype.pinyin  - 微信输入法
+local g_zh_im_name = 'com.tencent.inputmethod.wetype.pinyin'
 -- 切换到英文输入法
 -- force: 表示使用 currentSourceID() 函数切换
 function toEnIM(force)
@@ -162,8 +168,7 @@ function toEnIM(force)
     if hs.host.operatingSystemVersion().major >= g_major or force then
       hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
     else
-      --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
-      --hs.eventtap.keyStroke({"ctrl"}, "space")
+      --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
       toggleInputMethod()
     end
     g_lastToEn = now
@@ -184,12 +189,10 @@ function toZhIM()
 
   if (hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC') then
     -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
-    --hs.keycodes.currentSourceID('com.sogou.inputmethod.sogou.pinyin')
     if hs.host.operatingSystemVersion().major >= g_major then
-      hs.keycodes.currentSourceID('com.apple.inputmethod.SCIM.ITABC')
+      hs.keycodes.currentSourceID(g_zh_im_name)
     else
-      --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
-      --hs.eventtap.keyStroke({"ctrl"}, "space")
+      --hs.keycodes.currentSourceID(g_zh_im_name)
       toggleInputMethod()
     end
     g_lastToZh = now
