@@ -27,6 +27,7 @@ local opts = {
     unfold_all = 'zR',
     down_and_jump = {},
     up_and_jump = {},
+    restore_location = {},
   },
   symbol_folding = {
     autofold_depth = 2;

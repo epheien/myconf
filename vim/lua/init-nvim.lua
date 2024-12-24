@@ -813,6 +813,12 @@ vim.keymap.set('n', '<C-g>', function()
     table.insert(msg_list, vim.fn.strftime("%Y-%m-%d %H:%M:%S", vim.fn.getftime(fname)))
   end
   vim.cmd.echo(vim.fn.string(vim.fn.join(msg_list, ' ')))
+
+  if vim.g.outline_loaded == 1 then
+    if require('outline').is_open() then
+      require('outline').follow_cursor({ focus_outline = false })
+    end
+  end
 end)
 -- }}}
 
