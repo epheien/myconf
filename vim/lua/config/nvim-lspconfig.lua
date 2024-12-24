@@ -137,3 +137,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 });
 
 vim.api.nvim_create_autocmd('FileType', { callback = lsp_setup })
+-- 关闭 lsp 日志, 仅在需要的时候再开启, 最终都需要关闭
+vim.lsp.set_log_level('OFF')
