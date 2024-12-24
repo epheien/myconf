@@ -9,6 +9,9 @@ local opts = {
           kinds = {
           },
         },
+        markdown = {
+          scope_sep = '""',
+        },
       }
     },
   },
