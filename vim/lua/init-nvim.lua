@@ -461,6 +461,10 @@ local function setup_pckr() -- {{{
             open = "TagbarOpen",
           },
           {
+            ft = "aerial",
+            open = "AerialOpen",
+          },
+          {
             title = function() return 'Outline' end,
             ft = "Outline",
             open = "OutlineOpen",
