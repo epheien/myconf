@@ -17,6 +17,11 @@ local opts = {
   symbol_folding = {
     autofold_depth = 2;
   },
+  outline_items = {
+    auto_update_events = {
+      follow = { 'CursorHold', 'WinLeave' },
+    },
+  },
 }
 
 outline.setup(opts)
