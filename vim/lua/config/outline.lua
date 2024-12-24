@@ -1,6 +1,17 @@
 local outline = require('outline')
 
 local opts = {
+  providers = {
+    priority = { 'lsp', 'ctags', 'coc', 'markdown', 'norg' },
+    ctags = {
+      filetypes = {
+        ['c++'] = {
+          kinds = {
+          },
+        },
+      }
+    },
+  },
   outline_window = {
     width = 30,
     relative_width = false,

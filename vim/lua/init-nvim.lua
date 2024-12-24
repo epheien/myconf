@@ -176,6 +176,7 @@ local function setup_pckr() -- {{{
       "hedyhli/outline.nvim",
       cond = {cmd('Outline'), cmd('OutlineOpen')},
       config = function() require('config/outline') end,
+      requires = { 'epheien/outline-ctags-provider.nvim' },
     };
 
     {
