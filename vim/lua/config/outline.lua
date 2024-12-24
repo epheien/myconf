@@ -33,6 +33,11 @@ local opts = {
       follow = { 'CursorHold' },
     },
   },
+  symbols = {
+    icons = {
+      TypeAlias = { icon = '', hl = 'Type' },
+    }
+  },
 }
 
 outline.setup(opts)
