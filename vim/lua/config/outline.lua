@@ -19,7 +19,7 @@ local opts = {
   },
   outline_items = {
     auto_update_events = {
-      follow = { 'CursorHold', 'WinLeave' },
+      follow = { 'CursorHold' },
     },
   },
 }
