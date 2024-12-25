@@ -841,13 +841,28 @@ vim.keymap.set('n', '<C-g>', function()
 end)
 -- }}}
 
--- 默认使用 treesitter 的文件类型
+-- • Enabled treesitter highlighting for:
+--   • Treesitter query files
+--   • Vim help files
+--   • Lua files
+-- 额外的默认使用 treesitter 的文件类型
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'c', 'vim' },
+  pattern = { 'c', 'vim' },
   callback = function()
     vim.treesitter.start()
   end
 })
+
+local open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
+  local bak = vim.g.syntax_on
+  vim.g.syntax_on = nil
+  local floating_bufnr, floating_winnr = open_floating_preview(contents, syntax, opts)
+  vim.g.syntax_on = bak
+  if syntax == 'markdown' then vim.wo[floating_winnr].conceallevel = 2 end
+  return floating_bufnr, floating_winnr
+end
 
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:
