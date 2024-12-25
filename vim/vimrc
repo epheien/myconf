@@ -970,10 +970,10 @@ if !has('nvim')
     inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
 endif
 
-cnoremap ( ()<Left>
-cnoremap [ []<Left>
-cnoremap { {}<Left>
-cnoremap " ""<Left>
+"cnoremap ( ()<Left>
+"cnoremap [ []<Left>
+"cnoremap { {}<Left>
+"cnoremap " ""<Left>
 cnoremap <expr> <BS> <SID>c_BS_plus()
 
 inoremap <expr> <BS> <SID>i_BS_plus()
