@@ -1388,6 +1388,9 @@ function! s:FixDosFmt() "{{{2
     if &ff != 'unix' || &bin || &buftype =~# '\<quickfix\>\|\<nofile\>'
         return
     endif
+    if &ft ==# 'vim' " vimp.vim 会存在特殊字符, 不处理这种文件类型
+        return
+    endif
     " 打开常见的图像文件类型的话, 不处理, 一般会有对应的插件处理
     if expand('%:e') =~? '^\(png\|jpg\|jpeg\|gif\|bmp\|webp\|tif\|tiff\)$'
         return
