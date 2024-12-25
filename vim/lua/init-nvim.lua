@@ -581,6 +581,7 @@ local function setup_pckr() -- {{{
       require('todo-comments').setup({
         signs = false,
         highlight = {
+          multiline = false,
           pattern = [[.*<(KEYWORDS)>\s*]], -- vim regex with prefix '\v\C'
         },
         search = {
