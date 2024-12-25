@@ -757,6 +757,11 @@ local function status_line_theme_mywombat()
   -- 修改 treesiter 部分配色
   vim.api.nvim_set_hl(0, '@variable', {})
   vim.api.nvim_set_hl(0, '@constructor', { link = '@function' })
+  vim.api.nvim_set_hl(0, 'markdownCodeBlock', { link = 'markdownCode' })
+  vim.api.nvim_set_hl(0, 'markdownCode', { link = 'String' })
+  vim.api.nvim_set_hl(0, 'markdownCodeDelimiter', { link = 'Delimiter' })
+  vim.api.nvim_set_hl(0, 'markdownOrderedListMarker', { link = 'markdownListMarker' })
+  vim.api.nvim_set_hl(0, 'markdownListMarker', { link = 'Tag' })
 end
 
 local stl_hl_map = {
