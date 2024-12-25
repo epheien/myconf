@@ -40,7 +40,20 @@ local opts = {
   symbols = {
     icons = {
       TypeAlias = { icon = '', hl = 'Type' },
-    }
+    },
+    filter = {
+      -- lua 总显示一些 if 语句很烦, 以下 filter 列表取自 aerial.nvim
+      lua = {
+        "Class",
+        "Constructor",
+        "Enum",
+        "Function",
+        "Interface",
+        "Module",
+        "Method",
+        "Struct",
+      },
+    },
   },
 }
 
