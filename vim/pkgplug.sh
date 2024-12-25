@@ -11,7 +11,7 @@ fi
 
 # -m means minimize
 if [ "$1" == "-m" ]; then
-    cmd="$cmd --exclude 'coc/*' --exclude '*/coc.nvim/*' --exclude videm --exclude '*/vimcdoc/*'"
+    cmd="$cmd --exclude 'coc/*' --exclude '*/coc.nvim/*' --exclude videm --exclude '*/vimcdoc/*' --exclude '*/nvim-treesitter/*'"
 fi
 
 eval $cmd -czf "$output" pckr/ plugged/ coc/
