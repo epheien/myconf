@@ -472,7 +472,7 @@ local function setup_pckr() -- {{{
         left = {
           {
             ft = 'NvimTree',
-            pinned = true,
+            --pinned = true,
             open = 'NvimTreeOpen',
           },
           {
