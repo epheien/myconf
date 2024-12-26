@@ -582,7 +582,7 @@ local function setup_pckr() -- {{{
         signs = false,
         highlight = {
           multiline = false,
-          pattern = [[.*<(KEYWORDS)>\s*]], -- vim regex with prefix '\v\C'
+          pattern = [[.*\s<(KEYWORDS)>\s*]], -- vim regex with prefix '\v\C'
         },
         search = {
           pattern = [[\b(KEYWORDS)\b]], -- ripgrep regex
