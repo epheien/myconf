@@ -1,8 +1,15 @@
 local outline = require('outline')
 
 local opts = {
+  view = {
+    filter = function(buf)
+      local ft = vim.bo[buf].filetype
+      if ft == 'qf' then return false end
+      return vim.bo[buf].buflisted or ft == 'help'
+    end,
+  },
   providers = {
-    priority = { 'lsp', 'ctags', 'coc', 'markdown', 'norg' },
+    priority = { 'lsp', 'coc', 'markdown', 'norg', 'man', 'treesitter', 'ctags' },
     ctags = {
       filetypes = {
         ['c++'] = {
@@ -40,6 +47,8 @@ local opts = {
   symbols = {
     icons = {
       TypeAlias = { icon = '', hl = 'Type' },
+      Fragment = { icon = '●' }, -- ''
+      Null = { icon = '∅' },
     },
     filter = {
       -- lua 总显示一些 if 语句很烦, 以下 filter 列表取自 aerial.nvim

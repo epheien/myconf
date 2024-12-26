@@ -173,10 +173,10 @@ local function setup_pckr() -- {{{
     {'sakhnik/nvim-gdb', run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart')};
 
     {
-      "hedyhli/outline.nvim",
+      "epheien/outline.nvim",
       cond = {cmd('Outline'), cmd('OutlineOpen')},
       config = function() require('config/outline') end,
-      requires = { 'epheien/outline-ctags-provider.nvim' },
+      requires = { 'epheien/outline-ctags-provider.nvim', 'epheien/outline-treesitter-provider.nvim' },
     };
 
     {
