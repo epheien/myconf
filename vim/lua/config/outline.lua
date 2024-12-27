@@ -2,6 +2,18 @@ local outline = require('outline')
 
 local M = {}
 
+local access_icons = {
+  public = '○',
+  protected = '◉',
+  private = '●',
+  --public = '○',
+  --protected = '◉',
+  --private = '✖',
+  --public = '🟢',
+  --protected = '🟡',
+  --private = '🔴',
+}
+
 local opts = {
   view = {
     filter = function(buf)
@@ -52,6 +64,14 @@ local opts = {
       Fragment = { icon = '●' }, -- ''
       Null = { icon = '∅' },
     },
+    icon_fetcher = function(kindstr, bufnr, symbol) ---@diagnostic disable-line
+      local cfg = require('outline.config')
+      local icon = cfg.o.symbols.icons[kindstr].icon
+      if symbol and symbol.access then
+        return icon .. ' ' .. access_icons[symbol.access]
+      end
+      return icon
+    end,
     filter = {
       -- lua 总显示一些 if 语句很烦, 以下 filter 列表取自 aerial.nvim
       lua = {
