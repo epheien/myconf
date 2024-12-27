@@ -459,6 +459,7 @@ local function setup_pckr() -- {{{
         close_when_all_hidden = false,
         wo = {
           statusline = '─',
+          winfixbuf = true,
         },
         options = {
           left = { size = 36 },
