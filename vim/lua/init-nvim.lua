@@ -406,6 +406,7 @@ local function setup_pckr() -- {{{
     end,
   })
 
+  -- 支持鼠标拖动浮窗
   table.insert(plugins, {
     'epheien/flirt.nvim',
     cond = event('BufWinEnter'),
@@ -427,6 +428,7 @@ local function setup_pckr() -- {{{
     end
   })
 
+  -- 显示 LSP 进度
   table.insert(plugins, {
     'j-hui/fidget.nvim',
     cond = event('BufReadPre'),
