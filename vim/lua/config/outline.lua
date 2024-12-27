@@ -23,7 +23,7 @@ local opts = {
     end,
   },
   providers = {
-    priority = { 'lsp', 'coc', 'markdown', 'norg', 'man', 'treesitter', 'ctags' },
+    priority = { 'lsp', 'coc', 'markdown', 'norg', 'man', 'ctags', 'treesitter' },
     ctags = {
       filetypes = {
         ['c++'] = {
@@ -60,6 +60,7 @@ local opts = {
   },
   symbols = {
     icons = {
+      Variable = { icon = '' },
       TypeAlias = { icon = '', hl = 'Type' },
       Fragment = { icon = '●' }, -- ''
       Null = { icon = '∅' },
