@@ -652,8 +652,12 @@ local create_help_floatwin = function()
       height = math.floor(vim.o.lines / 2),
       border = 'rounded',
     })
-    -- BUG: 使用 vim.fn.setwinvar 的话不能正常工作, 而下面的 API 就正常
-    vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal', { win = help_winid })
+    local opt = vim.wo[help_winid]
+    if opt.winhighlight ~= '' then
+      opt.winhighlight = opt.winhighlight .. ':Normal:Normal'
+    else
+      opt.winhighlight = opt.winhighlight .. 'Normal:Normal'
+    end
   end
   vim.fn.win_gotoid(help_winid)
 end
