@@ -135,6 +135,8 @@ local function setup_pckr() -- {{{
   })
 
   local plugins = {
+    'drybalka/tree-climber.nvim',
+
     {
       'nvim-lualine/lualine.nvim',
       cond = keys('n', '<Plug>lualine'),
