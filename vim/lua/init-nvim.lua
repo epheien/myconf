@@ -61,7 +61,12 @@ local function setup_noice() -- {{{
       align = 'message-left',
       position = {
         col = 0,
-      }
+      },
+      popup = {
+        border = {
+          style = 'none',
+        },
+      },
     },
     cmdline_popup = {
       position = {
