@@ -212,7 +212,7 @@ local function setup_pckr() -- {{{
       config = function()
         require('blink.cmp').setup({
           keymap = {
-            preset = 'enter',
+            preset = 'enter', ---@diagnostic disable-line
             ['<C-e>'] = { 'hide', 'fallback' },
             ['<CR>'] = { 'select_and_accept', 'fallback' },
           },
@@ -664,9 +664,9 @@ local create_help_floatwin = function()
     })
     local opt = vim.wo[help_winid]
     if opt.winhighlight ~= '' then
-      opt.winhighlight = opt.winhighlight .. ',Normal:Normal'
+      opt.winhighlight = opt.winhighlight .. ',NormalFloat:Normal'
     else
-      opt.winhighlight = opt.winhighlight .. 'Normal:Normal'
+      opt.winhighlight = opt.winhighlight .. 'NormalFloat:Normal'
     end
   end
   vim.fn.win_gotoid(help_winid)
@@ -796,7 +796,7 @@ local function status_line_theme_mywombat()
     local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
     if not vim.tbl_isempty(opts) then
       opts.bg = nil
-      vim.api.nvim_set_hl(0, name, opts)
+      vim.api.nvim_set_hl(0, name, opts) ---@diagnostic disable-line
     end
   end
   -- 修改 treesiter 部分配色
