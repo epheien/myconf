@@ -24,6 +24,7 @@ unlet! b:current_syntax
 if !exists('g:markdown_fenced_languages')
   let g:markdown_fenced_languages = []
 endif
+let s:bak_var = ''
 let s:done_include = {}
 for s:type in map(copy(g:markdown_fenced_languages),'matchstr(v:val,"[^=]*$")')
   if has_key(s:done_include, matchstr(s:type,'[^.]*'))
@@ -33,12 +34,25 @@ for s:type in map(copy(g:markdown_fenced_languages),'matchstr(v:val,"[^=]*$")')
     let b:{matchstr(s:type,'[^.]*')}_subtype = matchstr(s:type,'\.\zs.*')
   endif
   syn case match
+  " NOTE: 内嵌 vim 的时候, 不能再递归在 vim 内嵌 lua
+  if s:type ==# 'vim'
+    let s:bak_var = get(g:, 'vimsyn_embed', 'l')
+    let g:vimsyn_embed = 0
+  endif
   exe 'syn include @markdownHighlight_'.tr(s:type,'.','_').' syntax/'.matchstr(s:type,'[^.]*').'.vim'
+  if s:type ==# 'vim'
+    let g:vimsyn_embed = s:bak_var
+  endif
+  if s:type ==# 'lua'
+    syntax clear luaParenError
+    syntax clear luaError
+  endif
   unlet! b:current_syntax
   let s:done_include[matchstr(s:type,'[^.]*')] = 1
 endfor
 unlet! s:type
 unlet! s:done_include
+unlet! s:bak_var
 
 syn spell toplevel
 if exists('s:foldmethod') && s:foldmethod !=# &l:foldmethod
