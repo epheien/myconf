@@ -3,7 +3,7 @@ local M = {}
 local scratch_winid = -1
 M.create_scratch_floatwin = function(title)
   local bufid
-  local title = string.format(' %s ', title) or ' More Prompt '
+  title = string.format(' %s ', title) or ' More Prompt '
   if not vim.api.nvim_win_is_valid(scratch_winid) then
     bufid = vim.api.nvim_create_buf(false, true)
     local bo = vim.bo[bufid]
