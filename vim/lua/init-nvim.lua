@@ -663,14 +663,14 @@ local create_help_floatwin = function()
       height = math.floor(vim.o.lines / 2),
       border = 'rounded',
     })
-    local opt = vim.wo[help_winid]
-    if opt.winhighlight ~= '' then
-      opt.winhighlight = opt.winhighlight .. ',NormalFloat:Normal'
-    else
-      opt.winhighlight = opt.winhighlight .. 'NormalFloat:Normal'
-    end
   end
-  vim.fn.win_gotoid(help_winid)
+  vim.api.nvim_set_current_win(help_winid)
+  -- NOTE: floating window 的 winhighlight 选项会继承自调用此函数的窗口
+  --       但是用下面的方法设置选项就没有问题
+  local opt = vim.opt_local.winhighlight
+  if not opt:get().NormalFloat then
+    opt:append({ NormalFloat = 'Normal' })
+  end
 end
 vim.keymap.set('c', '<CR>', function()
   if vim.fn.getcmdtype() ~= ':' then
