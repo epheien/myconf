@@ -901,9 +901,16 @@ end)
 --   • Lua files
 -- 额外的默认使用 treesitter 的文件类型
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'c', 'vim' },
+  pattern = { 'c', 'vim', 'markdown' },
   callback = function()
-    vim.treesitter.start()
+    if vim.bo.filetype == 'markdown' then
+      -- 非 floating window 用 treesiter 高亮, 否则就用 syntax 高亮
+      if vim.api.nvim_win_get_config(0).relative == '' then
+        vim.treesitter.start()
+      end
+    else
+      vim.treesitter.start()
+    end
   end
 })
 
