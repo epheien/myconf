@@ -32,6 +32,7 @@ local function setup_cscope_maps() --{{{
 end
 --}}}
 
+---@diagnostic disable-next-line
 local function setup_noice() -- {{{
   lazysetup('noice', {
     override = {
@@ -191,7 +192,7 @@ local function setup_pckr() -- {{{
         require('nvim-autopairs').setup({
           map_cr = false,
         })
-        require('config/nvim-autopairs')
+        require('config/nvim-autopairs') ---@diagnostic disable-line
       end,
     };
 
@@ -764,11 +765,11 @@ local function create_transitional_hl(left, right)
   end
   local right_opts = vim.api.nvim_get_hl(0, { name = right, link = false })
   opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true, fg = right_opts.bg or 'NONE' })
-  vim.api.nvim_set_hl(0, name .. 'Reverse', opts)
+  vim.api.nvim_set_hl(0, name .. 'Reverse', opts) ---@diagnostic disable-line
   return true
 end
 
-local function status_line_theme_gruvbox()
+local function status_line_theme_gruvbox() ---@diagnostic disable-line
   vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#a89984', bg = '#504945' }) -- 246 239
   vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#7c6f64', bg = '#3c3836' }) -- 243 237
   vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#a89984' }) -- 235 246
@@ -850,7 +851,7 @@ vim.api.nvim_create_autocmd('ModeChanged', { callback = function() vim.cmd.redra
 -- 修正 quickfix 窗口的状态栏
 vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function()
-    local stl = vim.opt_local.statusline:get()
+    local stl = vim.opt_local.statusline:get() ---@diagnostic disable-line: undefined-field
     if stl ~= '' and stl ~= '─' then
       vim.opt_local.statusline = ''
     end
@@ -884,8 +885,9 @@ vim.keymap.set('n', '<C-g>', function()
   vim.cmd.echo(vim.fn.string(vim.fn.join(msg_list, ' ')))
 
   if vim.g.outline_loaded == 1 then
-    if require('outline').is_open() then
-      require('outline').follow_cursor({ focus_outline = false })
+    local outline = require('outline') ---@diagnostic disable-line: different-requires
+    if outline.is_open() then
+      outline.follow_cursor({ focus_outline = false })
     end
   end
 end)
