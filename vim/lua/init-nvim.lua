@@ -664,7 +664,7 @@ local create_help_floatwin = function()
     })
     local opt = vim.wo[help_winid]
     if opt.winhighlight ~= '' then
-      opt.winhighlight = opt.winhighlight .. ':Normal:Normal'
+      opt.winhighlight = opt.winhighlight .. ',Normal:Normal'
     else
       opt.winhighlight = opt.winhighlight .. 'Normal:Normal'
     end
