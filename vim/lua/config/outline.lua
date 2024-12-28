@@ -4,7 +4,7 @@ local M = {}
 
 local access_icons = {
   public = '○',
-  protected = '◉',
+  protected = '■', -- ◉  <= 这个字符偏大, 字体需要改进
   private = '●',
   --public = '○',
   --protected = '◉',
