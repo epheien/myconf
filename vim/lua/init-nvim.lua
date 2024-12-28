@@ -640,7 +640,7 @@ local function setup_pckr() -- {{{
 
   table.insert(plugins, {
     'tpope/vim-scriptease',
-    cond = cmd('Message'),
+    cond = cmd('BreakAdd'),
   })
 
   pckr.add(plugins)
@@ -907,6 +907,18 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.filetype == 'help' and vim.api.nvim_win_get_config(0).relative ~= '' then
+      local opt = vim.opt_local.winhighlight
+      if not opt:get().NormalFloat then
+        opt:append({ NormalFloat = 'Normal' })
+      end
+    end
+  end
+})
+
 local open_floating_preview = vim.lsp.util.open_floating_preview
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
@@ -921,7 +933,7 @@ end
 local nvim_open_win = vim.api.nvim_open_win
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.api.nvim_open_win = function(buffer, enter, config)
-  if config.relative then
+  if config.relative ~= '' then
     if config.title == 'Outline Status' or config.title == 'Outline Help' then
       config.border = 'none'
     end
