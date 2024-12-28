@@ -22,14 +22,6 @@ M.create_scratch_floatwin = function(title)
       title = title,
       title_pos = 'center',
     })
-    local wo = vim.wo[scratch_winid]
-    if wo.winhighlight ~= '' then
-      wo.winhighlight = wo.winhighlight .. ',Normal:Normal'
-    else
-      wo.winhighlight = wo.winhighlight .. 'Normal:Normal'
-    end
-    wo.number = false
-    wo.cc = ''
     vim.keymap.set('n', 'q', '<C-w>q', { buffer = bufid, remap = false })
   else
     bufid = vim.api.nvim_win_get_buf(scratch_winid)
@@ -37,7 +29,13 @@ M.create_scratch_floatwin = function(title)
     config.title = title
     vim.api.nvim_win_set_config(scratch_winid, config)
   end
-  vim.fn.win_gotoid(scratch_winid)
+  vim.api.nvim_set_current_win(scratch_winid)
+  vim.opt_local.number = false
+  vim.opt_local.colorcolumn = {}
+  local opt = vim.opt_local.winhighlight
+  if not opt:get().NormalFloat then
+    opt:append({ NormalFloat = 'Normal' })
+  end
   return bufid, scratch_winid
 end
 
