@@ -7,6 +7,7 @@
 - [X] 支持鼠标拖动浮动窗口
 - [X] nvim-cmp 以及 cmp-cmdline 插件在命令行粘贴命令的时候, 好像有性能问题
 - [ ] `setl nowra` 无法补全, 因为原版是以 `setl no` 作为起点匹配补全的
+- [ ] `:h<CR>:Outline<CR>:OutlineStatus<CR>` 背景色会变化, 非常奇怪
 
 ## 参考资料
 
