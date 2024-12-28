@@ -635,6 +635,11 @@ local function setup_pckr() -- {{{
     end
   })
 
+  table.insert(plugins, {
+    'tpope/vim-scriptease',
+    cond = cmd('Message'),
+  })
+
   pckr.add(plugins)
 end
 -- }}}
