@@ -904,5 +904,16 @@ vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
   return floating_bufnr, floating_winnr
 end
 
+local nvim_open_win = vim.api.nvim_open_win
+---@diagnostic disable-next-line: duplicate-set-field
+vim.api.nvim_open_win = function(buffer, enter, config)
+  if config.relative then
+    if config.title == 'Outline Status' or config.title == 'Outline Help' then
+      config.border = 'none'
+    end
+  end
+  return nvim_open_win(buffer, enter, config)
+end
+
 ------------------------------------------------------------------------------
 -- vim:set fdm=marker fen fdl=0:
