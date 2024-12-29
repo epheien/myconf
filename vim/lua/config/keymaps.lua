@@ -1,5 +1,6 @@
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
+  -- defaults: remap = false
+  local options = { silent = true }
   if opts then
     options = vim.tbl_deep_extend("force", options, opts)
   end
@@ -63,10 +64,10 @@ map("n", "\\=", ":set columns+=30<CR>")
 map("n", "\\d", ":call myrc#n_BufferDelete()<CR>")
 
 -- Change local directory to file's directory
-map("n", "\\h", ":lcd %:p:h <Bar> pwd<CR>", { silent = false })
+map("n", "\\h", ":lcd %:p:h <Bar> pwd<CR>", nosilent)
 
 -- Save session
-map("n", "\\]", ":mksession! vimp.vim<CR>")
+map("n", "\\]", ":mksession! vimp.vim<CR>", nosilent)
 
 -- Scroll down
 map("n", "<Space>", "3<C-e>")
@@ -150,14 +151,14 @@ map("n", "\\T", ":Telescope tags<CR>")
 map("n", "\\g", ":Telescope tags<CR>")
 map("n", "\\/", ":Telescope current_buffer_fuzzy_find<CR>")
 
-map('i', '<C-h>', '<Left>')
-map('i', '<C-j>', '<Down>')
-map('i', '<C-k>', '<Up>')
-map('i', '<C-l>', '<Right>')
-map('i', '<C-b>', '<Left>')
-map('i', '<C-f>', '<Right>')
-map('i', '<C-p>', '<Up>')
-map('i', '<C-n>', '<Down>')
+map('i', '<C-h>', '<Left>', { remap = true })
+map('i', '<C-j>', '<Down>', { remap = true })
+map('i', '<C-k>', '<Up>', { remap = true })
+map('i', '<C-l>', '<Right>', { remap = true })
+map('i', '<C-b>', '<Left>', { remap = true })
+map('i', '<C-f>', '<Right>', { remap = true })
+map('i', '<C-p>', '<Up>', { remap = true })
+map('i', '<C-n>', '<Down>', { remap = true })
 
 map("i", "<C-s>", "<ESC>:update<CR>")
 map("i", "<C-o>", "<End><CR>")
@@ -166,7 +167,7 @@ map("i", "<C-z>", "<Esc>O")
 map("i", "<C-a>", "<Home>")
 map("i", "<C-d>", "<Del>")
 
-map('x', '<C-n>', '<plug>NERDCommenterToggle', { noremap = false })
+map('x', '<C-n>', '<plug>NERDCommenterToggle', { remap = true })
 
 -- termdbg
 map('n', '<C-p>', [[:exec 'TSendCommand p' expand('<cword>')<CR>]])
@@ -178,12 +179,13 @@ map("n", "<F8>", ":TStep<CR>")
 map("n", "<F10>", ":TNext<CR>")
 map("n", "<F11>", ":TStep<CR>")
 
-map("n", "\\\\", "<Plug>MarkSet", { noremap = false })
-map("n", "\\c", ":noh<CR><Plug>MarkAllClear", { noremap = false })
-map("n", "*", "<Plug>MarkSearchCurrentNext", { noremap = false })
-map("n", "#", "<Plug>MarkSearchCurrentPrev", { noremap = false })
-map("n", "<Leader>*", "<Plug>MarkSearchNext", { noremap = false })
-map("n", "<Leader>#", "<Plug>MarkSearchPrev", { noremap = false })
+map("n", "\\\\", "<Plug>MarkSet", { remap = true })
+map("x", "\\\\", "<Plug>MarkSet", { remap = true })
+map("n", "\\c", ":noh<CR><Plug>MarkAllClear", { remap = true })
+map("n", "*", "<Plug>MarkSearchCurrentNext", { remap = true })
+map("n", "#", "<Plug>MarkSearchCurrentPrev", { remap = true })
+map("n", "<Leader>*", "<Plug>MarkSearchNext", { remap = true })
+map("n", "<Leader>#", "<Plug>MarkSearchPrev", { remap = true })
 map('n', '<2-LeftMouse>', function() vim.call('myrc#MouseMark') end)
 
 local cscmd = 'Cs'
