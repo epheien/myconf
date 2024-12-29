@@ -356,14 +356,32 @@ local function setup_pckr() -- {{{
   local local_plugins = {
     'common',
     'vim-repeat',
-    { 'python-syntax' },
-    { 'mymark',       cond = { keys('n', '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
-    { 'jsonfmt',      cond = cmd('JsonFmt') },
-    { 'colorizer',    cond = cmd('UpdateColor') },
-    { 'colorsel',     cond = cmd('ColorSel') },
-    { 'visincr',      cond = keys('n', 'I') }
+    { 'python-syntax', cond = event('FileType', 'python') },
+    { 'mymark',        cond = { keys('n', '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
+    { 'jsonfmt',       cond = cmd('JsonFmt') },
+    { 'colorizer',     cond = cmd('UpdateColor') },
+    { 'colorsel',      cond = cmd('ColorSel') },
+    { 'visincr',       cond = keys('n', 'I') }
   }
   add_local_plugins(local_plugins)
+
+  local vim_plugins = {
+    { 'yianwillis/vimcdoc' },
+    { 'tpope/vim-surround' },
+    { 'dstein64/vim-startuptime',    cond = cmd('StartupTime') },
+    { 'sunaku/vim-dasht',            cond = cmd('Dasht') },
+    { 'yuratomo/w3m.vim',            cond = cmd('W3m') },
+    { 'Yggdroot/LeaderF',            cond = cmd('Leaderf') },
+    { 'mbbill/undotree',             cond = cmd('UndotreeShow') },
+    { 'dhruvasagar/vim-table-mode',  cond = cmd('TableModeToggle') },
+    { 'skywind3000/asyncrun.vim',    cond = cmd('AsyncRun') },
+    { 'kassio/neoterm',              cond = cmd('Tnew') },
+    { 'epheien/vim-clang-format',    cond = cmd('ClangFormat') },
+    { 'epheien/videm',               cond = cmd('VidemOpen') },
+    { 'iamcco/markdown-preview.vim', cond = event('FileType', 'markdown') },
+    { 'tweekmonster/helpful.vim',    cond = cmd('HelpfulVersion'), },
+  }
+  vim.list_extend(plugins, vim_plugins)
 
   -- noice
   --if vim.fn.has('nvim-0.10') == 1 then
@@ -711,6 +729,18 @@ local function setup_pckr() -- {{{
   table.insert(plugins, {
     'tpope/vim-scriptease',
     cond = cmd('BreakAdd'),
+  })
+
+  table.insert(plugins, {
+    'oskarrrrrrr/symbols.nvim',
+    cond = cmd('SymbolsToggle'),
+    config = function()
+      local r = require("symbols.recipes")
+      require("symbols").setup(r.DefaultFilters, r.AsciiSymbols, {
+        -- custom settings here
+        -- e.g. hide_cursor = false
+      })
+    end,
   })
 
   table.insert(plugins, {
