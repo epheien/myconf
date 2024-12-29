@@ -17,13 +17,9 @@ local function setup_colorscheme(colors_name)
   vim.o.background = 'dark'
   local ok = pcall(vim.cmd.colorscheme, colors_name)
   if not ok then
-    print(string.format('colorscheme %s failed, fallback to gruvbox-origin'))
+    print('colorscheme gruvbox failed, fallback to gruvbox-origin')
     vim.cmd.colorscheme('gruvbox-origin')
   end
-end
-
-if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
-  setup_colorscheme('gruvbox')
 end
 
 -- 插件设置入口, 避免在新环境中出现各种报错
@@ -166,10 +162,32 @@ local function setup_pckr() -- {{{
   local event = require('pckr.loader.event')
 
   pckr.setup({
-    package_root = vim.fn.stdpath('config'),
+    package_root = vim.fn.stdpath('config'), ---@diagnostic disable-line
     pack_dir = vim.fn.stdpath('config'), -- 新版本用的配置名, 最终目录: pack/pckr/opt
     autoinstall = false,
   })
+
+  -- 优先设置 nvim 主题
+  pckr.add({
+    'epheien/gruvbox.nvim',
+    config = function()
+      require('gruvbox').setup({
+        bold = true,
+        italic = {
+          strings = false,
+          emphasis = false,
+          comments = false,
+          operators = false,
+          folds = false
+        },
+        terminal_colors = vim.fn.has('gui_running') == 1
+      })
+    end,
+  })
+  -- BUG: 放到 run 字段会有问题
+  if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
+    setup_colorscheme('gruvbox')
+  end
 
   local plugins = {
     { 'epheien/pckr.nvim', keys('n', '<Plug>pckr') }, -- 用来管理更新

@@ -118,6 +118,10 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 
 -- LeaderF
 vim.cmd([[
+" TODO
+function g:OnlyASCII()
+  return 0
+endfunction
 " 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
 let g:Lf_UseCache = 0
 " 短期缓存, 会在内存缓存, 如果文件经常改动的话, 就不适合了

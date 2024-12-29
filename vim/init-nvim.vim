@@ -14,23 +14,16 @@ function g:OnlyASCII() "{{{
 endfunction
 "}}}
 
-" 激活 bundle 目录的插件, 优先于 Plug
-call pathogen#infect()
-" 设置 nvim 主题
-" 写成一行, 避免默认的语法解释出现奇怪的问题
-silent! lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false},
-    \ terminal_colors=vim.fn.has('gui_running')==1})
-
 let g:plug_window = 'new'
 " ## vim-plug
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 " NOTE: 对于 nvim, 必须安装 python 模块: pip3 install -U pynvim
 call plug#begin(stdpath('config') .. '/plugged')
 
-Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
-Plug 'yianwillis/vimcdoc' " 中文文档
-Plug 'asins/vim-dict'
-Plug 'tpope/vim-surround'
+"Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
+"Plug 'yianwillis/vimcdoc' " 中文文档
+"Plug 'asins/vim-dict'
+"Plug 'tpope/vim-surround'
 
 Plug 'tweekmonster/helpful.vim', {'on': 'HelpfulVersion'} " 获取特性加入/删除的具体版本
 
@@ -51,9 +44,6 @@ Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
 Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
 Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
 Plug 'epheien/videm', {'on': 'VidemOpen'}
-
-" 基础配色, 但不在这里加载, 因为时机有点晚
-Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 
 call plug#end()
 " ####
