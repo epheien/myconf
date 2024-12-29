@@ -65,3 +65,7 @@ if vim.env.TERM_PROGRAM and
     vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM) then
   vim.o.termguicolors = true
 end
+
+-- 需要导出到子环境的环境变量
+vim.env.VIM_SERVERNAME = vim.v.servername
+vim.env.VIM_EXE = vim.v.progpath

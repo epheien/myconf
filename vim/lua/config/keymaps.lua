@@ -17,3 +17,14 @@ vim.keymap.set('n', '<CR>', function() vim.call('myrc#MyEnter') end, { silent = 
 
 vim.keymap.set('i', '<Tab>', function() vim.call('myrc#SuperTab') end, { silent = true })
 vim.keymap.set('i', '<S-Tab>', function() vim.call('myrc#ShiftTab') end, { silent = true })
+
+vim.keymap.set('n', '<C-f>', function()
+  vim.call('mydict#Search', vim.fn.expand('<cword>'))
+end, { silent = true })
+
+vim.keymap.set('n', '<C-f>', function()
+  vim.call('mydict#Search', vim.fn.expand('<cword>'))
+end, { silent = true })
+vim.keymap.set('v', '<C-f>', 'y:call mydict#Search(@")<CR>', { silent = true })
+
+vim.keymap.set('n', '<C-]>', function() vim.call('myrc#Cstag') end, { silent = true })

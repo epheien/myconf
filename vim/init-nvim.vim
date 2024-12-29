@@ -38,11 +38,7 @@ function s:joinpath(...) "{{{
 endfunction
 "}}}
 " 用户配置文件所在的目录
-if s:IsWindowsOS()
-    let s:USERRUNTIME = s:joinpath($HOME, 'vimfiles')
-else
-    let s:USERRUNTIME = s:joinpath($HOME, '.vim')
-endif
+let s:USERRUNTIME = stdpath('config')
 
 " vimrc 配置专用自动命令组
 augroup vimrc
@@ -129,33 +125,6 @@ command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
 
 command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
 
-" user PATH
-if $PATH !~ expand('~/bin')
-    let $PATH .= ':' . expand('~/bin')
-endif
-
-" 摘录自vimrc sample by Bram
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-" Also don't do it when the mark is in the first line, that is the default
-" position when opening a file.
-autocmd vimrc BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \     exe "normal! g`\"" |
-    \ endif
-
-" 需要导出到子环境的环境变量
-let $VIM_SERVERNAME = v:servername
-let $VIM_EXE = v:progpath
-
-" ============================================================================
-" 额外的文件格式支持
-" ============================================================================
-
-" rfc 文件格式
-autocmd vimrc BufNewFile,BufRead *.txt if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
-
 " ============================================================================
 " 常规键盘映射
 " ============================================================================
@@ -169,8 +138,6 @@ cnoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>
 if exists(':tmap')
     tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
 endif
-command -nargs=0 OSCYankEnable  call myrc#enable_oscyank()
-command -nargs=0 OSCYankDisable call myrc#disable_oscyank()
 
 nnoremap <silent> <M-h> :tabNext<CR>
 nnoremap <silent> <M-l> :tabnext<CR>
@@ -422,12 +389,6 @@ command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 " 清理后置的多余的空白
 command -nargs=0 CleanSpaces silent! %s/\s\+$//g | noh | normal! ``
 
-"cnoremap ( ()<Left>
-"cnoremap [ []<Left>
-"cnoremap { {}<Left>
-"cnoremap " ""<Left>
-cnoremap <expr> <BS> <SID>c_BS_plus()
-
 inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
 inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
@@ -444,55 +405,10 @@ function! s:i_Semicolon_plus() "{{{
     endif
 endfunction
 "}}}
-function! IfPair(char1,char2) "{{{
-    " 命令行模式
-    if mode() =~# '^c'
-        if getcmdline()[getcmdpos() - 2] == a:char1 && getcmdline()[getcmdpos() - 1] == a:char2
-            return 1
-        else
-            return 0
-        endif
-    endif
-
-    if getline('.')[col('.') - 2] == a:char1 && getline('.')[col('.') - 1] == a:char2
-        return 1
-    else
-        return 0
-    endif
-endfunction
-"}}}
-function! s:i_BS_plus() "{{{
-    if IfPair('(',')') || IfPair('[',']') || IfPair('{', '}')
-        return "\<DEL>\<BS>"
-    else
-        return "\<BS>"
-    endif
-endfunction
-"}}}
-function! s:c_BS_plus() "{{{
-    if IfPair('(',')') || IfPair('[',']') || IfPair('{', '}')
-        return "\<DEL>\<BS>"
-    else
-        return "\<BS>"
-    endif
-endfunction
-"}}}
-
 " ========== cscope 设置 ==========
 "{{{
-let s:cmd = 'cs'
 command -complete=file -nargs=+ CsFind call myrc#CscopeFind(<q-args>)
-if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
-    set cscopeverbose
-    set cscopetagorder=1 " cscope 对定义的跳转不够准确, 优先使用 tags 的
-    set cscopetag
-    set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
-    "nnoremap <silent> <C-\>a :call myrc#AlterSource()<CR>
-    command! -complete=file -nargs=1 CsAdd call myrc#CscopeAdd(<f-args>)
-else
-    let s:cmd = 'Cs'
-    nnoremap <silent> <C-]> :call myrc#Cstag()<CR>
-endif
+let s:cmd = 'Cs'
 " cscope_maps 插件
 exec printf('nnoremap <silent> <C-\>s :%s find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
 exec printf('nnoremap <silent> <C-\>g :%s find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
@@ -518,14 +434,6 @@ let g:plug_window = 'new'
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 " NOTE: 对于 nvim, 必须安装 python 模块: pip3 install -U pynvim
 call plug#begin(s:joinpath(s:USERRUNTIME, 'plugged'))
-
-" ssh 环境下, 使用 OSC52 剪切板机制, 仅支持某些终端模拟器
-Plug 'ojroques/vim-oscyank', {'on': 'OSCYankVisual'}
-command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
-command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
-if !empty($SSH_TTY)
-    autocmd InsertLeave * silent call myrc#OSCYank('toEnIM()')
-endif
 
 Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'yianwillis/vimcdoc' " 中文文档
@@ -555,15 +463,9 @@ Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
 Plug 'epheien/termdbg', {'on': 'Termdbg'}
 Plug 'epheien/videm', {'on': 'VidemOpen'}
 
-" 处理 kitty 背景问题
 " NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
 if $TERM_PROGRAM =~# '\V\<Apple_Terminal'
     Plug 'epheien/bg.nvim'
-endif
-
-if !g:OnlyASCII()
-    "Plug 'Xuyuanp/nerdtree-git-plugin'
-    "Plug 'ryanoasis/vim-devicons'
 endif
 
 " 基础配色, 但不在这里加载, 因为时机有点晚
@@ -694,25 +596,6 @@ function! s:ShowDocumentation()
         call feedkeys('K', 'in')
     endif
 endfunction
-" ========== smartim by hammerspoon ==========
-"{{{
-if has('mac')
-    " 可使用 system 来同步, 只要 hammerspoon 足够快就没问题
-    augroup smartim
-        autocmd!
-        " NOTE: 这个 VimEnter 事件比较耗时, 但是为了使用方便, 还是要用
-        autocmd VimEnter    * call jobstart('open -g hammerspoon://toEnIM')
-        autocmd VimLeavePre * call jobstart('open -g hammerspoon://toEnIM')
-        autocmd InsertLeave * call jobstart('open -g hammerspoon://toEnIM')
-        autocmd FocusGained * call jobstart('open -g hammerspoon://toEnIM')
-    augroup end
-endif
-"}}}
-
-" ========== videm ==========
-" videm 的一些扩展
-" ## gtags
-command VGtagsInit call myrc#VGtagsInit()
 
 " ========== termdbg ==========
 nnoremap <silent> <C-p> :exec 'TSendCommand p' expand('<cword>')<CR>
@@ -723,11 +606,6 @@ nnoremap <silent> <F8> :TStep<CR>
 " 快捷键来自 vscode 的调试器
 nnoremap <silent> <F10> :TNext<CR>
 nnoremap <silent> <F11> :TStep<CR>
-
-" ========== mydict ==========
-nnoremap <silent> <C-f> :call mydict#Search(expand('<cword>'))<CR>
-vnoremap <silent> <C-f> y:call mydict#Search(@")<CR>
-command! -nargs=+ Dict call mydict#Search(<q-args>)
 
 " ========== table-mode ==========
 " 兼容 markdown 表格格式
@@ -768,28 +646,6 @@ endif
 "highlight ScrollView ctermbg=243 guibg=#89816d
 highlight link ScrollView PmenuThumb
 let scrollview_auto_mouse = v:false
-
-" macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
-" 但好消息是可以用映射修正这个问题
-if has('mac') || exists('$SSH_TTY')
-    let keymaps = {
-        \   '，': ',',
-        \   '；': ';',
-        \   '。': '.',
-        \   '：': ':',
-        \   '？': '?',
-        \   '！': '!',
-        \   '【': '[',
-        \   '】': ']',
-        \   '（': '(',
-        \   '）': ')',
-        \   '·': '`',
-        \}
-    for [lhs, rhs] in items(keymaps)
-        exec 'imap' lhs rhs
-        exec 'tmap' lhs rhs
-    endfor
-endif
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 sw=4 sts=-1 et

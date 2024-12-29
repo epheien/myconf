@@ -12,3 +12,15 @@ vim.api.nvim_create_user_command('Title', function(args)
   vim.o.title = true
   vim.o.titlestring = args.args
 end, { nargs = '+' })
+
+vim.api.nvim_create_user_command('Dict', function(args)
+  vim.call('mydict#Search', args.args)
+end, { nargs = '+' })
+
+vim.api.nvim_create_user_command('EnableOSCYank', function()
+  vim.call('myrc#enable_oscyank')
+end, { nargs = 0 })
+
+vim.api.nvim_create_user_command('DisableOSCYank', function()
+  vim.call('myrc#disable_oscyank')
+end, { nargs = 0 })

@@ -652,6 +652,11 @@ local function setup_pckr() -- {{{
     cond = cmd('BreakAdd'),
   })
 
+  table.insert(plugins, {
+    'ojroques/vim-oscyank',
+    cond = { cmd('OSCYankVisual'), cmd('OSCYank') },
+  })
+
   pckr.add(plugins)
 end
 -- }}}
