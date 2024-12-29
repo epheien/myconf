@@ -61,7 +61,7 @@ vim.o.foldlevel = 10000
 -- 允许光标移动到刚刚超过行尾字符之后的位置
 vim.o.virtualedit = 'onemore,block'
 vim.o.cc = '81,101'
-vim.o.sessionoptions = 'buffers,curdir,folds,help,localoptions,tabpages,winsize,resize,terminal'
+vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,localoptions'
 vim.o.wildignorecase = true
 
 -- vim -d a b 启动的时候, 不设置 'list'
