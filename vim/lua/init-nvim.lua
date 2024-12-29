@@ -1,25 +1,26 @@
--- 读取 vimrc
---local vimrc = vim.fn.stdpath("config") .. "/vimrc"
---vim.cmd.source(vimrc)
+local utils = require('utils')
 
 -- 使用 packadd 加载 pckr.nvim
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
 --  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
-vim.opt.packpath:append(vim.fn.stdpath('config')) ---@diagnostic disable-line
+vim.opt.packpath:append(vim.fn.stdpath('config'))
 vim.cmd.packadd('pckr.nvim')
+vim.cmd.packadd('gruvbox.nvim')
 
--- 颜色方案
--- https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
--- 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
-local function setup_colorscheme(colors_name)
-  -- 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
-  vim.g.gitgutter_override_sign_column_highlight = 1
-  vim.o.background = 'dark'
-  local ok = pcall(vim.cmd.colorscheme, colors_name)
-  if not ok then
-    print('colorscheme gruvbox failed, fallback to gruvbox-origin')
-    vim.cmd.colorscheme('gruvbox-origin')
-  end
+-- 直接用内置的 packadd 初始化主题
+require('gruvbox').setup({
+  bold = true,
+  italic = {
+    strings = false,
+    emphasis = false,
+    comments = false,
+    operators = false,
+    folds = false
+  },
+  terminal_colors = vim.fn.has('gui_running') == 1
+})
+if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
+  utils.setup_colorscheme('gruvbox')
 end
 
 -- 插件设置入口, 避免在新环境中出现各种报错
@@ -167,30 +168,10 @@ local function setup_pckr() -- {{{
     autoinstall = false,
   })
 
-  -- 优先设置 nvim 主题
-  pckr.add({ {
-    'epheien/gruvbox.nvim',
-    config = function()
-      require('gruvbox').setup({
-        bold = true,
-        italic = {
-          strings = false,
-          emphasis = false,
-          comments = false,
-          operators = false,
-          folds = false
-        },
-        terminal_colors = vim.fn.has('gui_running') == 1
-      })
-    end
-  } })
-  -- XXX: 放到 run 字段会有问题
-  if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
-    setup_colorscheme('gruvbox')
-  end
-
   local plugins = {
     { 'epheien/pckr.nvim', keys('n', '<Plug>pckr') }, -- 用来管理更新
+
+    'epheien/gruvbox.nvim',
 
     'drybalka/tree-climber.nvim',
 
