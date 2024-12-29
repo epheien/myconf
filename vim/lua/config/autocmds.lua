@@ -14,7 +14,7 @@ end
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = '*.txt',
   callback = function()
-    if vim.regex([[rfc\d\+\.txt]]):match_str(vim.fn.expand('%:t')) then
+    if vim.regex([[rfc\d\+\.txt]]):match_str(vim.fn.expand('%:t') or '') then
       vim.bo.filetype = 'rfc'
     end
   end

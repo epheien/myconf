@@ -225,7 +225,7 @@ map('x', '/',
 map('i', ';', function()
   local line = vim.api.nvim_get_current_line()
   local pos = vim.api.nvim_win_get_cursor(0)
-  if not vim.regex([[^\s*for\>]]):match_str(line) and string.sub(line, pos[2] + 1, pos[2] + 1) == ')' then
+  if not vim.regex([[^\s*for\>]]):match_str(line or '') and string.sub(line, pos[2] + 1, pos[2] + 1) == ')' then
     return '<Right>;'
   else
     return ';'
