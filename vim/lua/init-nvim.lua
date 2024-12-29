@@ -152,7 +152,7 @@ local function setup_pckr() -- {{{
         pckr.add(vim.fs.joinpath(base_dir, plugin))
       else
         plugin[1] = vim.fs.joinpath(base_dir, plugin[1])
-        pckr.add(plugin)
+        pckr.add({ plugin })
       end
     end
   end
@@ -750,6 +750,7 @@ local function setup_pckr() -- {{{
 
   table.insert(plugins, { 'epheien/termdbg', cond = cmd('Termdbg') })
 
+  -- NOTE: pckr.add() 的参数必须是 {{}} 的嵌套列表格式, 否则会出现奇怪的问题
   pckr.add(plugins)
 end
 -- }}}
