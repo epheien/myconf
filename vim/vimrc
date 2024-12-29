@@ -1165,8 +1165,7 @@ else
 endif
 
 if (has('gui_running') || &t_Co == 256) && !has('nvim')
-    "Plug 'itchyny/lightline.vim'
-    Plug 'epheien/lightline.vim' " 包含了一些自定义修改
+    call s:Plug('lightline.vim')
 else
     set tabline=%!myrc#MyTabLine() " 使用自定义的简易 tabline, 减少依赖
 endif
