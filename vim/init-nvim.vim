@@ -32,8 +32,6 @@ function s:SetupColorscheme(colors_name) "{{{
 endfunction
 "}}}
 
-command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
-
 " 激活 bundle 目录的插件, 优先于 Plug
 call pathogen#infect()
 " 设置 nvim 主题

@@ -1008,6 +1008,7 @@ function myrc#RefreshStatusTables(fname, ...) abort
     call nvim_set_option_value('list', v:false, {'win': bufwinid(bufid)})
     call nvim_set_option_value('cursorline', v:true, {'win': bufwinid(bufid)})
     call nvim_set_option_value('filetype', 'status_table', {'buf': bufid})
+    call s:RefreshStatusTables(a:fname, bufid)
     let s:status_refresh_timer = timer_start(interval,
         \ function('s:RefreshStatusTables', [a:fname, bufid]), {'repeat': -1})
     autocmd BufUnload <buffer=abuf> call myrc#StopRefreshStatusTables()

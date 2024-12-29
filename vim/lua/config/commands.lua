@@ -42,3 +42,7 @@ end, { nargs = '+', complete = 'file' })
 vim.api.nvim_create_user_command('Man', function(args)
   vim.call('myrc#Man', args.mods, args.args)
 end, {})
+
+vim.api.nvim_create_user_command('RefreshStatusTables', function(args)
+  vim.call('myrc#RefreshStatusTables', unpack(args.fargs))
+end, { nargs = '+', complete = 'file' })
