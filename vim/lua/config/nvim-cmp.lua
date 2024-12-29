@@ -399,7 +399,7 @@ local cmdline_opts = {
   },
   matching = {
     -- NOTE: 需要全部关闭才能保证进入真正的 fuzzy match 流程
-    -- TODO: 作为一个可选的临时可用性解决方案, 最终方案是换 fuzzy matcher 算法
+    -- NOTE: 作为一个可选的临时可用性解决方案, 也可以换 fuzzy matcher 算法
     disallow_partial_fuzzy_matching = false,    -- default: true
     -- input = '-cmp', word = 'nvim-cmp', 此选项为 true 时, 无法匹配, 否则可匹配
     disallow_symbol_nonprefix_matching = false, -- default: true
