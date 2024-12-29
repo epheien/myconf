@@ -48,98 +48,6 @@ endif
 augroup vimrc
 augroup END
 
-" 关闭 vi 兼容模式，否则无法使用 vim 的大部分扩展功能
-set nocompatible
-" 让退格键以现代化的方式工作
-set backspace=2
-" 设置 Vim 内部使用的字符编码
-set encoding=utf-8
-
-" 由于安全原因, 直接禁用 modeline, 使用 securemodelines 替代
-set nomodeline
-
-" 不强制在末尾添加换行符，兼容其他编辑器的行为
-"set nofixendofline
-
-if has('gui_macvim')
-    set macmeta
-    " 干掉 macvim 的一些默认键位绑定
-    let macvim_skip_cmd_opt_movement = 1
-elseif has('gui_vimr')
-    " 解决终端颜色问题
-    set termguicolors
-endif
-" 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
-"set guioptions-=m
-set guioptions-=t
-set winaltkeys=no
-
-" 交换文件不放到跟编辑的文件同一个目录
-set directory-=.
-
-" 自动缩进设置
-" 使新行缩进与前一行一样
-set autoindent
-" 主要是实现自动对齐大括号的缩进
-set smartindent
-" 打开 cindent，主要体现为函数参数过长时，换行自动缩进
-set cindent
-set cinoptions+=(0,Ws
-set cinoptions+=L0 " 输入 std: 的时候禁止缩进, 避免频繁的光标跳动
-set cinoptions+=:0
-set cinoptions+=l1
-
-" 总在 vim 窗口的右下角显示当前光标位置。
-set ruler rulerformat=%l/%L,%v
-" 用 statusline 模拟
-"set statusline=%<%f\ %h%m%r%=%-13.(%l,%c%V%)\ %P
-" 显示了以下信息:
-"   - 文件名
-"   - [help]
-"   - [Preview]
-"   - [+]/[-]
-"   - [RO]
-"   - [vim]
-"   - [unix]                  <- &ff
-"   - [utf-8]                 <- &fenc
-"   - [2010-10-10 10:10:10]   <- GetFtm()
-"   =====
-"   - 行号/最大行号,列号-虚拟列号
-"   - ruler 百分比
-set statusline=%<%f\ %h%w%m%r%y[%{&ff}]%([%{&fenc}]%)%{GetFtm(0)}%=%(%l/%L,%v%)\ %p
-set laststatus=2
-if !has('nvim')
-    set fillchars-=vert:\| fillchars+=vert:│
-endif
-" (noquote=1)
-function! GetFtm(...) "{{{
-    if winwidth(0) < 90
-        return ''
-    endif
-    let l:ftm = getftime(expand("%:p"))
-    if l:ftm != -1
-        if get(a:000, 0, 1)
-            return strftime("%Y-%m-%d %H:%M:%S", l:ftm)
-        else
-            return "[". strftime("%Y-%m-%d %H:%M:%S", l:ftm) . "]"
-        endif
-    else
-        return ""
-    endif
-endfunction
-"}}}
-let StlDash = {-> repeat('─', &columns)} " 一条横线
-
-" 在 vim 窗口右下角，标尺的右边显示未完成的命令
-set showcmd
-
-" 左下角显示当前模式
-set showmode
-
-" 语法高亮
-syntax on
-" 扩大正则使用的内存, 至少 20MiB
-set maxmempattern=20000
 " 禁用 vim 文件类型的错误
 let g:vimsyn_noerror = 1
 " 使用增强的 python 语法高亮的所有功能
@@ -152,148 +60,8 @@ let g:lisp_rainbow = 1
 let g:markdown_fenced_languages = ['html', 'python', 'vim', 'lua', 'cpp', 'c', 'go']
 let g:markdown_syntax_conceal = 1
 
-" 文件类型的检测
-" 为特定的文件类型允许插件文件的载入
-" 为特定的文件类型载入缩进文件
-" 这个命令触发载入 $VIMRUNTIME/filetype.vim
-filetype plugin indent on
-
-
-" 禁用响铃
-"set noerrorbells
-" 禁用闪屏
-"set vb t_vb=
-
-" 显示行号
-set number
-
-" 标号栏
-silent! set signcolumn=auto:9
-
-" 设定文件编码类型，彻底解决中文编码问题
-if !has('nvim')
-    let &termencoding=&encoding
-endif
-set fileencodings=utf-8,gbk,gb18030,ucs-bom,utf-16,cp936
-" 我们统一使用 unix 风格换行
-set fileformat=unix
-
-" 设置搜索结果高亮显示
-set hlsearch
-" 搜索时忽略大小写
-set ignorecase
-set smartcase
-" 在搜索模式时输入时即时显示相应的匹配点。
-set incsearch
-
-" 终于在nvim 0.5.0解决了恶心的jumplist问题
-if exists('&jumpoptions')
-    set jumpoptions+=stack
-    silent! set jumpoptions+=view
-endif
-
-" 设置不自动备份
-set nobackup
-if has('nvim')
-    " nvim 没有删除对话框选项, 直接禁用算了
-    set noswapfile
-endif
-
-" 启动对鼠标的支持
-set mouse=a
-if exists('$TMUX') && !has('nvim')
-    set ttymouse=xterm2
-endif
-
-" 第一行设置tab键为4个空格，第二行设置当行之间交错时使用4个空格
-"set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
 " 设置 vim 脚本的续行缩进
 let g:vim_indent_cont = shiftwidth()
-
-" 长行不能完全显示时显示当前屏幕能显示的部分，长行不能完全显示时显示 @
-set display=lastline
-
-" 上下为跨屏幕一行
-noremap <silent> k gk
-noremap <silent> j gj
-
-" 自动绕行显示
-set wrap
-" 按词绕行
-"set linebreak
-" 回绕行的前导符号, 可选字符: ↪\ 
-"set showbreak=<-->
-" 光标上下需要保留的行数，滚动时用
-"set scrolloff=3
-if has('nvim')
-    " nvim 下的终端模拟器的终端模式使用 scrolloff=3 会有问题
-    "autocmd TermEnter * silent! call matchdelete(3) | setlocal scrolloff=0
-    "autocmd TermLeave * setlocal scrolloff=3
-endif
-
-" 设置鼠标和选择的行为
-set selectmode=key
-set mousemodel=popup
-set keymodel=startsel,stopsel
-set selection=inclusive
-if s:IsLinuxOS()
-    " 修正鼠标右键菜单行为
-    noremap <RightMouse> <Nop>
-    noremap <RightRelease> <RightMouse>
-    noremap! <RightMouse> <Nop>
-    noremap! <RightRelease> <RightMouse>
-    " 没用的 3、4 连击
-    noremap <3-LeftMouse> <Nop>
-    noremap! <3-LeftMouse> <Nop>
-    noremap <4-LeftMouse> <Nop>
-    noremap! <4-LeftMouse> <Nop>
-endif
-" 我的鼠标的中键坏了，禁用掉这个功能，以免改错文件
-noremap <MiddleMouse> <Nop>
-noremap <2-MiddleMouse> <Nop>
-noremap <3-MiddleMouse> <Nop>
-noremap <4-MiddleMouse> <Nop>
-inoremap <MiddleMouse> <Nop>
-inoremap <2-MiddleMouse> <Nop>
-inoremap <3-MiddleMouse> <Nop>
-inoremap <4-MiddleMouse> <Nop>
-" 上下文菜单, 慢慢完善
-nnoremap <silent> <RightRelease> :call myrc#ContextPopup(1)<CR>
-"nnoremap <silent> <C-p> :call myrc#ContextPopup()<CR>
-
-" 全能补全禁止预览
-set completeopt=menuone
-silent! set completeopt+=noinsert
-
-" 补全窗口不用太大, 限制之
-set pumheight=5
-
-" 修改<Leader>键，默认为 '\'
-" 重新映射的原因是，很多插件擅自映射了复杂的<Leader>绑定，导致自用的绑定不灵敏
-"let mapleader = "\\"
-let mapleader = "\<F12>"
-
-" 设置折叠级别: 高于此级别的折叠会被关闭
-set foldlevel=10000
-
-" 允许光标移动到刚刚超过行尾字符之后的位置
-set virtualedit=onemore,block
-
-" 切换时隐藏缓冲而不是提示已修改未保存
-set hidden
-
-" 显示 80 字符右边距的实现，需要 7.3 以上版本
-silent! set cc=81,101
-
-" 设置 session 文件保存的信息
-" (缺省: "blank,buffers,curdir,folds,help,options,tabpages,winsize")
-set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winsize,resize
-if has('terminal')
-    silent! set sessionoptions+=terminal
-endif
 
 if !has('gui_running')
     if has('nvim')
@@ -430,55 +198,9 @@ function s:SetupColorscheme(colors_name) "{{{
 endfunction
 "}}}
 
-" 增强的命令行补全
-set wildmenu
-set wildignorecase
-if has('nvim') || v:version >= 900
-    silent! set wildoptions+=pum
-endif
-
-" 设置键码延时, 避免终端下 <ESC> 的等待
-set ttimeoutlen=50
-
-" 用空格来显示制表并同时把光标放在空白开始位置
-" vim -d a b 这样启动的时候, 无法触发 OptionSet
-if !&diff
-    set list
-endif
-if (has('gui_running') || &t_Co == 256) && has('nvim')
-    " 可选的字符: ¬ ⏎
-    " tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-    set listchars=tab:→\ ,eol:¬
-    "set listchars+=space:⋅
-else
-    set listchars=tab:\ \ 
-endif
-" diff 模式就不能设置 list 了
-autocmd OptionSet diff call s:OptionSetDiffHook()
-function! s:OptionSetDiffHook() abort
-    if v:option_new == 0
-        setl list
-    else
-        setl nolist
-    endif
-endfunction
-
 " 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
 if exists('$LANGUAGE')
     let $LANGUAGE = ''
-endif
-
-if has('mac') && !has('nvim')
-    " 修复 terminal locale 错误问题
-    try
-        language zh_CN.UTF-8
-    catch
-        try
-            language en_US.UTF-8
-        catch
-            echomsg 'Failed to run :language en_US.UTF-8'
-        endtry
-    endtry
 endif
 
 " Man
@@ -504,10 +226,6 @@ autocmd vimrc BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \     exe "normal! g`\"" |
     \ endif
-
-if has('nvim')
-    set title " nvim 一般都运行在终端, 需要显示标题以标识
-endif
 
 " <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
 nnoremap <silent> <CR> :call myrc#MyEnter()<CR>
@@ -1028,7 +746,6 @@ endfunction
 
 " ========== cscope 设置 ==========
 "{{{
-set tagcase=match " 标签文件一般是区分大小写的
 let s:cmd = 'cs'
 command -complete=file -nargs=+ CsFind call myrc#CscopeFind(<q-args>)
 if has('cscope') " nvim-0.9.0 弃用了 cscope 集成, 需要改为插件式支持
@@ -1164,13 +881,6 @@ else
     let g:apc_enable_ft = {'*': 1}
 endif
 
-if (has('gui_running') || &t_Co == 256) && !has('nvim')
-    "Plug 'itchyny/lightline.vim'
-    Plug 'epheien/lightline.vim' " 包含了一些自定义修改
-else
-    set tabline=%!myrc#MyTabLine() " 使用自定义的简易 tabline, 减少依赖
-endif
-
 call plug#end()
 " ####
 
@@ -1205,98 +915,6 @@ if has('nvim')
     "autocmd vimrc filetype * if &ft == 'leaderf' | setl nonumber | endif
 endif
 
-" ## lightline 配置，用了他的高亮机制，显示的内容自己定制
-function s:setup_lightline() "{{{
-  " 修改主题的 tabline 高亮
-  try
-      if has('nvim')
-          let s:palette = g:lightline#colorscheme#mywombat2#palette
-      else
-          let s:palette = g:lightline#colorscheme#mywombat#palette
-      endif
-      let s:palette.tabline.tabsel = [s:palette.normal.left[0]]
-      let s:palette.tabline.left = [s:palette.normal.right[1]]
-      unlet s:palette
-  catch
-  endtry
-  let g:lightline = {
-    \ 'colorscheme': 'mywombat',
-    \ 'enable': {
-    \     'statusline': 1,
-    \     'tabline': 1,
-    \ },
-    \ 'component_function': {
-    \     'myftm': 'GetFtm',
-    \     'myfileinfo': 'GetFI',
-    \     'StlDash' : 'StlDash',
-    \ },
-  \ }
-  let g:lightline.active = {
-      \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'filename' ],
-      \           [ 'fileflags' ],
-      \         ],
-      \ }
-  let g:lightline.active.right = [['mylineinfo'], ['myfileinfo'], ['myftm']]
-  let g:lightline.inactive = {
-      \ 'left': [ [ 'filename' ],
-      \           [ 'fileflags' ],
-      \         ],
-      \ }
-  let g:lightline.inactive.right = [['mylineinfo'], ['myfileinfo']]
-  let g:lightline.tab = {
-      \ 'active': [ 'tabnum', 'mytabfile', 'modified' ],
-      \ 'inactive': [ 'tabnum', 'mytabfile', 'modified' ] }
-  let g:lightline.tab_component_function = {
-      \ 'mytabfile': 'GetTabFile',
-      \ 'filename': 'lightline#tab#filename',
-      \ 'modified': 'lightline#tab#modified',
-      \ 'readonly': 'lightline#tab#readonly',
-      \ 'tabnum': 'lightline#tab#tabnum',
-      \ }
-  let g:lightline.component = {}
-  let g:lightline.component.filename = '%f'
-  let g:lightline.component.fileflags = '%m%r'
-  let g:lightline.component.myfileinfo = '%{&ff} %{&fenc} %{&ft}'
-  let g:lightline.component.mylineinfo = '%3l/%L:%-2v %3P'
-  " ◄► ◀︎▶︎  
-  if g:OnlyASCII()
-      " 非 Nerd Font
-      "let g:lightline.separator = { 'left': '►', 'right': '◄' }
-      "let g:lightline.tabline_subseparator = { 'left': '►', 'right': '' }
-  else
-      let g:lightline.separator = { 'left': '', 'right': '' }
-      let g:lightline.tabline_separator = { 'left': '', 'right': '' }
-      let g:lightline.tabline_subseparator = { 'left': '', 'right': '' }
-  endif
-  let g:lightline.subseparator = { 'left': '', 'right': '' }
-  if g:lightline.enable.statusline
-      set noshowmode
-  endif
-  function GetFI()
-      let ff = &ff
-      let ft = empty(&ft) ? 'n/a' : &ft
-      let fenc = empty(&fenc) ? &enc : &fenc
-      return join([ff, fenc, ft], ' ')
-  endfunction
-  function GetTabFile(tabnum)
-      let title = gettabvar(a:tabnum, 'title', '')
-      if title !=# ''
-          return title
-      endif
-      return lightline#tab#filename(a:tabnum)
-  endfunction
-  " nvim 使用 incline 替代, lightline 仅用与辅助
-  if has('nvim')
-      let g:lightline.colorscheme = 'mywombat2'
-      let g:lightline.active.left = []
-      let g:lightline.active.right = [['StlDash']]
-      let g:lightline.inactive.left = []
-      let g:lightline.inactive.right = []
-      let g:lightline.separator = { 'left': '', 'right': '' }
-  endif
-endfunction
-"}}}
 " NOTE: g:plugs 是 plug.vim 插件导出的变量, 但是没有文档, 看源码得出的
 if has_key(g:plugs, 'lightline.vim') | call s:setup_lightline() | endif
 " 稍微定制一下 startify 的 header
@@ -1544,10 +1162,6 @@ if get(g:, 'gonvim_running', 0)
     let g:line_ppp = 14
     let g:column_ppp = 8
     autocmd OptionSet * call myrc#optionset_hook()
-endif
-
-if has('nvim-0.8.0')
-    lua require('init-nvim')
 endif
 
 " macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
