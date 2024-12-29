@@ -53,7 +53,7 @@ vim.g.python_slow_sync = 0
 -- 对于 lisp，使用彩虹高亮括号匹配
 vim.g.lisp_rainbow = 1
 -- 基于 syntax 的 markdown 代码块高亮可用的语言类型
-vim.g.markdown_fenced_languages = {'html', 'python', 'vim', 'lua', 'cpp', 'c', 'go'}
+vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'lua', 'cpp', 'c', 'go' }
 vim.g.markdown_syntax_conceal = 1
 
 -- 设置折叠级别: 高于此级别的折叠会被关闭
@@ -85,6 +85,74 @@ vim.env.VIM_EXE = vim.v.progpath
 vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
 vim.g.scrollview_auto_mouse = false
 
-vim.g.gruvbox_italic = 0    -- gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
-vim.g.mkdp_auto_close = 0   -- markdown-preview 禁止自动关闭
-vim.g.asyncrun_open = 5     -- asyncrun 自动打开 quickfix
+vim.g.gruvbox_italic = 0  -- gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
+vim.g.mkdp_auto_close = 0 -- markdown-preview 禁止自动关闭
+vim.g.asyncrun_open = 5   -- asyncrun 自动打开 quickfix
+
+-- table-mode 兼容 markdown 表格格式
+vim.g.table_mode_corner = '|'
+
+-- gutentags
+vim.cmd([[
+let g:gutentags_define_advanced_commands = 1
+let g:gutentags_file_list_command = 'cat gtags.files'
+let g:gutentags_ctags_tagfile = 'gutags'
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['gtags.files']
+let g:gutentags_auto_add_gtags_cscope = 0 " 这个必须设置为 0, 避免 nvim 报错
+let g:gutentags_modules = []
+if executable('ctags')
+    let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+    if has('nvim-0.9')
+        let g:gutentags_modules += ['cscope_maps']
+        let g:gutentags_cscope_executable_maps = 'gtags'
+    else
+        let g:gutentags_modules += ['gtags_cscope']
+    endif
+endif
+" ctags 的一些参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+]])
+
+-- LeaderF
+vim.cmd([[
+" 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
+let g:Lf_UseCache = 0
+" 短期缓存, 会在内存缓存, 如果文件经常改动的话, 就不适合了
+"let g:Lf_UseMemoryCache = 0
+" 不使用版本控制机制，要的是简单粗暴直接磁盘搜索！
+let g:Lf_UseVersionControlTool = 0
+" Up 和 Down 使用 C-P 和 C-N
+let g:Lf_CommandMap = {'<C-K>': ['<C-K>', '<Up>'], '<C-J>': ['<C-J>', '<Down>']}
+if g:OnlyASCII()
+    let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+else
+    let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+endif
+let g:Lf_WindowPosition = 'popup'
+]])
+
+-- mark
+vim.g.mwIgnoreCase = 0
+vim.g.mwHistAdd = ''
+
+-- vim-signature
+vim.g.SignaturePeriodicRefresh = 0
+vim.g.SignatureMap = {
+  PlaceNextMark = "m,",
+  PurgeMarks = "m<Space>",
+  GotoNextSpotByPos = "<F2>",
+  GotoPrevSpotByPos = "<S-F2>",
+  ListBufferMarks = "m/",
+}
+
+-- NERD commenter
+vim.g.NERDMenuMode = 0
+vim.g.NERDCreateDefaultMappings = 0
+vim.g.NERDCustomDelimiters = {
+  python = {
+    left = '#'
+  }
+}

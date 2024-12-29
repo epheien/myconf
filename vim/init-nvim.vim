@@ -98,42 +98,12 @@ endfunction
 
 command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
 
-" ============================================================================
-" 插件设置
-" ============================================================================
 " 激活 bundle 目录的插件, 优先于 Plug
 call pathogen#infect()
 " 设置 nvim 主题
 " 写成一行, 避免默认的语法解释出现奇怪的问题
 silent! lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false},
     \ terminal_colors=vim.fn.has('gui_running')==1})
-
-" ========== NERD commenter ==========
-"{{{
-let NERDMenuMode = 0
-let g:NERDCreateDefaultMappings = 0
-let g:NERDCustomDelimiters = {
-    \ 'python': {'left': '#'},
-    \ }
-"let NERDSpaceDelims = 1
-"}}}
-" ========== mark ==========
-let g:mwIgnoreCase = 0
-let g:mwHistAdd = ''
-" 'extended' 的话, 颜色不是太好看
-"let g:mwDefaultHighlightingPalette = 'extended'
-"}}}
-" ========== vim-signature ==========
-"{{{
-let g:SignaturePeriodicRefresh = 0
-let g:SignatureMap = {
-  \ 'PlaceNextMark'      :  "m,",
-  \ 'PurgeMarks'         :  "m<Space>",
-  \ 'GotoNextSpotByPos'  :  "<F2>",
-  \ 'GotoPrevSpotByPos'  :  "<S-F2>",
-  \ 'ListBufferMarks'    :  "m/",
-  \ }
-"}}}
 
 let g:plug_window = 'new'
 " ## vim-plug
@@ -164,8 +134,6 @@ Plug 'kassio/neoterm', {'on': 'Tnew'}
 Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
 Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
 Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
-" 自己的插件
-"Plug 'epheien/termdbg', {'on': 'Termdbg'}
 Plug 'epheien/videm', {'on': 'VidemOpen'}
 
 " NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
@@ -179,22 +147,6 @@ Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 call plug#end()
 " ####
 
-" 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
-let g:Lf_UseCache = 0
-" 短期缓存, 会在内存缓存, 如果文件经常改动的话, 就不适合了
-"let g:Lf_UseMemoryCache = 0
-" 不使用版本控制机制，要的是简单粗暴直接磁盘搜索！
-let g:Lf_UseVersionControlTool = 0
-" Up 和 Down 使用 C-P 和 C-N
-let g:Lf_CommandMap = {'<C-K>': ['<C-K>', '<Up>'], '<C-J>': ['<C-J>', '<Down>']}
-if g:OnlyASCII()
-    let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-else
-    let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-endif
-let g:Lf_WindowPosition = 'popup'
-"autocmd vimrc filetype * if &ft == 'leaderf' | setl nonumber | endif
-
 if $TERM_PROGRAM !=# 'Apple_Terminal'
     call s:SetupColorscheme('gruvbox')
 endif
@@ -203,35 +155,6 @@ if exists(':Rg') != 2
     command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
 endif
 
-" gutentags
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_file_list_command = 'cat gtags.files'
-let g:gutentags_ctags_tagfile = 'gutags'
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['gtags.files']
-let g:gutentags_auto_add_gtags_cscope = 0 " 这个必须设置为 0, 避免 nvim 报错
-let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
-endif
-if executable('gtags-cscope') && executable('gtags')
-    if has('nvim-0.9')
-        let g:gutentags_modules += ['cscope_maps']
-        let g:gutentags_cscope_executable_maps = 'gtags'
-    else
-        let g:gutentags_modules += ['gtags_cscope']
-    endif
-endif
-" ctags 的一些参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-" 这两个选项会导致 ctags 退出码有异常, 禁用掉
-"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-"let g:gutentags_trace = 1
-
-" ==========================================================
-" 自己的简易插件
-" ==========================================================
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
 "{{{
 autocmd BufReadPost * nested call <SID>FixDosFmt()
@@ -273,9 +196,6 @@ let g:coc_data_home = s:joinpath(s:USERRUNTIME, 'coc')
 " 一般按<CR>确认补全函数后, 会自动添加括号并让光标置于括号中
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
-" ========== table-mode ==========
-" 兼容 markdown 表格格式
-let g:table_mode_corner = '|'
 " ========== clang-format ==========
 let g:clang_format#code_style = 'llvm'
 " NOTE: 不能指定 IndentWidth 和 UseTab, 因为插件自动设置了, 重复设置会出错!
