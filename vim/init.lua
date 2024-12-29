@@ -1,6 +1,7 @@
 require('config/options')
 require('config/keymaps')
 require('config/autocmds')
+require('config/commands')
 
 -- source init-nvim.vim
 local loop = vim.uv or vim.loop

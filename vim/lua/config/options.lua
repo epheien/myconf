@@ -40,6 +40,10 @@ vim.o.completeopt = 'menuone,noinsert'
 vim.o.pumheight = 5
 
 vim.g.mapleader = '<F12>'
+-- 设置 vim 脚本的续行缩进
+vim.g.vim_indent_cont = vim.fn.shiftwidth()
+-- shell 文件格式语法类型默认为 bash
+vim.g.is_bash = 1
 
 -- 设置折叠级别: 高于此级别的折叠会被关闭
 vim.o.foldlevel = 10000
@@ -56,3 +60,7 @@ vim.o.listchars = 'tab:→ ,eol:¬'
 vim.o.title = true
 vim.o.tagcase = 'match' -- 标签文件一般是区分大小写的
 vim.o.tabline = '%!myrc#MyTabLine()'
+
+if vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM) then
+  vim.o.termguicolors = true
+end

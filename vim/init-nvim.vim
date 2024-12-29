@@ -60,70 +60,6 @@ let g:lisp_rainbow = 1
 let g:markdown_fenced_languages = ['html', 'python', 'vim', 'lua', 'cpp', 'c', 'go']
 let g:markdown_syntax_conceal = 1
 
-" 设置 vim 脚本的续行缩进
-let g:vim_indent_cont = shiftwidth()
-
-if !has('gui_running')
-    if has('nvim')
-        command CursorBlinkEnable set guicursor=
-            \n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,
-            \a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
-        command CursorBlinkDisable set guicursor=
-            \n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,
-            \a:Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
-        CursorBlinkEnable
-        if $TERM_PROGRAM =~# '\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty'
-            set termguicolors
-        endif
-    else
-        " 终端环境下，设置不同模式的光标形状，如果不支持改变形状的话，不设置
-        " 通用约定为：普通模式：方块(t_EI)，插入模式：条状(t_SI))，替换模式：下划线(t_SR))
-        function s:SetupCursorOnTerminal() "{{{
-            let color_normal = 'grey'
-            let color_insert = 'magenta'
-            let color_exit = 'grey'
-            if &term ==# "linux" || &term ==# "fbterm"
-                " console fbterm 通用，一般用于 Linux 控制台
-                let g:loaded_vimcdoc = 0
-                set t_ve+=[?6c
-                autocmd! InsertEnter * set t_ve-=[?6c
-                autocmd! InsertLeave * set t_ve+=[?6c
-                autocmd! VimLeave * set t_ve-=[?6c
-            elseif &term ==# "xterm-256color"
-                " 支持 256 色的一般是高级终端，一般支持改变光标形状
-                if $TERM_PROGRAM =~# '\V\<iTerm'
-                    " 一般现代的终端都支持这种功能，例如 iTerm2 和 konsole
-                    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-                    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-                    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-                    set termguicolors
-                elseif $TERM_PROGRAM =~# '\V\<Apple_Terminal'
-                    let &t_EI = "\033[1 q"
-                    let &t_SI = "\033[5 q"
-                    let &t_SR = "\033[4 q"
-                else
-                    " gnome-terminal xterm 通用，不能改变形状，只能改变颜色
-                    let &t_EI = "\<Esc>]12;" . color_normal . "\x7" " 普通模式的光标颜色
-                    let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
-                endif
-            elseif &term =~# "^screen"
-                " tmux 下没有测试成功，保守起见，不处理
-                "set ttymouse=xterm2
-            elseif &term =~ 'xterm.\+'
-                " xterm
-                " 0 or 1 -> blinking block
-                " 2 -> solid block
-                " 3 -> blinking underscore
-                " 4 -> solid underscore
-                "let &t_EI = "\<Esc>[0 q"
-                "let &t_SI = "\<Esc>[3 q"
-            endif
-        endfunction
-        "}}}
-        call s:SetupCursorOnTerminal()
-    endif
-endif
-
 function s:SetupColorschemePost(...) "{{{
     if g:colors_name ==# 'gruvbox'
         " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
@@ -178,15 +114,7 @@ autocmd vimrc ColorScheme * call s:SetupColorschemePost(expand("<afile>"), expan
 function s:SetupColorscheme(colors_name) "{{{
     " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
     let g:gitgutter_override_sign_column_highlight = 1
-    if has('gui_running')   " gui 的情况下
-        set background=dark
-        try
-            exec 'colorscheme' a:colors_name
-        catch
-            echomsg 'colorscheme ' .. a:colors_name .. ' failed, fallback to gruvbox-origin'
-            colorscheme gruvbox-origin
-        endtry
-    elseif &t_Co == 256     " 支持 256 色的话
+    if &t_Co == 256     " 支持 256 色的话
         set background=dark
         try
             exec 'colorscheme' a:colors_name
@@ -198,16 +126,8 @@ function s:SetupColorscheme(colors_name) "{{{
 endfunction
 "}}}
 
-" 删除环境变量 LANGUAGE，不然会影响某些插件无法提取英文环境下的命令输出
-if exists('$LANGUAGE')
-    let $LANGUAGE = ''
-endif
-
 " Man
 command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
-
-" log view
-command -nargs=0 LogSetup call myrc#LogSetup()
 
 command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
 
@@ -227,13 +147,6 @@ autocmd vimrc BufReadPost *
     \     exe "normal! g`\"" |
     \ endif
 
-" <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
-nnoremap <silent> <CR> :call myrc#MyEnter()<CR>
-
-" 可设置窗口标题的命令
-command -nargs=+ Title set title | let &titlestring = <q-args>
-command -nargs=+ TabTitle let t:title = '['.<q-args>.']' | redrawtabline
-
 " 需要导出到子环境的环境变量
 let $VIM_SERVERNAME = v:servername
 let $VIM_EXE = v:progpath
@@ -241,9 +154,6 @@ let $VIM_EXE = v:progpath
 " ============================================================================
 " 额外的文件格式支持
 " ============================================================================
-
-" shell 文件格式语法类型默认为 bash
-let g:is_bash = 1
 
 " rfc 文件格式
 autocmd vimrc BufNewFile,BufRead *.txt if expand('%:t') =~# 'rfc\d\+\.txt' | setf rfc | endif
@@ -1125,24 +1035,6 @@ let g:gitgutter_diff_args = '--ignore-cr-at-eol'
 if !has('gui_running')
     let g:gitgutter_terminal_reports_focus = 0
 endif
-autocmd vimrc BufWritePost * call s:GitGutter()
-func s:GitGutter()
-    if exists(':GitGutter') == 2
-        GitGutter
-    endif
-endfunc
-
-func s:AutoGitGutter()
-    if globpath('.', '.git') != '' || filereadable('.gitignore')
-        try
-            GitGutterEnable
-        catch
-        endtry
-    endif
-endfunc
-if !has('nvim')
-    autocmd vimrc BufReadPost * call s:AutoGitGutter()
-endif
 
 " ========== scrollview ==========
 " macOS iTerm2 色差 (-1, 0, 2)
@@ -1150,12 +1042,6 @@ endif
 "highlight ScrollView ctermbg=243 guibg=#89816d
 highlight link ScrollView PmenuThumb
 let scrollview_auto_mouse = v:false
-
-" 可在启动的时候指定 vim 的窗口尺寸, eg: vim --cmd 'let resize_window=1'
-if get(g:, 'resize_window', 0)
-    set lines=45 columns=90
-    unlet g:resize_window
-endif
 
 " 使用 gonvim 的时候, 通过外挂的形式改变窗口的尺寸
 if get(g:, 'gonvim_running', 0)
