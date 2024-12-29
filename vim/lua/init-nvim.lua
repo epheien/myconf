@@ -4,24 +4,31 @@ local utils = require('utils')
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
 --  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
 vim.opt.packpath:append(vim.fn.stdpath('config'))
-vim.cmd.packadd('pckr.nvim')
-vim.cmd.packadd('gruvbox.nvim')
+assert(pcall(vim.cmd.packadd, 'pckr.nvim'), 'Failed to init pckr.nvim, '
+  ..
+  'try to run git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim')
 
 -- 直接用内置的 packadd 初始化主题
-require('gruvbox').setup({
-  bold = true,
-  italic = {
-    strings = false,
-    emphasis = false,
-    comments = false,
-    operators = false,
-    folds = false
-  },
-  terminal_colors = vim.fn.has('gui_running') == 1
-})
-if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
-  utils.setup_colorscheme('gruvbox')
+local function setup_colorscheme()
+  if not pcall(vim.cmd.packadd, 'gruvbox.nvim') then
+    return
+  end
+  require('gruvbox').setup({
+    bold = true,
+    italic = {
+      strings = false,
+      emphasis = false,
+      comments = false,
+      operators = false,
+      folds = false
+    },
+    terminal_colors = vim.fn.has('gui_running') == 1
+  })
+  if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
+    utils.setup_colorscheme('gruvbox')
+  end
 end
+setup_colorscheme()
 
 -- 插件设置入口, 避免在新环境中出现各种报错
 -- NOTE: vim-plug 和 lazy.nvim 不兼容, 而 packer.nvim 已经停止维护
