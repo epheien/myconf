@@ -131,6 +131,7 @@ local function setup_pckr() -- {{{
 
   pckr.setup({
     package_root = vim.fn.stdpath('config'),
+    pack_dir = vim.fn.stdpath('config'), -- 新版本用的配置名, 最终目录: pack/pckr/opt
     autoinstall = false,
   })
 
