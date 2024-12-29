@@ -145,17 +145,17 @@ local function setup_pckr() -- {{{
     return
   end
 
-  local function add_local_plugins(plugins)
+  local function process_local_plugins(plugins)
     ---@diagnostic disable-next-line
     local base_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'plugpack')
-    for _, plugin in ipairs(plugins) do
+    for idx, plugin in ipairs(plugins) do
       if type(plugin) == 'string' then
-        pckr.add(vim.fs.joinpath(base_dir, plugin))
+        plugins[idx] = vim.fs.joinpath(base_dir, plugin)
       else
         plugin[1] = vim.fs.joinpath(base_dir, plugin[1])
-        pckr.add({ plugin })
       end
     end
+    return plugins
   end
 
   local cmd = require('pckr.loader.cmd')
@@ -344,7 +344,7 @@ local function setup_pckr() -- {{{
     { 'colorsel',  cond = cmd('ColorSel') },
     { 'visincr',   cond = keys('n', 'I') }
   }
-  add_local_plugins(local_plugins)
+  vim.list_extend(plugins, process_local_plugins(local_plugins))
 
   local vim_plugins = {
     { 'yianwillis/vimcdoc' },
@@ -732,6 +732,7 @@ local function setup_pckr() -- {{{
   table.insert(plugins, { 'epheien/termdbg', cond = cmd('Termdbg') })
 
   -- NOTE: pckr.add() 的参数必须是 {{}} 的嵌套列表格式, 否则会出现奇怪的问题
+  -- NOTE: 每次调用 pckr.add() 的时候都可能导致加载其他文件, 所以最好仅调用一次
   pckr.add(plugins)
 end
 -- }}}
