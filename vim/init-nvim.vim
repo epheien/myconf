@@ -1,17 +1,5 @@
-" ============================================================================
-" 基本设定
-" ============================================================================
-
 function s:IsWindowsOS() "{{{
     return has("win32") || has("win64")
-endfunction
-"}}}
-function s:IsUnixOS() "{{{
-    return has('unix')
-endfunction
-"}}}
-function s:IsLinuxOS() "{{{
-    return !s:IsWindowsOS()
 endfunction
 "}}}
 " 表示是否仅使用 ASCII 显示
@@ -108,15 +96,7 @@ function s:SetupColorscheme(colors_name) "{{{
 endfunction
 "}}}
 
-" Man
-command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
-
 command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
-
-" 选择后立即搜索
-xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
-    \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
-
 
 " ============================================================================
 " 插件设置
@@ -136,16 +116,6 @@ let g:NERDCustomDelimiters = {
     \ 'python': {'left': '#'},
     \ }
 "let NERDSpaceDelims = 1
-func s:nmap_ctrl_n()
-    if get(g:, 'termdbg_running')
-        TNext
-    else
-        call plug#load('nerdcommenter')
-        call nerdcommenter#Comment("n", "Toggle")
-        call feedkeys("\<Down>")
-    endif
-endfunc
-nnoremap <silent> <C-n> :call <SID>nmap_ctrl_n()<CR>
 "}}}
 " ========== mark ==========
 let g:mwIgnoreCase = 0
@@ -163,32 +133,6 @@ let g:SignatureMap = {
   \ 'GotoPrevSpotByPos'  :  "<S-F2>",
   \ 'ListBufferMarks'    :  "m/",
   \ }
-"}}}
-" ============================================================================
-" IDE 设置
-" ============================================================================
-let g:c_kernel_mode = 1
-
-command -nargs=0 CKernelMode setlocal ts=8 sts=0 sw=8 noet
-command -nargs=0 CSpaceMode setlocal ts=8 sts=4 sw=4 et
-command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
-" 清理后置的多余的空白
-command -nargs=0 CleanSpaces silent! %s/\s\+$//g | noh | normal! ``
-
-inoremap <expr> ; <SID>i_Semicolon_plus()
-
-function! s:i_Semicolon_plus() "{{{
-    let sLine = getline('.')
-    if sLine !~# '^\s*for\>' && sLine[col('.') - 1] ==# ')'
-        return "\<Right>;"
-    else
-        return ";"
-    endif
-endfunction
-"}}}
-" ========== cscope 设置 ==========
-"{{{
-command -complete=file -nargs=+ CsFind call myrc#CscopeFind(<q-args>)
 "}}}
 
 let g:plug_window = 'new'
@@ -218,7 +162,6 @@ Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 Plug 'kassio/neoterm', {'on': 'Tnew'}
 Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter', {'on': '<Plug>NERDCommenterToggle'}
 Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
 Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
 " 自己的插件
@@ -235,14 +178,6 @@ Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 
 call plug#end()
 " ####
-
-" ========== Plug 安装的插件的配置，理论上不应过长 ==========
-"let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_italic = 0 " gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
-let g:mkdp_auto_close = 0 " markdown-preview 禁止自动关闭
-let g:asyncrun_open = 5 " asyncrun 自动打开 quickfix
-
-autocmd vimrc VimEnter * ++once set helplang=
 
 " 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
 let g:Lf_UseCache = 0
@@ -361,22 +296,6 @@ let g:clang_format#style_options = {
     \ 'AllowShortIfStatementsOnASingleLine': v:false,
     \ 'SpacesBeforeTrailingComments': 1,
     \ }
-
-" ========== gitgutter ==========
-let g:gitgutter_sign_added = '┃'
-let g:gitgutter_sign_modified = '┃'
-let g:gitgutter_sign_modified_removed = '~'
-let g:gitgutter_diff_args = '--ignore-cr-at-eol'
-if !has('gui_running')
-    let g:gitgutter_terminal_reports_focus = 0
-endif
-
-" ========== scrollview ==========
-" macOS iTerm2 色差 (-1, 0, 2)
-" 137 => 136 129 => 129 109 => 111
-"highlight ScrollView ctermbg=243 guibg=#89816d
-highlight link ScrollView PmenuThumb
-let scrollview_auto_mouse = v:false
 
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 sw=4 sts=-1 et

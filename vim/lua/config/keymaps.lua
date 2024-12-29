@@ -101,7 +101,7 @@ map('n', '[w', vim.diagnostic.goto_prev)
 
 -- stty -ixon
 map('n', '<C-s>', function()
-  if vim.g.termdbg_running then
+  if vim.g.termdbg_running == 1 then
     vim.cmd('TStep')
   else
     vim.cmd.update()
@@ -167,7 +167,17 @@ map("i", "<C-z>", "<Esc>O")
 map("i", "<C-a>", "<Home>")
 map("i", "<C-d>", "<Del>")
 
-map('x', '<C-n>', '<plug>NERDCommenterToggle', { remap = true })
+map('x', '<C-n>', '<Plug>NERDCommenterToggle', { remap = true })
+map('n', '<C-n>', function()
+  if vim.g.termdbg_running == 1 then
+    vim.cmd('TNext')
+  else
+    vim.cmd('NERDCommenter') -- load NERDCommenter by pckr.nvim
+    local key = vim.api.nvim_replace_termcodes('<Plug>NERDCommenterToggle', true, false, true)
+    vim.api.nvim_feedkeys(key, 'm', false)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, false, true), 'n', false)
+  end
+end, { remap = true })
 
 -- termdbg
 map('n', '<C-p>', [[:exec 'TSendCommand p' expand('<cword>')<CR>]])
@@ -207,3 +217,17 @@ map('i', '<CR>', function() vim.call('myrc#SmartEnter') end)
 map('i', '<C-e>', 'myrc#i_CTRL_E()', { expr = true })
 -- 切换光标前的单词的大小写
 map('i', '<C-y>', [=[pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"]=], { expr = true })
+
+-- 选择后立即搜索
+map('x', '/',
+  [[y:let @" = substitute(@", '\\', '\\\\', "g")<CR>:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N]])
+
+map('i', ';', function()
+  local line = vim.api.nvim_get_current_line()
+  local pos = vim.api.nvim_win_get_cursor(0)
+  if not vim.regex([[^\s*for\>]]):match_str(line) and string.sub(line, pos[2] + 1, pos[2] + 1) == ')' then
+    return '<Right>;'
+  else
+    return ';'
+  end
+end, { expr = true })

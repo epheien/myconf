@@ -66,3 +66,9 @@ vim.api.nvim_create_autocmd('TermOpen', {
     vim.cmd.startinsert()
   end
 })
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  once = true,
+  group = vimrc_group,
+  callback = function() vim.o.helplang = '' end
+})

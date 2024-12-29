@@ -80,3 +80,11 @@ end
 -- 需要导出到子环境的环境变量
 vim.env.VIM_SERVERNAME = vim.v.servername
 vim.env.VIM_EXE = vim.v.progpath
+
+-- scrollview
+vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
+vim.g.scrollview_auto_mouse = false
+
+vim.g.gruvbox_italic = 0    -- gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
+vim.g.mkdp_auto_close = 0   -- markdown-preview 禁止自动关闭
+vim.g.asyncrun_open = 5     -- asyncrun 自动打开 quickfix

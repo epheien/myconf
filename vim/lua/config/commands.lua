@@ -27,5 +27,18 @@ end, { nargs = 0 })
 
 vim.api.nvim_create_user_command('Terminal', function(args)
   vim.cmd.split()
-  vim.cmd.terminal()
+  vim.cmd.terminal() -- TODO
 end, { nargs = '*' })
+
+-- 清理后置的多余的空白
+vim.api.nvim_create_user_command('CleanSpaces', function()
+  vim.cmd([[silent! %s/\s\+$//g | noh | normal! ``]])
+end, { nargs = 0 })
+
+vim.api.nvim_create_user_command('CsFind', function(args)
+  vim.call('myrc#CscopeFind', args.args)
+end, { nargs = '+', complete = 'file' })
+
+vim.api.nvim_create_user_command('Man', function(args)
+  vim.call('myrc#Man', args.mods, args.args)
+end, {})
