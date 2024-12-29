@@ -24,3 +24,8 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command('DisableOSCYank', function()
   vim.call('myrc#disable_oscyank')
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command('Terminal', function(args)
+  vim.cmd.split()
+  vim.cmd.terminal()
+end, { nargs = '*' })

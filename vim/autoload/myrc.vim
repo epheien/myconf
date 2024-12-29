@@ -1013,4 +1013,32 @@ function myrc#RefreshStatusTables(fname, ...) abort
     autocmd BufUnload <buffer=abuf> call myrc#StopRefreshStatusTables()
 endfunction
 
+function! myrc#MouseMark() "{{{2
+    if &ft == "help"
+        execute "normal! \<C-]>"
+        return
+    endif
+    let c = getline('.')[col('.')-1]
+    if &buftype ==# 'quickfix'
+        call myrc#MyEnter()
+        return
+    elseif c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}'
+        execute "normal! \<2-LeftMouse>"
+        return
+    endif
+    call feedkeys("\<Plug>MarkSet")
+endfunction
+"}}}2
+
+" Show hover when provider exists, fallback to vim's builtin behavior.
+function! myrc#ShowDocumentation()
+    if has('nvim-0.10') && luaeval('#vim.lsp.get_clients({bufnr=vim.fn.bufnr()})') > 0
+        lua vim.lsp.buf.hover()
+    elseif exists('g:did_coc_loaded') && CocAction('hasProvider', 'hover')
+        call CocActionAsync('definitionHover')
+    else
+        call feedkeys('K', 'in')
+    endif
+endfunction
+
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et

@@ -6,6 +6,8 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
+local nosilent = { silent = false }
+
 map('n', 'j', 'gj')
 map('n', 'k', 'gk')
 
@@ -43,3 +45,163 @@ map("t", "<M-l>", "<C-\\><C-n>:tabnext<CR>")
 -- Insert mode mappings
 map("i", "<M-h>", "<C-\\><C-o>:tabNext<CR>")
 map("i", "<M-l>", "<C-\\><C-o>:tabnext<CR>")
+
+-- 最常用的复制粘贴
+map("v", "<C-x>", "\"\"x:call myrc#cby()<CR>")
+map("v", "<C-c>", "\"\"y:call myrc#cby()<CR>")
+map("v", "<C-v>", "\"_d:<C-u>call myrc#cbp()<CR>\"\"gP")
+map("n", "<C-v>", ":call myrc#cbp()<CR>\"\"gP")
+map("i", "<C-v>", "<C-r>=myrc#prepIpaste()<CR><C-r>=myrc#cbp()<CR><C-r>\"<C-r>=myrc#postIpaste()<CR>")
+map("c", "<C-v>", "<C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>")
+map("t", "<C-v>", "<C-w>:call myrc#cbp()<CR><C-w>\"\"")
+
+-- Resize columns
+map("n", "\\-", ":set columns-=30<CR>")
+map("n", "\\=", ":set columns+=30<CR>")
+
+-- Buffer delete
+map("n", "\\d", ":call myrc#n_BufferDelete()<CR>")
+
+-- Change local directory to file's directory
+map("n", "\\h", ":lcd %:p:h <Bar> pwd<CR>", { silent = false })
+
+-- Save session
+map("n", "\\]", ":mksession! vimp.vim<CR>")
+
+-- Scroll down
+map("n", "<Space>", "3<C-e>")
+
+-- Scroll up
+map("n", ",", "3<C-y>")
+
+-- Window navigation
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")
+
+-- Remap ; to :
+map("n", ";", ":", { silent = false })
+
+-- Close window
+map("n", "gq", ":call myrc#close()<CR>")
+
+map('n', 'T', function() vim.cmd.tag() end)
+
+-- 交换 ' 和 `，因为 ` 比 ' 常用但太远
+map('n', "'", "`")
+map('n', "`", "'")
+-- quickfix 跳转
+map('n', ']q', ':cn<CR>')
+map('n', '[q', ':cp<CR>')
+-- diagnostic 跳转
+map('n', ']w', vim.diagnostic.goto_next)
+map('n', '[w', vim.diagnostic.goto_prev)
+
+-- stty -ixon
+map('n', '<C-s>', function()
+  if vim.g.termdbg_running then
+    vim.cmd('TStep')
+  else
+    vim.cmd.update()
+  end
+end)
+
+-- 终端模拟器键位绑定
+map("t", "<C-y><C-y>", "<C-\\><C-n>")
+map("t", "<C-\\><C-\\>", "<C-\\><C-n>")
+map("t", "<C-\\>:", "<C-\\><C-n>:")
+map("t", "<C-h>", "<C-\\><C-n><C-w>h")
+map("t", "<C-j>", "<C-\\><C-n><C-w>j")
+map("t", "<C-k>", "<C-\\><C-n><C-w>k")
+map("t", "<C-l>", "<C-\\><C-n><C-w>l")
+map("t", "<C-v>", "<C-\\><C-n>\"+pa")
+
+-- 命令行模式，包括搜索时
+map("c", "<C-h>", "<Left>", nosilent)
+map("c", "<C-j>", "<Down>", nosilent)
+map("c", "<C-k>", "<Up>", nosilent)
+map("c", "<C-l>", "<Right>", nosilent)
+map("c", "<C-b>", "<Left>", nosilent)
+map("c", "<C-f>", "<Right>", nosilent)
+map("c", "<C-a>", "<Home>", nosilent)
+map("c", "<C-d>", "<Del>", nosilent)
+
+map('v', '<C-s>', '<C-c>:update<CR>')
+map('v', '$', '$h')
+map('s', '<BS>', '<BS>i')
+
+map("x", ";", ":", { silent = false })
+map("x", "<Space>", "3j")
+map("x", ",", "3k")
+map("x", "(", "di()<ESC>Pl")
+map("x", "[", "di[]<ESC>Pl")
+map("x", "{", "di{}<ESC>Pl")
+map("x", "'", "di''<ESC>Pl")
+map("x", '"', 'di""<ESC>Pl')
+-- C 文件的 #if 0 段落注释
+map('x', '0', '<C-c>:call myrc#MacroComment()<CR>')
+
+map("n", "\\f", ":Telescope find_files<CR>")
+map("n", "\\e", ":Leaderf cmdHistory --regexMode<CR>")
+map("n", "\\b", ":Telescope buffers<CR>")
+map("n", "\\t", ":Leaderf bufTag<CR>")
+map("n", "\\T", ":Telescope tags<CR>")
+map("n", "\\g", ":Telescope tags<CR>")
+map("n", "\\/", ":Telescope current_buffer_fuzzy_find<CR>")
+
+map('i', '<C-h>', '<Left>')
+map('i', '<C-j>', '<Down>')
+map('i', '<C-k>', '<Up>')
+map('i', '<C-l>', '<Right>')
+map('i', '<C-b>', '<Left>')
+map('i', '<C-f>', '<Right>')
+map('i', '<C-p>', '<Up>')
+map('i', '<C-n>', '<Down>')
+
+map("i", "<C-s>", "<ESC>:update<CR>")
+map("i", "<C-o>", "<End><CR>")
+-- 不能使用 <C-\><C-o>O, 因为可能会导致多余的缩进
+map("i", "<C-z>", "<Esc>O")
+map("i", "<C-a>", "<Home>")
+map("i", "<C-d>", "<Del>")
+
+map('x', '<C-n>', '<plug>NERDCommenterToggle', { noremap = false })
+
+-- termdbg
+map('n', '<C-p>', [[:exec 'TSendCommand p' expand('<cword>')<CR>]])
+map('v', '<C-p>', [[y:exec 'TSendCommand p' @"<CR>]])
+-- 参考 magic keyboard 的媒体按键, F8 暂停用于 step, F9 下一曲用于 next
+map("n", "<F9>", ":TNext<CR>")
+map("n", "<F8>", ":TStep<CR>")
+-- 快捷键来自 vscode 的调试器
+map("n", "<F10>", ":TNext<CR>")
+map("n", "<F11>", ":TStep<CR>")
+
+map("n", "\\\\", "<Plug>MarkSet", { noremap = false })
+map("n", "\\c", ":noh<CR><Plug>MarkAllClear", { noremap = false })
+map("n", "*", "<Plug>MarkSearchCurrentNext", { noremap = false })
+map("n", "#", "<Plug>MarkSearchCurrentPrev", { noremap = false })
+map("n", "<Leader>*", "<Plug>MarkSearchNext", { noremap = false })
+map("n", "<Leader>#", "<Plug>MarkSearchPrev", { noremap = false })
+map('n', '<2-LeftMouse>', function() vim.call('myrc#MouseMark') end)
+
+local cscmd = 'Cs'
+map("n", "<C-\\>s", string.format(":%s find s <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+map("n", "<C-\\>g", string.format(":%s find g <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+map("n", "<C-\\>c", string.format(":%s find c <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+map("n", "<C-\\>t", string.format(":%s find t <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+map("n", "<C-\\>e", string.format(":%s find e <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+map("n", "<C-\\>f", string.format(":%s find f <C-R>=fnameescape(expand('<cfile>'))<CR><CR>", cscmd))
+map("n", "<C-\\>i", string.format(":%s find i ^<C-R>=fnameescape(expand('<cfile>'))<CR>$<CR>", cscmd))
+map("n", "<C-\\>d", string.format(":%s find d <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+map("n", "<C-\\>a", string.format(":%s find a <C-R>=fnameescape(expand('<cword>'))<CR><CR>", cscmd))
+
+map('n', 'K', function() vim.call('myrc#ShowDocumentation') end)
+
+map('i', '<C-g>', '<C-r>=myrc#i_InsertHGuard()<CR>', nosilent)
+map('i', '<CR>', function() vim.call('myrc#SmartEnter') end)
+
+map('i', '<C-e>', 'myrc#i_CTRL_E()', { expr = true })
+-- 切换光标前的单词的大小写
+map('i', '<C-y>', [=[pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"]=], { expr = true })

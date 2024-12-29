@@ -47,3 +47,22 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end
 })
+
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = vimrc_group,
+  callback = function(event)
+    if vim.bo.buftype ~= 'terminal' then return end
+    vim.opt_local.list = false
+    vim.opt_local.number = false
+    vim.opt_local.cursorline = true
+    vim.api.nvim_create_autocmd('WinEnter', {
+      buffer = event.buf,
+      callback = function()
+        if vim.api.nvim_win_get_cursor(0)[1] == vim.api.nvim_buf_line_count(0) then
+          vim.cmd.startinsert()
+        end
+      end,
+    })
+    vim.cmd.startinsert()
+  end
+})

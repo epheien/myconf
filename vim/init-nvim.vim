@@ -113,166 +113,10 @@ command -nargs=+ -complete=shellcmd Man call myrc#Man('Man', <q-mods>, <q-args>)
 
 command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
 
-" ============================================================================
-" 常规键盘映射
-" ============================================================================
-" 最常用的复制粘贴
-vnoremap <silent> <C-x> ""x:call myrc#cby()<CR>
-vnoremap <silent> <C-c> ""y:call myrc#cby()<CR>
-vnoremap <silent> <C-v> "_d:<C-u>call myrc#cbp()<CR>""gP
-nnoremap <silent> <C-v> :call myrc#cbp()<CR>""gP
-inoremap <silent> <C-v> <C-r>=myrc#prepIpaste()<CR><C-r>=myrc#cbp()<CR><C-r>"<C-r>=myrc#postIpaste()<CR>
-cnoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>
-if exists(':tmap')
-    tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
-endif
-
-" ======================================
-" 普通模式
-" ======================================
-nnoremap <silent> \- :set columns-=30<CR>
-nnoremap <silent> \= :set columns+=30<CR>
-nnoremap <silent> \d :call myrc#n_BufferDelete()<CR>
-nnoremap \h :lcd %:p:h <Bar> pwd<CR>
-"nnoremap \] :mksession! vimp.vim <Bar> wviminfo! vimp.vi<CR>
-" vim -S vimp.vim
-nnoremap \] :mksession! vimp.vim<CR>
-nnoremap <Space>    3<C-e>
-nnoremap ,          3<C-y>
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap ; :
-nnoremap <silent> gq :call myrc#close()<CR>
-"nnoremap Q gq " nvim 的 Q 命令含义以及改了, 但是未能在 vim 同等实现
-" stty -ixon
-func s:nmap_ctrl_s()
-    if get(g:, 'termdbg_running')
-        TStep
-    else
-        update
-    endif
-endfunc
-nnoremap <silent> <C-s> :call <SID>nmap_ctrl_s()<CR>
-nnoremap T :tag<CR>
-
-" 交换 ' 和 `，因为 ` 比 ' 常用但太远
-nnoremap ' `
-nnoremap ` '
-
-" quickfix 跳转
-nnoremap <silent> ]q :cn<CR>
-nnoremap <silent> [q :cp<CR>
-
-" diagnostic 跳转
-nnoremap <silent> ]w :lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> [w :lua vim.diagnostic.goto_prev()<CR>
-
-" 终端模拟器键位绑定
-if exists(':tmap')
-    " NOTE: 由于终端的转义特性，<Esc> 的识别依赖于延时，所以如果映射了这个按键
-    "       的话，会导致鼠标点击的识别出问题，所以，我们不再映射 <Esc> 了
-    tnoremap <silent> <C-y><C-y> <C-\><C-n>
-    tnoremap <silent> <C-\><C-\> <C-\><C-n>
-    func s:SetupTerminal()
-        if &buftype !=# 'terminal'
-            return
-        endif
-        setl nolist nonumber cursorline
-        "autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
-        autocmd! WinEnter <buffer> if getpos('.')[1] == line('$') | star | endif
-        " vim 有 BUG, 某些情况下创建新窗口的时候, 会导致意外的进入插入模式
-        autocmd! BufLeave <buffer> stopinsert
-        startinsert
-    endfunc
-    command -nargs=* Terminal sp | terminal <args>
-    tnoremap <C-\>: <C-\><C-n>:
-    tnoremap <C-h> <C-\><C-n><C-w>h
-    tnoremap <C-j> <C-\><C-n><C-w>j
-    tnoremap <C-k> <C-\><C-n><C-w>k
-    tnoremap <C-l> <C-\><C-n><C-w>l
-    tnoremap <C-v> <C-\><C-n>"+pa
-    autocmd vimrc TermOpen * call s:SetupTerminal()
-endif
-
-
-nnoremap <silent> \f :Telescope find_files<CR>
-"nnoremap <silent> \e :Telescope command_history<CR>
-" Leaderf 的实现更好用, 因为同样的匹配的时候, 最近的命令更优先
-nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
-nnoremap <silent> \b :Telescope buffers<CR>
-"nnoremap <silent> \t :Telescope current_buffer_tags<CR>
-nnoremap <silent> \t :Leaderf bufTag<CR>
-nnoremap <silent> \T :Telescope tags<CR>
-" gtags => g
-nnoremap <silent> \g :Telescope tags<CR>
-nnoremap <silent> \/ :Telescope current_buffer_fuzzy_find<CR>
-
-"=======================================
-" 命令行模式，包括搜索时
-"=======================================
-cnoremap <C-h> <Left>
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
-cnoremap <C-l> <Right>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <C-a> <Home>
-cnoremap <C-d> <Del>
-
-"=======================================
-" 可视和选择模式
-"=======================================
-vnoremap <silent> <C-s> <C-c>:update<CR>
-"vnoremap y "+y
-"vnoremap x "+x
-vnoremap $ $h
-
-" 仅选择模式
-snoremap <BS> <BS>i
-
-"=======================================
-" 可视模式
-"=======================================
-xnoremap ; :
-xnoremap <Space> 3j
-xnoremap , 3k
-xnoremap ( di()<ESC>Pl
-xnoremap [ di[]<ESC>Pl
-xnoremap { di{}<ESC>Pl
-xnoremap ' di''<ESC>Pl
-xnoremap " di""<ESC>Pl
-
 " 选择后立即搜索
 xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
     \:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N
-" C 文件的 #if 0 段落注释
-xnoremap 0 <C-c>:call myrc#MacroComment()<CR>
 
-
-" ======================================
-" 插入模式下
-" ======================================
-inoremap <silent> <C-s> <ESC>:update<CR>
-inoremap <C-o> <End><CR>
-" 不能使用 <C-\><C-o>O, 因为可能会导致多余的缩进
-inoremap <C-z> <Esc>O
-inoremap <silent> <expr> <C-e> myrc#i_CTRL_E()
-inoremap <C-a> <Home>
-inoremap <C-d> <Del>
-
-" 写 C 时麻烦的宏定义大写问题，解决！
-inoremap <silent> <expr> <C-y> pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"
-
-imap <C-h> <Left>
-imap <C-j> <Down>
-imap <C-k> <Up>
-imap <C-l> <Right>
-imap <C-b> <Left>
-imap <C-f> <Right>
-imap <C-p> <Up>
-imap <C-n> <Down>
 
 " ============================================================================
 " 插件设置
@@ -302,7 +146,6 @@ func s:nmap_ctrl_n()
     endif
 endfunc
 nnoremap <silent> <C-n> :call <SID>nmap_ctrl_n()<CR>
-xmap <silent> <C-n> <plug>NERDCommenterToggle
 "}}}
 " ========== pydiction ==========
 "{{{
@@ -337,14 +180,6 @@ let g:mwIgnoreCase = 0
 let g:mwHistAdd = ''
 " 'extended' 的话, 颜色不是太好看
 "let g:mwDefaultHighlightingPalette = 'extended'
-nmap <silent> \\ <Plug>MarkSet
-xmap <silent> \\ <Plug>MarkSet
-nmap <silent> \c :noh<CR><Plug>MarkAllClear
-nmap <silent> * <Plug>MarkSearchCurrentNext
-nmap <silent> # <Plug>MarkSearchCurrentPrev
-nmap <silent> <Leader>* <Plug>MarkSearchNext
-nmap <silent> <Leader># <Plug>MarkSearchPrev
-nnoremap <silent> <2-LeftMouse> :call <SID>MouseMark()<CR>
 "}}}
 " ========== vim-signature ==========
 "{{{
@@ -368,12 +203,7 @@ command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 " 清理后置的多余的空白
 command -nargs=0 CleanSpaces silent! %s/\s\+$//g | noh | normal! ``
 
-inoremap <expr> <BS> <SID>i_BS_plus()
 inoremap <expr> ; <SID>i_Semicolon_plus()
-inoremap <C-g> <C-r>=myrc#i_InsertHGuard()<CR>
-
-" 补全模式下的映射
-inoremap <silent> <CR> <C-r>=myrc#SmartEnter()<CR>
 
 function! s:i_Semicolon_plus() "{{{
     let sLine = getline('.')
@@ -387,17 +217,6 @@ endfunction
 " ========== cscope 设置 ==========
 "{{{
 command -complete=file -nargs=+ CsFind call myrc#CscopeFind(<q-args>)
-let s:cmd = 'Cs'
-" cscope_maps 插件
-exec printf('nnoremap <silent> <C-\>s :%s find s <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>g :%s find g <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>c :%s find c <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>t :%s find t <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>e :%s find e <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>f :%s find f <C-R>=fnameescape(expand("<cfile>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>i :%s find i ^<C-R>=fnameescape(expand("<cfile>"))<CR>$<CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>d :%s find d <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
-exec printf('nnoremap <silent> <C-\>a :%s find a <C-R>=fnameescape(expand("<cword>"))<CR><CR>', s:cmd)
 "}}}
 
 function s:Plug(name, ...)
@@ -439,7 +258,7 @@ Plug 'preservim/nerdcommenter', {'on': '<Plug>NERDCommenterToggle'}
 Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
 Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
 " 自己的插件
-Plug 'epheien/termdbg', {'on': 'Termdbg'}
+"Plug 'epheien/termdbg', {'on': 'Termdbg'}
 Plug 'epheien/videm', {'on': 'VidemOpen'}
 
 " NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
@@ -564,27 +383,6 @@ let g:coc_data_home = s:joinpath(s:USERRUNTIME, 'coc')
 " 补全后自动弹出函数参数提示
 " 一般按<CR>确认补全函数后, 会自动添加括号并让光标置于括号中
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-" Show hover when provider exists, fallback to vim's builtin behavior.
-nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
-function! s:ShowDocumentation()
-    if has('nvim-0.10') && luaeval('#vim.lsp.get_clients({bufnr=vim.fn.bufnr()})') > 0
-        lua vim.lsp.buf.hover()
-    elseif exists('g:did_coc_loaded') && CocAction('hasProvider', 'hover')
-        call CocActionAsync('definitionHover')
-    else
-        call feedkeys('K', 'in')
-    endif
-endfunction
-
-" ========== termdbg ==========
-nnoremap <silent> <C-p> :exec 'TSendCommand p' expand('<cword>')<CR>
-vnoremap <silent> <C-p> y:exec 'TSendCommand p' @"<CR>
-" 参考 magic keyboard 的媒体按键, F8 暂停用于 step, F9 下一曲用于 next
-nnoremap <silent> <F9> :TNext<CR>
-nnoremap <silent> <F8> :TStep<CR>
-" 快捷键来自 vscode 的调试器
-nnoremap <silent> <F10> :TNext<CR>
-nnoremap <silent> <F11> :TStep<CR>
 
 " ========== table-mode ==========
 " 兼容 markdown 表格格式

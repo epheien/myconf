@@ -657,6 +657,8 @@ local function setup_pckr() -- {{{
     cond = { cmd('OSCYankVisual'), cmd('OSCYank') },
   })
 
+  table.insert(plugins, { 'epheien/termdbg', cond = cmd('Termdbg') })
+
   pckr.add(plugins)
 end
 -- }}}
