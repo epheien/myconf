@@ -356,12 +356,12 @@ local function setup_pckr() -- {{{
   local local_plugins = {
     'common',
     'vim-repeat',
-    { 'python-syntax', cond = event('FileType', 'python') },
-    { 'mymark',        cond = { keys('n', '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
-    { 'jsonfmt',       cond = cmd('JsonFmt') },
-    { 'colorizer',     cond = cmd('UpdateColor') },
-    { 'colorsel',      cond = cmd('ColorSel') },
-    { 'visincr',       cond = keys('n', 'I') }
+    'python-syntax',
+    { 'mymark',    cond = { keys('n', '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
+    { 'jsonfmt',   cond = cmd('JsonFmt') },
+    { 'colorizer', cond = cmd('UpdateColor') },
+    { 'colorsel',  cond = cmd('ColorSel') },
+    { 'visincr',   cond = keys('n', 'I') }
   }
   add_local_plugins(local_plugins)
 
