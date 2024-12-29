@@ -338,7 +338,7 @@ local function setup_pckr() -- {{{
     'common',
     'vim-repeat',
     'python-syntax',
-    { 'mymark',    cond = { keys('n', '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
+    { 'mymark',    cond = { keys({ 'n', 'x' }, '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
     { 'jsonfmt',   cond = cmd('JsonFmt') },
     { 'colorizer', cond = cmd('UpdateColor') },
     { 'colorsel',  cond = cmd('ColorSel') },
