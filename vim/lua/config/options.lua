@@ -61,6 +61,7 @@ vim.o.title = true
 vim.o.tagcase = 'match' -- 标签文件一般是区分大小写的
 vim.o.tabline = '%!myrc#MyTabLine()'
 
-if vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM) then
+if vim.env.TERM_PROGRAM and
+    vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM) then
   vim.o.termguicolors = true
 end
