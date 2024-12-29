@@ -167,7 +167,7 @@ local function setup_incline()
       local ctermbg = 235
       --    
       local trail_glyph = ''
-      if vim.fn.OnlyASCII() ~= 0 then trail_glyph = '' end
+      if require('utils').only_ascii() then trail_glyph = '' end
       if active then
         --left_icon = {'', guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}
         trail_icon = {trail_glyph, guibg = guibg, guifg = InclineNormal.guibg, ctermbg = ctermbg, ctermfg = InclineNormal.ctermbg}

@@ -899,7 +899,7 @@ local stl_hl_map = {
   ['\19'] = 'MyStlVisualMode',
 }
 local mode_table = require('config/mystl').mode_table
-local trail_glyph = vim.fn.OnlyASCII() == 1 and '' or ''
+local trail_glyph = require('utils').only_ascii() and '' or ''
 function MyStatusLine()
   local m = vim.api.nvim_get_mode().mode
   local mode = 'NORMAL'

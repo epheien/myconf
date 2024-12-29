@@ -118,10 +118,6 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 
 -- LeaderF
 vim.cmd([[
-" TODO
-function g:OnlyASCII()
-  return 0
-endfunction
 " 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
 let g:Lf_UseCache = 0
 " 短期缓存, 会在内存缓存, 如果文件经常改动的话, 就不适合了
@@ -130,7 +126,7 @@ let g:Lf_UseCache = 0
 let g:Lf_UseVersionControlTool = 0
 " Up 和 Down 使用 C-P 和 C-N
 let g:Lf_CommandMap = {'<C-K>': ['<C-K>', '<Up>'], '<C-J>': ['<C-J>', '<Down>']}
-if g:OnlyASCII()
+if luaeval("require('utils').only_ascii()")
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 else
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }

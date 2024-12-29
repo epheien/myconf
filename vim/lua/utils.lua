@@ -48,4 +48,18 @@ function M.floatwin_run(cmd)
   vim.bo[bufid].modifiable = false
 end
 
+local only_ascii
+function M.only_ascii()
+  if only_ascii ~= nil then
+    return only_ascii
+  end
+  local pat = vim.regex([=[\V\<iTerm\|\<Apple_Terminal\|\<kitty\|\<alacritty\|\<tmux]=])
+  if vim.fn.has('gui_running') == 1 or pat:match_str(vim.env.TERM_PROGRAM) then
+    only_ascii = false
+  else
+    only_ascii = true
+  end
+  return only_ascii
+end
+
 return M

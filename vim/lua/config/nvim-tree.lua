@@ -169,7 +169,7 @@ local nvim_tree_opts = {
   },
 }
 
-if vim.fn.OnlyASCII() ~= 0 then
+if require('utils').only_ascii() then
   nvim_tree_opts.renderer.icons = {
     symlink_arrow = ' -> ',
     show = {
