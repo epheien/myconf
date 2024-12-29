@@ -147,35 +147,7 @@ func s:nmap_ctrl_n()
 endfunc
 nnoremap <silent> <C-n> :call <SID>nmap_ctrl_n()<CR>
 "}}}
-" ========== pydiction ==========
-"{{{
-let g:pydiction_location = s:USERRUNTIME . '/dict/complete-dict'
-"let g:pydiction_menu_height = 20
-"}}}
-" ========== videm ==========
-"{{{
-let g:videm_user_options = {
-    \ 'videm.wsp.ShowBriefHelp'            : 0,
-    \ 'videm.wsp.SaveBeforeBuild'          : 1,
-\ }
 " ========== mark ==========
-"{{{
-function! s:MouseMark() "{{{2
-    if &ft == "help"
-        execute "normal! \<C-]>"
-        return
-    endif
-    let c = getline('.')[col('.')-1]
-    if &buftype ==# 'quickfix'
-        call myrc#MyEnter()
-        return
-    elseif c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}'
-        execute "normal! \<2-LeftMouse>"
-        return
-    endif
-    call feedkeys("\<Plug>MarkSet")
-endfunction
-"}}}2
 let g:mwIgnoreCase = 0
 let g:mwHistAdd = ''
 " 'extended' 的话, 颜色不是太好看
@@ -219,14 +191,6 @@ endfunction
 command -complete=file -nargs=+ CsFind call myrc#CscopeFind(<q-args>)
 "}}}
 
-function s:Plug(name, ...)
-    let plug = printf('my/%s', a:name)
-    let opt = {'dir': s:joinpath(s:USERRUNTIME, 'plugpack', a:name)}
-    let opt['frozen'] = 1
-    let opt = extend(opt, get(a:000, 0, {}))
-    exec printf('Plug %s, %s', string(plug), string(opt))
-endfunction
-
 let g:plug_window = 'new'
 " ## vim-plug
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
@@ -268,16 +232,6 @@ endif
 
 " 基础配色, 但不在这里加载, 因为时机有点晚
 Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
-
-" 本地插件
-call s:Plug('common')
-call s:Plug('vim-repeat') " autoload
-call s:Plug('mymark', {'on': ['<Plug>MarkSet', '<Plug>MarkAllClear']})
-call s:Plug('python-syntax', {'for': 'python'})
-call s:Plug('jsonfmt', {'on': 'JsonFmt'})
-call s:Plug('colorizer', {'on': 'UpdateColor'})
-call s:Plug('colorsel', {'on': 'ColorSel'})
-call s:Plug('visincr', {'on': 'I'})
 
 call plug#end()
 " ####

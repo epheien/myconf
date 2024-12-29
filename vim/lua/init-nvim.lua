@@ -124,11 +124,23 @@ end
 -- 以下开始是 pckr.nvim 管理的插件
 -- ======================================================================
 local function setup_pckr() -- {{{
-  local plugin = 'pckr'
-  local ok, pckr = pcall(require, plugin)
+  local ok, pckr = pcall(require, 'pckr')
   if not ok then
-    print('ignore lua plugin:', plugin)
+    print('ignore lua plugin: pckr')
     return
+  end
+
+  local function add_local_plugins(plugins)
+    ---@diagnostic disable-next-line
+    local base_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'plugpack')
+    for _, plugin in ipairs(plugins) do
+      if type(plugin) == 'string' then
+        pckr.add(vim.fs.joinpath(base_dir, plugin))
+      else
+        plugin[1] = vim.fs.joinpath(base_dir, plugin[1])
+        pckr.add(plugin)
+      end
+    end
   end
 
   local cmd = require('pckr.loader.cmd')
@@ -290,6 +302,18 @@ local function setup_pckr() -- {{{
     };
   }
   vim.list_extend(plugins, cmp_plugins)
+
+  local local_plugins = {
+    'common',
+    'vim-repeat',
+    { 'python-syntax' },
+    { 'mymark',       cond = { keys('n', '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
+    { 'jsonfmt',      cond = cmd('JsonFmt') },
+    { 'colorizer',    cond = cmd('UpdateColor') },
+    { 'colorsel',     cond = cmd('ColorSel') },
+    { 'visincr',      cond = keys('n', 'I') }
+  }
+  add_local_plugins(local_plugins)
 
   -- noice
   --if vim.fn.has('nvim-0.10') == 1 then
