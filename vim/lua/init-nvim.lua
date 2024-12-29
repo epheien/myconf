@@ -2,6 +2,12 @@
 --local vimrc = vim.fn.stdpath("config") .. "/vimrc"
 --vim.cmd.source(vimrc)
 
+-- 使用 packadd 加载 pckr.nvim
+--  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
+--  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
+vim.opt.packpath:append(vim.fn.stdpath('config')) ---@diagnostic disable-line
+vim.cmd.packadd('pckr.nvim')
+
 -- 插件设置入口, 避免在新环境中出现各种报错
 -- NOTE: vim-plug 和 lazy.nvim 不兼容, 而 packer.nvim 已经停止维护
 local function lazysetup(plugin, config) -- {{{
@@ -136,6 +142,8 @@ local function setup_pckr() -- {{{
   })
 
   local plugins = {
+    { 'epheien/pckr.nvim', keys('n', '<Plug>pckr') }, -- 用来管理更新
+
     'drybalka/tree-climber.nvim',
 
     {
