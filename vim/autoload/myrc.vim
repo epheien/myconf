@@ -1041,4 +1041,28 @@ function! myrc#ShowDocumentation()
     endif
 endfunction
 
+function! myrc#FixDosFmt() "{{{2
+    if &ff != 'unix' || &bin || &buftype =~# '\<quickfix\>\|\<nofile\>'
+        return
+    endif
+    if &ft ==# 'vim' " vimp.vim 会存在特殊字符, 不处理这种文件类型
+        return
+    endif
+    " 打开常见的图像文件类型的话, 不处理, 一般会有对应的插件处理
+    if expand('%:e') =~? '^\(png\|jpg\|jpeg\|gif\|bmp\|webp\|tif\|tiff\)$'
+        return
+    endif
+    " 搜索 ^M
+    let nStopLine = 0
+    let nTimeOut = 100
+    let nRet = search('\r$', 'nc', nStopLine, nTimeOut)
+    if nRet > 0
+        e ++ff=dos
+        echohl WarningMsg
+        echomsg "'fileformat' of buffer" bufname('%') 'has been set to dos'
+        echohl None
+    endif
+endfunction
+"}}}2
+
 " vim: fdm=indent fen fdl=0 sw=4 sts=-1 et

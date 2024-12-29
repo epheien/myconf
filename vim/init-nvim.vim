@@ -1,7 +1,3 @@
-function s:IsWindowsOS() "{{{
-    return has("win32") || has("win64")
-endfunction
-"}}}
 " 表示是否仅使用 ASCII 显示
 let s:only_ascii = -1
 function g:OnlyASCII() "{{{
@@ -17,66 +13,6 @@ function g:OnlyASCII() "{{{
     return s:only_ascii
 endfunction
 "}}}
-function s:joinpath(...) "{{{
-    let sep = '/'
-    if s:IsWindowsOS()
-        let sep = '\'
-    endif
-    return join(a:000, sep)
-endfunction
-"}}}
-" 用户配置文件所在的目录
-let s:USERRUNTIME = stdpath('config')
-
-" vimrc 配置专用自动命令组
-augroup vimrc
-augroup END
-
-function s:SetupColorschemePost(...) "{{{
-    if g:colors_name ==# 'gruvbox'
-        " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
-        hi! link String Constant
-        " 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
-        hi Cursor guifg=black guibg=yellow gui=NONE ctermfg=16 ctermbg=226 cterm=NONE
-        hi Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE
-        hi IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
-        hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
-        " tagbar 配色
-        hi! link TagbarAccessPublic GruvboxAqua
-        hi! link TagbarAccessProtected GruvboxPurple
-        hi! link TagbarAccessPrivate GruvboxRed
-        hi! link TagbarSignature Normal
-        hi! link TagbarKind Constant
-        hi! link CurSearch Search
-        hi! link FloatBorder WinSeparator
-        hi! link SpecialKey Special
-        hi! SignColumn guibg=NONE ctermbg=NONE
-        " GitGutter
-        hi! link GitGutterAdd GruvboxGreen
-        hi! link GitGutterChange GruvboxAqua
-        hi! link GitGutterDelete GruvboxRed
-        hi! link GitGutterChangeDelete GruvboxYellow
-        " Signature
-        hi! link SignatureMarkText   GruvboxBlue
-        hi! link SignatureMarkerText GruvboxPurple
-    endif
-    " 配合 incline
-    "hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
-    let normalHl = nvim_get_hl(0, {'name': 'Normal', 'link': v:false})
-    let winSepHl = nvim_get_hl(0, {'name': 'WinSeparator', 'link': v:false})
-    let fg = printf('#%06x', get(winSepHl, get(winSepHl, 'reverse') ? 'bg' : 'fg'))
-    let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
-    let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg')
-    let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
-    call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
-    hi! link StatusLineNC StatusLine
-    if &statusline !~# '^%!\|^%{%'
-        set statusline=─
-    endif
-    set fillchars+=stl:─,stlnc:─
-endfunction
-"}}}
-autocmd vimrc ColorScheme * call s:SetupColorschemePost(expand("<afile>"), expand("<amatch>"))
 
 " 颜色方案
 " https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
@@ -109,7 +45,7 @@ let g:plug_window = 'new'
 " ## vim-plug
 " NOTE: 对于依赖程度高的或者复杂的插件，需要锁定版本
 " NOTE: 对于 nvim, 必须安装 python 模块: pip3 install -U pynvim
-call plug#begin(s:joinpath(s:USERRUNTIME, 'plugged'))
+call plug#begin(stdpath('config') .. '/plugged')
 
 Plug 'junegunn/vim-plug' " NOTE: 重复安装 plug 是为了看帮助信息
 Plug 'yianwillis/vimcdoc' " 中文文档
@@ -155,34 +91,6 @@ if exists(':Rg') != 2
     command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
 endif
 
-" ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
-"{{{
-autocmd BufReadPost * nested call <SID>FixDosFmt()
-function! s:FixDosFmt() "{{{2
-    if &ff != 'unix' || &bin || &buftype =~# '\<quickfix\>\|\<nofile\>'
-        return
-    endif
-    if &ft ==# 'vim' " vimp.vim 会存在特殊字符, 不处理这种文件类型
-        return
-    endif
-    " 打开常见的图像文件类型的话, 不处理, 一般会有对应的插件处理
-    if expand('%:e') =~? '^\(png\|jpg\|jpeg\|gif\|bmp\|webp\|tif\|tiff\)$'
-        return
-    endif
-    " 搜索 ^M
-    let nStopLine = 0
-    let nTimeOut = 100
-    let nRet = search('\r$', 'nc', nStopLine, nTimeOut)
-    if nRet > 0
-        e ++ff=dos
-        echohl WarningMsg
-        echomsg "'fileformat' of buffer" bufname('%') 'has been set to dos'
-        echohl None
-    endif
-endfunction
-"}}}2
-"}}}
-
 " ========== neosnippet ==========
 let g:neosnippet#snippets_directory = [expand('~/.vim/snippets')]
 
@@ -191,7 +99,7 @@ let g:neosnippet#snippets_directory = [expand('~/.vim/snippets')]
 " CocInstall coc-json
 let g:coc_snippet_next = ''
 let g:coc_snippet_prev = ''
-let g:coc_data_home = s:joinpath(s:USERRUNTIME, 'coc')
+let g:coc_data_home = stdpath('config') .. '/coc'
 " 补全后自动弹出函数参数提示
 " 一般按<CR>确认补全函数后, 会自动添加括号并让光标置于括号中
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
