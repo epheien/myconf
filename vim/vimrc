@@ -1153,7 +1153,6 @@ call s:Plug('colorsel', {'on': 'ColorSel'})
 call s:Plug('visincr', {'on': 'I'})
 
 " 代码补全相关插件
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
 if has('nvim')
     "Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
@@ -1317,31 +1316,6 @@ endif
 if exists(':Rg') != 2
     command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
 endif
-
-" vim-go
-let g:go_gopls_enabled = 1
-let g:go_version_warning = 0
-let g:go_fmt_autosave = 0
-let g:go_imports_autosave = 0
-let g:go_fmt_experimental = 1
-let g:go_term_enabled = 1
-let g:go_term_mode = "split"
-let g:go_diagnostics_enabled = 0
-let g:go_highlight_diagnostic_errors = 0
-let g:go_metalinter_enabled = ['errcheck']
-" 高亮色以 :h group-name 为指导
-" 高亮函数声明
-let g:go_highlight_functions = 1
-" 高亮函数调用
-let g:go_highlight_function_calls = 1
-hi link goFunctionCall Function
-" 高亮 x := 的 x
-let g:go_highlight_variable_declarations = 1
-hi link goVarDefs Identifier
-" GoDoc 使用 floating window
-let g:go_doc_popup_window = 1
-let g:go_debug_log_output = ''
-let g:go_def_mapping_enabled = 0
 
 " gutentags
 if has('nvim') || has('cscope')
