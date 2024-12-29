@@ -168,7 +168,7 @@ local function setup_pckr() -- {{{
   })
 
   -- 优先设置 nvim 主题
-  pckr.add({
+  pckr.add({ {
     'epheien/gruvbox.nvim',
     config = function()
       require('gruvbox').setup({
@@ -182,9 +182,9 @@ local function setup_pckr() -- {{{
         },
         terminal_colors = vim.fn.has('gui_running') == 1
       })
-    end,
-  })
-  -- BUG: 放到 run 字段会有问题
+    end
+  } })
+  -- XXX: 放到 run 字段会有问题
   if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
     setup_colorscheme('gruvbox')
   end
