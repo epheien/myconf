@@ -8,6 +8,24 @@
 vim.opt.packpath:append(vim.fn.stdpath('config')) ---@diagnostic disable-line
 vim.cmd.packadd('pckr.nvim')
 
+-- 颜色方案
+-- https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
+-- 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
+local function setup_colorscheme(colors_name)
+  -- 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
+  vim.g.gitgutter_override_sign_column_highlight = 1
+  vim.o.background = 'dark'
+  local ok = pcall(vim.cmd.colorscheme, colors_name)
+  if not ok then
+    print(string.format('colorscheme %s failed, fallback to gruvbox-origin'))
+    vim.cmd.colorscheme('gruvbox-origin')
+  end
+end
+
+if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
+  setup_colorscheme('gruvbox')
+end
+
 -- 插件设置入口, 避免在新环境中出现各种报错
 -- NOTE: vim-plug 和 lazy.nvim 不兼容, 而 packer.nvim 已经停止维护
 local function lazysetup(plugin, config) -- {{{
@@ -262,6 +280,11 @@ local function setup_pckr() -- {{{
       end
     },
   }
+
+  -- NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
+  if vim.env.TERM_PROGRAM == 'Apple_Terminal' then
+    table.insert(plugins, 'epheien/bg.nvim')
+  end
 
   -- 事件顺序: BufReadPre => FileType => BufReadPost
   local cmp_plugins = {

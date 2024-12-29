@@ -14,24 +14,6 @@ function g:OnlyASCII() "{{{
 endfunction
 "}}}
 
-" 颜色方案
-" https://hm66hd.csb.app/ 真彩色 => 256色 在线工具
-" 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
-function s:SetupColorscheme(colors_name) "{{{
-    " 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
-    let g:gitgutter_override_sign_column_highlight = 1
-    if &t_Co == 256     " 支持 256 色的话
-        set background=dark
-        try
-            exec 'colorscheme' a:colors_name
-        catch
-            echomsg 'colorscheme ' .. a:colors_name .. ' failed, fallback to gruvbox-origin'
-            colorscheme gruvbox-origin
-        endtry
-    endif
-endfunction
-"}}}
-
 " 激活 bundle 目录的插件, 优先于 Plug
 call pathogen#infect()
 " 设置 nvim 主题
@@ -70,24 +52,11 @@ Plug 'epheien/tagbar', {'on': 'TagbarToggle'}
 Plug 'epheien/vim-clang-format', {'on': 'ClangFormat'}
 Plug 'epheien/videm', {'on': 'VidemOpen'}
 
-" NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
-if $TERM_PROGRAM =~# '\V\<Apple_Terminal'
-    Plug 'epheien/bg.nvim'
-endif
-
 " 基础配色, 但不在这里加载, 因为时机有点晚
 Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 
 call plug#end()
 " ####
-
-if $TERM_PROGRAM !=# 'Apple_Terminal'
-    call s:SetupColorscheme('gruvbox')
-endif
-
-if exists(':Rg') != 2
-    command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
-endif
 
 " ========== neosnippet ==========
 let g:neosnippet#snippets_directory = [expand('~/.vim/snippets')]
