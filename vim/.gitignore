@@ -5,5 +5,7 @@ GTAGS
 /.netrwhist
 /plugged/
 /pckr/
+/pack/pckr
 /coc/
 /vim-plugins.tar.gz
+/unused/
