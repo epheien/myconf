@@ -89,21 +89,19 @@ function s:SetupColorschemePost(...) "{{{
         hi! link SignatureMarkerText GruvboxPurple
     endif
     " 配合 incline
-    if has('nvim')
-        "hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
-        let normalHl = nvim_get_hl(0, {'name': 'Normal', 'link': v:false})
-        let winSepHl = nvim_get_hl(0, {'name': 'WinSeparator', 'link': v:false})
-        let fg = printf('#%06x', get(winSepHl, get(winSepHl, 'reverse') ? 'bg' : 'fg'))
-        let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
-        let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg')
-        let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
-        call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
-        hi! link StatusLineNC StatusLine
-        if &statusline !~# '^%!\|^%{%'
-            set statusline=─
-        endif
-        set fillchars+=stl:─,stlnc:─
+    "hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
+    let normalHl = nvim_get_hl(0, {'name': 'Normal', 'link': v:false})
+    let winSepHl = nvim_get_hl(0, {'name': 'WinSeparator', 'link': v:false})
+    let fg = printf('#%06x', get(winSepHl, get(winSepHl, 'reverse') ? 'bg' : 'fg'))
+    let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
+    let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg')
+    let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
+    call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
+    hi! link StatusLineNC StatusLine
+    if &statusline !~# '^%!\|^%{%'
+        set statusline=─
     endif
+    set fillchars+=stl:─,stlnc:─
 endfunction
 "}}}
 autocmd vimrc ColorScheme * call s:SetupColorschemePost(expand("<afile>"), expand("<amatch>"))
@@ -162,43 +160,24 @@ autocmd vimrc BufNewFile,BufRead *.txt if expand('%:t') =~# 'rfc\d\+\.txt' | set
 " 常规键盘映射
 " ============================================================================
 " 最常用的复制粘贴
-if !has('nvim') && has('clipboard')
-    vnoremap <C-x> "+x
-    vnoremap <C-c> "+y
-    vnoremap <C-v> "+gP
-    nnoremap <C-v> "+gP
-    inoremap <C-v> <C-r>=myrc#prepIpaste()<CR><C-r>+<C-r>=myrc#postIpaste()<CR>
-    cnoremap <C-v> <C-r>+
-    if exists(':tmap')
-        tnoremap <C-v> <C-w>"+
-    endif
-else
-    vnoremap <silent> <C-x> ""x:call myrc#cby()<CR>
-    vnoremap <silent> <C-c> ""y:call myrc#cby()<CR>
-    vnoremap <silent> <C-v> "_d:<C-u>call myrc#cbp()<CR>""gP
-    nnoremap <silent> <C-v> :call myrc#cbp()<CR>""gP
-    inoremap <silent> <C-v> <C-r>=myrc#prepIpaste()<CR><C-r>=myrc#cbp()<CR><C-r>"<C-r>=myrc#postIpaste()<CR>
-    cnoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>
-    if exists(':tmap')
-        tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
-    endif
-    command -nargs=0 OSCYankEnable  call myrc#enable_oscyank()
-    command -nargs=0 OSCYankDisable call myrc#disable_oscyank()
+vnoremap <silent> <C-x> ""x:call myrc#cby()<CR>
+vnoremap <silent> <C-c> ""y:call myrc#cby()<CR>
+vnoremap <silent> <C-v> "_d:<C-u>call myrc#cbp()<CR>""gP
+nnoremap <silent> <C-v> :call myrc#cbp()<CR>""gP
+inoremap <silent> <C-v> <C-r>=myrc#prepIpaste()<CR><C-r>=myrc#cbp()<CR><C-r>"<C-r>=myrc#postIpaste()<CR>
+cnoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>
+if exists(':tmap')
+    tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
 endif
+command -nargs=0 OSCYankEnable  call myrc#enable_oscyank()
+command -nargs=0 OSCYankDisable call myrc#disable_oscyank()
 
 nnoremap <silent> <M-h> :tabNext<CR>
 nnoremap <silent> <M-l> :tabnext<CR>
 nnoremap <silent> <M-j> <C-w>-
 nnoremap <silent> <M-k> <C-w>+
-if exists(':tmap')
-    if has('nvim')
-        tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
-        tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
-    else
-        tnoremap <silent> <M-h> <C-w>:tabNext<CR>
-        tnoremap <silent> <M-l> <C-w>:tabnext<CR>
-    endif
-endif
+tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
+tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
 inoremap <silent> <M-h> <C-\><C-o>:tabNext<CR>
 inoremap <silent> <M-l> <C-\><C-o>:tabnext<CR>
 
@@ -250,62 +229,39 @@ if exists(':tmap')
     "       的话，会导致鼠标点击的识别出问题，所以，我们不再映射 <Esc> 了
     tnoremap <silent> <C-y><C-y> <C-\><C-n>
     tnoremap <silent> <C-\><C-\> <C-\><C-n>
-    if has('nvim')
-        func s:SetupTerminal()
-            if &buftype !=# 'terminal'
-                return
-            endif
-            setl nolist nonumber cursorline
-            "autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
-            autocmd! WinEnter <buffer> if getpos('.')[1] == line('$') | star | endif
-            " vim 有 BUG, 某些情况下创建新窗口的时候, 会导致意外的进入插入模式
-            autocmd! BufLeave <buffer> stopinsert
-            startinsert
-        endfunc
-        command -nargs=* Terminal sp | terminal <args>
-        tnoremap <C-\>: <C-\><C-n>:
-        tnoremap <C-h> <C-\><C-n><C-w>h
-        tnoremap <C-j> <C-\><C-n><C-w>j
-        tnoremap <C-k> <C-\><C-n><C-w>k
-        tnoremap <C-l> <C-\><C-n><C-w>l
-        tnoremap <C-v> <C-\><C-n>"+pa
-        autocmd vimrc TermOpen * call s:SetupTerminal()
-    else
-        command -nargs=* Terminal terminal <args>
-        function s:tbs()
-            call term_sendkeys(bufnr('%'), "\<C-w>")
-        endfunction
-        tnoremap <C-\>: <C-w>:
-        tnoremap <C-h> <C-w>h
-        tnoremap <C-j> <C-w>j
-        tnoremap <C-k> <C-w>k
-        tnoremap <C-l> <C-w>l
-        tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
-        if exists('##TerminalOpen')
-            autocmd vimrc TerminalOpen * if &bt ==# 'terminal' | setl nolist nonu wfh | endif
+    func s:SetupTerminal()
+        if &buftype !=# 'terminal'
+            return
         endif
-    endif
+        setl nolist nonumber cursorline
+        "autocmd! WinEnter <buffer> if getpos('.')[1:2] == [line('$'), col('$')] | star | endif
+        autocmd! WinEnter <buffer> if getpos('.')[1] == line('$') | star | endif
+        " vim 有 BUG, 某些情况下创建新窗口的时候, 会导致意外的进入插入模式
+        autocmd! BufLeave <buffer> stopinsert
+        startinsert
+    endfunc
+    command -nargs=* Terminal sp | terminal <args>
+    tnoremap <C-\>: <C-\><C-n>:
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+    tnoremap <C-v> <C-\><C-n>"+pa
+    autocmd vimrc TermOpen * call s:SetupTerminal()
 endif
 
 
-if has('nvim')
-    nnoremap <silent> \f :Telescope find_files<CR>
-    "nnoremap <silent> \e :Telescope command_history<CR>
-    " Leaderf 的实现更好用, 因为同样的匹配的时候, 最近的命令更优先
-    nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
-    nnoremap <silent> \b :Telescope buffers<CR>
-    "nnoremap <silent> \t :Telescope current_buffer_tags<CR>
-    nnoremap <silent> \t :Leaderf bufTag<CR>
-    nnoremap <silent> \T :Telescope tags<CR>
-    " gtags => g
-    nnoremap <silent> \g :Telescope tags<CR>
-    nnoremap <silent> \/ :Telescope current_buffer_fuzzy_find<CR>
-else
-    nnoremap <silent> \f :Leaderf file<CR>
-    nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
-    nnoremap <silent> \b :Leaderf buffer<CR>
-    nnoremap <silent> \t :Leaderf bufTag<CR>
-endif
+nnoremap <silent> \f :Telescope find_files<CR>
+"nnoremap <silent> \e :Telescope command_history<CR>
+" Leaderf 的实现更好用, 因为同样的匹配的时候, 最近的命令更优先
+nnoremap <silent> \e :Leaderf cmdHistory --regexMode<CR>
+nnoremap <silent> \b :Telescope buffers<CR>
+"nnoremap <silent> \t :Telescope current_buffer_tags<CR>
+nnoremap <silent> \t :Leaderf bufTag<CR>
+nnoremap <silent> \T :Telescope tags<CR>
+" gtags => g
+nnoremap <silent> \g :Telescope tags<CR>
+nnoremap <silent> \/ :Telescope current_buffer_fuzzy_find<CR>
 
 "=======================================
 " 命令行模式，包括搜索时
@@ -378,132 +334,10 @@ imap <C-n> <Down>
 " 激活 bundle 目录的插件, 优先于 Plug
 call pathogen#infect()
 " 设置 nvim 主题
-if has('nvim') "{{{
-    " 写成一行, 避免默认的语法解释出现奇怪的问题
-    silent! lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false},
-        \ terminal_colors=vim.fn.has('gui_running')==1})
-endif
-"}}}
+" 写成一行, 避免默认的语法解释出现奇怪的问题
+silent! lua require('gruvbox').setup({bold=true, italic={strings=false, emphasis=false, comments=false, operators=false, folds=false},
+    \ terminal_colors=vim.fn.has('gui_running')==1})
 
-" ========== tagbar ==========
-"{{{
-let g:tagbar_compact = 1
-let g:tagbar_width = 30
-let g:tagbar_sort = 0
-"let g:tagbar_expand = 1
-let g:tagbar_map_showproto = 'S'
-let g:tagbar_silent = 1
-let g:tagbar_disable_statusline = v:true
-if has("win32") || has("win64")
-    if !executable('ctags')
-        let g:tagbar_ctags_bin = $VIM . '\vimfiles\bin\ctags.exe'
-    endif
-endif
-
-let g:tagbar_type_rfc = {
-    \ 'ctagstype' : 'rfc',
-    \ 'kinds'     : [
-        \ 'c:chapters',
-    \ ],
-    \ 'sort'    : 0,
-    \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'rfc.cnf'),
-\ }
-
-let g:tagbar_type_autoit = {
-    \ 'ctagstype' : 'autoit',
-    \ 'kinds'     : [
-        \ 'f:functions',
-    \ ],
-    \ 'sort'    : 0,
-    \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'autoit.cnf'),
-\ }
-
-if s:IsWindowsOS()
-    let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'kinds' : [
-            \ 'h:headings',
-        \ ],
-        \ 'sort' : 0,
-        \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'markdown.cnf'),
-    \ }
-endif
-
-let g:tagbar_type_cpp = {
-    \ 'ctagstype' : 'c++',
-    \ 'kinds'     : [
-        \ 'd:macros:0',
-        \ 'p:prototypes:1',
-        \ 'g:enums',
-        \ 'e:enumerators',
-        \ 't:typedefs',
-        \ 'n:namespaces',
-        \ 'c:classes',
-        \ 's:structs',
-        \ 'u:unions',
-        \ 'f:functions',
-        \ 'm:members',
-        \ 'v:variables'
-    \ ],
-    \ 'sro'        : '::',
-    \ 'kind2scope' : {
-        \ 'g' : 'enum',
-        \ 'n' : 'namespace',
-        \ 'c' : 'class',
-        \ 's' : 'struct',
-        \ 'u' : 'union'
-    \ },
-    \ 'scope2kind' : {
-        \ 'enum'      : 'g',
-        \ 'namespace' : 'n',
-        \ 'class'     : 'c',
-        \ 'struct'    : 's',
-        \ 'union'     : 'u'
-    \ }
-\ }
-
-" 修正 go 文件类型无法显示结构体成员的问题
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:packages:0:0',
-        \ 'i:interfaces:0:0',
-        \ 'c:constants:0:0',
-        \ 's:structs:0:1',
-        \ 'm:struct members:0:0',
-        \ 't:types:0:1',
-        \ 'f:functions:0:1',
-        \ 'v:variables:0:0',
-        \ 'a:talias:0:0',
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 's' : 'struct',
-        \ 'p' : 'package',
-    \ },
-    \ 'scope2kind' : {
-        \ 'struct'  : 's',
-        \ 'package' : 'p',
-    \ }
-\ }
-
-nnoremap <nowait> <Leader>t :TagbarToggle<CR>
-nnoremap <nowait> <Leader>f :NvimTreeToggle<CR>
-
-"}}}
-" ========== NERDTree ==========
-"{{{
-" 设置不显示的文件，效果为仅显示 .c,.cpp,.h 文件，无后缀名文件暂时无法解决
-"let NERDTreeIgnore = ['\(\.cpp$\|\.c$\|\.h$\|\.cxx\|\.hpp\)\@!\..\+', '\~$']
-let NERDTreeIgnore = ['^__pycache__$[[dir]]']
-let NERDTreeMapMenu = "."
-if g:OnlyASCII()
-    let NERDTreeDirArrowExpandable = '+'
-    let NERDTreeDirArrowCollapsible = '~'
-endif
-let NERDTreeMinimalUI = 1
-let NERDTreeStatusline = -1
-"}}}
 " ========== NERD commenter ==========
 "{{{
 let NERDMenuMode = 0
@@ -587,16 +421,6 @@ command -nargs=0 CSpaceMode setlocal ts=8 sts=4 sw=4 et
 command -nargs=0 CTS4ETMode setlocal ts=4 sts=4 sw=4 et
 " 清理后置的多余的空白
 command -nargs=0 CleanSpaces silent! %s/\s\+$//g | noh | normal! ``
-
-" 括号自动补全. 为了性能, 直接禁用闭合检查
-" 仅 vim 适用, nvim 使用 ultimate-autopair.nvim 插件实现
-if !has('nvim')
-    inoremap ( ()<Left>
-    inoremap [ []<Left>
-    inoremap { {}<Left>
-    inoremap <expr> " (&filetype == "vim") ? "\"" : "\"\"\<Left>"
-    inoremap <expr> ' (&ft ==# 'lisp') ? "'" : "''\<Left>"
-endif
 
 "cnoremap ( ()<Left>
 "cnoremap [ []<Left>
@@ -722,7 +546,6 @@ Plug 'mbbill/undotree', {'on': 'UndotreeShow'}
 Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
 Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
-Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'kassio/neoterm', {'on': 'Tnew'}
 Plug 'epheien/nerdtree', {'on': 'NERDTree'} " orig: 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter', {'on': '<Plug>NERDCommenterToggle'}
@@ -734,7 +557,6 @@ Plug 'epheien/videm', {'on': 'VidemOpen'}
 
 " 处理 kitty 背景问题
 " NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
-"if $TERM_PROGRAM =~# '\V\<Apple_Terminal\|\<kitty\|\<alacritty'
 if $TERM_PROGRAM =~# '\V\<Apple_Terminal'
     Plug 'epheien/bg.nvim'
 endif
@@ -744,30 +566,8 @@ if !g:OnlyASCII()
     "Plug 'ryanoasis/vim-devicons'
 endif
 
-" nvim 专用插件
-" 管理原则:
-"   - Plug 插件能实现懒加载的就用 Plug 管理
-"   - 无条件加载的插件也用 Plug 管理
-"   - 其他插件就用 pckr.nvim 管理
-if has('nvim')
-    " 基础配色, 但不在这里加载, 因为时机有点晚
-    Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
-else
-" vim 专用插件
-    Plug 'posva/vim-vue'
-    " vim-which-key 基本不适用于 nvim 了, 因为解析 map 的时候会出错
-    Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-    Plug 'airblade/vim-gitgutter', {'on': 'GitGutterEnable'}
-    Plug 'jreybert/vimagit', {'on': 'Magit'}
-    Plug 'lambdalisue/gina.vim', {'on': 'Gina'}
-
-    " git 相关插件
-    Plug 'junegunn/gv.vim', {'on': 'GV'}
-    Plug 'tpope/vim-fugitive', {'on': 'Git'}
-
-    call s:Plug('vim-signature') " TODO
-    call s:Plug('json5', {'for': 'json5'})
-endif
+" 基础配色, 但不在这里加载, 因为时机有点晚
+Plug 'epheien/gruvbox.nvim', {'on': '<Plug>(gruvbox-placeholder)'}
 
 " 本地插件
 call s:Plug('common')
@@ -779,33 +579,16 @@ call s:Plug('colorizer', {'on': 'UpdateColor'})
 call s:Plug('colorsel', {'on': 'ColorSel'})
 call s:Plug('visincr', {'on': 'I'})
 
-" 代码补全相关插件
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'skywind3000/vim-auto-popmenu', {'on': 'ApcEnable'}
-if has('nvim')
-    "Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocStart'}
-    "Plug 'Shougo/neosnippet.vim'
-    "Plug 'Shougo/neosnippet-snippets'
-else
-    let g:apc_enable_tab = 0
-    let g:apc_enable_ft = {'*': 1}
-endif
-
 call plug#end()
 " ####
 
 " ========== Plug 安装的插件的配置，理论上不应过长 ==========
 "let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_italic = 0 " gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
-if !has('nvim')
-    let g:gruvbox_bold = 0 " gruvbox 主题的粗体设置
-endif
 let g:mkdp_auto_close = 0 " markdown-preview 禁止自动关闭
 let g:asyncrun_open = 5 " asyncrun 自动打开 quickfix
 
-if has('nvim')
-    autocmd vimrc VimEnter * ++once set helplang=
-endif
+autocmd vimrc VimEnter * ++once set helplang=
 
 " 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
 let g:Lf_UseCache = 0
@@ -820,96 +603,46 @@ if g:OnlyASCII()
 else
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 endif
-if has('nvim')
-    let g:Lf_WindowPosition = 'popup'
-    "autocmd vimrc filetype * if &ft == 'leaderf' | setl nonumber | endif
-endif
+let g:Lf_WindowPosition = 'popup'
+"autocmd vimrc filetype * if &ft == 'leaderf' | setl nonumber | endif
 
-" NOTE: g:plugs 是 plug.vim 插件导出的变量, 但是没有文档, 看源码得出的
-if has_key(g:plugs, 'lightline.vim') | call s:setup_lightline() | endif
-" 稍微定制一下 startify 的 header
-let g:startify_custom_header = [
-    \ '        __________       ______ ___                  _____            ',
-    \ '        ___  ____/__________  /__( )_______   ___   ____(_)______ ___ ',
-    \ '        __  __/  ___  __ \_  __ \|/__  ___/   __ | / /_  /__  __ `__ \',
-    \ '        _  /___  __  /_/ /  / / /  _(__  )    __ |/ /_  / _  / / / / /',
-    \ '        /_____/  _  .___//_/ /_/   /____/     _____/ /_/  /_/ /_/ /_/ ',
-    \ '                 /_/                                                  ',
-    \ ]
-
-if has('nvim') && $TERM_PROGRAM !=# 'Apple_Terminal'
-    set termguicolors | call s:SetupColorscheme('gruvbox')
-else
-    call s:SetupColorscheme('gruvbox-origin')
+if $TERM_PROGRAM !=# 'Apple_Terminal'
+    call s:SetupColorscheme('gruvbox')
 endif
 
 if exists(':Rg') != 2
     command! -nargs=+ -complete=customlist,myrc#FileComplete Rg call myrc#rg(<q-args>)
 endif
 
-" vim-go
-let g:go_gopls_enabled = 1
-let g:go_version_warning = 0
-let g:go_fmt_autosave = 0
-let g:go_imports_autosave = 0
-let g:go_fmt_experimental = 1
-let g:go_term_enabled = 1
-let g:go_term_mode = "split"
-let g:go_diagnostics_enabled = 0
-let g:go_highlight_diagnostic_errors = 0
-let g:go_metalinter_enabled = ['errcheck']
-" 高亮色以 :h group-name 为指导
-" 高亮函数声明
-let g:go_highlight_functions = 1
-" 高亮函数调用
-let g:go_highlight_function_calls = 1
-hi link goFunctionCall Function
-" 高亮 x := 的 x
-let g:go_highlight_variable_declarations = 1
-hi link goVarDefs Identifier
-" GoDoc 使用 floating window
-let g:go_doc_popup_window = 1
-let g:go_debug_log_output = ''
-let g:go_def_mapping_enabled = 0
-
 " gutentags
-if has('nvim') || has('cscope')
-    let g:gutentags_define_advanced_commands = 1
-    let g:gutentags_file_list_command = 'cat gtags.files'
-    let g:gutentags_ctags_tagfile = 'gutags'
-    let g:gutentags_add_default_project_roots = 0
-    let g:gutentags_project_root = ['gtags.files']
-    let g:gutentags_auto_add_gtags_cscope = 0 " 这个必须设置为 0, 避免 nvim 报错
-    let g:gutentags_modules = []
-    if executable('ctags')
-        let g:gutentags_modules += ['ctags']
-    endif
-    if executable('gtags-cscope') && executable('gtags')
-        if has('nvim-0.9')
-            let g:gutentags_modules += ['cscope_maps']
-            let g:gutentags_cscope_executable_maps = 'gtags'
-        else
-            let g:gutentags_modules += ['gtags_cscope']
-        endif
-    endif
-    " ctags 的一些参数
-    let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-    " 这两个选项会导致 ctags 退出码有异常, 禁用掉
-    "let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-    "let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-    "let g:gutentags_trace = 1
+let g:gutentags_define_advanced_commands = 1
+let g:gutentags_file_list_command = 'cat gtags.files'
+let g:gutentags_ctags_tagfile = 'gutags'
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['gtags.files']
+let g:gutentags_auto_add_gtags_cscope = 0 " 这个必须设置为 0, 避免 nvim 报错
+let g:gutentags_modules = []
+if executable('ctags')
+    let g:gutentags_modules += ['ctags']
 endif
+if executable('gtags-cscope') && executable('gtags')
+    if has('nvim-0.9')
+        let g:gutentags_modules += ['cscope_maps']
+        let g:gutentags_cscope_executable_maps = 'gtags'
+    else
+        let g:gutentags_modules += ['gtags_cscope']
+    endif
+endif
+" ctags 的一些参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+" 这两个选项会导致 ctags 退出码有异常, 禁用掉
+"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+"let g:gutentags_trace = 1
 
 " ==========================================================
 " 自己的简易插件
 " ==========================================================
-" ========== SimpleSuperTab ==========
-"{{{
-" 需要把 completeopt 设置为 menuone
-inoremap <silent> <Tab> <C-r>=myrc#SuperTab()<CR>
-inoremap <silent> <S-Tab> <C-r>=myrc#ShiftTab()<CR>
-
-"}}}
 " ========== 隐藏混乱的文件格式中的 ^M 字符 ==========
 "{{{
 autocmd BufReadPost * nested call <SID>FixDosFmt()
@@ -964,21 +697,14 @@ endfunction
 " ========== smartim by hammerspoon ==========
 "{{{
 if has('mac')
-    function! s:job_start(cmd)
-        if has('nvim')
-            return jobstart(a:cmd)
-        else
-            return job_start(a:cmd)
-        endif
-    endfunction
     " 可使用 system 来同步, 只要 hammerspoon 足够快就没问题
     augroup smartim
         autocmd!
         " NOTE: 这个 VimEnter 事件比较耗时, 但是为了使用方便, 还是要用
-        autocmd VimEnter    * call s:job_start('open -g hammerspoon://toEnIM')
-        autocmd VimLeavePre * call s:job_start('open -g hammerspoon://toEnIM')
-        autocmd InsertLeave * call s:job_start('open -g hammerspoon://toEnIM')
-        autocmd FocusGained * call s:job_start('open -g hammerspoon://toEnIM')
+        autocmd VimEnter    * call jobstart('open -g hammerspoon://toEnIM')
+        autocmd VimLeavePre * call jobstart('open -g hammerspoon://toEnIM')
+        autocmd InsertLeave * call jobstart('open -g hammerspoon://toEnIM')
+        autocmd FocusGained * call jobstart('open -g hammerspoon://toEnIM')
     augroup end
 endif
 "}}}
@@ -1042,13 +768,6 @@ endif
 "highlight ScrollView ctermbg=243 guibg=#89816d
 highlight link ScrollView PmenuThumb
 let scrollview_auto_mouse = v:false
-
-" 使用 gonvim 的时候, 通过外挂的形式改变窗口的尺寸
-if get(g:, 'gonvim_running', 0)
-    let g:line_ppp = 14
-    let g:column_ppp = 8
-    autocmd OptionSet * call myrc#optionset_hook()
-endif
 
 " macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
 " 但好消息是可以用映射修正这个问题

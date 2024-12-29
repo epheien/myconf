@@ -39,7 +39,7 @@ vim.o.keymodel = 'startsel,stopsel'
 vim.o.completeopt = 'menuone,noinsert'
 vim.o.pumheight = 5
 
-vim.g.mapleader = '<F12>'
+vim.g.mapleader = vim.api.nvim_replace_termcodes('<F12>', true, false, true)
 -- 设置 vim 脚本的续行缩进
 vim.g.vim_indent_cont = vim.fn.shiftwidth()
 -- shell 文件格式语法类型默认为 bash
