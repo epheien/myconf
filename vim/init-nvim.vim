@@ -44,18 +44,6 @@ let s:USERRUNTIME = stdpath('config')
 augroup vimrc
 augroup END
 
-" 禁用 vim 文件类型的错误
-let g:vimsyn_noerror = 1
-" 使用增强的 python 语法高亮的所有功能
-let g:python_highlight_all = 1
-" 禁用很慢的语法
-let g:python_slow_sync = 0
-" 对于 lisp，使用彩虹高亮括号匹配
-let g:lisp_rainbow = 1
-" 基于 syntax 的 markdown 代码块高亮可用的语言类型
-let g:markdown_fenced_languages = ['html', 'python', 'vim', 'lua', 'cpp', 'c', 'go']
-let g:markdown_syntax_conceal = 1
-
 function s:SetupColorschemePost(...) "{{{
     if g:colors_name ==# 'gruvbox'
         " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
@@ -138,15 +126,6 @@ cnoremap <silent> <C-v> <C-r>=myrc#cbp()<CR><C-r>=myrc#_paste()<CR>
 if exists(':tmap')
     tnoremap <silent> <C-v> <C-w>:call myrc#cbp()<CR><C-w>""
 endif
-
-nnoremap <silent> <M-h> :tabNext<CR>
-nnoremap <silent> <M-l> :tabnext<CR>
-nnoremap <silent> <M-j> <C-w>-
-nnoremap <silent> <M-k> <C-w>+
-tnoremap <silent> <M-h> <C-\><C-n>:tabNext<CR>
-tnoremap <silent> <M-l> <C-\><C-n>:tabnext<CR>
-inoremap <silent> <M-h> <C-\><C-o>:tabNext<CR>
-inoremap <silent> <M-l> <C-\><C-o>:tabnext<CR>
 
 " ======================================
 " 普通模式

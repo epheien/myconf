@@ -44,6 +44,17 @@ vim.g.mapleader = vim.api.nvim_replace_termcodes('<F12>', true, false, true)
 vim.g.vim_indent_cont = vim.fn.shiftwidth()
 -- shell 文件格式语法类型默认为 bash
 vim.g.is_bash = 1
+-- 禁用 vim 文件类型的错误
+vim.g.vimsyn_noerror = 1
+-- 使用增强的 python 语法高亮的所有功能
+vim.g.python_highlight_all = 1
+-- 禁用很慢的语法
+vim.g.python_slow_sync = 0
+-- 对于 lisp，使用彩虹高亮括号匹配
+vim.g.lisp_rainbow = 1
+-- 基于 syntax 的 markdown 代码块高亮可用的语言类型
+vim.g.markdown_fenced_languages = {'html', 'python', 'vim', 'lua', 'cpp', 'c', 'go'}
+vim.g.markdown_syntax_conceal = 1
 
 -- 设置折叠级别: 高于此级别的折叠会被关闭
 vim.o.foldlevel = 10000
