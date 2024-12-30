@@ -34,10 +34,16 @@ local function setup_telescope()
       },
     },
   })
-  vim.api.nvim_set_hl(0, 'TelescopeBorder', {link = 'WinSeparator', force = true})
-  vim.api.nvim_set_hl(0, 'TelescopeTitle', {link = 'Title', force = true})
+  vim.api.nvim_set_hl(0, 'TelescopeBorder', { link = 'WinSeparator', force = true })
+  vim.api.nvim_set_hl(0, 'TelescopeTitle', { link = 'Title', force = true })
   -- telescope 的 undo 插件
   require("telescope").load_extension("undo")
 end
 
-setup_telescope()
+return {
+  'nvim-telescope/telescope.nvim',
+  tag = '0.1.8',
+  requires = { 'nvim-lua/plenary.nvim', 'debugloop/telescope-undo.nvim', 'nvim-tree/nvim-web-devicons' },
+  cmd = 'Telescope',
+  config = setup_telescope,
+}
