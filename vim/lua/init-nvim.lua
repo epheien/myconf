@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 -- 使用 packadd 加载 pckr.nvim
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
 --  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
@@ -25,7 +23,7 @@ local function setup_colorscheme()
     terminal_colors = vim.fn.has('gui_running') == 1
   })
   if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
-    utils.setup_colorscheme('gruvbox')
+    require('utils').setup_colorscheme('gruvbox')
   end
 end
 setup_colorscheme()
