@@ -6,6 +6,13 @@ require('neo-tree').setup({
       ['<space>'] = 'noop',
     },
   },
+  filesystem = {
+    filtered_items = {
+      hide_dotfiles = false,
+      hide_gitignored = false,
+      hide_hidden = false,
+    },
+  },
 })
 vim.api.nvim_set_hl(0, 'NeoTreeDirectoryIcon', { fg = '#8094b4', ctermfg = 12 })
 vim.api.nvim_set_hl(0, 'NeoTreeDirectoryName', { link = 'Title' })

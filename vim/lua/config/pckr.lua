@@ -328,6 +328,10 @@ local function setup_pckr()
             open = 'NvimTreeOpen',
           },
           {
+            ft = 'neo-tree',
+            open = 'Neotree',
+          },
+          {
             ft = "tagbar",
             open = "TagbarOpen",
           },
