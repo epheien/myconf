@@ -18,7 +18,9 @@ local opts = {
   view = {
     filter = function(buf)
       local ft = vim.bo[buf].filetype
-      if ft == 'qf' then return false end
+      if ft == 'qf' then
+        return false
+      end
       return vim.bo[buf].buflisted or ft == 'help'
     end,
   },
@@ -27,13 +29,12 @@ local opts = {
     ctags = {
       filetypes = {
         ['c++'] = {
-          kinds = {
-          },
+          kinds = {},
         },
         markdown = {
           scope_sep = '""',
         },
-      }
+      },
     },
   },
   outline_window = {
@@ -51,7 +52,7 @@ local opts = {
     restore_location = {},
   },
   symbol_folding = {
-    autofold_depth = 2;
+    autofold_depth = 2,
   },
   outline_items = {
     auto_update_events = {
@@ -76,14 +77,14 @@ local opts = {
     filter = {
       -- lua 总显示一些 if 语句很烦, 以下 filter 列表取自 aerial.nvim
       lua = {
-        "Class",
-        "Constructor",
-        "Enum",
-        "Function",
-        "Interface",
-        "Module",
-        "Method",
-        "Struct",
+        'Class',
+        'Constructor',
+        'Enum',
+        'Function',
+        'Interface',
+        'Module',
+        'Method',
+        'Struct',
       },
     },
   },
@@ -92,12 +93,16 @@ local opts = {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'Outline',
   callback = function()
-    vim.keymap.set('n', '<LeftRelease>',
-      '<LeftRelease>:lua require("config/outline").check_mouse_click()<CR>', {
+    vim.keymap.set(
+      'n',
+      '<LeftRelease>',
+      '<LeftRelease>:lua require("plugins.config.outline").check_mouse_click()<CR>',
+      {
         silent = true,
         buffer = true,
-      })
-  end
+      }
+    )
+  end,
 })
 function M.check_mouse_click()
   local cursor = vim.api.nvim_win_get_cursor(0)
