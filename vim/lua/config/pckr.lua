@@ -462,7 +462,7 @@ local function setup_pckr()
       local conform = require('conform')
       conform.setup({
         formatters_by_ft = {
-          lua = { lsp_format = 'prefer' },
+          lua = { 'stylua', lsp_format = 'fallback' },
           cpp = { 'clang-format' },
         },
         format_on_save = function() end,

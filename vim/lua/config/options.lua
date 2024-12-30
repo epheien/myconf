@@ -29,12 +29,12 @@ vim.o.swapfile = false
 vim.o.mouse = 'a'
 
 vim.opt.guicursor = {
-  "n-v-c:block",
-  "i-ci-ve:ver25",
-  "r-cr:hor20",
-  "o:hor50",
-  "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
-  "sm:block-blinkwait175-blinkoff150-blinkon175",
+  'n-v-c:block',
+  'i-ci-ve:ver25',
+  'r-cr:hor20',
+  'o:hor50',
+  'a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor',
+  'sm:block-blinkwait175-blinkoff150-blinkon175',
 }
 
 -- 缩进相关
@@ -74,15 +74,19 @@ vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,localoptions'
 vim.o.wildignorecase = true
 
 -- vim -d a b 启动的时候, 不设置 'list'
-if not vim.o.diff then vim.o.list = true end
+if not vim.o.diff then
+  vim.o.list = true
+end
 
 vim.o.listchars = 'tab:→ ,eol:¬'
 vim.o.title = true
 vim.o.tagcase = 'match' -- 标签文件一般是区分大小写的
 vim.o.tabline = '%!myrc#MyTabLine()'
 
-if vim.env.TERM_PROGRAM and
-    vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM or '') then
+if
+  vim.env.TERM_PROGRAM
+  and vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM or '')
+then
   vim.o.termguicolors = true
 end
 
@@ -94,9 +98,9 @@ vim.env.VIM_EXE = vim.v.progpath
 vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
 vim.g.scrollview_auto_mouse = false
 
-vim.g.gruvbox_italic = 0  -- gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
+vim.g.gruvbox_italic = 0 -- gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
 vim.g.mkdp_auto_close = 0 -- markdown-preview 禁止自动关闭
-vim.g.asyncrun_open = 5   -- asyncrun 自动打开 quickfix
+vim.g.asyncrun_open = 5 -- asyncrun 自动打开 quickfix
 
 -- table-mode 兼容 markdown 表格格式
 vim.g.table_mode_corner = '|'
@@ -150,11 +154,11 @@ vim.g.mwHistAdd = ''
 -- vim-signature
 vim.g.SignaturePeriodicRefresh = 0
 vim.g.SignatureMap = {
-  PlaceNextMark = "m,",
-  PurgeMarks = "m<Space>",
-  GotoNextSpotByPos = "<F2>",
-  GotoPrevSpotByPos = "<S-F2>",
-  ListBufferMarks = "m/",
+  PlaceNextMark = 'm,',
+  PurgeMarks = 'm<Space>',
+  GotoNextSpotByPos = '<F2>',
+  GotoPrevSpotByPos = '<S-F2>',
+  ListBufferMarks = 'm/',
 }
 
 -- NERD commenter
@@ -162,8 +166,8 @@ vim.g.NERDMenuMode = 0
 vim.g.NERDCreateDefaultMappings = 0
 vim.g.NERDCustomDelimiters = {
   python = {
-    left = '#'
-  }
+    left = '#',
+  },
 }
 
 -- neosnippet
@@ -185,19 +189,19 @@ vim.cmd([[autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp
 vim.g['clang_format#code_style'] = 'llvm'
 vim.g['clang_format#style_options'] = {
   AccessModifierOffset = -4,
-  AllowShortFunctionsOnASingleLine = "Empty",
+  AllowShortFunctionsOnASingleLine = 'Empty',
   AllowShortIfStatementsOnASingleLine = false,
   AlwaysBreakTemplateDeclarations = true,
   BinPackArguments = false,
   BinPackParameters = false,
   ColumnLimit = 100,
   DerivePointerAlignment = false,
-  IncludeBlocks = "Preserve",
+  IncludeBlocks = 'Preserve',
   IndentCaseLabels = false,
-  PointerAlignment = "Left",
+  PointerAlignment = 'Left',
   ReflowComments = false,
   SortIncludes = true,
-  SpacesBeforeTrailingComments = 1
+  SpacesBeforeTrailingComments = 1,
 }
 
 local open_floating_preview = vim.lsp.util.open_floating_preview
@@ -207,7 +211,9 @@ vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
   vim.g.syntax_on = nil
   local floating_bufnr, floating_winnr = open_floating_preview(contents, syntax, opts)
   vim.g.syntax_on = bak
-  if syntax == 'markdown' then vim.wo[floating_winnr].conceallevel = 2 end
+  if syntax == 'markdown' then
+    vim.wo[floating_winnr].conceallevel = 2
+  end
   return floating_bufnr, floating_winnr
 end
 

@@ -6,7 +6,7 @@ if vim.fn.has('mac') == 1 then
   vim.api.nvim_create_autocmd({ 'VimEnter', 'VimLeavePre', 'InsertLeave', 'FocusGained' }, {
     callback = function()
       vim.system({ 'open', '-g', 'hammerspoon://toEnIM' })
-    end
+    end,
   })
 end
 
@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
     if vim.regex([[rfc\d\+\.txt]]):match_str(vim.fn.expand('%:t') or '') then
       vim.bo.filetype = 'rfc'
     end
-  end
+  end,
 })
 
 if vim.env.SSH_TTY then
@@ -45,13 +45,15 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     if lnum > 1 and lnum <= vim.api.nvim_buf_line_count(0) then
       vim.cmd.normal({ args = { [[g`"]] }, bang = true })
     end
-  end
+  end,
 })
 
 vim.api.nvim_create_autocmd('TermOpen', {
   group = vimrc_group,
   callback = function(event)
-    if vim.bo.buftype ~= 'terminal' then return end
+    if vim.bo.buftype ~= 'terminal' then
+      return
+    end
     vim.opt_local.list = false
     vim.opt_local.number = false
     vim.opt_local.cursorline = true
@@ -64,13 +66,15 @@ vim.api.nvim_create_autocmd('TermOpen', {
       end,
     })
     vim.cmd.startinsert()
-  end
+  end,
 })
 
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   group = vimrc_group,
-  callback = function() vim.o.helplang = '' end
+  callback = function()
+    vim.o.helplang = ''
+  end,
 })
 
 vim.cmd([[
@@ -123,7 +127,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   group = vimrc_group,
   callback = function(args)
     vim.call('g:SetupColorschemePost', args.file, args.match)
-  end
+  end,
 })
 
 -- 隐藏混乱的文件格式中的 ^M 字符
@@ -131,7 +135,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   nested = true,
   callback = function()
     vim.call('myrc#FixDosFmt')
-  end
+  end,
 })
 
 -- • Enabled treesitter highlighting for:
@@ -150,7 +154,7 @@ vim.api.nvim_create_autocmd('FileType', {
     else
       vim.treesitter.start()
     end
-  end
+  end,
 })
 
 vim.api.nvim_create_autocmd('BufWinEnter', {
@@ -162,5 +166,5 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
         opt:append({ NormalFloat = 'Normal' })
       end
     end
-  end
+  end,
 })
