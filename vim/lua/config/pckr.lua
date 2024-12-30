@@ -24,12 +24,6 @@ local function setup_pckr()
 
     'drybalka/tree-climber.nvim',
 
-    {
-      'nvim-lualine/lualine.nvim',
-      keys = '<Plug>lualine',
-      config = function() require('config/lualine') end,
-    },
-
     { 'stevearc/aerial.nvim',                cond = cmd('AerialToggle'), config = function() require('config/aerial') end },
     { 'nvim-treesitter/nvim-treesitter',     cmd = 'TSBufToggle',        event = 'BufReadPre' },
     { 'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'),    config = function() require('ibl').setup() end },

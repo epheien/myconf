@@ -1,8 +1,11 @@
 local function setup_lualine() -- {{{
+  vim.opt.laststatus = 2
+  vim.opt.showmode = false
+
   local theme = {
     normal = {
       a = { fg = '#282828', bg = '#8ac6f2' }, -- "模式 文件 | 位置" 后两者的颜色
-      c = { fg = "#665c54", bg = "NONE" }, -- 填充色
+      c = { fg = "#665c54", bg = "NONE" },    -- 填充色
     },
     inactive = { a = { fg = '#282828', bg = '#6a6a6a' } },
   }
@@ -17,7 +20,7 @@ local function setup_lualine() -- {{{
     return color_map[vim.fn.mode():sub(1, 1):lower()] or { fg = '#282828', bg = '#e0e000' }
   end
   local location = function()
-    return vim.api.nvim_eval_statusline('%l/%L,%v', {winid = vim.fn.win_getid()})['str']
+    return vim.api.nvim_eval_statusline('%l/%L,%v', { winid = vim.fn.win_getid() })['str']
   end
   local opts = {
     options = {
@@ -25,7 +28,7 @@ local function setup_lualine() -- {{{
       theme = theme,
     },
     sections = {
-      lualine_a = { { 'mode', separator = '', color = mode_color}, 'filename', location },
+      lualine_a = { { 'mode', separator = '', color = mode_color }, 'filename', location },
       lualine_b = {},
       lualine_c = {},
       lualine_x = {},
@@ -47,6 +50,4 @@ local function setup_lualine() -- {{{
 end
 -- }}}
 
-vim.opt.laststatus = 2
-vim.opt.showmode = false
 setup_lualine()
