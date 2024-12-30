@@ -8,7 +8,7 @@ return {
       filter_rules = {
         include_current_win = true,
         bo = {
-          filetype = { 'scrollview', 'notify' },
+          filetype = { 'scrollview', 'scrollview_sign', 'notify' },
           buftype = {},
         },
       },
