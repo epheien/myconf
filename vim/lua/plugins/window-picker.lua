@@ -1,5 +1,6 @@
 return {
-  's1n7ax/nvim-window-picker',
+  --'s1n7ax/nvim-window-picker',
+  'epheien/nvim-window-picker',
   keys = [[\w]],
   config = function()
     require 'window-picker'.setup({
