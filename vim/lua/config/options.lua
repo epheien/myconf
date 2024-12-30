@@ -8,14 +8,13 @@ vim.o.cindent = true
 -- L0 - 输入 std: 的时候禁止缩进, 避免频繁的光标跳动
 vim.opt.cinoptions:append({ '(0', 'Ws', 'L0', ':0', 'l1' })
 vim.o.rulerformat = '%l/%L,%v'
---vim.cmd.syntax('on')
 -- 扩大正则使用的内存, 至少 20MiB
 vim.o.maxmempattern = 20000
 -- 文件类型的检测
 -- 为特定的文件类型允许插件文件的载入
 -- 为特定的文件类型载入缩进文件
 -- 这个命令触发载入 $VIMRUNTIME/filetype.vim
-vim.cmd('filetype plugin indent on')
+--vim.cmd('filetype plugin indent on') -- nvim 默认已经全部启用
 vim.o.number = true
 vim.o.signcolumn = 'auto:9'
 vim.o.fileencodings = 'utf-8,gbk,gb18030,ucs-bom,utf-16,cp936'
@@ -106,46 +105,43 @@ vim.g.asyncrun_open = 5 -- asyncrun 自动打开 quickfix
 vim.g.table_mode_corner = '|'
 
 -- gutentags
-vim.cmd([[
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_file_list_command = 'cat gtags.files'
-let g:gutentags_ctags_tagfile = 'gutags'
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['gtags.files']
-let g:gutentags_auto_add_gtags_cscope = 0 " 这个必须设置为 0, 避免 nvim 报错
-let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
-endif
-if executable('gtags-cscope') && executable('gtags')
-    if has('nvim-0.9')
-        let g:gutentags_modules += ['cscope_maps']
-        let g:gutentags_cscope_executable_maps = 'gtags'
-    else
-        let g:gutentags_modules += ['gtags_cscope']
-    endif
-endif
-" ctags 的一些参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-]])
+vim.g.gutentags_define_advanced_commands = 1
+vim.g.gutentags_file_list_command = 'cat gtags.files'
+vim.g.gutentags_ctags_tagfile = 'gutags'
+vim.g.gutentags_add_default_project_roots = 0
+vim.g.gutentags_project_root = { 'gtags.files' }
+vim.g.gutentags_auto_add_gtags_cscope = 0
+vim.g.gutentags_modules = {}
+if vim.fn.executable('ctags') == 1 then
+  table.insert(vim.g.gutentags_modules, 'ctags')
+end
+
+if vim.fn.executable('gtags-cscope') == 1 and vim.fn.executable('gtags') == 1 then
+  if vim.fn.has('nvim-0.9') == 1 then
+    table.insert(vim.g.gutentags_modules, 'cscope_maps')
+    vim.g.gutentags_cscope_executable_maps = 'gtags'
+  else
+    table.insert(vim.g.gutentags_modules, 'gtags_cscope')
+  end
+end
+-- ctags 的一些参数
+vim.g.gutentags_ctags_extra_args = { '--fields=+niazS', '--extra=+q' }
 
 -- LeaderF
-vim.cmd([[
-" 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
-let g:Lf_UseCache = 0
-" 短期缓存, 会在内存缓存, 如果文件经常改动的话, 就不适合了
-"let g:Lf_UseMemoryCache = 0
-" 不使用版本控制机制，要的是简单粗暴直接磁盘搜索！
-let g:Lf_UseVersionControlTool = 0
-" Up 和 Down 使用 C-P 和 C-N
-let g:Lf_CommandMap = {'<C-K>': ['<C-K>', '<Up>'], '<C-J>': ['<C-J>', '<Down>']}
-if luaeval("require('utils').only_ascii()")
-    let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+-- 长期缓存, 如保存到文件, 这样的话, 重开 vim 就不会重建缓存
+vim.g.Lf_UseCache = 0
+-- 短期缓存, 会在内存缓存, 如果文件经常改动的话, 就不适合了
+--vim.g.Lf_UseMemoryCache = 0
+-- 不使用版本控制机制，要的是简单粗暴直接磁盘搜索！
+vim.g.Lf_UseVersionControlTool = 0
+-- Up 和 Down 使用 C-P 和 C-N
+vim.g.Lf_CommandMap = { ['<C-K>'] = { '<C-K>', '<Up>' }, ['<C-J>'] = { '<C-J>', '<Down>' } }
+if require('utils').only_ascii() then
+  vim.g.Lf_StlSeparator = { left = '', right = '', font = '' }
 else
-    let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-endif
-let g:Lf_WindowPosition = 'popup'
-]])
+  vim.g.Lf_StlSeparator = { left = '', right = '', font = '' }
+end
+vim.g.Lf_WindowPosition = 'popup'
 
 -- mark
 vim.g.mwIgnoreCase = 0
@@ -182,7 +178,14 @@ vim.g.coc_snippet_prev = ''
 vim.g.coc_data_home = vim.fs.joinpath(vim.fn.stdpath('config'), 'coc')
 -- 补全后自动弹出函数参数提示
 -- 一般按<CR>确认补全函数后, 会自动添加括号并让光标置于括号中
-vim.cmd([[autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')]])
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'CocJumpPlaceholder',
+  callback = function()
+    vim.schedule(function()
+      vim.fn.CocActionAsync('showSignatureHelp')
+    end)
+  end,
+})
 
 -- clang-format
 -- NOTE: 不能指定 IndentWidth 和 UseTab, 因为插件自动设置了, 重复设置会出错!
