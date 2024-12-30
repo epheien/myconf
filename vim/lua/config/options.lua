@@ -96,6 +96,7 @@ vim.env.VIM_EXE = vim.v.progpath
 -- scrollview
 vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
 vim.g.scrollview_auto_mouse = false
+vim.g.scrollview_excluded_filetypes = { 'NvimTree' }
 
 vim.g.gruvbox_italic = 0 -- gruvbox 主题的斜体设置, 中文无法显示斜体, 所以不用
 vim.g.mkdp_auto_close = 0 -- markdown-preview 禁止自动关闭
