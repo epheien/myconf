@@ -209,9 +209,9 @@ map('n', '<F8>', ':TStep<CR>')
 map('n', '<F10>', ':TNext<CR>')
 map('n', '<F11>', ':TStep<CR>')
 
-map('n', [[\\]], '<Plug>MarkSet', { remap = true })
-map('x', [[\\]], '<Plug>MarkSet', { remap = true })
-map('n', [[\c]], ':noh<CR><Plug>MarkAllClear', { remap = true })
+--map('n', [[\\]], '<Plug>MarkSet', { remap = true })
+--map('x', [[\\]], '<Plug>MarkSet', { remap = true })
+--map('n', [[\c]], ':noh<CR><Plug>MarkAllClear', { remap = true })
 map('n', '*', '<Plug>MarkSearchCurrentNext', { remap = true })
 map('n', '#', '<Plug>MarkSearchCurrentPrev', { remap = true })
 map('n', '<Leader>*', '<Plug>MarkSearchNext', { remap = true })
@@ -219,6 +219,46 @@ map('n', '<Leader>#', '<Plug>MarkSearchPrev', { remap = true })
 map('n', '<2-LeftMouse>', function()
   vim.call('myrc#MouseMark')
 end)
+
+-- 这个函数是为了 workaround 在 edgy.nvim 管理的窗口中执行的时候产生的异常
+-- WARN: 如果没有可用的其他窗口的时候, 仍然有问题, 但是多数情况下够用了
+local function goto_other_window(curwin)
+  for _, winid in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if not vim.api.nvim_win_is_valid(winid) then
+      goto continue
+    end
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = vim.api.nvim_win_get_buf(winid) })
+    if ft == 'NvimTree' or ft == 'Outline' then
+      goto continue
+    end
+    if winid ~= curwin then
+      vim.api.nvim_set_current_win(winid)
+    end
+    do
+      return winid
+    end
+    ::continue::
+  end
+end
+
+map('n', [[\c]], function()
+  local winid = vim.api.nvim_get_current_win()
+  local other = goto_other_window(winid)
+  vim.cmd.noh()
+  vim.api.nvim_input('<Plug>MarkAllClear')
+  if winid ~= other then
+    vim.api.nvim_set_current_win(winid)
+  end
+end, { remap = true })
+
+map({ 'n', 'x' }, [[\\]], function()
+  local winid = vim.api.nvim_get_current_win()
+  local other = goto_other_window(winid)
+  vim.api.nvim_input('<Plug>MarkSet')
+  if winid ~= other then
+    vim.api.nvim_set_current_win(winid)
+  end
+end, { remap = true })
 
 local cscmd = 'Cs'
 map(
