@@ -21,19 +21,6 @@ local function setup_pckr()
     return
   end
 
-  local function process_local_plugins(plugins)
-    ---@diagnostic disable-next-line
-    local base_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'plugpack')
-    for idx, plugin in ipairs(plugins) do
-      if type(plugin) == 'string' then
-        plugins[idx] = vim.fs.joinpath(base_dir, plugin)
-      else
-        plugin[1] = vim.fs.joinpath(base_dir, plugin[1])
-      end
-    end
-    return plugins
-  end
-
   local cmd = require('pckr.loader.cmd')
   local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
   local event = require('pckr.loader.event')
@@ -209,36 +196,6 @@ local function setup_pckr()
     };
   }
   vim.list_extend(plugins, cmp_plugins)
-
-  local local_plugins = {
-    'common',
-    'vim-repeat',
-    'python-syntax',
-    { 'mymark',    keys = { { { 'n', 'x' }, '<Plug>MarkSet' }, '<Plug>MarkAllClear' } },
-    { 'jsonfmt',   cmd = 'JsonFmt' },
-    { 'colorizer', cmd = 'UpdateColor' },
-    { 'colorsel',  cmd = 'ColorSel' },
-    { 'visincr',   keys = 'I' }
-  }
-  vim.list_extend(plugins, process_local_plugins(local_plugins))
-
-  local vim_plugins = {
-    { 'yianwillis/vimcdoc' },
-    { 'tpope/vim-surround' },
-    { 'dstein64/vim-startuptime',    cond = cmd('StartupTime') },
-    { 'sunaku/vim-dasht',            cond = cmd('Dasht') },
-    { 'yuratomo/w3m.vim',            cond = cmd('W3m') },
-    { 'Yggdroot/LeaderF',            cond = cmd('Leaderf') },
-    { 'mbbill/undotree',             cond = cmd('UndotreeShow') },
-    { 'dhruvasagar/vim-table-mode',  cond = cmd('TableModeToggle') },
-    { 'skywind3000/asyncrun.vim',    cond = cmd('AsyncRun') },
-    { 'kassio/neoterm',              cond = cmd('Tnew') },
-    { 'epheien/vim-clang-format',    cond = cmd('ClangFormat') },
-    { 'epheien/videm',               cond = cmd('VidemOpen') },
-    { 'iamcco/markdown-preview.vim', cond = event('FileType', 'markdown') },
-    { 'tweekmonster/helpful.vim',    cond = cmd('HelpfulVersion'), },
-  }
-  vim.list_extend(plugins, vim_plugins)
 
   -- noice
   --if vim.fn.has('nvim-0.10') == 1 then

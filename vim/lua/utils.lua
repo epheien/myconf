@@ -76,7 +76,7 @@ function M.setup_colorscheme(colors_name)
   end
 end
 
-local function ensure_list(v)
+function M.ensure_list(v)
   if not vim.islist(v) then
     return { v }
   end
@@ -97,21 +97,21 @@ local function handle_cond(spec)
 
   -- lazy 风格的 spec 的话, 直接忽略 cond
   if spec.cmd then
-    for _, c in ipairs(ensure_list(spec.cmd)) do
+    for _, c in ipairs(M.ensure_list(spec.cmd)) do
       table.insert(cond, cmd(c))
     end
     spec.cmd = nil
   end
 
   if spec.event then
-    for _, e in ipairs(ensure_list(spec.event)) do
-      table.insert(cond, event(unpack(ensure_list(e))))
+    for _, e in ipairs(M.ensure_list(spec.event)) do
+      table.insert(cond, event(unpack(M.ensure_list(e))))
     end
     spec.event = nil
   end
 
   if spec.keys then
-    for _, k in ipairs(ensure_list(spec.keys)) do
+    for _, k in ipairs(M.ensure_list(spec.keys)) do
       if type(k) == 'string' then
         -- { 'key1', 'key2' }
         table.insert(cond, keys('n', k))
@@ -121,6 +121,13 @@ local function handle_cond(spec)
       end
     end
     spec.keys = nil
+  end
+
+  if spec.ft then
+    for _, ft in ipairs(M.ensure_list(spec.ft)) do
+      table.insert(cond, event('FileType', ft))
+    end
+    spec.ft = nil
   end
 
   if #cond > 0 then
