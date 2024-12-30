@@ -416,6 +416,12 @@ local function setup_pckr()
         heading_3 = {
           sign = "",
         },
+        setext_1 = {
+          sign = '',
+        },
+        setext_2 = {
+          sign = '',
+        },
       },
     },
     requires = {
