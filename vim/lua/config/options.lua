@@ -190,3 +190,25 @@ vim.g['clang_format#style_options'] = {
   SortIncludes = true,
   SpacesBeforeTrailingComments = 1
 }
+
+local open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
+  local bak = vim.g.syntax_on
+  vim.g.syntax_on = nil
+  local floating_bufnr, floating_winnr = open_floating_preview(contents, syntax, opts)
+  vim.g.syntax_on = bak
+  if syntax == 'markdown' then vim.wo[floating_winnr].conceallevel = 2 end
+  return floating_bufnr, floating_winnr
+end
+
+local nvim_open_win = vim.api.nvim_open_win
+---@diagnostic disable-next-line: duplicate-set-field
+vim.api.nvim_open_win = function(buffer, enter, config)
+  if config.relative ~= '' then
+    if config.title == 'Outline Status' or config.title == 'Outline Help' then
+      config.border = 'none'
+    end
+  end
+  return nvim_open_win(buffer, enter, config)
+end
