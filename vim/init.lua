@@ -7,11 +7,14 @@ require('config.commands')
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
 --  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
 vim.opt.packpath:append(vim.fn.stdpath('config'))
+---@diagnostic disable-next-line
+local path = vim.fs.joinpath(vim.fn.stdpath('config'), 'pack', 'pckr', 'opt', 'pckr.nvim')
 assert(
-  pcall(vim.cmd.packadd, 'pckr.nvim'),
+  (vim.uv or vim.loop).fs_stat(path),
   'Failed to init pckr.nvim, '
     .. 'try to run `git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim`'
 )
+vim.opt.rtp:prepend(path)
 
 -- 直接用内置的 packadd 初始化主题
 if pcall(vim.cmd.packadd, 'gruvbox.nvim') then
