@@ -28,6 +28,15 @@ vim.opt.jumpoptions:append({ 'stack', 'view' })
 vim.o.swapfile = false
 vim.o.mouse = 'a'
 
+vim.opt.guicursor = {
+  "n-v-c:block",
+  "i-ci-ve:ver25",
+  "r-cr:hor20",
+  "o:hor50",
+  "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
+  "sm:block-blinkwait175-blinkoff150-blinkon175",
+}
+
 -- 缩进相关
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
