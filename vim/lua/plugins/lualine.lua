@@ -1,5 +1,5 @@
 return {
   'nvim-lualine/lualine.nvim',
   keys = '<Plug>lualine',
-  config = function() require('config/lualine') end,
+  config = function() require('plugins.config.lualine') end,
 }

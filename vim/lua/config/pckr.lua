@@ -24,12 +24,11 @@ local function setup_pckr()
 
     'drybalka/tree-climber.nvim',
 
-    { 'stevearc/aerial.nvim',                cond = cmd('AerialToggle'), config = function() require('config/aerial') end },
-    { 'nvim-treesitter/nvim-treesitter',     cmd = 'TSBufToggle',        event = 'BufReadPre' },
-    { 'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'),    config = function() require('ibl').setup() end },
+    { 'nvim-treesitter/nvim-treesitter',     cmd = 'TSBufToggle',     event = 'BufReadPre' },
+    { 'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end },
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
-    { 'stevearc/oil.nvim',                   cond = cmd('Oil'),          opts = {} },
+    { 'stevearc/oil.nvim',                   cond = cmd('Oil'),       opts = {} },
 
     {
       'neoclide/coc.nvim',
@@ -45,7 +44,7 @@ local function setup_pckr()
     {
       "epheien/outline.nvim",
       cond = { cmd('Outline'), cmd('OutlineOpen') },
-      config = function() require('config/outline') end,
+      config = function() require('plugins.config.outline') end,
       requires = { 'epheien/outline-ctags-provider.nvim', 'epheien/outline-treesitter-provider.nvim' },
     },
 
@@ -56,7 +55,7 @@ local function setup_pckr()
         require('nvim-autopairs').setup({
           map_cr = false,
         })
-        require('config/nvim-autopairs') ---@diagnostic disable-line
+        require('plugins.config.nvim-autopairs') ---@diagnostic disable-line
       end,
     },
 
@@ -112,7 +111,7 @@ local function setup_pckr()
     {
       "neovim/nvim-lspconfig",
       cond = event({ 'FileType' }),
-      config = function() require('config/nvim-lspconfig') end,
+      config = function() require('plugins.config.nvim-lspconfig') end,
       requires = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
     },
     {
@@ -135,7 +134,7 @@ local function setup_pckr()
       cond = { event({ 'InsertEnter' }), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable') },
       --cond = cmd('CmpStatus'),
       config = function()
-        require('config/nvim-cmp')
+        require('plugins.config.nvim-cmp')
         require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
         vim.keymap.set('n', ';', ':')
         --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
@@ -288,7 +287,7 @@ local function setup_pckr()
   table.insert(plugins, { 'j-hui/fidget.nvim', cond = event('BufReadPre'), opts = {} })
 
   table.insert(plugins, { 'kshenoy/vim-signature', cond = event("BufReadPre") })
-  --table.insert(plugins, { 'b0o/incline.nvim', config = require('config/incline') })
+  --table.insert(plugins, { 'b0o/incline.nvim', config = require('plugins/config/incline') })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cond = cmd('ColorizerToggle') })
 
   table.insert(plugins, {
