@@ -5,36 +5,36 @@ vim.g.loaded_netrwPlugin = 1
 local function tree_actions_menu(node)
   local tree_actions = {
     {
-      name = "Create",
-      handler = require("nvim-tree.api").fs.create,
+      name = 'Create',
+      handler = require('nvim-tree.api').fs.create,
     },
     {
-      name = "Delete",
-      handler = require("nvim-tree.api").fs.remove,
+      name = 'Delete',
+      handler = require('nvim-tree.api').fs.remove,
     },
     {
-      name = "Trash",
-      handler = require("nvim-tree.api").fs.trash,
+      name = 'Trash',
+      handler = require('nvim-tree.api').fs.trash,
     },
     {
-      name = "Rename",
-      handler = require("nvim-tree.api").fs.rename,
+      name = 'Rename',
+      handler = require('nvim-tree.api').fs.rename,
     },
     {
-      name = "Rename: Omit Filename (Move)",
-      handler = require("nvim-tree.api").fs.rename_sub,
+      name = 'Rename: Omit Filename (Move)',
+      handler = require('nvim-tree.api').fs.rename_sub,
     },
     {
-      name = "Copy",
-      handler = require("nvim-tree.api").fs.copy.node,
+      name = 'Copy',
+      handler = require('nvim-tree.api').fs.copy.node,
     },
     {
-      name = "Paste",
-      handler = require("nvim-tree.api").fs.paste,
+      name = 'Paste',
+      handler = require('nvim-tree.api').fs.paste,
     },
     {
-      name = "Run Command",
-      handler = require("nvim-tree.api").node.run.cmd,
+      name = 'Run Command',
+      handler = require('nvim-tree.api').node.run.cmd,
     },
   }
 
@@ -46,22 +46,22 @@ local function tree_actions_menu(node)
     }
   end
 
-  local finder = require("telescope.finders").new_table({
+  local finder = require('telescope.finders').new_table({
     results = tree_actions,
     entry_maker = entry_maker,
   })
 
-  local sorter = require("telescope.sorters").get_generic_fuzzy_sorter()
+  local sorter = require('telescope.sorters').get_generic_fuzzy_sorter()
 
   local default_options = {
     finder = finder,
     sorter = sorter,
     attach_mappings = function(prompt_buffer_number)
-      local actions = require("telescope.actions")
+      local actions = require('telescope.actions')
 
       -- On item select
       actions.select_default:replace(function()
-        local state = require("telescope.actions.state")
+        local state = require('telescope.actions.state')
         local selection = state.get_selected_entry()
         -- Closing the picker
         actions.close(prompt_buffer_number)
@@ -83,14 +83,20 @@ local function tree_actions_menu(node)
   }
 
   -- Opening the menu
-  require("telescope.pickers").new({ prompt_title = "Tree Menu" }, default_options):find()
+  require('telescope.pickers').new({ prompt_title = 'Tree Menu' }, default_options):find()
 end
 
 local function my_on_attach(bufnr)
   local api = require('nvim-tree.api')
 
   local function opts(desc)
-    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    return {
+      desc = 'nvim-tree: ' .. desc,
+      buffer = bufnr,
+      noremap = true,
+      silent = true,
+      nowait = true,
+    }
   end
 
   api.config.mappings.default_on_attach(bufnr)
@@ -99,15 +105,15 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', '.', opts('Run Command'))
   local ok, mod = pcall(require, 'telescope')
   if ok then
-    vim.keymap.set("n", ".", tree_actions_menu, opts("nvim tree menu"))
+    vim.keymap.set('n', '.', tree_actions_menu, opts('nvim tree menu'))
   end
   vim.keymap.del('n', 'g?', opts('Help'))
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
   vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
-  vim.keymap.del('n', "<C-k>", opts('Info'))
+  vim.keymap.del('n', '<C-k>', opts('Info'))
   vim.keymap.del('n', 'U', opts('Toggle Hidden'))
-  vim.keymap.del('n', "<Tab>", opts('Open Preview'))
-  vim.keymap.set('n', "<C-i>", api.node.show_info_popup, opts('Info'))
+  vim.keymap.del('n', '<Tab>', opts('Open Preview'))
+  vim.keymap.set('n', '<C-i>', api.node.show_info_popup, opts('Info'))
   vim.keymap.del('n', 'I', opts('Toggle Git Ignore'))
   vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts('Toggle Hidden'))
   vim.keymap.del('n', 'C', opts('Toggle Git Clean'))
@@ -124,26 +130,29 @@ local function my_on_attach(bufnr)
 end
 
 local nvim_tree_opts = {
-  sort_by = "case_sensitive",
+  sort_by = 'case_sensitive',
   git = {
-    enable = false,
+    --enable = false,
   },
   sort = {
-    sorter = "name",
+    sorter = 'name',
   },
   view = {
     width = 31,
-    signcolumn = "auto",
+    signcolumn = 'auto',
   },
   renderer = {
     group_empty = true,
+    icons = {
+      git_placement = 'right_align',
+    },
   },
   filters = {
     dotfiles = true,
     git_ignored = false,
   },
   trash = {
-    cmd = "trash",
+    cmd = 'trash',
   },
   actions = {
     open_file = {
@@ -181,7 +190,7 @@ if require('utils').only_ascii() then
       folder = {
         arrow_closed = '+',
         arrow_open = '~',
-      }
+      },
     },
   }
 end
@@ -190,10 +199,10 @@ end
 vim.api.nvim_create_autocmd('WinEnter', {
   callback = function()
     vim.api.nvim_win_set_var(0, 'prev_winid', vim.fn.win_getid(vim.fn.winnr('#')))
-  end
+  end,
 })
 
-require("nvim-tree").setup(nvim_tree_opts)
+require('nvim-tree').setup(nvim_tree_opts)
 
 -- nvim-tree 的 ? 浮窗使用了 border, 所以需要修改背景色
-vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', {link = 'Normal'})
+vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', { link = 'Normal' })
