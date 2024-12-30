@@ -145,30 +145,7 @@ function M.add_plugins(specs)
       goto continue
     end
 
-    -- 确保 cond 是字典了
-    -- 转换 cond
-    -- {
-    --   cond = {
-    --     keys = { { 'n', 'p' } },
-    --     cmd = { 'abc' },
-    --     event = { { 'FileType', 'lua' } },
-    --   }
-    -- }
-    if spec.cond.keys then
-      for _, k in ipairs(norm_value(spec.cond.keys)) do
-        table.insert(cond, keys(unpack(k)))
-      end
-    end
-    if spec.cond.cmd then
-      for _, c in ipairs(spec.cond.cmd) do
-        table.insert(cond, cmd(c))
-      end
-    end
-    if spec.cond.event then
-      for _, e in ipairs(spec.cond.event) do
-        table.insert(cond, event(unpack(e)))
-      end
-    end
+    assert(false, 'invalid spec ' .. vim.inspect(spec))
 
     ::out::
     --print(spec[1], vim.inspect(cond))
