@@ -1,19 +1,5 @@
 local utils = require('utils')
 
-local function setup_cscope_maps() --{{{
-  require('cscope_maps').setup({
-    disable_maps = true,
-    skip_input_prompt = false,
-    prefix = '',
-    cscope = {
-      db_file = './GTAGS',
-      exec = 'gtags-cscope',
-      skip_picker_for_single_result = true
-    }
-  })
-end
---}}}
-
 local function setup_pckr()
   local ok, pckr = pcall(require, 'pckr')
   if not ok then
@@ -76,7 +62,6 @@ local function setup_pckr()
       requires = {'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets'},
     };
 
-    {'dhananjaylatkar/cscope_maps.nvim', cond = {cmd('Cs'), cmd('Cstag')}, config = setup_cscope_maps};
     {'epheien/vim-gutentags', cond = event({'BufReadPre'}), requires = {'dhananjaylatkar/cscope_maps.nvim'}};
 
     {'sakhnik/nvim-gdb', run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart')};
