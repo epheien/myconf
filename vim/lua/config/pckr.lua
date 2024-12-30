@@ -30,15 +30,6 @@ local function setup_pckr()
       config = function() require('config/lualine') end,
     },
 
-    -- nvim-tree
-    {
-      --'nvim-tree/nvim-tree.lua',
-      'epheien/nvim-tree.lua',
-      requires = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
-      cmd = { 'NvimTreeOpen', 'NvimTreeToggle' },
-      config = function() require('config/nvim-tree') end,
-    },
-
     { 'stevearc/aerial.nvim',                cond = cmd('AerialToggle'), config = function() require('config/aerial') end },
     { 'nvim-treesitter/nvim-treesitter',     cmd = 'TSBufToggle',        event = 'BufReadPre' },
     { 'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'),    config = function() require('ibl').setup() end },
