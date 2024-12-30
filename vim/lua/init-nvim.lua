@@ -176,7 +176,7 @@ local function setup_pckr() -- {{{
   })
 
   local plugins = {
-    { 'epheien/pckr.nvim', keys('n', '<Plug>pckr') }, -- 用来管理更新
+    { 'epheien/pckr.nvim', keys = '<Plug>pckr' }, -- 用来管理更新
 
     'epheien/gruvbox.nvim',
 
@@ -184,7 +184,7 @@ local function setup_pckr() -- {{{
 
     {
       'nvim-lualine/lualine.nvim',
-      cond = keys('n', '<Plug>lualine'),
+      keys = '<Plug>lualine',
       config = function() require('config/lualine') end,
     };
 
@@ -193,7 +193,7 @@ local function setup_pckr() -- {{{
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
       requires = {'nvim-lua/plenary.nvim', 'debugloop/telescope-undo.nvim', 'nvim-tree/nvim-web-devicons'},
-      cond = {cmd('Telescope')},
+      cmd = 'Telescope',
       config = function() require('config/telescope') end,
     };
 
@@ -202,12 +202,12 @@ local function setup_pckr() -- {{{
       --'nvim-tree/nvim-tree.lua',
       'epheien/nvim-tree.lua',
       requires = {'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim'},
-      cond = {cmd('NvimTreeOpen'), cmd('NvimTreeToggle')},
+      cmd = { 'NvimTreeOpen', 'NvimTreeToggle' },
       config = function() require('config/nvim-tree') end,
     };
 
     {'stevearc/aerial.nvim', cond = cmd('AerialToggle'), config = function() require('config/aerial') end};
-    {'nvim-treesitter/nvim-treesitter', cond = {cmd('TSBufToggle'), event('BufReadPre')}};
+    {'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre'};
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
@@ -345,11 +345,11 @@ local function setup_pckr() -- {{{
     'common',
     'vim-repeat',
     'python-syntax',
-    { 'mymark',    cond = { keys({ 'n', 'x' }, '<Plug>MarkSet'), keys('n', '<Plug>MarkAllClear') } },
-    { 'jsonfmt',   cond = cmd('JsonFmt') },
-    { 'colorizer', cond = cmd('UpdateColor') },
-    { 'colorsel',  cond = cmd('ColorSel') },
-    { 'visincr',   cond = keys('n', 'I') }
+    { 'mymark',    keys = { { { 'n', 'x' }, '<Plug>MarkSet' }, '<Plug>MarkAllClear' } },
+    { 'jsonfmt',   cmd = 'JsonFmt' },
+    { 'colorizer', cmd = 'UpdateColor' },
+    { 'colorsel',  cmd = 'ColorSel' },
+    { 'visincr',   keys = 'I' }
   }
   vim.list_extend(plugins, process_local_plugins(local_plugins))
 
@@ -586,7 +586,7 @@ local function setup_pckr() -- {{{
     requires = {
       'tpope/vim-fugitive',
     },
-    cond = { cmd('Flog'), cmd('Git') },
+    cmd = { 'Flog', 'Git' },
   })
 
   table.insert(plugins, {
@@ -740,7 +740,7 @@ local function setup_pckr() -- {{{
 
   -- NOTE: pckr.add() 的参数必须是 {{}} 的嵌套列表格式, 否则会出现奇怪的问题
   -- NOTE: 每次调用 pckr.add() 的时候都可能导致加载其他文件, 所以最好仅调用一次
-  pckr.add(plugins)
+  utils.add_plugins(plugins)
 end
 -- }}}
 setup_pckr()

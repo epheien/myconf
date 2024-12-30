@@ -76,4 +76,107 @@ function M.setup_colorscheme(colors_name)
   end
 end
 
+-- 统一转为 { {...} }
+-- 'abc' => { { 'abc' } }
+-- { 'abc' } => { { 'abc' } }
+local function norm_value(value)
+  if type(value) == 'string' then
+    return { { value } }
+  end
+  if type(value[1]) == 'string' then
+    return { value }
+  end
+end
+
+local function ensure_list(v)
+  if not vim.islist(v) then
+    return { v }
+  end
+  return v
+end
+
+---添加插件的抽象接口, 当前使用 pckr, 以后可能会兼容 lazy.nvim
+---@param specs table[]
+function M.add_plugins(specs)
+  local cmd = require('pckr.loader.cmd')
+  local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
+  local event = require('pckr.loader.event')
+
+  for _, spec in ipairs(specs) do
+    if type(spec) == 'string' then
+      goto continue
+    end
+
+    local cond = {}
+
+    -- lazy spec 风格的话, 直接忽略 cond
+    if spec.cmd then
+      for _, c in ipairs(ensure_list(spec.cmd)) do
+        table.insert(cond, cmd(c))
+      end
+    end
+
+    if spec.event then
+      for _, e in ipairs(ensure_list(spec.event)) do
+        table.insert(cond, event(unpack(ensure_list(e))))
+      end
+    end
+
+    if spec.keys then
+      for _, k in ipairs(ensure_list(spec.keys)) do
+        if type(k) == 'string' then
+          -- { 'key1', 'key2' }
+          table.insert(cond, keys('n', k))
+        else
+          -- { { 'n', 'key1' }, { 'x', 'key1' } }
+          table.insert(cond, keys(unpack(k)))
+        end
+      end
+    end
+
+    if spec.cmd or spec.event or spec.keys then
+      spec.cmd = nil
+      spec.event = nil
+      spec.keys = nil
+      goto out
+    end
+
+    if type(spec.cond) ~= "table" or vim.islist(spec.cond) then
+      goto continue
+    end
+
+    -- 确保 cond 是字典了
+    -- 转换 cond
+    -- {
+    --   cond = {
+    --     keys = { { 'n', 'p' } },
+    --     cmd = { 'abc' },
+    --     event = { { 'FileType', 'lua' } },
+    --   }
+    -- }
+    if spec.cond.keys then
+      for _, k in ipairs(norm_value(spec.cond.keys)) do
+        table.insert(cond, keys(unpack(k)))
+      end
+    end
+    if spec.cond.cmd then
+      for _, c in ipairs(spec.cond.cmd) do
+        table.insert(cond, cmd(c))
+      end
+    end
+    if spec.cond.event then
+      for _, e in ipairs(spec.cond.event) do
+        table.insert(cond, event(unpack(e)))
+      end
+    end
+
+    ::out::
+    --print(spec[1], vim.inspect(cond))
+    spec.cond = cond
+
+    ::continue::
+  end
+  require('pckr').add(specs)
+end
+
 return M
