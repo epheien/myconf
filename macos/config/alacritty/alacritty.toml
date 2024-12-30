@@ -1,0 +1,97 @@
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[[keyboard.bindings]]
+chars = "\u0004"
+key = "Q"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0004"
+key = "W"
+mods = "Command"
+
+[colors.bright]
+black = "#928378"
+blue = "#83a597"
+cyan = "#8ec07b"
+green = "#b8ba25"
+magenta = "#d3859a"
+red = "#fb4833"
+white = "#ebdbb2"
+yellow = "#fabc2e"
+
+[colors.cursor]
+cursor = "#ffff54"
+
+[colors.normal]
+black = "#272727"
+blue = "#448488"
+cyan = "#689d69"
+green = "#989719"
+magenta = "#b16185"
+red = "#cc231c"
+white = "#a89983"
+yellow = "#d79920"
+
+[colors.primary]
+background = "#282828"
+foreground = "#ebdbb2"
+
+[cursor]
+blink_interval = 500
+blink_timeout = 0
+
+[cursor.style]
+blinking = "On"
+shape = "Block"
+
+[env]
+TERM_PROGRAM = "alacritty"
+
+[font]
+size = 12.0
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Italic"
+
+[font.normal]
+family = "SFMono Nerd Font"
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+
+[hints.enabled.binding]
+key = "U"
+mods = "Control|Shift"
+
+[hints.enabled.mouse]
+enabled = false
+mods = "None"
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 10000
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations_theme_variant = "Dark"
+dynamic_title = true
+option_as_alt = "Both"
+resize_increments = true
+
+[window.dimensions]
+columns = 130
+lines = 40
+
+[keyboard]
