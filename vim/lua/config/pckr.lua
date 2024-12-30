@@ -18,7 +18,7 @@ local function setup_pckr()
   })
 
   local plugins = {
-    { 'epheien/pckr.nvim', keys = '<Plug>pckr' }, -- 用来管理更新
+    { 'epheien/pckr.nvim',                   keys = '<Plug>pckr' }, -- 仅用来管理更新
 
     'epheien/gruvbox.nvim',
 
@@ -28,59 +28,58 @@ local function setup_pckr()
       'nvim-lualine/lualine.nvim',
       keys = '<Plug>lualine',
       config = function() require('config/lualine') end,
-    };
-
+    },
 
     -- nvim-tree
     {
       --'nvim-tree/nvim-tree.lua',
       'epheien/nvim-tree.lua',
-      requires = {'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim'},
+      requires = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
       cmd = { 'NvimTreeOpen', 'NvimTreeToggle' },
       config = function() require('config/nvim-tree') end,
-    };
+    },
 
-    {'stevearc/aerial.nvim', cond = cmd('AerialToggle'), config = function() require('config/aerial') end};
-    {'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre'};
-    {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
+    { 'stevearc/aerial.nvim',                cond = cmd('AerialToggle'), config = function() require('config/aerial') end },
+    { 'nvim-treesitter/nvim-treesitter',     cmd = 'TSBufToggle',        event = 'BufReadPre' },
+    { 'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'),    config = function() require('ibl').setup() end },
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
-    {'stevearc/oil.nvim', cond = cmd('Oil'), opts = {} };
+    { 'stevearc/oil.nvim',                   cond = cmd('Oil'),          opts = {} },
 
     {
       'neoclide/coc.nvim',
       branch = 'release',
       cond = cmd('CocStart'),
-      requires = {'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets'},
-    };
+      requires = { 'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets' },
+    },
 
-    {'epheien/vim-gutentags', cond = event({'BufReadPre'}), requires = {'dhananjaylatkar/cscope_maps.nvim'}};
+    { 'epheien/vim-gutentags', cond = event({ 'BufReadPre' }),                      requires = { 'dhananjaylatkar/cscope_maps.nvim' } },
 
-    {'sakhnik/nvim-gdb', run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart')};
+    { 'sakhnik/nvim-gdb',      run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart') },
 
     {
       "epheien/outline.nvim",
-      cond = {cmd('Outline'), cmd('OutlineOpen')},
+      cond = { cmd('Outline'), cmd('OutlineOpen') },
       config = function() require('config/outline') end,
       requires = { 'epheien/outline-ctags-provider.nvim', 'epheien/outline-treesitter-provider.nvim' },
-    };
+    },
 
     {
       'windwp/nvim-autopairs',
-      cond = event({'InsertEnter', 'CmdlineEnter'}),
+      cond = event({ 'InsertEnter', 'CmdlineEnter' }),
       config = function()
         require('nvim-autopairs').setup({
           map_cr = false,
         })
         require('config/nvim-autopairs') ---@diagnostic disable-line
       end,
-    };
+    },
 
     {
       'epheien/log-highlight.nvim',
       cond = event('BufReadPre'),
       opts = {},
-    };
+    },
 
     -- TODO: 需要实现 BlinkDisable, 现阶段启用后就无法禁用了
     {
@@ -106,7 +105,7 @@ local function setup_pckr()
         -- 启用 blink.cmp 的话就禁用掉 nvim-cmp 的编辑文本补全
         vim.cmd('CmpDisable')
       end
-    };
+    },
 
     {
       'preservim/nerdcommenter',
@@ -127,10 +126,10 @@ local function setup_pckr()
   local cmp_plugins = {
     {
       "neovim/nvim-lspconfig",
-      cond = event({'FileType'}),
+      cond = event({ 'FileType' }),
       config = function() require('config/nvim-lspconfig') end,
-      requires = {'ray-x/lsp_signature.nvim'}, -- 需要在 lsp attach 之前加载
-    };
+      requires = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
+    },
     {
       --'hrsh7th/nvim-cmp',
       'epheien/nvim-cmp', -- 使用自己的版本
@@ -148,7 +147,7 @@ local function setup_pckr()
         --'garymjr/nvim-snippets',
         --'windwp/nvim-autopairs',
       },
-      cond = {event({'InsertEnter'}), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable')},
+      cond = { event({ 'InsertEnter' }), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable') },
       --cond = cmd('CmpStatus'),
       config = function()
         require('config/nvim-cmp')
@@ -156,7 +155,7 @@ local function setup_pckr()
         vim.keymap.set('n', ';', ':')
         --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
       end,
-    };
+    },
     {
       'ray-x/lsp_signature.nvim',
       cond = keys('n', '<Plug>lsp-signature'),
@@ -207,7 +206,7 @@ local function setup_pckr()
   -- dap setup
   table.insert(plugins, {
     "rcarriga/nvim-dap-ui",
-    requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+    requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     cond = cmd('DapuiToggle'),
     config = function()
       require('dapui').setup()
@@ -218,16 +217,16 @@ local function setup_pckr()
     'mfussenegger/nvim-dap',
     cond = cmd('DapToggleBreakpoint'),
     config = function()
-      vim.api.nvim_create_user_command('DapHover', function() require"dap.ui.widgets".hover() end, {})
+      vim.api.nvim_create_user_command('DapHover', function() require "dap.ui.widgets".hover() end, {})
     end
   })
   -- NOTE: 需要调试 nvim lua 的话, 这个插件必须在调试实例无条件加载
   table.insert(plugins, {
     'jbyuki/one-small-step-for-vimkind',
-    requires = {'mfussenegger/nvim-dap'},
+    requires = { 'mfussenegger/nvim-dap' },
     cond = os.getenv('NVIM_DEBUG_LUA') and nil or cmd('DapLuaRunThis'),
     config = function()
-      local dap = require"dap"
+      local dap = require "dap"
       dap.configurations.lua = {
         {
           type = 'nlua',
@@ -239,7 +238,7 @@ local function setup_pckr()
         callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
       end
       vim.fn.setenv('NVIM_DEBUG_LUA', 1) -- 设置环境变量让 run_this 正常工作
-      vim.api.nvim_create_user_command('DapLuaRunThis', function() require"osv".run_this() end, {})
+      vim.api.nvim_create_user_command('DapLuaRunThis', function() require "osv".run_this() end, {})
     end
   })
 
