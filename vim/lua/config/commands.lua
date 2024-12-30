@@ -50,3 +50,13 @@ end, { nargs = '+', complete = 'file' })
 vim.api.nvim_create_user_command('Rg', function(args)
   vim.call('myrc#rg', args.args)
 end, { nargs = '+', complete = 'file' })
+
+vim.api.nvim_create_user_command('Capture', function(opt)
+  require('utils').floatwin_run(opt.args)
+end, {
+  nargs = '+',
+  complete = function(arg_lead, cmd_line, cursor_pos) ---@diagnostic disable-line
+    local line = vim.fn.substitute(cmd_line, [=[^\s*\w\+\s\+]=], '', '')
+    return vim.fn.getcompletion(line, 'cmdline')
+  end
+})

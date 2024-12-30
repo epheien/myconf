@@ -1,5 +1,19 @@
 local utils = require('utils')
 
+local function setup_cscope_maps() --{{{
+  require('cscope_maps').setup({
+    disable_maps = true,
+    skip_input_prompt = false,
+    prefix = '',
+    cscope = {
+      db_file = './GTAGS',
+      exec = 'gtags-cscope',
+      skip_picker_for_single_result = true
+    }
+  })
+end
+--}}}
+
 local function setup_pckr() -- {{{
   local ok, pckr = pcall(require, 'pckr')
   if not ok then

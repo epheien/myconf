@@ -133,3 +133,34 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     vim.call('myrc#FixDosFmt')
   end
 })
+
+-- • Enabled treesitter highlighting for:
+--   • Treesitter query files
+--   • Vim help files
+--   • Lua files
+-- 额外的默认使用 treesitter 的文件类型
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'vim', 'markdown' },
+  callback = function()
+    if vim.bo.filetype == 'markdown' then
+      -- 非 floating window 用 treesiter 高亮, 否则就用 syntax 高亮
+      if vim.api.nvim_win_get_config(0).relative == '' then
+        vim.treesitter.start()
+      end
+    else
+      vim.treesitter.start()
+    end
+  end
+})
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.filetype == 'help' and vim.api.nvim_win_get_config(0).relative ~= '' then
+      local opt = vim.opt_local.winhighlight
+      if not opt:get().NormalFloat then
+        opt:append({ NormalFloat = 'Normal' })
+      end
+    end
+  end
+})

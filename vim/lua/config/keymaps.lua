@@ -231,3 +231,39 @@ map('i', ';', function()
     return ';'
   end
 end, { expr = true })
+
+-- 增强 <C-g> 显示的信息 {{{
+vim.keymap.set('n', '<C-g>', function()
+  local msg_list = {}
+  local fname = vim.fn.expand('%:p')
+  table.insert(msg_list, fname ~= '' and fname or vim.api.nvim_eval_statusline('%f', {}).str)
+  if vim.api.nvim_eval_statusline('%w', {}).str ~= '' then
+    table.insert(msg_list, vim.api.nvim_eval_statusline('%w', {}).str)
+  end
+  if vim.o.readonly then
+    table.insert(msg_list, '[RO]')
+  end
+  if vim.o.filetype ~= '' then
+    table.insert(msg_list, string.format('[%s]', vim.o.filetype))
+  end
+  if vim.o.fileformat ~= '' then
+    table.insert(msg_list, string.format('[%s]', vim.o.fileformat))
+  end
+  if vim.o.fileencoding ~= '' then
+    table.insert(msg_list, string.format('[%s]', vim.o.fileencoding))
+  end
+  if fname ~= '' and vim.fn.filereadable(fname) == 1 then
+    table.insert(msg_list, vim.fn.strftime("%Y-%m-%d %H:%M:%S", vim.fn.getftime(fname)))
+  end
+  vim.cmd.echo(vim.fn.string(vim.fn.join(msg_list, ' ')))
+
+  if vim.g.outline_loaded == 1 then
+    local outline = require('outline') ---@diagnostic disable-line: different-requires
+    if outline.is_open() then
+      outline.follow_cursor({ focus_outline = false })
+    end
+  end
+end)
+-- }}}
+
+-- vim:set fdm=marker fen fdl=0:
