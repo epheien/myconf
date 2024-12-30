@@ -3,5 +3,5 @@ return {
   'epheien/nvim-tree.lua',
   requires = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
   cmd = { 'NvimTreeOpen', 'NvimTreeToggle' },
-  config = function() require('config/nvim-tree') end,
+  config = function() require('plugins.config.nvim-tree') end,
 }
