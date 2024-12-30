@@ -300,6 +300,15 @@ map('i', ';', function()
   end
 end, { expr = true })
 
+-- 未用到
+--vim.cmd([[
+--for n in ['', 'l', 't']
+--  for i in range(13, 24)
+--    execute printf('%smap <F%s> <S-F%s>', n, i, i-12)
+--  endfor
+--endfor
+--]])
+
 -- 增强 <C-g> 显示的信息 {{{
 vim.keymap.set('n', '<C-g>', function()
   local msg_list = {}

@@ -1,5 +1,5 @@
--- 由于安全原因, 直接禁用 modeline, 使用 securemodelines 替代
-vim.o.modeline = false
+-- nvim 的 modeline 的安全问题基本解决了, modelineexpr 默认为 false 即可
+vim.o.modelineexpr = false
 -- 不强制在末尾添加换行符，兼容其他编辑器的行为
 --vim.o.fixendofline = false
 -- 主要是实现自动对齐大括号的缩进

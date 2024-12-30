@@ -13,7 +13,7 @@ end
 
 
 local local_plugins = {
-  'common',
+  --'common',
   'vim-repeat',
   'python-syntax',
   { 'mymark',    keys = { { { 'n', 'x' }, '<Plug>MarkSet' }, '<Plug>MarkAllClear' } },
