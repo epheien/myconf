@@ -136,6 +136,29 @@ local function handle_cond(spec)
   end
 end
 
+local function handle_opts(spec)
+  if spec.config or not spec.opts then
+    return
+  end
+  local func = function(opts)
+    return function()
+      -- abc-xyz.nvim, abc-xyz, abc_xyz
+      local names = { vim.fn.fnamemodify(spec[1], ':t'), vim.fn.fnamemodify(spec[1], ':t:r') }
+      table.insert(names, vim.fn.substitute(names[2], '-', '_', 'g'))
+      for _, name in ipairs(names) do
+        local ok, mod = pcall(require, name)
+        if ok then
+          mod.setup(opts)
+          return
+        end
+      end
+      assert(false, 'Failed to require module of plugin ' .. spec[1])
+    end
+  end
+  spec.config = func(spec.opts)
+  spec.opts = nil
+end
+
 ---添加插件的抽象接口, 当前使用 pckr, 以后可能会兼容 lazy.nvim
 ---@param specs table[]
 function M.add_plugins(specs)
@@ -145,6 +168,7 @@ function M.add_plugins(specs)
     end
 
     handle_cond(spec)
+    handle_opts(spec)
 
     ::continue::
   end

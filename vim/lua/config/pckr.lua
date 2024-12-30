@@ -67,7 +67,7 @@ local function setup_pckr()
     {'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end};
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
-    {'stevearc/oil.nvim', cond = cmd('Oil'), config = function() require('oil').setup() end};
+    {'stevearc/oil.nvim', cond = cmd('Oil'), opts = {} };
 
     {
       'neoclide/coc.nvim',
@@ -102,9 +102,7 @@ local function setup_pckr()
     {
       'epheien/log-highlight.nvim',
       cond = event('BufReadPre'),
-      config = function()
-        require('log-highlight').setup()
-      end,
+      opts = {},
     };
 
     -- TODO: 需要实现 BlinkDisable, 现阶段启用后就无法禁用了
@@ -185,26 +183,15 @@ local function setup_pckr()
     {
       'ray-x/lsp_signature.nvim',
       cond = keys('n', '<Plug>lsp-signature'),
-      config = function()
-        require('lsp_signature').setup({
-          handler_opts = { border = nil },
-          max_width = 80,
-          floating_window_off_x = -1,
-          zindex = 2,
-        })
-      end,
-    };
+      opts = {
+        handler_opts = { border = nil },
+        max_width = 80,
+        floating_window_off_x = -1,
+        zindex = 2,
+      },
+    },
   }
   vim.list_extend(plugins, cmp_plugins)
-
-  -- noice
-  --if vim.fn.has('nvim-0.10') == 1 then
-  --  table.insert(plugins, {
-  --    "folke/noice.nvim",
-  --    requires = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
-  --    config = function() require('config/noice') end,
-  --  })
-  --end
 
   if vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
@@ -301,19 +288,17 @@ local function setup_pckr()
   table.insert(plugins, {
     'echasnovski/mini.diff',
     cond = event('FileType'),
-    config = function()
-      require('mini.diff').setup({
-        view = {
-          style = 'sign',
-          --signs = { add = '+', change = '~', delete = '_' },
-          signs = { add = '┃', change = '┃', delete = '_' },
-        },
-        mappings = {
-          goto_prev = '[c',
-          goto_next = ']c',
-        },
-      })
-    end,
+    opts = {
+      view = {
+        style = 'sign',
+        --signs = { add = '+', change = '~', delete = '_' },
+        signs = { add = '┃', change = '┃', delete = '_' },
+      },
+      mappings = {
+        goto_prev = '[c',
+        goto_next = ']c',
+      },
+    },
   })
 
   -- 支持鼠标拖动浮窗
@@ -339,13 +324,7 @@ local function setup_pckr()
   })
 
   -- 显示 LSP 进度
-  table.insert(plugins, {
-    'j-hui/fidget.nvim',
-    cond = event('BufReadPre'),
-    config = function()
-      require('fidget').setup({})
-    end
-  })
+  table.insert(plugins, { 'j-hui/fidget.nvim', cond = event('BufReadPre'), opts = {} })
 
   table.insert(plugins, { 'kshenoy/vim-signature', cond = event("BufReadPre") })
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('config/incline') })
@@ -418,7 +397,7 @@ local function setup_pckr()
   table.insert(plugins, {
     'williamboman/mason.nvim',
     cond = cmd('Mason'),
-    config = function () require('mason').setup() end,
+    opts = {},
   })
   -- 手动更新 PATH, 避免载入 mason.nvim
   vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin' .. ':' .. vim.env.PATH
@@ -462,25 +441,23 @@ local function setup_pckr()
   table.insert(plugins, {
     "OXY2DEV/markview.nvim",
     cond = event("FileType", "markdown"),
-    config = function()
-      require('markview').setup({
-        --initial_state = false,
-        code_blocks = {
-          sign = false,
+    opts = {
+      --initial_state = false,
+      code_blocks = {
+        sign = false,
+      },
+      headings = {
+        heading_1 = {
+          sign = "",
         },
-        headings = {
-          heading_1 = {
-            sign = "",
-          },
-          heading_2 = {
-            sign = "",
-          },
-          heading_3 = {
-            sign = "",
-          },
+        heading_2 = {
+          sign = "",
         },
-      })
-    end,
+        heading_3 = {
+          sign = "",
+        },
+      },
+    },
     requires = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons"
