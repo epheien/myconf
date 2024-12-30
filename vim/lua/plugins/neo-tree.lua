@@ -1,6 +1,6 @@
 return {
-  'nvim-neo-tree/neo-tree.nvim',
-  branch = 'v3.x',
+  'epheien/neo-tree.nvim',
+  --branch = 'v3.x',
   cmd = 'Neotree',
   requires = {
     'nvim-lua/plenary.nvim',
