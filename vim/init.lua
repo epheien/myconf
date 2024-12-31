@@ -4,7 +4,7 @@ require('config.autocmds')
 require('config.commands')
 
 -- pckr or lazy
-vim.g.package_manager = 'pckr'
+vim.g.package_manager = 'lazy'
 
 -- 使用 packadd 加载 pckr.nvim
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/

@@ -82,7 +82,7 @@ end
 
 return {
   'folke/noice.nvim',
-  requires = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+  dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
   config = setup_noice,
   enabled = vim.fn.has('nvim-0.10') == 1 and false,
 }

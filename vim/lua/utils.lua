@@ -192,19 +192,13 @@ function M.handle_specs(specs)
       if type(spec) == 'string' then
         goto continue
       end
+      spec.requires = spec.dependencies
+      spec.dependencies = nil
 
       handle_cond(spec)
       handle_opts(spec)
 
       ::continue::
-    end
-  else
-    for _, spec in ipairs(specs) do
-      -- requires => dependencies
-      if type(spec) == 'table' then
-        spec.dependencies = spec.requires
-        spec.requires = nil
-      end
     end
   end
   return specs

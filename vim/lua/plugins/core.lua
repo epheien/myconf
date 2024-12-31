@@ -23,13 +23,13 @@ local function setup_pckr()
       'neoclide/coc.nvim',
       branch = 'release',
       cmd = 'CocStart',
-      requires = { 'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets' },
+      dependencies = { 'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets' },
     },
 
     {
       'epheien/vim-gutentags',
       event = { 'BufReadPre' },
-      requires = { 'dhananjaylatkar/cscope_maps.nvim' },
+      dependencies = { 'dhananjaylatkar/cscope_maps.nvim' },
     },
 
     {
@@ -46,7 +46,7 @@ local function setup_pckr()
       config = function()
         require('plugins.config.outline')
       end,
-      requires = {
+      dependencies = {
         'epheien/outline-ctags-provider.nvim',
         'epheien/outline-treesitter-provider.nvim',
       },
@@ -73,7 +73,7 @@ local function setup_pckr()
     {
       'saghen/blink.cmp',
       tag = 'v0.5.1',
-      requires = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
+      dependencies = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
       cmd = 'BlinkEnable',
       config = function()
         require('blink.cmp').setup({
@@ -119,12 +119,12 @@ local function setup_pckr()
       config = function()
         require('plugins.config.nvim-lspconfig')
       end,
-      requires = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
+      dependencies = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
     },
     {
       --'hrsh7th/nvim-cmp',
       'epheien/nvim-cmp', -- 使用自己的版本
-      requires = {
+      dependencies = {
         'hrsh7th/cmp-nvim-lsp',
         'onsails/lspkind.nvim',
         'epheien/cmp-buffer',
@@ -201,7 +201,7 @@ local function setup_pckr()
   -- dap setup
   table.insert(plugins, {
     'rcarriga/nvim-dap-ui',
-    requires = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
+    dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
     cmd = 'DapuiToggle',
     config = function()
       require('dapui').setup()
@@ -222,7 +222,7 @@ local function setup_pckr()
   -- NOTE: 需要调试 nvim lua 的话, 这个插件必须在调试实例无条件加载
   table.insert(plugins, {
     'jbyuki/one-small-step-for-vimkind',
-    requires = { 'mfussenegger/nvim-dap' },
+    dependencies = { 'mfussenegger/nvim-dap' },
     cmd = os.getenv('NVIM_DEBUG_LUA') and nil or 'DapLuaRunThis',
     config = function()
       local dap = require('dap')
@@ -371,7 +371,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'rbong/vim-flog',
-    requires = {
+    dependencies = {
       'tpope/vim-fugitive',
     },
     cmd = { 'Flog', 'Git' },
@@ -417,7 +417,7 @@ local function setup_pckr()
       vim.keymap.set('n', 'Z', callback(false), { nowait = true })
       vim.o.mousemodel = 'extend'
     end,
-    requires = { 'nvchad/volt' },
+    dependencies = { 'nvchad/volt' },
   })
 
   -- 在 nvim 内直接预览 markdown, 效果凑合可用
@@ -447,7 +447,7 @@ local function setup_pckr()
         },
       },
     },
-    requires = {
+    dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'nvim-tree/nvim-web-devicons',
     },
@@ -475,7 +475,7 @@ local function setup_pckr()
         require('todo-comments').jump_prev({ keywords = keywords })
       end, { desc = 'Prev todo comment' })
     end,
-    requires = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
   })
 
   table.insert(plugins, {
