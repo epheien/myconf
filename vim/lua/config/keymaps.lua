@@ -223,12 +223,13 @@ end)
 -- 这个函数是为了 workaround 在 edgy.nvim 管理的窗口中执行的时候产生的异常
 -- WARN: 如果没有可用的其他窗口的时候, 仍然有问题, 但是多数情况下够用了
 local function goto_other_window(curwin)
+  local pat = vim.regex([[\<edgy\.]])
   for _, winid in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
     if not vim.api.nvim_win_is_valid(winid) then
       goto continue
     end
     local ft = vim.api.nvim_get_option_value('filetype', { buf = vim.api.nvim_win_get_buf(winid) })
-    if ft == 'NvimTree' or ft == 'Outline' then
+    if pat:match_str(vim.wo[winid].winbar) then
       goto continue
     end
     if winid ~= curwin then
