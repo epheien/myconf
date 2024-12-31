@@ -4,7 +4,7 @@ require('config.autocmds')
 require('config.commands')
 
 -- pckr or lazy
-vim.g.package_manager = 'lazy'
+vim.g.package_manager = 'pckr'
 
 -- 使用 packadd 加载 pckr.nvim
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
@@ -45,7 +45,19 @@ if pcall(vim.cmd.packadd, 'gruvbox.nvim') then
   end
 end
 
-require('utils').add_plugins(require('config.plugins'))
+if vim.g.package_manager == 'pckr' then
+  require('utils').add_plugins(require('plugins'))
+else
+  require('lazy').setup({
+    root = vim.fn.stdpath('config') .. '/pack/pckr/opt',
+    install = {
+      missing = false,
+    },
+    checker = { enable = false },
+    spec = { import = 'plugins' },
+  })
+end
+
 require('config.float-help')
 require('config.mystl')
 require('config.alacritty-mouse-fix')

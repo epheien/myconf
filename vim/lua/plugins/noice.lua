@@ -1,24 +1,22 @@
-do return end -- bypass
-
 ---@diagnostic disable-next-line
 local function setup_noice() -- {{{
   require('noice').setup({
     override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
     },
     presets = {
-      bottom_search = true,         -- use a classic bottom cmdline for search
-      command_palette = true,       -- position the cmdline and popupmenu together
+      bottom_search = true, -- use a classic bottom cmdline for search
+      command_palette = true, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
-      inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-      lsp_doc_border = false,       -- add a border to hover docs and signature help
+      inc_rename = false, -- enables an input dialog for inc-rename.nvim
+      lsp_doc_border = false, -- add a border to hover docs and signature help
     },
     lsp = {
       signature = {
         enabled = false,
-      }
+      },
     },
     popupmenu = {
       enabled = false,
@@ -40,11 +38,11 @@ local function setup_noice() -- {{{
     cmdline_popup = {
       position = {
         row = 5,
-        col = "00%",
+        col = '00%',
       },
       size = {
         width = 60,
-        height = "auto",
+        height = 'auto',
       },
     },
     cmdline = {
@@ -72,9 +70,9 @@ local function setup_noice() -- {{{
     format = {
       level = {
         icons = {
-          error = "✖",
-          warn = "▼",
-          info = "●",
+          error = '✖',
+          warn = '▼',
+          info = '●',
         },
       },
     },
@@ -82,10 +80,9 @@ local function setup_noice() -- {{{
 end
 -- }}}
 
-if vim.fn.has('nvim-0.10') == 1 then
-  return {
-    "folke/noice.nvim",
-    requires = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
-    config = setup_noice,
-  }
-end
+return {
+  'folke/noice.nvim',
+  requires = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+  config = setup_noice,
+  enabled = vim.fn.has('nvim-0.10') == 1 and false,
+}

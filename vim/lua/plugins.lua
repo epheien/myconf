@@ -20,7 +20,7 @@ for _, name in ipairs(loaded_plugins) do
   local mod = require('plugins.' .. name)
   if type(mod) == 'string' then
     table.insert(M, mod)
-  elseif type(mod) == "table" then
+  elseif type(mod) == "table" and mod.enabled ~= false then
     if vim.islist(mod) then
       vim.list_extend(M, mod)
     else
