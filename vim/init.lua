@@ -63,6 +63,9 @@ else
   require('lazy').setup({
     spec = { import = 'plugins' },
     root = vim.fn.stdpath('config') .. '/pack/pckr/opt',
+    rocks = {
+      enabled = false,
+    },
     install = {
       missing = false,
     },
