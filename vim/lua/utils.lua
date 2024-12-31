@@ -106,7 +106,9 @@ local function handle_cond(spec)
 
   if spec.event then
     for _, e in ipairs(M.ensure_list(spec.event)) do
-      table.insert(cond, event(unpack(M.ensure_list(e))))
+      if e ~= 'VeryLazy' then
+        table.insert(cond, event(unpack(M.ensure_list(e))))
+      end
     end
     spec.event = nil
   end

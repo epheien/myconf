@@ -22,14 +22,13 @@ local function process_local_plugins(plugins)
 end
 
 local local_plugins = {
-  --'common',
-  'vim-repeat',
-  'python-syntax',
-  { 'mymark',    keys = { { '<Plug>MarkSet', mode = { 'n', 'x' } }, '<Plug>MarkAllClear' } },
-  { 'jsonfmt',   cmd = 'JsonFmt' },
+  { 'vim-repeat', event = 'VeryLazy' },
+  { 'python-syntax', event = 'VeryLazy' },
+  { 'mymark', keys = { { '<Plug>MarkSet', mode = { 'n', 'x' } }, '<Plug>MarkAllClear' } },
+  { 'jsonfmt', cmd = 'JsonFmt' },
   { 'colorizer', cmd = 'UpdateColor' },
-  { 'colorsel',  cmd = 'ColorSel' },
-  { 'visincr',   keys = 'I' },
+  { 'colorsel', cmd = 'ColorSel' },
+  { 'visincr', keys = 'I' },
 }
 
 return process_local_plugins(local_plugins)

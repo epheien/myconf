@@ -3,9 +3,9 @@ local function setup_pckr()
     { 'folke/lazy.nvim', lazy = true },
     { 'epheien/pckr.nvim', keys = '<Plug>pckr' }, -- 仅用来管理更新
 
-    'epheien/gruvbox.nvim',
+    { 'epheien/gruvbox.nvim', lazy = true },
 
-    'drybalka/tree-climber.nvim',
+    { 'drybalka/tree-climber.nvim', lazy = true },
 
     { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
     {
@@ -309,6 +309,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'dstein64/nvim-scrollview',
+    event = 'VeryLazy',
     config = function()
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
@@ -321,6 +322,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'folke/edgy.nvim',
+    event = 'VeryLazy',
     config = function()
       --vim.opt.splitkeep = "screen"
       require('edgy').setup({
