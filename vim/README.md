@@ -10,6 +10,7 @@
 - [x] `:h<CR>:Outline<CR>:OutlineStatus<CR>` 背景色会变化, 非常奇怪 (用 vim.opt_local 能解决这个问题)
 - [ ] `pckr.nvim` 会出现重复 source vim 文件的问题: `nvim --startuptime nvim.txt`
 - [ ] `edgy.nvim` 同时打开 nvimtree 和 outline 的时候, 把光标放到 nvimtree 窗口执行 `windo echo`, 就会再开一个 nvimtree 的窗口, autocmd 也会触发
+- [ ] 启动速度优化, 要跟 LazyVim 同一级别, 参考 `perf.md`
 
 ## 参考资料
 
