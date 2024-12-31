@@ -281,7 +281,7 @@ local function setup_pckr()
   -- 支持鼠标拖动浮窗
   table.insert(plugins, {
     'epheien/flirt.nvim',
-    event = 'BufWinEnter',
+    event = 'VeryLazy',
     config = function()
       local flirt = require('flirt')
       flirt.setup({
