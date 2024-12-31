@@ -49,12 +49,27 @@ if vim.g.package_manager == 'pckr' then
   require('utils').add_plugins(require('plugins'))
 else
   require('lazy').setup({
+    spec = { import = 'plugins' },
     root = vim.fn.stdpath('config') .. '/pack/pckr/opt',
     install = {
       missing = false,
     },
     checker = { enable = false },
-    spec = { import = 'plugins' },
+    performance = {
+      rtp = {
+        -- disable some rtp plugins
+        disabled_plugins = {
+          --'gzip',
+          -- "matchit",
+          -- "matchparen",
+          -- "netrwPlugin",
+          'tarPlugin',
+          'tohtml',
+          'tutor',
+          'zipPlugin',
+        },
+      },
+    },
   })
 end
 
