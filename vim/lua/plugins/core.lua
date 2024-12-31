@@ -391,6 +391,7 @@ local function setup_pckr()
   -- TODO: 想办法实现懒加载
   table.insert(plugins, {
     'andymass/vim-matchup',
+    lazy = true, -- 暂时禁用 matchup, 平时没有使用它的独有功能
     config = function()
       vim.g.matchup_matchparen_offscreen = {}
     end,
