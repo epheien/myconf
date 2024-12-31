@@ -18,17 +18,23 @@ local function setup_pckr()
   })
 
   local plugins = {
-    { 'epheien/pckr.nvim',                   keys = '<Plug>pckr' }, -- 仅用来管理更新
+    { 'epheien/pckr.nvim', keys = '<Plug>pckr' }, -- 仅用来管理更新
 
     'epheien/gruvbox.nvim',
 
     'drybalka/tree-climber.nvim',
 
-    { 'nvim-treesitter/nvim-treesitter',     cmd = 'TSBufToggle',     event = 'BufReadPre' },
-    { 'lukas-reineke/indent-blankline.nvim', cond = cmd('IBLEnable'), config = function() require('ibl').setup() end },
+    { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
+    {
+      'lukas-reineke/indent-blankline.nvim',
+      cond = cmd('IBLEnable'),
+      config = function()
+        require('ibl').setup()
+      end,
+    },
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
-    { 'stevearc/oil.nvim',                   cond = cmd('Oil'),       opts = {} },
+    { 'stevearc/oil.nvim', cond = cmd('Oil'), opts = {} },
 
     {
       'neoclide/coc.nvim',
@@ -37,15 +43,30 @@ local function setup_pckr()
       requires = { 'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets' },
     },
 
-    { 'epheien/vim-gutentags', cond = event({ 'BufReadPre' }),                      requires = { 'dhananjaylatkar/cscope_maps.nvim' } },
-
-    { 'sakhnik/nvim-gdb',      run = function() vim.cmd('UpdateRemotePlugins') end, cond = cmd('GdbStart') },
+    {
+      'epheien/vim-gutentags',
+      cond = event({ 'BufReadPre' }),
+      requires = { 'dhananjaylatkar/cscope_maps.nvim' },
+    },
 
     {
-      "epheien/outline.nvim",
+      'sakhnik/nvim-gdb',
+      run = function()
+        vim.cmd('UpdateRemotePlugins')
+      end,
+      cond = cmd('GdbStart'),
+    },
+
+    {
+      'epheien/outline.nvim',
       cond = { cmd('Outline'), cmd('OutlineOpen') },
-      config = function() require('plugins.config.outline') end,
-      requires = { 'epheien/outline-ctags-provider.nvim', 'epheien/outline-treesitter-provider.nvim' },
+      config = function()
+        require('plugins.config.outline')
+      end,
+      requires = {
+        'epheien/outline-ctags-provider.nvim',
+        'epheien/outline-treesitter-provider.nvim',
+      },
     },
 
     {
@@ -70,7 +91,7 @@ local function setup_pckr()
       'saghen/blink.cmp',
       tag = 'v0.5.1',
       requires = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
-      cond = cmd("BlinkEnable"),
+      cond = cmd('BlinkEnable'),
       config = function()
         require('blink.cmp').setup({
           keymap = {
@@ -81,14 +102,14 @@ local function setup_pckr()
           accept = {
             auto_brackets = {
               enabled = true,
-            }
-          }
+            },
+          },
         })
         -- dummy, TODO
         vim.api.nvim_create_user_command('BlinkEnable', function() end, {})
         -- 启用 blink.cmp 的话就禁用掉 nvim-cmp 的编辑文本补全
         vim.cmd('CmpDisable')
-      end
+      end,
     },
 
     {
@@ -97,7 +118,7 @@ local function setup_pckr()
       config = function()
         -- dumpy command
         vim.api.nvim_create_user_command('NERDCommenter', function() end, {})
-      end
+      end,
     },
   }
 
@@ -109,9 +130,11 @@ local function setup_pckr()
   -- 事件顺序: BufReadPre => FileType => BufReadPost
   local cmp_plugins = {
     {
-      "neovim/nvim-lspconfig",
+      'neovim/nvim-lspconfig',
       cond = event({ 'FileType' }),
-      config = function() require('plugins.config.nvim-lspconfig') end,
+      config = function()
+        require('plugins.config.nvim-lspconfig')
+      end,
       requires = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
     },
     {
@@ -131,11 +154,19 @@ local function setup_pckr()
         --'garymjr/nvim-snippets',
         --'windwp/nvim-autopairs',
       },
-      cond = { event({ 'InsertEnter' }), keys('n', ';'), keys('n', '/'), keys('n', '?'), cmd('CmpDisable') },
+      cond = {
+        event({ 'InsertEnter' }),
+        keys('n', ';'),
+        keys('n', '/'),
+        keys('n', '?'),
+        cmd('CmpDisable'),
+      },
       --cond = cmd('CmpStatus'),
       config = function()
         require('plugins.config.nvim-cmp')
-        require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
+        require('luasnip.loaders.from_vscode').lazy_load({
+          paths = { vim.fn.stdpath('config') .. '/snippets' },
+        })
         vim.keymap.set('n', ';', ':')
         --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
       end,
@@ -155,27 +186,27 @@ local function setup_pckr()
 
   if vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
-      "3rd/image.nvim",
+      '3rd/image.nvim',
       cond = { event({ 'BufReadPre', 'InsertEnter' }), cmd('ImageRender') },
       config = function()
-        require("image").setup({
+        require('image').setup({
           processor = 'magick_cli',
           max_height_window_percentage = 100,
           editor_only_render_when_focused = true,
           tmux_show_only_in_active_window = true,
         })
         vim.api.nvim_create_user_command('ImageRender', function() end, {})
-      end
+      end,
     })
   end
 
   table.insert(plugins, {
-    "epheien/eagle.nvim",
+    'epheien/eagle.nvim',
     cond = cmd('MouseHover'),
     config = function()
       --vim.keymap.del('n', '<MouseMove>')
       vim.o.mousemoveevent = true
-      require("eagle").setup({
+      require('eagle').setup({
         --title = ' Mouse Hover ',
         border = 'rounded',
         normal_group = 'Normal',
@@ -184,25 +215,29 @@ local function setup_pckr()
         --show_lsp_info = false,
       })
       vim.api.nvim_create_user_command('MouseHover', '', {})
-    end
+    end,
   })
 
   -- dap setup
   table.insert(plugins, {
-    "rcarriga/nvim-dap-ui",
-    requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    'rcarriga/nvim-dap-ui',
+    requires = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
     cond = cmd('DapuiToggle'),
     config = function()
       require('dapui').setup()
-      vim.api.nvim_create_user_command('DapuiToggle', function() require('dapui').toggle() end, {})
+      vim.api.nvim_create_user_command('DapuiToggle', function()
+        require('dapui').toggle()
+      end, {})
     end,
   })
   table.insert(plugins, {
     'mfussenegger/nvim-dap',
     cond = cmd('DapToggleBreakpoint'),
     config = function()
-      vim.api.nvim_create_user_command('DapHover', function() require "dap.ui.widgets".hover() end, {})
-    end
+      vim.api.nvim_create_user_command('DapHover', function()
+        require('dap.ui.widgets').hover()
+      end, {})
+    end,
   })
   -- NOTE: 需要调试 nvim lua 的话, 这个插件必须在调试实例无条件加载
   table.insert(plugins, {
@@ -210,20 +245,22 @@ local function setup_pckr()
     requires = { 'mfussenegger/nvim-dap' },
     cond = os.getenv('NVIM_DEBUG_LUA') and nil or cmd('DapLuaRunThis'),
     config = function()
-      local dap = require "dap"
+      local dap = require('dap')
       dap.configurations.lua = {
         {
           type = 'nlua',
           request = 'attach',
-          name = "Attach to running Neovim instance",
-        }
+          name = 'Attach to running Neovim instance',
+        },
       }
       dap.adapters.nlua = function(callback, config)
-        callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+        callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
       end
       vim.fn.setenv('NVIM_DEBUG_LUA', 1) -- 设置环境变量让 run_this 正常工作
-      vim.api.nvim_create_user_command('DapLuaRunThis', function() require "osv".run_this() end, {})
-    end
+      vim.api.nvim_create_user_command('DapLuaRunThis', function()
+        require('osv').run_this()
+      end, {})
+    end,
   })
 
   -- gitsigns 有严重的性能问题, 严重影响 lazygit 的使用体验, 暂时不用
@@ -274,19 +311,19 @@ local function setup_pckr()
       })
       -- 浮动窗口不能用鼠标拖选了
       vim.keymap.set('n', '<LeftDrag>', function()
-        if vim.fn.win_gettype() == "popup" then
+        if vim.fn.win_gettype() == 'popup' then
           vim.schedule(flirt.on_drag)
         else
           return '<LeftDrag>'
         end
       end, { silent = true, expr = true })
-    end
+    end,
   })
 
   -- 显示 LSP 进度
   table.insert(plugins, { 'j-hui/fidget.nvim', cond = event('BufReadPre'), opts = {} })
 
-  table.insert(plugins, { 'kshenoy/vim-signature', cond = event("BufReadPre") })
+  table.insert(plugins, { 'kshenoy/vim-signature', cond = event('BufReadPre') })
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('plugins/config/incline') })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cond = cmd('ColorizerToggle') })
 
@@ -299,7 +336,7 @@ local function setup_pckr()
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
       vim.api.nvim_set_hl(0, 'ScrollViewHover', { link = 'PmenuSel' })
       vim.api.nvim_set_hl(0, 'ScrollViewRestricted', { link = 'ScrollView' })
-    end
+    end,
   })
 
   table.insert(plugins, {
@@ -332,22 +369,24 @@ local function setup_pckr()
             open = 'Neotree',
           },
           {
-            ft = "tagbar",
-            open = "TagbarOpen",
+            ft = 'tagbar',
+            open = 'TagbarOpen',
           },
           {
-            ft = "aerial",
-            open = "AerialOpen",
+            ft = 'aerial',
+            open = 'AerialOpen',
           },
           {
-            title = function() return 'Outline' end,
-            ft = "Outline",
-            open = "OutlineOpen",
+            title = function()
+              return 'Outline'
+            end,
+            ft = 'Outline',
+            open = 'OutlineOpen',
           },
         },
       })
       vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
-    end
+    end,
   })
 
   table.insert(plugins, {
@@ -372,7 +411,7 @@ local function setup_pckr()
     'andymass/vim-matchup',
     config = function()
       vim.g.matchup_matchparen_offscreen = {}
-    end
+    end,
   })
 
   table.insert(plugins, {
@@ -381,21 +420,21 @@ local function setup_pckr()
     config = function()
       local callback = function(mouse)
         return function()
-          local menu_exists = #require("menu.state").bufids > 0
+          local menu_exists = #require('menu.state').bufids > 0
           if menu_exists then
             for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
               local buf = vim.api.nvim_win_get_buf(win)
-              if vim.bo[buf].filetype == "NvMenu" then
+              if vim.bo[buf].filetype == 'NvMenu' then
                 vim.api.nvim_win_close(win, true)
               end
             end
           end
-          local options = vim.bo.ft == "NvimTree" and "nvimtree" or "mydef"
-          require("menu").open(options, { mouse = mouse, border = false })
+          local options = vim.bo.ft == 'NvimTree' and 'nvimtree' or 'mydef'
+          require('menu').open(options, { mouse = mouse, border = false })
         end
       end
-      vim.keymap.set("n", "<RightRelease>", callback(true), {})
-      vim.keymap.set("n", "Z", callback(false), { nowait = true })
+      vim.keymap.set('n', '<RightRelease>', callback(true), {})
+      vim.keymap.set('n', 'Z', callback(false), { nowait = true })
       vim.o.mousemodel = 'extend'
     end,
     requires = { 'nvchad/volt' },
@@ -403,8 +442,8 @@ local function setup_pckr()
 
   -- 在 nvim 内直接预览 markdown, 效果凑合可用
   table.insert(plugins, {
-    "OXY2DEV/markview.nvim",
-    cond = event("FileType", "markdown"),
+    'OXY2DEV/markview.nvim',
+    cond = event('FileType', 'markdown'),
     opts = {
       --initial_state = false,
       code_blocks = {
@@ -412,13 +451,13 @@ local function setup_pckr()
       },
       headings = {
         heading_1 = {
-          sign = "",
+          sign = '',
         },
         heading_2 = {
-          sign = "",
+          sign = '',
         },
         heading_3 = {
-          sign = "",
+          sign = '',
         },
         setext_1 = {
           sign = '',
@@ -429,8 +468,8 @@ local function setup_pckr()
       },
     },
     requires = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
     },
   })
 
@@ -448,13 +487,13 @@ local function setup_pckr()
           pattern = [[\b(KEYWORDS)\b]], -- ripgrep regex
         },
       })
-      local keywords = { "TODO", "FIXME", }
-      vim.keymap.set("n", "]t", function()
-        require("todo-comments").jump_next({ keywords = keywords })
-      end, { desc = "Next todo comment" })
-      vim.keymap.set("n", "[t", function()
-        require("todo-comments").jump_prev({ keywords = keywords })
-      end, { desc = "Prev todo comment" })
+      local keywords = { 'TODO', 'FIXME' }
+      vim.keymap.set('n', ']t', function()
+        require('todo-comments').jump_next({ keywords = keywords })
+      end, { desc = 'Next todo comment' })
+      vim.keymap.set('n', '[t', function()
+        require('todo-comments').jump_prev({ keywords = keywords })
+      end, { desc = 'Prev todo comment' })
     end,
     requires = { 'nvim-lua/plenary.nvim' },
   })
@@ -473,18 +512,18 @@ local function setup_pckr()
         format_after_save = function() end,
       })
 
-      vim.api.nvim_create_user_command("Format", function(args)
+      vim.api.nvim_create_user_command('Format', function(args)
         local range = nil
         if args.count ~= -1 then
           local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
           range = {
             start = { args.line1, 0 },
-            ["end"] = { args.line2, end_line:len() },
+            ['end'] = { args.line2, end_line:len() },
           }
         end
-        conform.format({ async = true, lsp_format = "fallback", range = range })
+        conform.format({ async = true, lsp_format = 'fallback', range = range })
       end, { range = true })
-    end
+    end,
   })
 
   table.insert(plugins, {
@@ -496,8 +535,8 @@ local function setup_pckr()
     'oskarrrrrrr/symbols.nvim',
     cond = cmd('SymbolsToggle'),
     config = function()
-      local r = require("symbols.recipes")
-      require("symbols").setup(r.DefaultFilters, r.AsciiSymbols, {
+      local r = require('symbols.recipes')
+      require('symbols').setup(r.DefaultFilters, r.AsciiSymbols, {
         -- custom settings here
         -- e.g. hide_cursor = false
       })
