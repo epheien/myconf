@@ -1,5 +1,6 @@
 local function setup_pckr()
   local plugins = {
+    { 'folke/lazy.nvim', lazy = true },
     { 'epheien/pckr.nvim', keys = '<Plug>pckr' }, -- 仅用来管理更新
 
     'epheien/gruvbox.nvim',
