@@ -18,11 +18,23 @@ local path = vim.fs.joinpath(
   'opt',
   string.format('%s.nvim', vim.g.package_manager)
 )
-assert(
-  (vim.uv or vim.loop).fs_stat(path),
-  'Failed to init pckr.nvim, '
-    .. 'try to run `git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim`'
-)
+local msg = ''
+if vim.g.package_manager == 'lazy' then
+  msg = string.format(
+    'Failed to init lazy.nvim, '
+      .. 'try to run `git clone --filter=blob:none --branch=stable '
+      .. 'https://github.com/folke/lazy.nvim.git %s`',
+    path
+  )
+else
+  msg = string.format(
+    'Failed to init pckr.nvim, '
+      .. 'try to run `git clone --filter=blob:none '
+      .. 'https://github.com/epheien/pckr.nvim.git %s`',
+    path
+  )
+end
+assert((vim.uv or vim.loop).fs_stat(path), msg) ---@diagnostic disable-line
 vim.opt.rtp:prepend(path)
 
 -- 直接用内置的 packadd 初始化主题
