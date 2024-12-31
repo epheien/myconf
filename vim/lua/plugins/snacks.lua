@@ -3,6 +3,14 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    styles = {
+      dashboard = {
+        wo = {
+          winhighlight = 'Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal,Title:Directory',
+        },
+      },
+    },
+
     dashboard = {
       preset = {
         -- stylua: ignore
