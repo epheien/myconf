@@ -1,5 +1,5 @@
 local vim_plugins = {
-  { 'tpope/vim-surround', event = 'CursorMoved' },
+  { 'tpope/vim-surround', event = 'VeryLazy' },
   {
     'yianwillis/vimcdoc',
     event = 'CmdlineEnter',
