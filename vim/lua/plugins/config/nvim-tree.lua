@@ -130,6 +130,7 @@ local function my_on_attach(bufnr)
 end
 
 local nvim_tree_opts = {
+  on_attach = my_on_attach,
   sort_by = 'case_sensitive',
   git = {
     --enable = false,
@@ -171,7 +172,9 @@ local nvim_tree_opts = {
       enable = false,
     },
   },
-  on_attach = my_on_attach,
+  filesystem_watchers = {
+    enable = false, -- 开启的话, 在大目录退出 nvim 的时候会卡一下
+  },
 
   -- 试验性的功能
   experimental = {
