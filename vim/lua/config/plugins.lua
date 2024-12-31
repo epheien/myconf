@@ -531,9 +531,13 @@ local function setup_pckr()
   table.insert(plugins, { 'epheien/termdbg', cmd = 'Termdbg' })
 
   -- 载入 plugins 目录的插件
-  vim.list_extend(plugins, require('plugins'))
+  if vim.g.package_manager == 'pckr' then
+    vim.list_extend(plugins, require('plugins'))
+  else
+    vim.inspect(plugins, { import = 'plugins' })
+  end
 
-  require('utils').add_plugins(plugins)
+  return plugins
 end
 
-setup_pckr()
+return setup_pckr()
