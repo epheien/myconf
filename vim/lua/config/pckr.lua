@@ -7,10 +7,6 @@ local function setup_pckr()
     return
   end
 
-  local cmd = require('pckr.loader.cmd')
-  local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
-  local event = require('pckr.loader.event')
-
   pckr.setup({
     package_root = vim.fn.stdpath('config'), ---@diagnostic disable-line
     pack_dir = vim.fn.stdpath('config'), -- 新版本用的配置名, 最终目录: pack/pckr/opt
@@ -27,25 +23,25 @@ local function setup_pckr()
     { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
     {
       'lukas-reineke/indent-blankline.nvim',
-      cond = cmd('IBLEnable'),
+      cmd = 'IBLEnable',
       config = function()
         require('ibl').setup()
       end,
     },
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
-    { 'stevearc/oil.nvim', cond = cmd('Oil'), opts = {} },
+    { 'stevearc/oil.nvim', cmd = 'Oil', opts = {} },
 
     {
       'neoclide/coc.nvim',
       branch = 'release',
-      cond = cmd('CocStart'),
+      cmd = 'CocStart',
       requires = { 'Shougo/neosnippet.vim', 'Shougo/neosnippet-snippets' },
     },
 
     {
       'epheien/vim-gutentags',
-      cond = event({ 'BufReadPre' }),
+      event = { 'BufReadPre' },
       requires = { 'dhananjaylatkar/cscope_maps.nvim' },
     },
 
@@ -54,12 +50,12 @@ local function setup_pckr()
       run = function()
         vim.cmd('UpdateRemotePlugins')
       end,
-      cond = cmd('GdbStart'),
+      cmd = 'GdbStart',
     },
 
     {
       'epheien/outline.nvim',
-      cond = { cmd('Outline'), cmd('OutlineOpen') },
+      cmd = { 'Outline', 'OutlineOpen' },
       config = function()
         require('plugins.config.outline')
       end,
@@ -71,7 +67,7 @@ local function setup_pckr()
 
     {
       'windwp/nvim-autopairs',
-      cond = event({ 'InsertEnter', 'CmdlineEnter' }),
+      event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
         require('nvim-autopairs').setup({
           map_cr = false,
@@ -82,7 +78,7 @@ local function setup_pckr()
 
     {
       'epheien/log-highlight.nvim',
-      cond = event('BufReadPre'),
+      event = 'BufReadPre',
       opts = {},
     },
 
@@ -91,7 +87,7 @@ local function setup_pckr()
       'saghen/blink.cmp',
       tag = 'v0.5.1',
       requires = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
-      cond = cmd('BlinkEnable'),
+      cmd = 'BlinkEnable',
       config = function()
         require('blink.cmp').setup({
           keymap = {
@@ -114,7 +110,8 @@ local function setup_pckr()
 
     {
       'preservim/nerdcommenter',
-      cond = { keys({ 'n', 'x' }, '<Plug>NERDCommenterToggle'), cmd('NERDCommenter') },
+      cmd = 'NERDCommenter',
+      keys = { { { 'n', 'x' }, '<Plug>NERDCommenterToggle' } },
       config = function()
         -- dumpy command
         vim.api.nvim_create_user_command('NERDCommenter', function() end, {})
@@ -131,7 +128,7 @@ local function setup_pckr()
   local cmp_plugins = {
     {
       'neovim/nvim-lspconfig',
-      cond = event({ 'FileType' }),
+      event = { 'FileType' },
       config = function()
         require('plugins.config.nvim-lspconfig')
       end,
@@ -154,14 +151,9 @@ local function setup_pckr()
         --'garymjr/nvim-snippets',
         --'windwp/nvim-autopairs',
       },
-      cond = {
-        event({ 'InsertEnter' }),
-        keys('n', ';'),
-        keys('n', '/'),
-        keys('n', '?'),
-        cmd('CmpDisable'),
-      },
-      --cond = cmd('CmpStatus'),
+      event = 'InsertEnter',
+      cmd = 'CmpDisable',
+      keys = { ';', '/', '?' },
       config = function()
         require('plugins.config.nvim-cmp')
         require('luasnip.loaders.from_vscode').lazy_load({
@@ -173,7 +165,7 @@ local function setup_pckr()
     },
     {
       'ray-x/lsp_signature.nvim',
-      cond = keys('n', '<Plug>lsp-signature'),
+      keys = '<Plug>lsp-signature',
       opts = {
         handler_opts = { border = nil },
         max_width = 80,
@@ -187,7 +179,8 @@ local function setup_pckr()
   if vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
       '3rd/image.nvim',
-      cond = { event({ 'BufReadPre', 'InsertEnter' }), cmd('ImageRender') },
+      cmd = 'ImageRender',
+      event = { 'BufReadPre', 'InsertEnter' },
       config = function()
         require('image').setup({
           processor = 'magick_cli',
@@ -202,7 +195,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'epheien/eagle.nvim',
-    cond = cmd('MouseHover'),
+    cmd = 'MouseHover',
     config = function()
       --vim.keymap.del('n', '<MouseMove>')
       vim.o.mousemoveevent = true
@@ -222,7 +215,7 @@ local function setup_pckr()
   table.insert(plugins, {
     'rcarriga/nvim-dap-ui',
     requires = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
-    cond = cmd('DapuiToggle'),
+    cmd = 'DapuiToggle',
     config = function()
       require('dapui').setup()
       vim.api.nvim_create_user_command('DapuiToggle', function()
@@ -232,7 +225,7 @@ local function setup_pckr()
   })
   table.insert(plugins, {
     'mfussenegger/nvim-dap',
-    cond = cmd('DapToggleBreakpoint'),
+    cmd = 'DapToggleBreakpoint',
     config = function()
       vim.api.nvim_create_user_command('DapHover', function()
         require('dap.ui.widgets').hover()
@@ -243,7 +236,7 @@ local function setup_pckr()
   table.insert(plugins, {
     'jbyuki/one-small-step-for-vimkind',
     requires = { 'mfussenegger/nvim-dap' },
-    cond = os.getenv('NVIM_DEBUG_LUA') and nil or cmd('DapLuaRunThis'),
+    cmd = os.getenv('NVIM_DEBUG_LUA') and nil or 'DapLuaRunThis',
     config = function()
       local dap = require('dap')
       dap.configurations.lua = {
@@ -284,7 +277,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'echasnovski/mini.diff',
-    cond = event('FileType'),
+    event = 'FileType',
     opts = {
       view = {
         style = 'sign',
@@ -301,7 +294,7 @@ local function setup_pckr()
   -- 支持鼠标拖动浮窗
   table.insert(plugins, {
     'epheien/flirt.nvim',
-    cond = event('BufWinEnter'),
+    event = 'BufWinEnter',
     config = function()
       local flirt = require('flirt')
       flirt.setup({
@@ -321,11 +314,11 @@ local function setup_pckr()
   })
 
   -- 显示 LSP 进度
-  table.insert(plugins, { 'j-hui/fidget.nvim', cond = event('BufReadPre'), opts = {} })
+  table.insert(plugins, { 'j-hui/fidget.nvim', event = 'BufReadPre', opts = {} })
 
-  table.insert(plugins, { 'kshenoy/vim-signature', cond = event('BufReadPre') })
+  table.insert(plugins, { 'kshenoy/vim-signature', event = 'BufReadPre' })
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('plugins/config/incline') })
-  table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cond = cmd('ColorizerToggle') })
+  table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cmd = 'ColorizerToggle' })
 
   table.insert(plugins, {
     'dstein64/nvim-scrollview',
@@ -399,7 +392,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'williamboman/mason.nvim',
-    cond = cmd('Mason'),
+    cmd = 'Mason',
     opts = {},
   })
   -- 手动更新 PATH, 避免载入 mason.nvim
@@ -416,7 +409,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'nvchad/menu',
-    cond = { keys('n', 'Z'), keys('n', '<RightRelease>') },
+    keys = { 'Z', '<RightRelease>' },
     config = function()
       local callback = function(mouse)
         return function()
@@ -443,7 +436,7 @@ local function setup_pckr()
   -- 在 nvim 内直接预览 markdown, 效果凑合可用
   table.insert(plugins, {
     'OXY2DEV/markview.nvim',
-    cond = event('FileType', 'markdown'),
+    ft = 'markdown',
     opts = {
       --initial_state = false,
       code_blocks = {
@@ -475,7 +468,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'folke/todo-comments.nvim',
-    cond = event('FileType'),
+    event = 'FileType',
     config = function()
       require('todo-comments').setup({
         signs = false,
@@ -500,7 +493,7 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'stevearc/conform.nvim',
-    cond = cmd('Format'),
+    cmd = 'Format',
     config = function()
       local conform = require('conform')
       conform.setup({
@@ -528,12 +521,12 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'tpope/vim-scriptease',
-    cond = cmd('BreakAdd'),
+    cmd = 'BreakAdd',
   })
 
   table.insert(plugins, {
     'oskarrrrrrr/symbols.nvim',
-    cond = cmd('SymbolsToggle'),
+    cmd = 'SymbolsToggle',
     config = function()
       local r = require('symbols.recipes')
       require('symbols').setup(r.DefaultFilters, r.AsciiSymbols, {
@@ -545,10 +538,10 @@ local function setup_pckr()
 
   table.insert(plugins, {
     'ojroques/vim-oscyank',
-    cond = { cmd('OSCYankVisual'), cmd('OSCYank') },
+    cmd = { 'OSCYankVisual', 'OSCYank' },
   })
 
-  table.insert(plugins, { 'epheien/termdbg', cond = cmd('Termdbg') })
+  table.insert(plugins, { 'epheien/termdbg', cmd = 'Termdbg' })
 
   -- 载入 plugins 目录的插件
   vim.list_extend(plugins, require('plugins'))
