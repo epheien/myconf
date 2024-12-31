@@ -36,7 +36,7 @@ if pcall(vim.cmd.packadd, 'gruvbox.nvim') then
   end
 end
 
-require('config.pckr')
+require('config.plugins')
 require('config.float-help')
 require('config.mystl')
 require('config.alacritty-mouse-fix')
