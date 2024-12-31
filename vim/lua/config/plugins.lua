@@ -98,7 +98,7 @@ local function setup_pckr()
     {
       'preservim/nerdcommenter',
       cmd = 'NERDCommenter',
-      keys = { { { 'n', 'x' }, '<Plug>NERDCommenterToggle' } },
+      keys = { { '<Plug>NERDCommenterToggle', mode = { 'n', 'x' } } },
       config = function()
         -- dumpy command
         vim.api.nvim_create_user_command('NERDCommenter', function() end, {})

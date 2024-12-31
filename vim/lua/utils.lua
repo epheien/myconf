@@ -117,8 +117,8 @@ local function handle_cond(spec)
         -- { 'key1', 'key2' }
         table.insert(cond, keys('n', k))
       else
-        -- { { 'n', 'key1' }, { 'x', 'key1' } }
-        table.insert(cond, keys(unpack(k)))
+        -- { { 'key1', mode = { 'n', 'x' } }, { 'key1', mode = 'i' } }
+        table.insert(cond, keys(k.mode or 'n', k[1], k[2]))
       end
     end
     spec.keys = nil
