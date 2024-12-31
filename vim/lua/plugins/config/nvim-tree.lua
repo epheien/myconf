@@ -145,6 +145,11 @@ local nvim_tree_opts = {
     group_empty = true,
     icons = {
       git_placement = 'right_align',
+      glyphs = {
+        git = {
+          untracked = '?',
+        },
+      },
     },
   },
   filters = {
