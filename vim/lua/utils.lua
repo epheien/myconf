@@ -67,7 +67,6 @@ end
 -- 转换逻辑可在 unused/CSApprox 插件找到 (会跟在线工具有一些差别, 未深入研究)
 function M.setup_colorscheme(colors_name)
   -- 这个选项能直接控制 gruvbox 的 sign 列直接使用 LineNr 列的高亮组
-  vim.g.gitgutter_override_sign_column_highlight = 1
   vim.o.background = 'dark'
   local ok = pcall(vim.cmd.colorscheme, colors_name)
   if not ok then

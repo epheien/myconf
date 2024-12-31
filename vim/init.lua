@@ -30,7 +30,9 @@ if pcall(vim.cmd.packadd, 'gruvbox.nvim') then
     terminal_colors = vim.fn.has('gui_running') == 1,
   })
   if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
-    require('utils').setup_colorscheme('gruvbox')
+    vim.o.background = 'dark'
+    require('gruvbox').load()
+    vim.api.nvim_exec_autocmds('ColorScheme', { group = 'vimrc' })
   end
 end
 
