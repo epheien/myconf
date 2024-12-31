@@ -160,6 +160,28 @@ local function handle_opts(spec)
   spec.opts = nil
 end
 
+local function setup_pckr()
+  local ok, pckr = pcall(require, 'pckr')
+  if not ok then
+    print('ignore lua plugin: pckr')
+    return
+  end
+
+  pckr.setup({
+    package_root = vim.fn.stdpath('config'), ---@diagnostic disable-line
+    pack_dir = vim.fn.stdpath('config'), -- 新版本用的配置名, 最终目录: pack/pckr/opt
+    autoinstall = false,
+  })
+  return true
+end
+
+local function setup_lazy(specs)
+  require('lazy').setup({
+    spec = specs,
+    checker = { enable = false },
+  })
+end
+
 ---添加插件的抽象接口, 当前使用 pckr, 以后可能会兼容 lazy.nvim
 ---@param specs table[]
 function M.add_plugins(specs)
@@ -173,7 +195,13 @@ function M.add_plugins(specs)
 
     ::continue::
   end
-  require('pckr').add(specs)
+
+  if setup_pckr() then
+    -- NOTE: pckr.add() 的参数必须是 {{}} 的嵌套列表格式, 否则会出现奇怪的问题
+    -- NOTE: 每次调用 pckr.add() 的时候都可能导致加载其他文件, 所以最好仅调用一次
+    require('pckr').add(specs)
+  elseif setup_lazy(specs) then
+  end
 end
 
 return M
