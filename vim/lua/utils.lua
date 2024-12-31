@@ -41,7 +41,9 @@ end
 
 function M.floatwin_run(cmd)
   local output = vim.api.nvim_exec2(cmd, { output = true }).output
-  if output == '' then return end
+  if output == '' then
+    return
+  end
   local bufid = M.create_scratch_floatwin(cmd)
   vim.bo[bufid].modifiable = true
   vim.api.nvim_buf_set_lines(bufid, 0, -1, false, vim.split(output, '\n'))
@@ -88,7 +90,7 @@ local function handle_cond(spec)
   local event = require('pckr.loader.event')
 
   -- pckr 风格的 spec, 不处理
-  if type(spec.cond) == "string" or vim.islist(spec.cond) then
+  if type(spec.cond) == 'string' or vim.islist(spec.cond) then
     return
   end
 

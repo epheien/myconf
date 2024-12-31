@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 local function setup_pckr()
   local ok, pckr = pcall(require, 'pckr')
   if not ok then
@@ -548,7 +546,7 @@ local function setup_pckr()
 
   -- NOTE: pckr.add() 的参数必须是 {{}} 的嵌套列表格式, 否则会出现奇怪的问题
   -- NOTE: 每次调用 pckr.add() 的时候都可能导致加载其他文件, 所以最好仅调用一次
-  utils.add_plugins(plugins)
+  require('utils').add_plugins(plugins)
 end
 
 setup_pckr()
