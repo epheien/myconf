@@ -16,7 +16,7 @@ local vim_plugins = {
   { 'skywind3000/asyncrun.vim', cmd = 'AsyncRun' },
   { 'kassio/neoterm', cmd = 'Tnew' },
   { 'epheien/vim-clang-format', cmd = 'ClangFormat' },
-  { 'epheien/videm', cmd = 'VidemOpen' },
+  --{ 'epheien/videm', cmd = 'VidemOpen' },
   { 'iamcco/markdown-preview.vim', ft = 'markdown' },
   { 'tweekmonster/helpful.vim', cmd = 'HelpfulVersion' },
 }
