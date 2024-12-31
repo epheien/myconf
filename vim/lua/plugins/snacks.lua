@@ -8,6 +8,7 @@ local opts = {
   },
 
   dashboard = {
+    enabled = not vim.g.nodashboard,
     preset = {
       -- stylua: ignore
       keys = {

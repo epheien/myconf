@@ -1,5 +1,5 @@
 #!/bin/bash
 
 if [ $# -ge 1 ]; then
-    nvim -c "lua require('imgcat').imgcat('$1')"
+    nvim --cmd 'let nodashboard=1' -c "lua require('imgcat').imgcat('$1')"
 fi
