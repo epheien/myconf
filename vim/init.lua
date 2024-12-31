@@ -55,6 +55,7 @@ else
       missing = false,
     },
     checker = { enable = false },
+    change_detection = { enabled = false },
     performance = {
       rtp = {
         -- disable some rtp plugins
