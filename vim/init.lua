@@ -3,12 +3,21 @@ require('config.keymaps')
 require('config.autocmds')
 require('config.commands')
 
+-- pckr or lazy
+vim.g.package_manager = 'lazy'
+
 -- 使用 packadd 加载 pckr.nvim
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
 --  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
 vim.opt.packpath:append(vim.fn.stdpath('config'))
 ---@diagnostic disable-next-line
-local path = vim.fs.joinpath(vim.fn.stdpath('config'), 'pack', 'pckr', 'opt', 'pckr.nvim')
+local path = vim.fs.joinpath(
+  vim.fn.stdpath('config'), ---@diagnostic disable-line
+  'pack',
+  'pckr',
+  'opt',
+  string.format('%s.nvim', vim.g.package_manager)
+)
 assert(
   (vim.uv or vim.loop).fs_stat(path),
   'Failed to init pckr.nvim, '

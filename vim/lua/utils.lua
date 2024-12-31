@@ -177,30 +177,42 @@ end
 
 local function setup_lazy(specs)
   require('lazy').setup({
-    spec = specs,
+    root = vim.fn.stdpath('config') .. '/pack/pckr/opt',
+    install = {
+      missing = false,
+    },
     checker = { enable = false },
+    spec = specs,
   })
 end
 
 ---添加插件的抽象接口, 当前使用 pckr, 以后可能会兼容 lazy.nvim
 ---@param specs table[]
 function M.add_plugins(specs)
-  for _, spec in ipairs(specs) do
-    if type(spec) == 'string' then
-      goto continue
+  if vim.g.package_manager ~= 'lazy' then
+    for _, spec in ipairs(specs) do
+      if type(spec) == 'string' then
+        goto continue
+      end
+
+      handle_cond(spec)
+      handle_opts(spec)
+
+      ::continue::
     end
-
-    handle_cond(spec)
-    handle_opts(spec)
-
-    ::continue::
-  end
-
-  if setup_pckr() then
+    setup_pckr()
     -- NOTE: pckr.add() 的参数必须是 {{}} 的嵌套列表格式, 否则会出现奇怪的问题
     -- NOTE: 每次调用 pckr.add() 的时候都可能导致加载其他文件, 所以最好仅调用一次
     require('pckr').add(specs)
-  elseif setup_lazy(specs) then
+  else
+    for _, spec in ipairs(specs) do
+      -- requires => dependencies
+      if type(spec) == 'table' then
+        spec.dependencies = spec.requires
+        spec.requires = nil
+      end
+    end
+    setup_lazy(specs)
   end
 end
 
