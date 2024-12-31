@@ -175,17 +175,6 @@ local function setup_pckr()
   return true
 end
 
-local function setup_lazy(specs)
-  require('lazy').setup({
-    root = vim.fn.stdpath('config') .. '/pack/pckr/opt',
-    install = {
-      missing = false,
-    },
-    checker = { enable = false },
-    spec = specs,
-  })
-end
-
 function M.handle_specs(specs)
   if vim.g.package_manager ~= 'lazy' then
     for _, spec in ipairs(specs) do
