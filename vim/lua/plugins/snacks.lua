@@ -6,7 +6,7 @@ return {
     styles = {
       dashboard = {
         wo = {
-          winhighlight = 'Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal,Title:Directory',
+          --winhighlight = 'Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal,Title:Directory',
         },
       },
     },
