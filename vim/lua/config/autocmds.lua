@@ -87,6 +87,7 @@ function g:SetupColorschemePost(...)
     hi Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE
     hi IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26
     hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
+    hi Directory guifg=#8094b4 gui=bold ctermfg=12 cterm=bold
     " tagbar 配色
     hi! link TagbarAccessPublic GruvboxAqua
     hi! link TagbarAccessProtected GruvboxPurple
