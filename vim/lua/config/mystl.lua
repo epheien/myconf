@@ -103,6 +103,17 @@ local function status_line_theme_mywombat()
   post_process_status_line_theme()
 end
 
+local function status_line_theme_catppuccin() ---@diagnostic disable-line
+  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#181826', bg = '#89b4fb' })
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#303030', bg = '#6a6a6a' })
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#181826', bg = '#89b4fb', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlCommandMode', { fg = '#1e1e2f', bg = '#fab388' })
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#1e1e2f', bg = '#a6e3a2', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#1e1e2f', bg = '#cba6f8', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#1e1e2f', bg = '#f38ba9', bold = true })
+  post_process_status_line_theme()
+end
+
 local stl_hl_map = {
   I       = 'MyStlInsertMode',
   T       = 'MyStlInsertMode',
