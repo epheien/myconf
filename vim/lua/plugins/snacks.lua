@@ -3,6 +3,7 @@ local opts = {
     dashboard = {
       wo = {
         --winhighlight = 'Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal,Title:Directory',
+        fillchars = 'eob: ', -- end of buffer 填充的字符, 默认为 ~
       },
     },
   },
