@@ -93,7 +93,7 @@ local function status_line_theme_gruvbox() ---@diagnostic disable-line
   post_process_status_line_theme()
 end
 
-local function status_line_theme_mywombat()
+local function status_line_theme_mywombat() ---@diagnostic disable-line
   vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
   vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#303030', bg = '#6a6a6a', ctermfg = 236, ctermbg = 242 })
   vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#eeee00', ctermfg = 235, ctermbg = 226, bold = true })
@@ -106,7 +106,7 @@ end
 local function status_line_theme_catppuccin() ---@diagnostic disable-line
   vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#181826', bg = '#89b4fb' })
   vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#303030', bg = '#6a6a6a' })
-  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#181826', bg = '#89b4fb', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#181826', bg = '#dddd00', bold = true })
   vim.api.nvim_set_hl(0, 'MyStlCommandMode', { fg = '#1e1e2f', bg = '#fab388' })
   vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#1e1e2f', bg = '#a6e3a2', bold = true })
   vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#1e1e2f', bg = '#cba6f8', bold = true })
@@ -135,7 +135,7 @@ function MyStatusLine()
   end
   local active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
   local mod = vim.o.modified and ' [+]' or ''
-  local gap = tail_glyph == '' and ' ' or ''
+  local gap = tail_glyph == '' and ' ' or ' '
   if active then
     local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
     local head_string = string.format('%%#%s#%s', mode_group .. 'Reverse', head_glyph)
@@ -152,7 +152,7 @@ function MyStatusLine()
 end
 
 -- init MyStatusLine
-local mystl_theme = status_line_theme_mywombat
+local mystl_theme = status_line_theme_catppuccin
 mystl_theme()
 vim.api.nvim_create_autocmd('ColorScheme', { callback = mystl_theme })
 vim.opt.showmode = false
