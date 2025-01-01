@@ -7,6 +7,10 @@ local function load_config()
   require('config.autocmds')
   require('config.keymaps')
   require('config.commands')
+
+  require('config.float-help')
+  require('config.mystl')
+  require('config.alacritty-mouse-fix')
 end
 
 if vim.g.package_manager == 'lazy' then
@@ -155,7 +159,3 @@ else
     },
   })
 end
-
-require('config.float-help')
-require('config.mystl')
-require('config.alacritty-mouse-fix')
