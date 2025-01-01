@@ -941,7 +941,7 @@ endfunction
 augroup Mark
 	autocmd!
 	autocmd WinEnter * if ! exists('w:mwMatch') | call mark#UpdateMark() | endif
-	autocmd TabEnter * call mark#UpdateScope()
+	autocmd TabEnter * if &winbar !~# '\<edgy\.' | call mark#UpdateScope() | endif
 augroup END
 
 " Define global variables and initialize current scope.
