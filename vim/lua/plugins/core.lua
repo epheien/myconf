@@ -114,7 +114,6 @@ local function core_plugins()
   if vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
       '3rd/image.nvim',
-      build = false,
       cmd = 'ImageRender',
       event = { 'BufReadPre', 'InsertEnter' },
       config = function()
