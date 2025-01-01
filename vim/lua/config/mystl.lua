@@ -72,25 +72,7 @@ local function create_reverse_hl(name)
   return true
 end
 
-local function status_line_theme_gruvbox() ---@diagnostic disable-line
-  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#a89984', bg = '#504945' })      -- 246 239
-  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#7c6f64', bg = '#3c3836' })    -- 243 237
-  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#a89984' })  -- 235 246
-  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#83a598' })  -- 235 109
-  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#fe8019' })  -- 235 208
-  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#8ec07c' }) -- 235 108
-  create_transitional_hl('MyStlNormal', 'Normal')
-  create_transitional_hl('MyStlNormalNC', 'Normal')
-end
-
-local function status_line_theme_mywombat()
-  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
-  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#303030', bg = '#6a6a6a', ctermfg = 236, ctermbg = 242 })
-  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#eeee00', ctermfg = 235, ctermbg = 226, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlReplaceMode',
-    { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203, bold = true })
+local function post_process_status_line_theme()
   create_transitional_hl('MyStlNormal', 'Normal')
   create_transitional_hl('MyStlNormalNC', 'Normal')
   create_transitional_hl('MyStlNormal', 'MyStlNormalMode')
@@ -99,6 +81,26 @@ local function status_line_theme_mywombat()
   create_reverse_hl('MyStlVisualMode')
   create_reverse_hl('MyStlReplaceMode')
   create_reverse_hl('MyStlNormalNC')
+end
+
+local function status_line_theme_gruvbox() ---@diagnostic disable-line
+  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#a89984', bg = '#504945' })      -- 246 239
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#7c6f64', bg = '#3c3836' })    -- 243 237
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#a89984' })  -- 235 246
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#83a598' })  -- 235 109
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#fe8019' })  -- 235 208
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#8ec07c' }) -- 235 108
+  post_process_status_line_theme()
+end
+
+local function status_line_theme_mywombat()
+  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#303030', bg = '#6a6a6a', ctermfg = 236, ctermbg = 242 })
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#eeee00', ctermfg = 235, ctermbg = 226, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203, bold = true })
+  post_process_status_line_theme()
 
   -- gruvbox.nvim 的这几个配色要覆盖掉
   local names = { 'GruvboxRedSign', 'GruvboxGreenSign', 'GruvboxYellowSign', 'GruvboxBlueSign', 'GruvboxPurpleSign',
