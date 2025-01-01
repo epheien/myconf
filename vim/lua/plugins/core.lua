@@ -1,4 +1,4 @@
-local function setup_pckr()
+local function core_plugins()
   local plugins = {
     { 'folke/lazy.nvim', lazy = true },
     { 'epheien/pckr.nvim', keys = '<Plug>pckr' }, -- 仅用来管理更新
@@ -485,4 +485,4 @@ local function setup_pckr()
   return plugins
 end
 
-return setup_pckr()
+return core_plugins()
