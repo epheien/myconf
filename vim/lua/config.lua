@@ -1,6 +1,19 @@
 -- pckr or lazy
 vim.g.package_manager = 'lazy'
 
+---@type string
+local config_path = vim.fn.stdpath('config') ---@diagnostic disable-line
+local loop = vim.uv or vim.loop
+
+-- 非 macOS 系统, 可能会缺少一些插件, 改用 pckr.nvim, 因为 pckr.nvim 不报错
+if
+  vim.g.package_manager == 'lazy'
+  and vim.fn.has('mac') ~= 1
+  and not loop.fs_stat(config_path .. '/pack/pckr/opt/vimcdoc') ---@diagnostic disable-line
+then
+  vim.g.package_manager = 'pckr'
+end
+
 require('config.options')
 require('config.autocmds')
 
@@ -29,7 +42,7 @@ end
 vim.opt.packpath:append(vim.fn.stdpath('config'))
 ---@diagnostic disable-next-line
 local path = vim.fs.joinpath(
-  vim.fn.stdpath('config'), ---@diagnostic disable-line
+  config_path,
   'pack',
   'pckr',
   'opt',
