@@ -2,7 +2,7 @@ local vim_plugins = {
   { 'tpope/vim-surround', event = 'VeryLazy' },
   {
     'yianwillis/vimcdoc',
-    event = 'CmdlineEnter',
+    cmd = 'HelpfulVersion', -- 使用命令触发加载避免 lazy 报错
     config = function()
       vim.o.helplang = ''
     end,
