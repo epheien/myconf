@@ -1,6 +1,7 @@
 -- 自实现的简易状态栏
 local M = {}
 
+-- stylua: ignore
 M.mode_table = {
   ['n']     = 'NORMAL',
   ['no']    = 'O-PENDING',
@@ -42,17 +43,32 @@ M.mode_table = {
 
 -- MyStatusLine, 简易实现以提高载入速度 {{{
 local function create_transitional_hl(left, right)
+  local target_name = left .. '_' .. right
   local name = left
   local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
-  if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = name .. 'Reverse' })) then
+  if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = target_name })) then
     return false -- 已存在的话就忽略
   end
   if vim.tbl_isempty(opts) then
     return false
   end
   local right_opts = vim.api.nvim_get_hl(0, { name = right, link = false })
-  opts = vim.tbl_deep_extend('force', opts, { reverse = opts.reverse and false or true, fg = right_opts.bg or 'NONE' })
-  vim.api.nvim_set_hl(0, name .. 'Reverse', opts) ---@diagnostic disable-line
+  opts = vim.tbl_deep_extend('force', opts, { reverse = not opts.reverse, fg = right_opts.bg or 'NONE' })
+  vim.api.nvim_set_hl(0, target_name, opts) ---@diagnostic disable-line
+  return true
+end
+
+local function create_reverse_hl(name)
+  local target_name = name .. 'Reverse'
+  if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = target_name })) then
+    return false -- 已存在的话就忽略
+  end
+  local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
+  if vim.tbl_isempty(opts) then
+    return false
+  end
+  opts = vim.tbl_deep_extend('force', opts, { reverse = not opts.reverse })
+  vim.api.nvim_set_hl(0, target_name, opts) ---@diagnostic disable-line
   return true
 end
 
@@ -77,6 +93,12 @@ local function status_line_theme_mywombat()
     { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203, bold = true })
   create_transitional_hl('MyStlNormal', 'Normal')
   create_transitional_hl('MyStlNormalNC', 'Normal')
+  create_transitional_hl('MyStlNormal', 'MyStlNormalMode')
+  create_reverse_hl('MyStlNormalMode')
+  create_reverse_hl('MyStlInsertMode')
+  create_reverse_hl('MyStlVisualMode')
+  create_reverse_hl('MyStlReplaceMode')
+  create_reverse_hl('MyStlNormalNC')
 
   -- gruvbox.nvim 的这几个配色要覆盖掉
   local names = { 'GruvboxRedSign', 'GruvboxGreenSign', 'GruvboxYellowSign', 'GruvboxBlueSign', 'GruvboxPurpleSign',
@@ -108,7 +130,9 @@ local stl_hl_map = {
   ['\19'] = 'MyStlVisualMode',
 }
 local mode_table = M.mode_table
-local trail_glyph = require('utils').only_ascii() and '' or ''
+--  
+local head_glyph = require('utils').only_ascii() and '' or ''
+local tail_glyph = require('utils').only_ascii() and '' or ''
 function MyStatusLine()
   local m = vim.api.nvim_get_mode().mode
   local mode = 'NORMAL'
@@ -119,11 +143,16 @@ function MyStatusLine()
   local mod = vim.o.modified and ' [+]' or ''
   if active then
     local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
-    return ('%#' .. mode_group .. '# ' .. mode ..
-      ' %#MyStlNormal# %f' .. mod .. ' │ %l/%L,%v %#MyStlNormalReverse#'
-      .. trail_glyph .. '%#StatusLine#')
+    local head_string = string.format('%%#%s#%s', mode_group .. 'Reverse', head_glyph)
+    local mode_string = string.format('%%#%s# %s ', mode_group, mode)
+    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v ', 'MyStlNormal', mod)
+    local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormal_Normal', tail_glyph)
+    return head_string .. mode_string .. file_string .. tail_string
   else
-    return '%#MyStlNormalNC# %f' .. mod .. ' │ %l/%L,%v %#MyStlNormalNCReverse#' .. trail_glyph .. '%#StatusLineNC#'
+    local head_string = string.format('%%#%s#%s', 'MyStlNormalNCReverse', head_glyph)
+    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v ', 'MyStlNormalNC', mod)
+    local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormalNC_Normal', tail_glyph)
+    return head_string .. file_string .. tail_string
   end
 end
 
