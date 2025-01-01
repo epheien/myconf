@@ -7,8 +7,8 @@ local loop = vim.uv or vim.loop
 
 -- 非 macOS 系统, 可能会缺少一些插件, 改用 pckr.nvim, 因为 pckr.nvim 不报错
 if
-  vim.g.package_manager == 'lazy'
-  and vim.fn.has('mac') ~= 1
+  vim.fn.has('mac') ~= 1
+  and vim.g.package_manager == 'lazy'
   and not loop.fs_stat(config_path .. '/pack/pckr/opt/vimcdoc') ---@diagnostic disable-line
 then
   vim.g.package_manager = 'pckr'
