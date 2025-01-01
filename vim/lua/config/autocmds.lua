@@ -90,6 +90,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 --   • Vim help files
 --   • Lua files
 -- 额外的默认使用 treesitter 的文件类型
+-- 事件顺序: BufReadPre => FileType => BufReadPost
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'c', 'vim', 'markdown' },
   callback = function()
