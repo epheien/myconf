@@ -105,11 +105,11 @@ end
 
 local function status_line_theme_catppuccin() ---@diagnostic disable-line
   vim.api.nvim_set_hl(0, 'MyStlNormalNC',       { fg = '#303030', bg = '#6a6a6a' })
-  vim.api.nvim_set_hl(0, 'MyStlNormal',         { fg = '#1e1e2f', bg = '#82aaff' }) -- tokyonight
-  vim.api.nvim_set_hl(0, 'MyStlNormalMode',     { fg = '#1e1e2f', bg = '#dddd00', bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlInsertMode',     { fg = '#1e1e2f', bg = '#a6e3a2', bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlVisualMode',     { fg = '#1e1e2f', bg = '#c099ff', bold = true }) -- tokyonight
-  vim.api.nvim_set_hl(0, 'MyStlReplaceMode',    { fg = '#1e1e2f', bg = '#f38ba9', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlNormal',         { fg = '#282828', bg = '#82aaff' }) -- tokyonight
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode',     { fg = '#282828', bg = '#dddd00', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode',     { fg = '#282828', bg = '#a6e3a2', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode',     { fg = '#282828', bg = '#c099ff', bold = true }) -- tokyonight
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode',    { fg = '#282828', bg = '#f38ba9', bold = true })
   post_process_status_line_theme()
 end
 
