@@ -131,7 +131,6 @@ end
 local mystl_theme = status_line_theme_mywombat
 mystl_theme()
 vim.api.nvim_create_autocmd('ColorScheme', { callback = mystl_theme })
-vim.opt.laststatus = 2
 vim.opt.showmode = false
 vim.opt.statusline = '%{%v:lua.MyStatusLine()%}'
 -- :pwd<CR> 的时候会不及时刷新, 所以需要添加这个自动命令

@@ -26,6 +26,7 @@ vim.opt.jumpoptions:append({ 'stack', 'view' })
 -- nvim 没有删除对话框选项, 直接禁用算了
 vim.o.swapfile = false
 vim.o.mouse = 'a'
+vim.o.laststatus = 2
 
 vim.opt.guicursor = {
   'n-v-c:block',
