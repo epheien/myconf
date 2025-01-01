@@ -141,16 +141,17 @@ function MyStatusLine()
   end
   local active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
   local mod = vim.o.modified and ' [+]' or ''
+  local gap = tail_glyph == '' and ' ' or ''
   if active then
     local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
     local head_string = string.format('%%#%s#%s', mode_group .. 'Reverse', head_glyph)
-    local mode_string = string.format('%%#%s# %s ', mode_group, mode)
-    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v ', 'MyStlNormal', mod)
+    local mode_string = string.format('%%#%s#%s%s ', mode_group, gap, mode)
+    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v%s', 'MyStlNormal', mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormal_Normal', tail_glyph)
     return head_string .. mode_string .. file_string .. tail_string
   else
     local head_string = string.format('%%#%s#%s', 'MyStlNormalNCReverse', head_glyph)
-    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v ', 'MyStlNormalNC', mod)
+    local file_string = string.format('%%#%s#%s%%f%s │ %%l/%%L,%%v%s', 'MyStlNormalNC', gap, mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormalNC_Normal', tail_glyph)
     return head_string .. file_string .. tail_string
   end
