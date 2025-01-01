@@ -84,6 +84,10 @@ resize_increments = true
 columns = 130
 lines = 40
 
+[window.padding]
+x = 1 # 横轴 border
+y = 0 # 纵轴 border
+
 [keyboard]
 bindings = [
     { key = 'Right',    mods = 'Command',       action = 'SelectNextTab' },
