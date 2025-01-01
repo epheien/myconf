@@ -2,9 +2,9 @@
 vim.g.package_manager = 'lazy'
 
 require('config.options')
+require('config.autocmds')
 
 local function load_config()
-  require('config.autocmds')
   require('config.keymaps')
   require('config.commands')
 
