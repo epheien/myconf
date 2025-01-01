@@ -1,16 +1,6 @@
 [colors]
 draw_bold_text_with_bright_colors = true
 
-[[keyboard.bindings]]
-chars = "\u0004"
-key = "Q"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0004"
-key = "W"
-mods = "Command"
-
 [colors.bright]
 black = "#928378"
 blue = "#83a597"
@@ -95,24 +85,9 @@ columns = 130
 lines = 40
 
 [keyboard]
-
-
-[[keyboard.bindings]]
-key = 'Right'
-mods = 'Command'
-action = 'SelectNextTab'
-
-[[keyboard.bindings]]
-key = 'Tab'
-mods = 'Control'
-action = 'SelectNextTab'
-
-[[keyboard.bindings]]
-key = 'Left'
-mods = 'Command'
-action = 'SelectPreviousTab'
-
-[[keyboard.bindings]]
-key = 'Tab'
-mods = 'Control|Shift'
-action = 'SelectPreviousTab'
+bindings = [
+    { key = 'Right',    mods = 'Command',       action = 'SelectNextTab' },
+    { key = 'Left',     mods = 'Command',       action = 'SelectPreviousTab' },
+    { key = 'Tab',      mods = 'Control',       action = 'SelectNextTab' },
+    { key = 'Tab',      mods = 'Control|Shift', action = 'SelectPreviousTab' },
+]
