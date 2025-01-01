@@ -1,3 +1,5 @@
+-- NOTE: 这里的键位绑定比 lazy 的插件配置加载之后, 也就是可能会覆盖 lazy 设置的绑定
+
 local function map(mode, lhs, rhs, opts)
   -- defaults: remap = false
   local options = { silent = true }
@@ -100,7 +102,7 @@ map('n', '<C-k>', '<C-w>k')
 map('n', '<C-l>', '<C-w>l')
 
 -- Remap ; to :
-map('n', ';', ':', { silent = false })
+map('n', ';', ':', { remap = true, silent = false })
 
 -- Close window
 map('n', 'gq', ':call myrc#close()<CR>')
