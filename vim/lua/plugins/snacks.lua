@@ -33,5 +33,6 @@ return {
   config = function()
     require('snacks').setup(opts)
     vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { link = 'Directory' })
+    vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { link = 'Normal' })
   end,
 }
