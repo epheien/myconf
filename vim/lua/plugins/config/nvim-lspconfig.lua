@@ -76,6 +76,18 @@ local default_capabilities = function(override)
   }
 end
 
+local open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
+  local bak = vim.g.syntax_on
+  vim.g.syntax_on = nil
+  local floating_bufnr, floating_winnr = open_floating_preview(contents, syntax, opts)
+  vim.g.syntax_on = bak
+  if syntax == 'markdown' then
+    vim.wo[floating_winnr].conceallevel = 2
+  end
+  return floating_bufnr, floating_winnr
+end
 
 -- 扩展名映射到 lsp 服务器名称
 local function ext_to_lsp_server(ext)
