@@ -169,3 +169,10 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     end
   end,
 })
+
+-- 替换 spellfile.vim 标准插件的实现
+vim.api.nvim_create_autocmd('SpellFileMissing', {
+  callback = function(args)
+    vim.call('spellfile#LoadFile', args.match)
+  end,
+})

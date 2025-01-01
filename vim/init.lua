@@ -83,6 +83,7 @@ else
           'tohtml',
           'tutor',
           'zipPlugin',
+          'spellfile',
         },
       },
     },
