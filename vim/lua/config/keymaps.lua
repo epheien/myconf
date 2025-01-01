@@ -234,7 +234,6 @@ local function goto_other_window(curwin)
     if not vim.api.nvim_win_is_valid(winid) then
       goto continue
     end
-    local ft = vim.api.nvim_get_option_value('filetype', { buf = vim.api.nvim_win_get_buf(winid) })
     if pat:match_str(vim.wo[winid].winbar) then
       goto continue
     end
