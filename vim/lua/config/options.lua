@@ -72,6 +72,11 @@ vim.o.virtualedit = 'onemore,block'
 vim.o.cc = '81,101'
 vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,localoptions'
 vim.o.wildignorecase = true
+-- 设置为可空获得更好的显示效果, nvim 内置
+vim.o.foldtext = ''
+vim.o.foldcolumn = 'auto'
+--vim.opt.fillchars:append({ fold = ' ', foldclose = '', foldopen = '', foldsep = ' ' })
+vim.opt.fillchars:append({ fold = ' ', foldclose = '+', foldopen = '-', foldsep = ' ' })
 
 -- vim -d a b 启动的时候, 不设置 'list'
 if not vim.o.diff then

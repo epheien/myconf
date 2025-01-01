@@ -65,6 +65,7 @@ function g:SetupColorschemePost(...)
     "hi IncSearch guifg=#181826 guibg=#7ec9d9 gui=NONE cterm=NONE
     hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
     hi Directory guifg=#8094b4 gui=bold ctermfg=12 cterm=bold
+    hi FoldColumn guibg=NONE ctermbg=NONE
     " tagbar 配色
     hi! link TagbarAccessPublic GruvboxAqua
     hi! link TagbarAccessProtected GruvboxPurple
