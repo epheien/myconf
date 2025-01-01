@@ -50,6 +50,7 @@ update
 /Users/eph/.config/nvim/init.lua
 /Users/eph/.config/nvim/pack/pckr/opt/snacks.nvim/plugin/snacks.lua
 /Users/eph/opt/nvim-macos-arm64/share/nvim/runtime/plugin/gzip.vim
+require('config')
 require('config.alacritty-mouse-fix')
 require('config.autocmds')
 require('config.commands')
