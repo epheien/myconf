@@ -115,9 +115,13 @@ map('n', '`', '\'')
 -- quickfix 跳转
 map('n', ']q', ':cn<CR>')
 map('n', '[q', ':cp<CR>')
--- diagnostic 跳转
-map('n', ']w', vim.diagnostic.goto_next)
-map('n', '[w', vim.diagnostic.goto_prev)
+-- diagnostic 跳转 (包装成函数避免初始化的时候载入 vim.diagnostic 模块)
+map('n', ']w', function()
+  return vim.diagnostic.goto_next()
+end)
+map('n', '[w', function()
+  return vim.diagnostic.goto_prev()
+end)
 
 -- stty -ixon
 map('n', '<C-s>', function()
