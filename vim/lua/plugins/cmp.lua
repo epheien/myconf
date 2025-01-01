@@ -26,7 +26,7 @@ return {
     },
     event = 'InsertEnter',
     cmd = 'CmpDisable',
-    keys = { ';', '/', '?' },
+    keys = { ':', ';', '/', '?' },
     config = function()
       require('plugins.config.nvim-cmp')
       require('luasnip.loaders.from_vscode').lazy_load({
