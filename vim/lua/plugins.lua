@@ -1,3 +1,6 @@
+-- stylua: ignore
+if vim.g.package_manager == 'lazy' then return {} end
+
 ---@diagnostic disable-next-line
 local root = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua', 'plugins')
 
@@ -20,7 +23,7 @@ for _, name in ipairs(loaded_plugins) do
   local mod = require('plugins.' .. name)
   if type(mod) == 'string' then
     table.insert(M, mod)
-  elseif type(mod) == "table" and mod.enabled ~= false then
+  elseif type(mod) == 'table' and mod.enabled ~= false then
     if vim.islist(mod) then
       vim.list_extend(M, mod)
     else
