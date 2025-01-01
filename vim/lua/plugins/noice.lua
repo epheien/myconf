@@ -51,6 +51,9 @@ local function setup_noice() -- {{{
         help = false,
         lua = false,
         filter = false,
+        cmdline = {
+          icon = '>',
+        },
         --search_down = { icon = "/ ⌄" },
         --search_up = { icon = "? ⌃" },
       },
