@@ -186,7 +186,7 @@ local nvim_tree_opts = {
 }
 
 if require('utils').only_ascii() then
-  nvim_tree_opts.renderer.icons = {
+  nvim_tree_opts.renderer.icons = vim.tbl_deep_extend('force', nvim_tree_opts.renderer.icons, {
     symlink_arrow = ' -> ',
     show = {
       file = false,
@@ -199,7 +199,7 @@ if require('utils').only_ascii() then
         arrow_open = '~',
       },
     },
-  }
+  })
 end
 
 -- 每个窗口记录上一个窗口, 以实现保存窗口跳转历史
