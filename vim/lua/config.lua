@@ -98,7 +98,6 @@ endfunction
 ]])
 
 vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vimrc_group,
   callback = function(args)
     vim.call('g:SetupColorschemePost', args.file, args.match)
   end,
