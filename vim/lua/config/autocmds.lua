@@ -54,6 +54,10 @@ vim.api.nvim_create_autocmd('TermOpen', {
     if vim.bo.buftype ~= 'terminal' then
       return
     end
+    -- 判断 snacks_dashboard 是否完成了显示
+    if vim.fn.exists(':Capture') ~= 2 then
+      return
+    end
     vim.opt_local.list = false
     vim.opt_local.number = false
     vim.opt_local.cursorline = true
