@@ -191,4 +191,6 @@ else
       },
     },
   })
+  -- 定制部分高亮组
+  vim.api.nvim_set_hl(0, 'LazyNormal', { link = 'Normal' })
 end
