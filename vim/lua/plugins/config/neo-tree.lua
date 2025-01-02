@@ -1,3 +1,5 @@
+local utils = require('utils')
+
 require('neo-tree').setup({
   open_file_with_relative = true,
   window = {
@@ -14,3 +16,7 @@ require('neo-tree').setup({
     },
   },
 })
+
+-- 禁用斜体
+utils.modify_hl('NeoTreeRootName', { italic = false })
+utils.modify_hl('NeoTreeGitUntracked', { italic = false })

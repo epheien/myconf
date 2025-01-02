@@ -79,17 +79,12 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       -- 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
       vim.api.nvim_set_hl(0, 'String', { link = 'Constant' })
       -- 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
-      vim.api.nvim_set_hl(0, 'Cursor', {})
-      vim.api.nvim_set_hl(0, 'Cursor', { fg = 'black', bg = 'yellow', ctermfg = 16, ctermbg = 226 })
-      vim.api.nvim_set_hl(0, 'Todo', {})
-      -- stylua: ignore
-      vim.api.nvim_set_hl(0, 'Todo', { fg = 'orangered', bg = 'yellow2', ctermfg = 202, ctermbg = 226 })
-
-      vim.api.nvim_set_hl(0, 'Search', {})
-      -- stylua: ignore
-      vim.api.nvim_set_hl(0, 'Search', { fg = 'gray80', bg = '#445599', ctermfg = 252, ctermbg = 61 })
-      vim.api.nvim_set_hl(0, 'Directory', { fg = '#8094b4', bold = true })
-      vim.api.nvim_set_hl(0, 'FoldColumn', { bg = 'NONE', ctermbg = 'NONE' })
+      vim.cmd.hi('Cursor guifg=black guibg=yellow gui=NONE ctermfg=16 ctermbg=226 cterm=NONE')
+      vim.cmd.hi('Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE')
+      vim.cmd.hi('IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26')
+      vim.cmd.hi('Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE')
+      vim.cmd.hi('Directory guifg=#8094b4 gui=bold ctermfg=12 cterm=bold')
+      vim.cmd.hi({ args = { 'FoldColumn', 'guibg=NONE', 'ctermbg=NONE' } })
 
       -- tagbar 配色
       vim.api.nvim_set_hl(0, 'TagbarAccessPublic', { link = 'GruvboxAqua' })
@@ -101,7 +96,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'CurSearch', { link = 'Search' })
       vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'WinSeparator' })
       vim.api.nvim_set_hl(0, 'SpecialKey', { link = 'Special' })
-      vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE', ctermbg = 'NONE' })
+      vim.cmd.hi({ args = { 'SignColumn', 'guibg=NONE', 'ctermbg=NONE' } })
 
       -- GitGutter
       vim.api.nvim_set_hl(0, 'GitGutterAdd', { link = 'GruvboxGreen' })
@@ -135,12 +130,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { link = 'Directory' })
       vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { link = 'Normal' })
       -- neo-tree
-      vim.api.nvim_set_hl(0, 'NeoTreeDirectoryIcon', { fg = '#8094b4', ctermfg = 12 })
       vim.api.nvim_set_hl(0, 'NeoTreeDirectoryName', { link = 'Title' })
-      vim.api.nvim_set_hl(0, 'NeoTreeRootName', { bold = true })
-      local opts = vim.api.nvim_get_hl(0, { name = 'NeoTreeGitUntracked' })
-      opts.italic = false ---@diagnostic disable-line
-      vim.api.nvim_set_hl(0, 'NeoTreeGitUntracked', opts) ---@diagnostic disable-line
       -- nvim-tree 的 ? 浮窗使用了 border, 所以需要修改背景色
       vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', { link = 'Normal' })
       vim.api.nvim_set_hl(0, 'NvimTreeFolderName', { link = 'Title' })

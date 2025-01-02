@@ -84,6 +84,12 @@ function M.ensure_list(v)
   return v
 end
 
+function M.modify_hl(name, opts)
+  local o = vim.api.nvim_get_hl(0, { name = name })
+  ---@diagnostic disable-next-line
+  vim.api.nvim_set_hl(0, name, vim.tbl_deep_extend('force', o, opts))
+end
+
 local function handle_cond(spec)
   local cmd = require('pckr.loader.cmd')
   local keys = require('pckr.loader.keys') -- function(mode, key, rhs?, opts?)
