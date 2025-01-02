@@ -1,5 +1,7 @@
+-- 自用全局变量 `package_manager` `nodashboard` `my_colors_name`
 -- pckr or lazy
 vim.g.package_manager = 'lazy'
+vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin
 
 ---@type string
 local config_path = vim.fn.stdpath('config') ---@diagnostic disable-line
@@ -98,14 +100,15 @@ function g:SetupColorschemePost(...)
     hi! link SignatureMarkText   GruvboxBlue
     hi! link SignatureMarkerText GruvboxPurple
   endif
-  " 配合 incline
+
+  " 修改 StatusLine 和 StatusLineNC 高亮组, 以适配 mystl 状态栏
   "hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
   let normalHl = nvim_get_hl(0, {'name': 'Normal', 'link': v:false})
   let winSepHl = nvim_get_hl(0, {'name': 'WinSeparator', 'link': v:false})
   let fg = printf('#%06x', get(winSepHl, get(winSepHl, 'reverse') ? 'bg' : 'fg'))
   let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
-  let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg')
-  let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg')
+  let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg', 'NONE')
+  let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg', 'NONE')
   call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
   hi! link StatusLineNC StatusLine
   if &statusline !~# '^%!\|^%{%'
@@ -122,7 +125,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 
 -- 直接用内置的 packadd 初始化主题
-if pcall(vim.cmd.packadd, 'gruvbox.nvim') then
+if vim.g.my_colors_name == 'gruvbox' and pcall(vim.cmd.packadd, 'gruvbox.nvim') then
   require('gruvbox').setup({
     bold = true,
     italic = {
