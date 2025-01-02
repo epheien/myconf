@@ -281,6 +281,14 @@ if exists(':tmap')
     tnoremap <C-v> <C-w>"+
     tnoremap <silent> <C-BS> <C-w>:call <SID>tbs()<CR>
     tnoremap <silent> <C-w> <C-w>:call <SID>tbs()<CR>
+    tnoremap <silent> <C-y><C-y> <C-\><C-n>
+    tnoremap <silent> <C-\><C-\> <C-\><C-n>
+    if has('nvim')
+        tnoremap <C-h> <C-\><C-n><C-w>h
+        tnoremap <C-j> <C-\><C-n><C-w>j
+        tnoremap <C-k> <C-\><C-n><C-w>k
+        tnoremap <C-l> <C-\><C-n><C-w>l
+    endif
 endif
 nnoremap ; :
 nmap <silent> gq q
