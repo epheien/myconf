@@ -11,6 +11,6 @@ return {
       },
     })
     require('tokyonight').load()
-    vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false })
+    vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false, pattern = vim.g.colors_name })
   end,
 }

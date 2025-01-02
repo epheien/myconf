@@ -1,7 +1,7 @@
 -- 自用全局变量 `package_manager` `nodashboard` `my_colors_name`
 -- pckr or lazy
 vim.g.package_manager = 'lazy'
-vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin
+vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin | tokyonight
 
 ---@type string
 local config_path = vim.fn.stdpath('config') ---@diagnostic disable-line
@@ -72,7 +72,10 @@ vim.opt.rtp:prepend(path)
 vim.api.nvim_create_autocmd('ColorScheme', {
   -- 修改一些插件的高亮组, 需要插件初始化的时候用了 default 属性
   callback = function(event) ---@diagnostic disable-line
-    if vim.g.colors_name == 'gruvbox' then
+    -- 这个高亮原始值是 Visual, 在大多数主题下效果都不好, 必须修改
+    vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
+
+    if event.match == 'gruvbox' then
       -- 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
       vim.api.nvim_set_hl(0, 'String', { link = 'Constant' })
       -- 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
@@ -113,7 +116,6 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       -- edgy.nvim
       vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
       -- scrollview
-      vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
       vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
@@ -164,7 +166,7 @@ if vim.g.my_colors_name == 'gruvbox' and pcall(vim.cmd.packadd, 'gruvbox.nvim') 
   if vim.env.TERM_PROGRAM ~= 'Apple_Terminal' then
     vim.o.background = 'dark'
     require('gruvbox').load()
-    vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false })
+    vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false, pattern = vim.g.colors_name })
   end
   -- TODO: 放到 ColorScheme callback
   -- gruvbox.nvim 的这几个配色要覆盖掉
