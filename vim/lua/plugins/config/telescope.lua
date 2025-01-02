@@ -60,9 +60,6 @@ local function setup_telescope()
       },
     },
   })
-  vim.api.nvim_set_hl(0, 'TelescopeBorder', { link = 'WinSeparator', force = true })
-  vim.api.nvim_set_hl(0, 'TelescopeTitle', { link = 'Title', force = true })
-  vim.api.nvim_set_hl(0, 'TelescopeSelection', { link = 'CursorLine' })
   -- telescope 的 undo 插件
   require('telescope').load_extension('undo')
 end

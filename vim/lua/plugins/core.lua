@@ -258,14 +258,7 @@ local function core_plugins()
   table.insert(plugins, {
     'dstein64/nvim-scrollview',
     event = 'VeryLazy',
-    config = function()
-      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
-      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
-      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
-      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
-      vim.api.nvim_set_hl(0, 'ScrollViewHover', { link = 'PmenuSel' })
-      vim.api.nvim_set_hl(0, 'ScrollViewRestricted', { link = 'ScrollView' })
-    end,
+    config = function() end,
   })
 
   table.insert(plugins, {
@@ -315,7 +308,6 @@ local function core_plugins()
           },
         },
       })
-      vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
     end,
   })
 

@@ -121,6 +121,41 @@ endfunction
 vim.api.nvim_create_autocmd('ColorScheme', {
   callback = function(args)
     vim.call('g:SetupColorschemePost', args.file, args.match)
+    -- 修改一些插件的高亮组, 需要插件初始化的时候用了 default 属性
+    vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
+    -- scrollview
+    vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
+    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
+    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
+    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
+    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
+    vim.api.nvim_set_hl(0, 'ScrollViewHover', { link = 'PmenuSel' })
+    vim.api.nvim_set_hl(0, 'ScrollViewRestricted', { link = 'ScrollView' })
+    -- telescope
+    vim.api.nvim_set_hl(0, 'TelescopeBorder', { link = 'WinSeparator', force = true })
+    vim.api.nvim_set_hl(0, 'TelescopeTitle', { link = 'Title', force = true })
+    vim.api.nvim_set_hl(0, 'TelescopeSelection', { link = 'CursorLine' })
+
+    if vim.g.colors_name == 'gruvbox' then
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { link = 'SpecialChar' })
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'SpecialChar' })
+      vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'String' })
+      vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Identifier' })
+      vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { link = 'Directory' })
+      vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { link = 'Normal' })
+      -- neo-tree
+      vim.api.nvim_set_hl(0, 'NeoTreeDirectoryIcon', { fg = '#8094b4', ctermfg = 12 })
+      vim.api.nvim_set_hl(0, 'NeoTreeDirectoryName', { link = 'Title' })
+      vim.api.nvim_set_hl(0, 'NeoTreeRootName', { bold = true })
+      local opts = vim.api.nvim_get_hl(0, { name = 'NeoTreeGitUntracked' })
+      opts.italic = false ---@diagnostic disable-line
+      vim.api.nvim_set_hl(0, 'NeoTreeGitUntracked', opts) ---@diagnostic disable-line
+      -- nvim-tree 的 ? 浮窗使用了 border, 所以需要修改背景色
+      vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', { link = 'Normal' })
+      vim.api.nvim_set_hl(0, 'NvimTreeFolderName', { link = 'Title' })
+      vim.api.nvim_set_hl(0, 'NvimTreeOpenedFolderName', { link = 'Title' })
+      vim.api.nvim_set_hl(0, 'NvimTreeSymlinkFolderName', { link = 'Title' })
+    end
   end,
 })
 
@@ -144,8 +179,15 @@ if vim.g.my_colors_name == 'gruvbox' and pcall(vim.cmd.packadd, 'gruvbox.nvim') 
   end
   -- TODO: 放到 ColorScheme callback
   -- gruvbox.nvim 的这几个配色要覆盖掉
-  local names = { 'GruvboxRedSign', 'GruvboxGreenSign', 'GruvboxYellowSign', 'GruvboxBlueSign', 'GruvboxPurpleSign',
-    'GruvboxAquaSign', 'GruvboxOrangeSign' }
+  local names = {
+    'GruvboxRedSign',
+    'GruvboxGreenSign',
+    'GruvboxYellowSign',
+    'GruvboxBlueSign',
+    'GruvboxPurpleSign',
+    'GruvboxAquaSign',
+    'GruvboxOrangeSign',
+  }
   for _, name in ipairs(names) do
     local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
     if not vim.tbl_isempty(opts) then

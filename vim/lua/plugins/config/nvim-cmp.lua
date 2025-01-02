@@ -346,11 +346,6 @@ vim.keymap.set('i', '<C-e>', '', {
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
 
-vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { link = 'SpecialChar' })
-vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'SpecialChar' })
-vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'String' })
-vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Identifier' })
-
 vim.keymap.set('s', '<Tab>', function() require('luasnip').jump(1) end, { silent = true })
 vim.keymap.set('s', '<S-Tab>', function() require('luasnip').jump(-1) end, { silent = true })
 

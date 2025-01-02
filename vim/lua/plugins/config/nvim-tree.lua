@@ -211,8 +211,3 @@ vim.api.nvim_create_autocmd('WinEnter', {
 
 require('nvim-tree').setup(nvim_tree_opts)
 
--- nvim-tree 的 ? 浮窗使用了 border, 所以需要修改背景色
-vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', { link = 'Normal' })
-vim.api.nvim_set_hl(0, 'NvimTreeFolderName', { link = 'Title' })
-vim.api.nvim_set_hl(0, 'NvimTreeOpenedFolderName', { link = 'Title' })
-vim.api.nvim_set_hl(0, 'NvimTreeSymlinkFolderName', { link = 'Title' })

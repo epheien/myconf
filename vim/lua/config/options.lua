@@ -100,7 +100,6 @@ vim.env.VIM_SERVERNAME = vim.v.servername
 vim.env.VIM_EXE = vim.v.progpath
 
 -- scrollview
-vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
 vim.g.scrollview_auto_mouse = false
 vim.g.scrollview_excluded_filetypes = { 'NvimTree' }
 
