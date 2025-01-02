@@ -169,7 +169,9 @@ local function mystl_setup()
   if not vim.regex([[^%!\|^%{%]]):match_str(vim.o.statusline) then
     vim.o.statusline = '─'
   end
-  vim.opt.fillchars:append({ stl = '─', stlnc = '─' })
+  -- NOTE: 这里用 vim.opt 的话会导致奇怪的问题,
+  --       例如 此时 local 和 global 不一致的时候, 会直接覆盖而不是添加
+  vim.opt_global.fillchars:append({ stl = '─', stlnc = '─' })
 end
 
 -- init MyStatusLine
