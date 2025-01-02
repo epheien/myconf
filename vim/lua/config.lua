@@ -122,25 +122,27 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   callback = function(args)
     vim.call('g:SetupColorschemePost', args.file, args.match)
     -- 修改一些插件的高亮组, 需要插件初始化的时候用了 default 属性
-    vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
-    -- scrollview
-    vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
-    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
-    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
-    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
-    vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
-    vim.api.nvim_set_hl(0, 'ScrollViewHover', { link = 'PmenuSel' })
-    vim.api.nvim_set_hl(0, 'ScrollViewRestricted', { link = 'ScrollView' })
-    -- telescope
-    vim.api.nvim_set_hl(0, 'TelescopeBorder', { link = 'WinSeparator', force = true })
-    vim.api.nvim_set_hl(0, 'TelescopeTitle', { link = 'Title', force = true })
-    vim.api.nvim_set_hl(0, 'TelescopeSelection', { link = 'CursorLine' })
-
     if vim.g.colors_name == 'gruvbox' then
+      -- edgy.nvim
+      vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
+      -- scrollview
+      vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsHint', { link = 'DiagnosticHint' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsInfo', { link = 'DiagnosticInfo' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsWarn', { link = 'DiagnosticWarn' })
+      vim.api.nvim_set_hl(0, 'ScrollViewDiagnosticsError', { link = 'DiagnosticError' })
+      vim.api.nvim_set_hl(0, 'ScrollViewHover', { link = 'PmenuSel' })
+      vim.api.nvim_set_hl(0, 'ScrollViewRestricted', { link = 'ScrollView' })
+      -- telescope
+      vim.api.nvim_set_hl(0, 'TelescopeBorder', { link = 'WinSeparator', force = true })
+      vim.api.nvim_set_hl(0, 'TelescopeTitle', { link = 'Title', force = true })
+      vim.api.nvim_set_hl(0, 'TelescopeSelection', { link = 'CursorLine' })
+      -- nvim-cmp
       vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { link = 'SpecialChar' })
       vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'SpecialChar' })
       vim.api.nvim_set_hl(0, 'CmpItemMenu', { link = 'String' })
       vim.api.nvim_set_hl(0, 'CmpItemKind', { link = 'Identifier' })
+      -- snacks
       vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { link = 'Directory' })
       vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { link = 'Normal' })
       -- neo-tree
