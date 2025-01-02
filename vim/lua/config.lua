@@ -69,45 +69,47 @@ end
 assert((vim.uv or vim.loop).fs_stat(path), msg) ---@diagnostic disable-line
 vim.opt.rtp:prepend(path)
 
-vim.cmd([[
-function g:SetupColorschemePost(...)
-  if g:colors_name ==# 'gruvbox'
-    " 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
-    hi! link String Constant
-    " 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
-    hi Cursor guifg=black guibg=yellow gui=NONE ctermfg=16 ctermbg=226 cterm=NONE
-    hi Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE
-    "hi IncSearch guifg=#181826 guibg=#7ec9d9 gui=NONE cterm=NONE
-    hi Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE
-    hi Directory guifg=#8094b4 gui=bold ctermfg=12 cterm=bold
-    hi FoldColumn guibg=NONE ctermbg=NONE
-    " tagbar 配色
-    hi! link TagbarAccessPublic GruvboxAqua
-    hi! link TagbarAccessProtected GruvboxPurple
-    hi! link TagbarAccessPrivate GruvboxRed
-    hi! link TagbarSignature Normal
-    hi! link TagbarKind Constant
-    hi! link CurSearch Search
-    hi! link FloatBorder WinSeparator
-    hi! link SpecialKey Special
-    hi! SignColumn guibg=NONE ctermbg=NONE
-    " GitGutter
-    hi! link GitGutterAdd GruvboxGreen
-    hi! link GitGutterChange GruvboxAqua
-    hi! link GitGutterDelete GruvboxRed
-    hi! link GitGutterChangeDelete GruvboxYellow
-    " Signature
-    hi! link SignatureMarkText   GruvboxBlue
-    hi! link SignatureMarkerText GruvboxPurple
-  endif
-endfunction
-]])
-
 vim.api.nvim_create_autocmd('ColorScheme', {
   -- 修改一些插件的高亮组, 需要插件初始化的时候用了 default 属性
-  callback = function(args)
+  callback = function(event) ---@diagnostic disable-line
     if vim.g.colors_name == 'gruvbox' then
-      vim.call('g:SetupColorschemePost', args.file, args.match)
+      -- 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
+      vim.api.nvim_set_hl(0, 'String', { link = 'Constant' })
+      -- 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
+      vim.api.nvim_set_hl(0, 'Cursor', {})
+      vim.api.nvim_set_hl(0, 'Cursor', { fg = 'black', bg = 'yellow', ctermfg = 16, ctermbg = 226 })
+      vim.api.nvim_set_hl(0, 'Todo', {})
+      -- stylua: ignore
+      vim.api.nvim_set_hl(0, 'Todo', { fg = 'orangered', bg = 'yellow2', ctermfg = 202, ctermbg = 226 })
+
+      vim.api.nvim_set_hl(0, 'Search', {})
+      -- stylua: ignore
+      vim.api.nvim_set_hl(0, 'Search', { fg = 'gray80', bg = '#445599', ctermfg = 252, ctermbg = 61 })
+      vim.api.nvim_set_hl(0, 'Directory', { fg = '#8094b4', bold = true })
+      vim.api.nvim_set_hl(0, 'FoldColumn', { bg = 'NONE', ctermbg = 'NONE' })
+
+      -- tagbar 配色
+      vim.api.nvim_set_hl(0, 'TagbarAccessPublic', { link = 'GruvboxAqua' })
+      vim.api.nvim_set_hl(0, 'TagbarAccessProtected', { link = 'GruvboxPurple' })
+      vim.api.nvim_set_hl(0, 'TagbarAccessPrivate', { link = 'GruvboxRed' })
+      vim.api.nvim_set_hl(0, 'TagbarSignature', { link = 'Normal' })
+      vim.api.nvim_set_hl(0, 'TagbarKind', { link = 'Constant' })
+
+      vim.api.nvim_set_hl(0, 'CurSearch', { link = 'Search' })
+      vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'WinSeparator' })
+      vim.api.nvim_set_hl(0, 'SpecialKey', { link = 'Special' })
+      vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE', ctermbg = 'NONE' })
+
+      -- GitGutter
+      vim.api.nvim_set_hl(0, 'GitGutterAdd', { link = 'GruvboxGreen' })
+      vim.api.nvim_set_hl(0, 'GitGutterChange', { link = 'GruvboxAqua' })
+      vim.api.nvim_set_hl(0, 'GitGutterDelete', { link = 'GruvboxRed' })
+      vim.api.nvim_set_hl(0, 'GitGutterChangeDelete', { link = 'GruvboxYellow' })
+
+      -- Signature
+      vim.api.nvim_set_hl(0, 'SignatureMarkText', { link = 'GruvboxBlue' })
+      vim.api.nvim_set_hl(0, 'SignatureMarkerText', { link = 'GruvboxPurple' })
+
       -- edgy.nvim
       vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
       -- scrollview
