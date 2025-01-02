@@ -19,6 +19,7 @@ local create_help_floatwin = function()
   -- NOTE: floating window 的 winhighlight 选项会继承自调用此函数的窗口
   --       但是用下面的方法设置选项就没有问题
   vim.wo.winhighlight = '' -- 无脑清空, 因为这个窗口不允许修改配色
+  vim.wo.cursorline = false
   local opt = vim.opt_local.winhighlight
   if not opt:get().NormalFloat then
     opt:append({ NormalFloat = 'Normal' })
