@@ -344,5 +344,7 @@ xnoremap / y:let @" = substitute(@", '\\', '\\\\', "g")<CR>
 nnoremap <silent> <C-f> :call mydict#Search(expand('<cword>'))<CR>
 vnoremap <silent> <C-f> y:call mydict#Search(@")<CR>
 
+nnoremap <silent> q :lclose<CR><C-w>q
+
 " ----------------------------------------------------------------------------
 " vim: fdm=marker fen fdl=0 expandtab softtabstop=4
