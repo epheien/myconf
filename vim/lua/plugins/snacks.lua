@@ -23,6 +23,24 @@ local opts = {
         { icon = " ", key = "q", desc = "Quit", action = ":qa" },
       },
     },
+
+    sections = {
+      {
+        section = 'terminal',
+        --cmd = 'chafa vscode-neovim.png --format symbols --symbols vhalf --size 20x10 --stretch; sleep .1',
+        cmd = string.format(
+          'cat \'%s\'; sleep .1',
+          ---@diagnostic disable-next-line
+          vim.fs.joinpath(vim.fn.stdpath('config'), 'images', 'vscode-neovim.cat')
+        ),
+        height = 10,
+        padding = 1,
+        indent = 20,
+      },
+      --{ section = 'header' },
+      { section = 'keys', gap = 1, padding = 1 },
+      { section = 'startup' },
+    },
   },
 }
 
