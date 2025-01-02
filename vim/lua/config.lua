@@ -100,29 +100,14 @@ function g:SetupColorschemePost(...)
     hi! link SignatureMarkText   GruvboxBlue
     hi! link SignatureMarkerText GruvboxPurple
   endif
-
-  " 修改 StatusLine 和 StatusLineNC 高亮组, 以适配 mystl 状态栏
-  "hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
-  let normalHl = nvim_get_hl(0, {'name': 'Normal', 'link': v:false})
-  let winSepHl = nvim_get_hl(0, {'name': 'WinSeparator', 'link': v:false})
-  let fg = printf('#%06x', get(winSepHl, get(winSepHl, 'reverse') ? 'bg' : 'fg'))
-  let bg = printf('#%06x', get(normalHl, get(normalHl, 'reverse') ? 'fg' : 'bg'))
-  let ctermfg = get(winSepHl, get(winSepHl, 'reverse') ? 'ctermbg' : 'ctermfg', 'NONE')
-  let ctermbg = get(normalHl, get(normalHl, 'reverse') ? 'ctermfg' : 'ctermbg', 'NONE')
-  call nvim_set_hl(0, 'StatusLine', {'fg': fg, 'bg': bg, 'ctermfg': ctermfg, 'ctermbg': ctermbg})
-  hi! link StatusLineNC StatusLine
-  if &statusline !~# '^%!\|^%{%'
-    set statusline=─
-  endif
-  set fillchars+=stl:─,stlnc:─
 endfunction
 ]])
 
 vim.api.nvim_create_autocmd('ColorScheme', {
+  -- 修改一些插件的高亮组, 需要插件初始化的时候用了 default 属性
   callback = function(args)
-    vim.call('g:SetupColorschemePost', args.file, args.match)
-    -- 修改一些插件的高亮组, 需要插件初始化的时候用了 default 属性
     if vim.g.colors_name == 'gruvbox' then
+      vim.call('g:SetupColorschemePost', args.file, args.match)
       -- edgy.nvim
       vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
       -- scrollview
