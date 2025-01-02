@@ -148,6 +148,7 @@ local nvim_tree_opts = {
       glyphs = {
         git = {
           untracked = '?',
+          ignored = '',
         },
       },
     },
@@ -210,4 +211,3 @@ vim.api.nvim_create_autocmd('WinEnter', {
 })
 
 require('nvim-tree').setup(nvim_tree_opts)
-

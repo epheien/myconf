@@ -74,6 +74,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   callback = function(event) ---@diagnostic disable-line
     -- 这个高亮原始值是 Visual, 在大多数主题下效果都不好, 必须修改
     vim.api.nvim_set_hl(0, 'ScrollView', { link = 'PmenuThumb' })
+    -- snacks dashboard 的描述和图标默认使用同一配色, 不易分辨, 改掉
+    vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { link = 'Normal' })
 
     if event.match == 'gruvbox' then
       -- 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
