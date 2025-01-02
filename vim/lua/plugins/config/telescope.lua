@@ -41,6 +41,8 @@ local function setup_telescope()
     layout_config = {
       prompt_position = 'top',
     },
+    -- border = 'single'
+    borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
   }
   require('telescope').setup({
     --defaults = require('telescope.themes').get_dropdown(opts),

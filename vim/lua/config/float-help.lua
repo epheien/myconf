@@ -12,7 +12,7 @@ local create_help_floatwin = function()
       col = col,
       width = width,
       height = math.floor(vim.o.lines / 2),
-      border = 'rounded',
+      border = 'single',
     })
   end
   vim.api.nvim_set_current_win(help_winid)
