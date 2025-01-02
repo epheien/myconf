@@ -9,3 +9,4 @@ GTAGS
 /coc/
 /vim-plugins.tar.gz
 /unused/
+/lazy-lock.json
