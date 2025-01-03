@@ -83,7 +83,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       -- 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
       vim.cmd.hi('Cursor guifg=black guibg=#dddd00 gui=NONE ctermfg=16 ctermbg=226 cterm=NONE')
       vim.cmd.hi('Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE')
-      vim.cmd.hi('IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26')
+      --vim.cmd.hi('IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26')
       vim.cmd.hi('Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE')
       vim.cmd.hi('Directory guifg=#8094b4 gui=bold ctermfg=12 cterm=bold')
       vim.cmd.hi({ args = { 'FoldColumn', 'guibg=NONE', 'ctermbg=NONE' } })
