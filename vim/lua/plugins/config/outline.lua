@@ -106,13 +106,17 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 function M.check_mouse_click()
   local cursor = vim.api.nvim_win_get_cursor(0)
+  local col = cursor[2]
   local line = vim.api.nvim_get_current_line()
   local icon_open = ' '
-  local icon_closed = ' '
-  if vim.fn.match(line, icon_open) == cursor[2] then
+  local icon_close = ' '
+  local open_match = vim.regex(icon_open):match_str(line)
+  local close_match = vim.regex(icon_close):match_str(line)
+  local gap = 3
+  if open_match and (col >= open_match and col <= open_match + gap) then
     local key = vim.api.nvim_replace_termcodes('<Tab>', true, false, true)
     vim.api.nvim_feedkeys(key, '', true)
-  elseif vim.fn.match(line, icon_closed) == cursor[2] then
+  elseif close_match and (col >= close_match and col <= close_match + gap) then
     local key = vim.api.nvim_replace_termcodes('<Tab>', true, false, true)
     vim.api.nvim_feedkeys(key, '', true)
   end
