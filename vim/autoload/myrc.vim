@@ -9,6 +9,9 @@ let s:enable_oscyank = v:false
 
 " 初始化本脚本的依赖项
 function! s:init() abort
+    if g:colors_name =~# '^catppuccin'
+        return
+    endif
     " tabline 高亮, gruvbox 主题
     "hi! MyTabLineSel    ctermfg=235 ctermbg=246 guifg=#282828 guibg=#a89984
     "hi! MyTabLineNotSel ctermfg=246 ctermbg=239 guifg=#a89984 guibg=#504945
