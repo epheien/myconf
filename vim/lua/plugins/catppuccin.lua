@@ -28,10 +28,10 @@ return {
           vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#9399b3', bg = '#11111c' })
           vim.api.nvim_set_hl(0, 'MyTabLineClose', { fg = '#f38ba9', bg = '#181826' })
         else
-          vim.api.nvim_set_hl(0, 'MyTabLineSel', { fg = '#cad3f6', bg = '#24273b', bold = true })
-          vim.api.nvim_set_hl(0, 'MyTabLineNotSel', { fg = '#8890ab', bg = '#1e2031' })
-          vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#939ab8', bg = '#181927' }) -- #1b1d2c
-          vim.api.nvim_set_hl(0, 'MyTabLineClose', { fg = '#ed8797', bg = '#1e2031' })
+          vim.api.nvim_set_hl(0, 'MyTabLineSel', { fg = '#cad3f5', bg = '#24273a', bold = true })
+          vim.api.nvim_set_hl(0, 'MyTabLineNotSel', { fg = '#8890ab', bg = '#1e2030' })
+          vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#939ab8', bg = '#181926' })
+          vim.api.nvim_set_hl(0, 'MyTabLineClose', { fg = '#ed8797', bg = '#1e2030' })
         end
       end,
     })
