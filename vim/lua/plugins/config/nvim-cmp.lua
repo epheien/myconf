@@ -215,12 +215,14 @@ local opts = {
   preselect = cmp.PreselectMode.None,
   window = {
     completion = {
+      col_offset = -2,
       -- 影响了 cmdline 补全的宽度, 未想到好的解决办法, 暂时关掉
       --maxwidth = 60, -- Linux 系统下, 函数参数列表放到了 menu 项
     },
   },
   formatting = {
-    format = lspkind.cmp_format(lspkind_opts)
+    format = lspkind.cmp_format(lspkind_opts),
+    fields = { 'kind', 'abbr', 'menu' },
   },
   completion = {
     completeopt = 'menuone,noinsert',
@@ -359,6 +361,9 @@ local cmdline_opts = {
       border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
       winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel,Search:None',
     },
+  },
+  formatting = {
+    fields = { 'abbr', 'kind', 'menu' },
   },
   completion = {
     completeopt = 'menuone,noinsert,noselect',
