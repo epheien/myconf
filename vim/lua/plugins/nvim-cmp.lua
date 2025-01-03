@@ -44,6 +44,7 @@ return {
       max_width = 80,
       floating_window_off_x = -1,
       zindex = 2,
+      hint_enable = false,
     },
   },
 }
