@@ -24,13 +24,13 @@ return {
         -- mocha tabline 主题
         if opts.flavour == 'mocha' then
           vim.api.nvim_set_hl(0, 'MyTabLineSel', { fg = '#cdd6f5', bg = '#1e1e2f', bold = true })
-          vim.api.nvim_set_hl(0, 'MyTabLineNotSel', { fg = '#45475b', bg = '#181826' })
-          vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#45475b', bg = '#181826' })
+          vim.api.nvim_set_hl(0, 'MyTabLineNotSel', { fg = '#797e94', bg = '#181826' })
+          vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#9399b3', bg = '#11111c' })
           vim.api.nvim_set_hl(0, 'MyTabLineClose', { fg = '#f38ba9', bg = '#181826' })
         else
           vim.api.nvim_set_hl(0, 'MyTabLineSel', { fg = '#cad3f6', bg = '#24273b', bold = true })
-          vim.api.nvim_set_hl(0, 'MyTabLineNotSel', { fg = '#494d65', bg = '#1e2031' })
-          vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#494d65', bg = '#181826' })
+          vim.api.nvim_set_hl(0, 'MyTabLineNotSel', { fg = '#8890ab', bg = '#1e2031' })
+          vim.api.nvim_set_hl(0, 'MyTabLineFill', { fg = '#939ab8', bg = '#181927' }) -- #1b1d2c
           vim.api.nvim_set_hl(0, 'MyTabLineClose', { fg = '#ed8797', bg = '#1e2031' })
         end
       end,
