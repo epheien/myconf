@@ -147,8 +147,8 @@ local nvim_tree_opts = {
       git_placement = 'right_align',
       glyphs = {
         git = {
-          untracked = '?',
-          ignored = '',
+          untracked = '',
+          ignored = vim.env.TERM_PROGRAM ~= 'kitty' and '' or nil,
         },
       },
     },
