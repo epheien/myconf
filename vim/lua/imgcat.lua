@@ -10,7 +10,7 @@ local M = {}
 
 function M.imgcat(fname)
   ---- from a file (absolute path)
-  local image = image.from_file(fname, {
+  local img = image.from_file(fname, {
     window = vim.fn.win_getid(), -- optional, binds image to a window and its bounds
     --buffer = 1000, -- optional, binds image to a buffer (paired with window binding)
     with_virtual_padding = true, -- optional, pads vertically with extmarks, defaults to false
@@ -26,7 +26,7 @@ function M.imgcat(fname)
     height = vim.opt_global.lines:get() - 1,
   })
 
-  image:render() -- render image
+  img:render() -- render image
 end
 
 return M
