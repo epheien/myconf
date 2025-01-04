@@ -25,7 +25,6 @@ local local_plugins = {
   { 'vim-repeat', event = 'VeryLazy' },
   { 'python-syntax', event = 'VeryLazy' },
   { 'jsonfmt', cmd = 'JsonFmt' },
-  { 'colorizer', cmd = 'UpdateColor' },
   { 'colorsel', cmd = 'ColorSel' },
   { 'visincr', keys = 'I' },
 }
