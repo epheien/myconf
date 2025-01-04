@@ -13,6 +13,8 @@
 
 - [x] 启动速度优化, 要跟 LazyVim 同一级别, 参考 `perf.md`
 - [ ] 了解 lazy.nvim 的 VeryLazy 原理
+- [x] `nvim-cmp`: :com<Tab><C-a><C-e>
+- [ ] `vim-gutentags`: 生成 tags 失败
 
 ## 参考资料
 
