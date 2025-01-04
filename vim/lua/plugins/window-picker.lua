@@ -3,7 +3,7 @@ return {
   'epheien/nvim-window-picker',
   keys = [[\w]],
   config = function()
-    require 'window-picker'.setup({
+    require('window-picker').setup({
       hint = 'floating-big-letter',
       filter_rules = {
         include_current_win = true,
@@ -20,6 +20,6 @@ return {
         vim.api.nvim_set_current_win(win)
       end
     end
-    vim.keymap.set('n', [[\w]], pick_window)
+    vim.keymap.set('n', [[\w]], pick_window, { desc = 'window-picker' })
   end,
 }

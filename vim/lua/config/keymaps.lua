@@ -255,7 +255,7 @@ map('n', [[\c]], function()
   if winid ~= other then
     vim.api.nvim_set_current_win(winid)
   end
-end, { remap = true })
+end, { remap = true, desc = 'MarkAllClear' })
 
 map({ 'n', 'x' }, [[\\]], function()
   local winid = vim.api.nvim_get_current_win()
@@ -264,7 +264,7 @@ map({ 'n', 'x' }, [[\\]], function()
   if winid ~= other then
     vim.api.nvim_set_current_win(winid)
   end
-end, { remap = true })
+end, { remap = true, desc = 'MarkSet' })
 
 local cscmd = 'Cs'
 map(
