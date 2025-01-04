@@ -149,9 +149,13 @@ else
 end
 vim.g.Lf_WindowPosition = 'popup'
 
--- mark
+-- vim-mark
 vim.g.mwIgnoreCase = 0
 vim.g.mwHistAdd = ''
+vim.g.mw_no_mappings = 1
+vim.g.mwDefaultHighlightingPalette = 'extended'
+-- 彩虹 7 色
+vim.g.mwDefaultHighlightingNum = 7
 
 -- vim-signature
 vim.g.SignaturePeriodicRefresh = 0
