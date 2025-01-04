@@ -24,7 +24,6 @@ end
 local local_plugins = {
   { 'vim-repeat', event = 'VeryLazy' },
   { 'python-syntax', event = 'VeryLazy' },
-  { 'mymark', keys = { { '<Plug>MarkSet', mode = { 'n', 'x' } }, '<Plug>MarkAllClear' } },
   { 'jsonfmt', cmd = 'JsonFmt' },
   { 'colorizer', cmd = 'UpdateColor' },
   { 'colorsel', cmd = 'ColorSel' },
