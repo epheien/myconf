@@ -117,19 +117,20 @@ vim.g.gutentags_ctags_tagfile = 'gutags'
 vim.g.gutentags_add_default_project_roots = 0
 vim.g.gutentags_project_root = { 'gtags.files' }
 vim.g.gutentags_auto_add_gtags_cscope = 0
-vim.g.gutentags_modules = {}
+local gutentags_modules = {}
 if vim.fn.executable('ctags') == 1 then
-  table.insert(vim.g.gutentags_modules, 'ctags')
+  table.insert(gutentags_modules, 'ctags')
 end
 
 if vim.fn.executable('gtags-cscope') == 1 and vim.fn.executable('gtags') == 1 then
   if vim.fn.has('nvim-0.9') == 1 then
-    table.insert(vim.g.gutentags_modules, 'cscope_maps')
+    table.insert(gutentags_modules, 'cscope_maps')
     vim.g.gutentags_cscope_executable_maps = 'gtags'
   else
-    table.insert(vim.g.gutentags_modules, 'gtags_cscope')
+    table.insert(gutentags_modules, 'gtags_cscope')
   end
 end
+vim.g.gutentags_modules = gutentags_modules
 -- ctags 的一些参数
 vim.g.gutentags_ctags_extra_args = { '--fields=+niazS', '--extra=+q' }
 
