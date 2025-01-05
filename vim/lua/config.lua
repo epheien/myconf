@@ -7,6 +7,9 @@ vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin | tokyonight
 local config_path = vim.fn.stdpath('config') ---@diagnostic disable-line
 local loop = vim.uv or vim.loop
 
+-- base46 主题引擎缓存目录
+vim.g.base46_cache = config_path .. '/base46_cache/'
+
 -- 非 macOS 系统, 可能会缺少一些插件, 改用 pckr.nvim, 因为 pckr.nvim 不报错
 if
   vim.fn.has('mac') ~= 1
@@ -141,6 +144,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'NvimTreeFolderName', { link = 'Title' })
       vim.api.nvim_set_hl(0, 'NvimTreeOpenedFolderName', { link = 'Title' })
       vim.api.nvim_set_hl(0, 'NvimTreeSymlinkFolderName', { link = 'Title' })
+    elseif event.match == 'base46' then
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'CmpItemAbbrMatch' })
     end
   end,
 })
@@ -189,6 +194,26 @@ if vim.g.my_colors_name == 'gruvbox' and pcall(vim.cmd.packadd, 'gruvbox.nvim') 
   vim.api.nvim_set_hl(0, 'markdownCodeDelimiter', { link = 'Delimiter' })
   vim.api.nvim_set_hl(0, 'markdownOrderedListMarker', { link = 'markdownListMarker' })
   vim.api.nvim_set_hl(0, 'markdownListMarker', { link = 'Tag' })
+elseif vim.g.my_colors_name == 'base46' then
+  dofile(vim.g.base46_cache .. 'defaults')
+  local function load_base46_colors()
+    for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+      if v ~= 'defaults' and v ~= 'statusline' then
+        dofile(vim.g.base46_cache .. v)
+      end
+    end
+  end
+  if vim.fn.argc(-1) > 0 then
+    load_base46_colors()
+  else
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'VeryLazy',
+      once = true,
+      callback = load_base46_colors,
+    })
+  end
+  vim.g.colors_name = 'base46'
+  vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false, pattern = vim.g.colors_name })
 end
 
 if vim.g.package_manager == 'pckr' then
