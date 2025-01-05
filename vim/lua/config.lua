@@ -78,6 +78,9 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { link = 'Normal' })
 
     if event.match == 'gruvbox' then
+      -- 不使用默认的状态栏, 直接清空状态栏高亮
+      vim.api.nvim_set_hl(0, 'StatusLine', {})
+      vim.api.nvim_set_hl(0, 'StatusLineNC', {})
       -- 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
       vim.api.nvim_set_hl(0, 'String', { link = 'Constant' })
       -- 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置

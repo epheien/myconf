@@ -27,6 +27,12 @@ vim.opt.jumpoptions:append({ 'stack', 'view' })
 vim.o.swapfile = false
 vim.o.mouse = 'a'
 vim.o.laststatus = 2
+-- 这几个选项在 mystl 会重置, 这里设置是为了启动的时候状态栏不闪烁
+--vim.o.statusline=' '
+vim.o.ruler = false
+-- 不使用默认的状态栏, 直接清空状态栏高亮
+vim.api.nvim_set_hl(0, 'StatusLine', {})
+vim.api.nvim_set_hl(0, 'StatusLineNC', {})
 
 vim.opt.guicursor = {
   'n-v-c:block',
