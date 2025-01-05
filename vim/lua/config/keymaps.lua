@@ -14,9 +14,7 @@ local nosilent = { silent = false }
 map('n', 'j', 'gj')
 map('n', 'k', 'gk')
 
-map('n', '<RightRelease>', function()
-  vim.cmd('call myrc#ContextPopup(1)')
-end)
+map('n', '<RightRelease>', function() vim.cmd('call myrc#ContextPopup(1)') end)
 
 -- 禁用这些鼠标的点击
 map('n', '<RightMouse>', '<Nop>')
@@ -26,29 +24,17 @@ map('n', '<4-LeftMouse>', '<Nop>')
 map('n', '<4-LeftMouse>', '<Nop>')
 
 -- <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
-map('n', '<CR>', function()
-  vim.call('myrc#MyEnter')
-end)
+map('n', '<CR>', function() vim.call('myrc#MyEnter') end)
 
-map('i', '<Tab>', function()
-  vim.call('myrc#SuperTab')
-end)
-map('i', '<S-Tab>', function()
-  vim.call('myrc#ShiftTab')
-end)
+map('i', '<Tab>', function() vim.call('myrc#SuperTab') end)
+map('i', '<S-Tab>', function() vim.call('myrc#ShiftTab') end)
 
-map('n', '<C-f>', function()
-  vim.call('mydict#Search', vim.fn.expand('<cword>'))
-end)
+map('n', '<C-f>', function() vim.call('mydict#Search', vim.fn.expand('<cword>')) end)
 
-map('n', '<C-f>', function()
-  vim.call('mydict#Search', vim.fn.expand('<cword>'))
-end)
+map('n', '<C-f>', function() vim.call('mydict#Search', vim.fn.expand('<cword>')) end)
 map('v', '<C-f>', 'y:call mydict#Search(@")<CR>')
 
-map('n', '<C-]>', function()
-  vim.call('myrc#Cstag')
-end)
+map('n', '<C-]>', function() vim.call('myrc#Cstag') end)
 
 map('n', '<M-h>', ':tabNext<CR>')
 map('n', '<M-l>', ':tabnext<CR>')
@@ -107,9 +93,7 @@ map('n', ';', ':', { remap = true, silent = false })
 -- Close window
 map('n', 'gq', ':call myrc#close()<CR>')
 
-map('n', 'T', function()
-  vim.cmd.tag()
-end)
+map('n', 'T', function() vim.cmd.tag() end)
 
 -- 交换 ' 和 `，因为 ` 比 ' 常用但太远
 map('n', '\'', '`')
@@ -118,12 +102,8 @@ map('n', '`', '\'')
 map('n', ']q', ':cn<CR>')
 map('n', '[q', ':cp<CR>')
 -- diagnostic 跳转 (包装成函数避免初始化的时候载入 vim.diagnostic 模块)
-map('n', ']w', function()
-  return vim.diagnostic.goto_next()
-end)
-map('n', '[w', function()
-  return vim.diagnostic.goto_prev()
-end)
+map('n', ']w', function() return vim.diagnostic.goto_next() end)
+map('n', '[w', function() return vim.diagnostic.goto_prev() end)
 
 -- stty -ixon
 map('n', '<C-s>', function()
@@ -221,9 +201,7 @@ map('n', '*', '<Plug>MarkSearchCurrentNext', { remap = true })
 map('n', '#', '<Plug>MarkSearchCurrentPrev', { remap = true })
 map('n', '<Leader>*', '<Plug>MarkSearchNext', { remap = true })
 map('n', '<Leader>#', '<Plug>MarkSearchPrev', { remap = true })
-map('n', '<2-LeftMouse>', function()
-  vim.call('myrc#MouseMark')
-end)
+map('n', '<2-LeftMouse>', function() vim.call('myrc#MouseMark') end)
 
 local cscmd = 'Cs'
 map(
@@ -272,14 +250,10 @@ map(
   string.format(':%s find a <C-R>=fnameescape(expand(\'<cword>\'))<CR><CR>', cscmd)
 )
 
-map('n', 'K', function()
-  vim.call('myrc#ShowDocumentation')
-end)
+map('n', 'K', function() vim.call('myrc#ShowDocumentation') end)
 
 map('i', '<C-g>', '<C-r>=myrc#i_InsertHGuard()<CR>', nosilent)
-map('i', '<CR>', function()
-  vim.call('myrc#SmartEnter')
-end)
+map('i', '<CR>', function() vim.call('myrc#SmartEnter') end)
 
 map('i', '<C-e>', 'myrc#i_CTRL_E()', { expr = true })
 -- 切换光标前的单词的大小写
