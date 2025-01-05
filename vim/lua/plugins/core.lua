@@ -210,22 +210,6 @@ local function core_plugins()
   --  end
   --})
 
-  table.insert(plugins, {
-    'echasnovski/mini.diff',
-    event = 'FileType',
-    opts = {
-      view = {
-        style = 'sign',
-        --signs = { add = '+', change = '~', delete = '_' },
-        signs = { add = '┃', change = '┃', delete = '_' },
-      },
-      mappings = {
-        goto_prev = '[c',
-        goto_next = ']c',
-      },
-    },
-  })
-
   -- 支持鼠标拖动浮窗
   table.insert(plugins, {
     'epheien/flirt.nvim',
