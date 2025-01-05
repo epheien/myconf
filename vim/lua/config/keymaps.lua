@@ -24,7 +24,7 @@ map('n', '<4-LeftMouse>', '<Nop>')
 map('n', '<4-LeftMouse>', '<Nop>')
 
 -- <CR> 来重复上一条命令，10秒内连续 <CR> 的话，无需确认
-map('n', '<CR>', function() vim.call('myrc#MyEnter') end)
+--map('n', '<CR>', function() vim.call('myrc#MyEnter') end)
 
 map('i', '<Tab>', function() vim.call('myrc#SuperTab') end)
 map('i', '<S-Tab>', function() vim.call('myrc#ShiftTab') end)
