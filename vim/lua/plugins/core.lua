@@ -384,6 +384,9 @@ local function core_plugins()
     'folke/todo-comments.nvim',
     event = 'FileType',
     config = function()
+      -- NOTE: todo-comments 会从已有的高亮组中自动生成高亮组,
+      --       所以必须确保 DiagnosticXXX 系列的高亮组已经全部载入
+      vim.api.nvim_exec_autocmds('User', { modeline = false, pattern = 'MyLazyEvent' })
       require('todo-comments').setup({
         signs = false,
         highlight = {
