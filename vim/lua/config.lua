@@ -144,8 +144,9 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'NvimTreeFolderName', { link = 'Title' })
       vim.api.nvim_set_hl(0, 'NvimTreeOpenedFolderName', { link = 'Title' })
       vim.api.nvim_set_hl(0, 'NvimTreeSymlinkFolderName', { link = 'Title' })
-    elseif event.match == 'base46' then
+    elseif event.match == 'base46' or event.match == 'onedark-nvchad' then
       vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'CmpItemAbbrMatch' })
+      vim.api.nvim_set_hl(0, 'StatusLine', {})
     end
   end,
 })
