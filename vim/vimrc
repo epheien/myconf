@@ -781,26 +781,6 @@ let g:tagbar_type_rfc = {
     \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'rfc.cnf'),
 \ }
 
-let g:tagbar_type_autoit = {
-    \ 'ctagstype' : 'autoit',
-    \ 'kinds'     : [
-        \ 'f:functions',
-    \ ],
-    \ 'sort'    : 0,
-    \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'autoit.cnf'),
-\ }
-
-if s:IsWindowsOS()
-    let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'kinds' : [
-            \ 'h:headings',
-        \ ],
-        \ 'sort' : 0,
-        \ 'deffile' : s:joinpath(s:USERRUNTIME, 'ctags', 'markdown.cnf'),
-    \ }
-endif
-
 let g:tagbar_type_cpp = {
     \ 'ctagstype' : 'c++',
     \ 'kinds'     : [
