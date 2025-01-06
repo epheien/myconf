@@ -1,7 +1,7 @@
 -- 自用全局变量 `package_manager` `nodashboard` `my_colors_name`
 -- pckr or lazy
 vim.g.package_manager = 'lazy'
-vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin | tokyonight
+vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
 
 ---@type string
 local config_path = vim.fn.stdpath('config') ---@diagnostic disable-line
