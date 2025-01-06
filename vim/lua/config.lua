@@ -105,6 +105,9 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'WinSeparator' })
       vim.api.nvim_set_hl(0, 'SpecialKey', { link = 'Special' })
       vim.cmd.hi({ args = { 'SignColumn', 'guibg=NONE', 'ctermbg=NONE' } })
+      -- NonText 和 WinSeparator 同时降低一个色阶, 避免过于明显
+      vim.api.nvim_set_hl(0, 'NonText', { link = 'GruvboxBg1' })
+      vim.api.nvim_set_hl(0, 'WinSeparator', { link = 'GruvboxBg2' })
 
       -- GitGutter
       vim.api.nvim_set_hl(0, 'GitGutterAdd', { link = 'GruvboxGreen' })
