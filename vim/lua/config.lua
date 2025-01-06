@@ -147,6 +147,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     elseif event.match == 'base46' or event.match == 'onedark-nvchad' then
       vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'CmpItemAbbrMatch' })
       vim.api.nvim_set_hl(0, 'StatusLine', {})
+      vim.api.nvim_set_hl(0, 'NonText', { link = 'WinSeparator' })
     end
   end,
 })
