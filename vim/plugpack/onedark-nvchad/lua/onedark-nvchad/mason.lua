@@ -1,0 +1,7 @@
+vim.api.nvim_set_hl(0, "MasonHeader", { fg = "#1e222a", bg = "#e06c75" })
+vim.api.nvim_set_hl(0, "MasonMutedBlock", { bg = "#282c34", fg = "#6f737b" })
+vim.api.nvim_set_hl(0, "MasonMuted", { fg = "#6f737b" })
+vim.api.nvim_set_hl(0, "MasonHeaderSecondary", { link = "MasonHighlightBlock" })
+vim.api.nvim_set_hl(0, "MasonHighlightBlock", { bg = "#98c379", fg = "#1e222a" })
+vim.api.nvim_set_hl(0, "MasonHighlightBlockBold", { link = "MasonHighlightBlock" })
+vim.api.nvim_set_hl(0, "MasonHighlight", { fg = "#61afef" })
