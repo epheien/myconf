@@ -4,9 +4,7 @@ local vimrc_group = vim.api.nvim_create_augroup('vimrc', {})
 if vim.fn.has('mac') == 1 then
   vim.api.nvim_create_augroup('smartim', {})
   vim.api.nvim_create_autocmd({ 'VimEnter', 'VimLeavePre', 'InsertLeave', 'FocusGained' }, {
-    callback = function()
-      vim.system({ 'open', '-g', 'hammerspoon://toEnIM' })
-    end,
+    callback = function() vim.system({ 'open', '-g', 'hammerspoon://toEnIM' }) end,
   })
 end
 
@@ -22,9 +20,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 
 if vim.env.SSH_TTY then
   vim.api.nvim_create_autocmd('InsertLeave', {
-    callback = function()
-      vim.cmd.OSCYank('toEnIM()')
-    end,
+    callback = function() vim.cmd.OSCYank('toEnIM()') end,
   })
 end
 
@@ -76,17 +72,13 @@ vim.api.nvim_create_autocmd('TermOpen', {
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   group = vimrc_group,
-  callback = function()
-    vim.o.helplang = ''
-  end,
+  callback = function() vim.o.helplang = '' end,
 })
 
 -- 隐藏混乱的文件格式中的 ^M 字符
 vim.api.nvim_create_autocmd('BufReadPost', {
   nested = true,
-  callback = function()
-    vim.call('myrc#FixDosFmt')
-  end,
+  callback = function() vim.call('myrc#FixDosFmt') end,
 })
 
 -- • Enabled treesitter highlighting for:
@@ -123,9 +115,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 
 -- 替换 spellfile.vim 标准插件的实现
 vim.api.nvim_create_autocmd('SpellFileMissing', {
-  callback = function(args)
-    vim.call('spellfile#LoadFile', args.match)
-  end,
+  callback = function(args) vim.call('spellfile#LoadFile', args.match) end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -133,5 +123,13 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.g.indentline_char = '│'
     require('config/indent-line').indentchar_update(true)
-  end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'OptionSet' }, {
+  pattern = { 'shiftwidth', 'expandtab', 'tabstop' },
+  group = vimrc_group,
+  callback = function()
+    require('config/indent-line').indentchar_update(vim.v.option_type == 'local')
+  end,
 })

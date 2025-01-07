@@ -34,11 +34,6 @@ local function indentchar_update(is_local)
   opt.listchars:append({ leadmultispace = leadmultispace })
 end
 
-vim.api.nvim_create_autocmd({ 'OptionSet' }, {
-  pattern = { 'shiftwidth', 'expandtab', 'tabstop' },
-  callback = function() indentchar_update(vim.v.option_type == 'local') end,
-})
-
 M.indentchar_update = indentchar_update
 
 return M
