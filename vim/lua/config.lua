@@ -150,6 +150,9 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'CmpItemAbbrMatch' })
       vim.api.nvim_set_hl(0, 'StatusLine', {})
       vim.api.nvim_set_hl(0, 'NonText', { link = 'WinSeparator' })
+      vim.api.nvim_set_hl(0, 'FoldColumn', { link = 'Comment' })
+      vim.api.nvim_set_hl(0, 'FloatTitle', { link = 'Title' })
+      vim.cmd.hi({ args = { 'Title', 'gui=bold' } })
     end
   end,
 })
