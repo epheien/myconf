@@ -2,7 +2,9 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = { 'FileType' },
-    config = function() require('plugins.config.nvim-lspconfig') end,
+    config = function()
+      require('plugins.config.nvim-lspconfig')
+    end,
     dependencies = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
   },
   {
@@ -22,13 +24,15 @@ return {
       --'garymjr/nvim-snippets',
       --'windwp/nvim-autopairs',
     },
-    event = { 'InsertEnter', 'CmdlineEnter' },
+    event = 'InsertEnter',
     cmd = 'CmpDisable',
+    keys = { ':', ';', '/', '?' },
     config = function()
       require('plugins.config.nvim-cmp')
       require('luasnip.loaders.from_vscode').lazy_load({
         paths = { vim.fn.stdpath('config') .. '/snippets' },
       })
+      vim.keymap.set('n', ';', ':')
       --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
     end,
   },
