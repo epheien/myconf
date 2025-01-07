@@ -1,5 +1,20 @@
 return {
   {
+    'echasnovski/mini.indentscope',
+    --enabled = false,
+    version = '*',
+    event = 'FileType',
+    config = function()
+      require('mini.indentscope').setup({
+        symbol = '│',
+        draw = {
+          animation = require('mini.indentscope').gen_animation.none(),
+        },
+      })
+    end,
+  },
+
+  {
     'echasnovski/mini.diff',
     event = 'FileType',
     opts = {
