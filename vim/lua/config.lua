@@ -2,7 +2,7 @@
 -- pckr or lazy
 vim.g.package_manager = 'lazy'
 if not vim.g.my_colors_name then
-  vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
+  vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
 end
 
 ---@type string
@@ -92,6 +92,9 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.cmd.hi('Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE')
       vim.cmd.hi('Directory guifg=#8094b4 gui=bold ctermfg=12 cterm=bold')
       vim.cmd.hi({ args = { 'FoldColumn', 'guibg=NONE', 'ctermbg=NONE' } })
+      vim.api.nvim_set_hl(0, 'Added', { link = 'DiagnosticOk' })
+      vim.api.nvim_set_hl(0, 'Changed', { link = 'DiagnosticHint' })
+      vim.api.nvim_set_hl(0, 'Removed', { link = 'DiagnosticError' })
 
       -- tagbar 配色
       vim.api.nvim_set_hl(0, 'TagbarAccessPublic', { link = 'GruvboxAqua' })
