@@ -12,13 +12,10 @@ local loop = vim.uv or vim.loop
 -- base46 主题引擎缓存目录
 vim.g.base46_cache = config_path .. '/base46_cache/'
 
--- 非 macOS 系统, 可能会缺少一些插件, 改用 pckr.nvim, 因为 pckr.nvim 不报错
-if
-  vim.fn.has('mac') ~= 1
-  and vim.g.package_manager == 'lazy'
-  and not loop.fs_stat(config_path .. '/pack/pckr/opt/vimcdoc') ---@diagnostic disable-line
-then
-  vim.g.package_manager = 'pckr'
+-- 简易覆盖 vim.notify, 用来避免 hit enter 信息, 例如 lazy.nvim 启动时的警告
+vim.notify = function(msg, level, opts) ---@diagnostic disable-line
+  print(msg)
+  vim.cmd.redraw() -- 避免 hit enter
 end
 
 require('config.options')
