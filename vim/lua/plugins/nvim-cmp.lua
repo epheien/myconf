@@ -26,13 +26,12 @@ return {
     },
     event = 'InsertEnter',
     cmd = 'CmpDisable',
-    keys = { ':', ';', '/', '?' },
+    keys = { ':', '/', '?' },
     config = function()
       require('plugins.config.nvim-cmp')
       require('luasnip.loaders.from_vscode').lazy_load({
         paths = { vim.fn.stdpath('config') .. '/snippets' },
       })
-      vim.keymap.set('n', ';', ':')
       --require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
     end,
   },
