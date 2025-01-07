@@ -121,7 +121,6 @@ vim.api.nvim_create_autocmd('SpellFileMissing', {
 vim.api.nvim_create_autocmd('FileType', {
   group = vimrc_group,
   callback = function()
-    vim.g.indentline_char = '│'
     require('config/indent-line').indentchar_update(true)
   end,
 })
