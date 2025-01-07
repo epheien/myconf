@@ -18,7 +18,7 @@ M.create_scratch_floatwin = function(title)
       col = col,
       width = width,
       height = math.floor(vim.o.lines / 2),
-      border = 'rounded',
+      border = 'single',
       title = title,
       title_pos = 'center',
     })
