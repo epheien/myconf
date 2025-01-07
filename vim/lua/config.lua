@@ -238,7 +238,7 @@ else
     install = {
       missing = false,
     },
-    checker = { enable = false },
+    checker = { enable = false, frequency = math.huge },
     change_detection = { enabled = false },
     performance = {
       rtp = {
