@@ -15,6 +15,30 @@ return {
   },
 
   {
+    'echasnovski/mini.notify',
+    event = 'VeryLazy',
+    config = function()
+      require('mini.notify').setup({
+        lsp_progress = {
+          enable = false,
+        },
+        content = {
+          format = function(notif)
+            local time = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update))
+            return string.format('[%s] %s', time, notif.msg)
+          end,
+        },
+      })
+      vim.notify = require('mini.notify').make_notify()
+      vim.api.nvim_create_user_command('MiniNotifyHistory', function()
+        require('utils').create_scratch_floatwin('MiniNotify History')
+        vim.keymap.set('n', 'q', '<C-w>q')
+        require('mini.notify').show_history()
+      end, { desc = 'mini.notify history' })
+    end,
+  },
+
+  {
     'echasnovski/mini.diff',
     event = 'FileType',
     opts = {
