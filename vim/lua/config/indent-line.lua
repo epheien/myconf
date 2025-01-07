@@ -6,6 +6,10 @@
 -- 2. If using tab as indentation: set leadmultispace to a special character for denotation and tab
 --    to the indent line character.
 
+local M = {}
+
+local indentline_char = '│'
+
 local function indentchar_update(is_local)
     local tab
     local leadmultispace
@@ -17,10 +21,10 @@ local function indentchar_update(is_local)
             spaces = vim.api.nvim_get_option_value('tabstop', {})
         end
         tab = '› '
-        leadmultispace = vim.g.indentline_char .. string.rep(' ', spaces - 1)
+        leadmultispace = indentline_char .. string.rep(' ', spaces - 1)
     else
         -- For tab indentation
-        tab = vim.g.indentline_char .. ' '
+        tab = indentline_char .. ' '
         leadmultispace = '␣'
     end
 
@@ -30,17 +34,13 @@ local function indentchar_update(is_local)
     opt.listchars:append({ leadmultispace = leadmultispace })
 end
 
-vim.api.nvim_create_augroup('rockyz/indentline', { clear = true })
-vim.api.nvim_create_autocmd({ 'VimEnter' }, {
-    group = 'rockyz/indentline',
-    callback = function()
-        indentchar_update(false)
-    end,
-})
 vim.api.nvim_create_autocmd({ 'OptionSet' }, {
-    group = 'rockyz/indentline',
     pattern = { 'shiftwidth', 'expandtab', 'tabstop' },
     callback = function()
         indentchar_update(vim.v.option_type == 'local')
     end,
 })
+
+M.indentchar_update = indentchar_update
+
+return M
