@@ -41,8 +41,8 @@ M.mode_table = {
   ['t']     = 'TERMINAL',
 }
 
--- MyStatusLine, 简易实现以提高载入速度 {{{
-local function create_transitional_hl(left, right)
+-- 使用 left 的 bg 和 right 的 fg 组成新的高亮组, 如果 reverse 传入, 则再 reverse
+local function create_transitional_hl(left, right, reverse)
   local target_name = left .. '_' .. right
   local name = left
   local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
@@ -53,7 +53,10 @@ local function create_transitional_hl(left, right)
     return false
   end
   local right_opts = vim.api.nvim_get_hl(0, { name = right, link = false })
-  opts = vim.tbl_deep_extend('force', opts, { reverse = not opts.reverse, fg = right_opts.bg or 'NONE' })
+  opts = vim.tbl_deep_extend('force', opts, { fg = right_opts.bg or 'NONE' })
+  if reverse then
+    opts.reverse = not opts.reverse
+  end
   vim.api.nvim_set_hl(0, target_name, opts) ---@diagnostic disable-line
   return true
 end
@@ -73,15 +76,14 @@ local function create_reverse_hl(name)
 end
 
 local function post_process_status_line_theme()
-  create_transitional_hl('MyStlNormal', 'Normal')
-  create_transitional_hl('MyStlNormalNC', 'Normal')
-  create_transitional_hl('MyStlNormal', 'MyStlNormalMode')
-  create_reverse_hl('MyStlNormalMode')
-  create_reverse_hl('MyStlCommandMode')
-  create_reverse_hl('MyStlInsertMode')
-  create_reverse_hl('MyStlVisualMode')
-  create_reverse_hl('MyStlReplaceMode')
-  create_reverse_hl('MyStlNormalNC')
+  create_transitional_hl('MyStlNormal', 'Normal', true)
+  create_transitional_hl('MyStlNormalNC', 'Normal', true)
+  create_transitional_hl('Normal', 'MyStlNormalMode')
+  create_transitional_hl('Normal', 'MyStlCommandMode')
+  create_transitional_hl('Normal', 'MyStlInsertMode')
+  create_transitional_hl('Normal', 'MyStlVisualMode')
+  create_transitional_hl('Normal', 'MyStlReplaceMode')
+  create_transitional_hl('Normal', 'MyStlNormalNC')
 end
 
 local function status_line_theme_gruvbox() ---@diagnostic disable-line
@@ -142,13 +144,13 @@ function MyStatusLine()
   local gap = tail_glyph == '' and ' ' or ' '
   if active then
     local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
-    local head_string = string.format('%%#%s#%s', mode_group .. 'Reverse', head_glyph)
+    local head_string = string.format('%%#%s#%s', 'Normal_' .. mode_group, head_glyph)
     local mode_string = string.format('%%#%s#%s%s ', mode_group, gap, mode)
     local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v%s', 'MyStlNormal', mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormal_Normal', tail_glyph)
     return head_string .. mode_string .. file_string .. tail_string
   else
-    local head_string = string.format('%%#%s#%s', 'MyStlNormalNCReverse', head_glyph)
+    local head_string = string.format('%%#%s#%s', 'Normal_MyStlNormalNC', head_glyph)
     local file_string = string.format('%%#%s#%s%%f%s │ %%l/%%L,%%v%s', 'MyStlNormalNC', gap, mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormalNC_Normal', tail_glyph)
     return head_string .. file_string .. tail_string
