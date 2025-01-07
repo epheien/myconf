@@ -68,7 +68,7 @@ else
     path
   )
 end
-assert((vim.uv or vim.loop).fs_stat(path), msg) ---@diagnostic disable-line
+assert(loop.fs_stat(path), msg) ---@diagnostic disable-line
 vim.opt.rtp:prepend(path)
 
 vim.api.nvim_create_autocmd('ColorScheme', {
