@@ -166,6 +166,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
         vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#31353d' })
         vim.api.nvim_set_hl(0, 'Folded', { link = 'CursorLine' })
       end
+      -- telescope
+      vim.api.nvim_set_hl(0, 'TelescopePromptCounter', { link = 'SpecialKey' })
     end
   end,
 })
