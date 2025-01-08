@@ -72,19 +72,35 @@ local function core_plugins()
     -- TODO: 需要实现 BlinkDisable, 现阶段启用后就无法禁用了
     {
       'saghen/blink.cmp',
-      tag = 'v0.5.1',
+      version = '*',
       dependencies = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
       cmd = 'BlinkEnable',
       config = function()
         require('blink.cmp').setup({
           keymap = {
-            preset = 'enter', ---@diagnostic disable-line
-            ['<C-e>'] = { 'hide', 'fallback' },
+            preset = 'none', ---@diagnostic disable-line
+            -- 最基本要求
+            ['<C-e>'] = { 'cancel', 'fallback' },
             ['<CR>'] = { 'select_and_accept', 'fallback' },
+            ['<C-k>'] = { 'select_prev', 'fallback' },
+            ['<C-j>'] = { 'select_next', 'fallback' },
+            ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+            ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+            -- 添头
+            ['<C-y>'] = { 'select_and_accept', 'fallback' },
+            ['<C-p>'] = { 'select_prev', 'fallback' },
+            ['<C-n>'] = { 'select_next', 'fallback' },
+            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
           },
-          accept = {
-            auto_brackets = {
-              enabled = true,
+          sources = {
+            cmdline = {},
+          },
+          completion = {
+            list = {
+              selection = {
+                auto_insert = false,
+              },
             },
           },
         })
