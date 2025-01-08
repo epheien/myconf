@@ -11,9 +11,7 @@ local function core_plugins()
     {
       'lukas-reineke/indent-blankline.nvim',
       cmd = 'IBLEnable',
-      config = function()
-        require('ibl').setup()
-      end,
+      config = function() require('ibl').setup() end,
     },
 
     -- 可让你在 nvim buffer 中新增/删除/改名文件的文件管理器
@@ -34,18 +32,14 @@ local function core_plugins()
 
     {
       'sakhnik/nvim-gdb',
-      run = function()
-        vim.cmd('UpdateRemotePlugins')
-      end,
+      run = function() vim.cmd('UpdateRemotePlugins') end,
       cmd = 'GdbStart',
     },
 
     {
       'epheien/outline.nvim',
       cmd = { 'Outline', 'OutlineOpen' },
-      config = function()
-        require('plugins.config.outline')
-      end,
+      config = function() require('plugins.config.outline') end,
       dependencies = {
         'epheien/outline-ctags-provider.nvim',
         'epheien/outline-treesitter-provider.nvim',
@@ -169,18 +163,18 @@ local function core_plugins()
     cmd = 'DapuiToggle',
     config = function()
       require('dapui').setup()
-      vim.api.nvim_create_user_command('DapuiToggle', function()
-        require('dapui').toggle()
-      end, {})
+      vim.api.nvim_create_user_command('DapuiToggle', function() require('dapui').toggle() end, {})
     end,
   })
   table.insert(plugins, {
     'mfussenegger/nvim-dap',
     cmd = 'DapToggleBreakpoint',
     config = function()
-      vim.api.nvim_create_user_command('DapHover', function()
-        require('dap.ui.widgets').hover()
-      end, {})
+      vim.api.nvim_create_user_command(
+        'DapHover',
+        function() require('dap.ui.widgets').hover() end,
+        {}
+      )
     end,
   })
   -- NOTE: 需要调试 nvim lua 的话, 这个插件必须在调试实例无条件加载
@@ -201,9 +195,11 @@ local function core_plugins()
         callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
       end
       vim.fn.setenv('NVIM_DEBUG_LUA', 1) -- 设置环境变量让 run_this 正常工作
-      vim.api.nvim_create_user_command('DapLuaRunThis', function()
-        require('osv').run_this()
-      end, {})
+      vim.api.nvim_create_user_command(
+        'DapLuaRunThis',
+        function() require('osv').run_this() end,
+        {}
+      )
     end,
   })
 
@@ -300,9 +296,7 @@ local function core_plugins()
             open = 'AerialOpen',
           },
           {
-            title = function()
-              return 'Outline'
-            end,
+            title = function() return 'Outline' end,
             ft = 'Outline',
             open = 'OutlineOpen',
           },
@@ -332,9 +326,7 @@ local function core_plugins()
   table.insert(plugins, {
     'andymass/vim-matchup',
     lazy = true, -- 暂时禁用 matchup, 平时没有使用它的独有功能
-    config = function()
-      vim.g.matchup_matchparen_offscreen = {}
-    end,
+    config = function() vim.g.matchup_matchparen_offscreen = {} end,
   })
 
   table.insert(plugins, {
@@ -414,12 +406,18 @@ local function core_plugins()
         },
       })
       local keywords = { 'TODO', 'FIXME' }
-      vim.keymap.set('n', ']t', function()
-        require('todo-comments').jump_next({ keywords = keywords })
-      end, { desc = 'Next todo comment' })
-      vim.keymap.set('n', '[t', function()
-        require('todo-comments').jump_prev({ keywords = keywords })
-      end, { desc = 'Prev todo comment' })
+      vim.keymap.set(
+        'n',
+        ']t',
+        function() require('todo-comments').jump_next({ keywords = keywords }) end,
+        { desc = 'Next todo comment' }
+      )
+      vim.keymap.set(
+        'n',
+        '[t',
+        function() require('todo-comments').jump_prev({ keywords = keywords }) end,
+        { desc = 'Prev todo comment' }
+      )
     end,
     dependencies = { 'nvim-lua/plenary.nvim' },
   })
