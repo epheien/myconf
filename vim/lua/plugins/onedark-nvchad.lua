@@ -10,6 +10,7 @@ return {
   lazy = vim.g.my_colors_name ~= 'onedark-nvchad',
   config = function()
     vim.g.colors_name = 'onedark-nvchad'
+    require('onedark-nvchad').setup({ style = 'soft' })
     if vim.fn.argc(-1) > 0 then
       require('onedark-nvchad').load()
       vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false, pattern = vim.g.colors_name })
