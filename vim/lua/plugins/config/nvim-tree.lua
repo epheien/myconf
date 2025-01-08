@@ -150,7 +150,7 @@ local nvim_tree_opts = {
       glyphs = {
         git = {
           untracked = '',
-          ignored = vim.env.TERM_PROGRAM ~= 'kitty' and '' or nil,
+          --ignored = vim.env.TERM_PROGRAM ~= 'kitty' and '' or nil,
         },
       },
     },
