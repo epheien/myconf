@@ -25,7 +25,7 @@ local function indentchar_update(is_local)
   else
     -- For tab indentation
     tab = indentline_char .. ' '
-    leadmultispace = '␣'
+    --leadmultispace = '␣'
   end
 
   -- Update
