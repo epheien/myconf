@@ -132,6 +132,17 @@ local function core_plugins()
           max_height_window_percentage = 100,
           editor_only_render_when_focused = true,
           tmux_show_only_in_active_window = true,
+          integrations = {
+            markdown = {
+              enabled = true,
+              clear_in_insert_mode = false,
+              download_remote_images = false,
+              only_render_image_at_cursor = false,
+              -- if true, images will be rendered in floating markdown windows
+              floating_windows = false,
+              filetypes = { 'markdown', 'vimwiki' },
+            },
+          },
         })
         vim.api.nvim_create_user_command('ImageRender', function() end, {})
       end,
