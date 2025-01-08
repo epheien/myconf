@@ -1,5 +1,9 @@
 local M = {}
 
+M.config = {
+  style = 'default',
+}
+
 local prefix = 'onedark-nvchad.default.'
 
 local modules = {
@@ -39,7 +43,8 @@ function M.load()
 end
 
 function M.setup(opts)
-  if opts.style == 'soft' then
+  M.config = vim.tbl_deep_extend('force', M.config, opts or {})
+  if M.config.style == 'soft' then
     prefix = 'onedark-nvchad.soft.'
   else
     prefix = 'onedark-nvchad.default.'
