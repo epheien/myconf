@@ -108,7 +108,7 @@ local function my_on_attach(bufnr)
   end
   vim.keymap.del('n', 'g?', opts('Help'))
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
-  vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
+  vim.keymap.set('n', '[[', api.node.navigate.parent, opts('Parent Directory'))
   vim.keymap.del('n', '<C-k>', opts('Info'))
   vim.keymap.del('n', 'U', opts('Toggle Hidden'))
   vim.keymap.del('n', '<Tab>', opts('Open Preview'))
@@ -123,6 +123,7 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', 'M', opts('Toggle Filter: No Bookmark'))
   vim.keymap.del('n', 'L', opts('Toggle Group Empty'))
   vim.keymap.del('n', '-', opts('Up'))
+  vim.keymap.del('n', 'P', opts('Parent Directory'))
 
   -- 不使用的快捷键, 避免混淆/误操作
   vim.keymap.del('n', 'u', opts(''))
