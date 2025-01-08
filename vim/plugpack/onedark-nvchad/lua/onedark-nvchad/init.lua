@@ -1,6 +1,6 @@
 local M = {}
 
-local prefix = 'onedark-nvchad.'
+local prefix = 'onedark-nvchad.default.'
 
 local modules = {
   'blankline',
