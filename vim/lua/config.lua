@@ -161,6 +161,11 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.cmd.hi({ args = { 'Title', 'gui=bold' } })
       vim.api.nvim_set_hl(0, '@markup.list.checked', { link = 'Added' })
       vim.api.nvim_set_hl(0, '@markup.list.unchecked', { link = 'Comment' })
+      if require('onedark-nvchad').config.style == 'soft' then ---@diagnostic disable-line
+        -- one_bg +030303
+        vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#31353d' })
+        vim.api.nvim_set_hl(0, 'Folded', { link = 'CursorLine' })
+      end
     end
   end,
 })
