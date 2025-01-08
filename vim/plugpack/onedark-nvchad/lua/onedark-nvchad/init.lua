@@ -38,4 +38,12 @@ function M.load()
   end
 end
 
+function M.setup(opts)
+  if opts.style == 'soft' then
+    prefix = 'onedark-nvchad.soft.'
+  else
+    prefix = 'onedark-nvchad.default.'
+  end
+end
+
 return M
