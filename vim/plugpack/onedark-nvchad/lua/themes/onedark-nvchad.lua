@@ -4,38 +4,44 @@
 local M = {}
 
 M.base_30 = {
-  white = "#abb2bf",
-  darker_black = "#252931",
-  black = "#282c34", --  nvim bg, +030303, **BASE** black
-  black2 = "#2B2F37", -- +030303
-  one_bg = "#2E323A", -- real bg of onedark, +030303
-  one_bg2 = "#3B414B", -- +0D0F11
-  one_bg3 = "#3D4149", -- +01FFFE +02,+00,-02
-  grey = "#484C54", -- +0B0B0B
-  grey_fg = "#5C626A", -- +141616
-  grey_fg2 = "#757981", -- +191717
-  light_grey = "#757981", -- +0
-  red = "#e06c75",
-  baby_pink = "#DE8C92",
-  pink = "#ff75a0",
-  line = "#3B3F47", -- for lines like vertsplit, black + 131313
-  green = "#98c379",
-  vibrant_green = "#7eca9c",
-  nord_blue = "#81A1C1",
-  blue = "#61afef",
-  yellow = "#e7c787",
-  sun = "#EBCB8B",
-  purple = "#de98fd",
-  dark_purple = "#c882e7",
-  teal = "#519ABA",
-  orange = "#fca2aa",
-  cyan = "#a3b8ef",
+  white         = "#abb2bf",
+
+  -- 这几个基本配色已经稳定
+  darker_black  = "#22262E", -- base -060606
+  black         = "#282c34", -- nvim bg, +060606, **BASE** black
+  black2        = "#30343C", -- +080808
+  one_bg        = "#383C44", -- real bg of onedark, +080808
+
+  one_bg2       = "#3B414B", -- +030507
+  one_bg3       = "#3D4149", -- +01FFFE +02,+00,-02
+  grey          = "#484C54", -- +0b0b0b
+  grey_fg       = "#5C626A", -- +141616
+  grey_fg2      = "#757981", -- +191717
+  light_grey    = "#757981", -- +0
+
+  line          = "#3B3F47", -- for lines like vertsplit, black + 131313
   statusline_bg = "#2C3038", -- black +040404
-  lightbg = "#373B43", -- statusline_bg +0b0b0b
-  pmenu_bg = "#61afef",
-  folder_bg = "#61afef",
+  lightbg       = "#373B43", -- statusline_bg +0b0b0b
+
+  red           = "#e06c75",
+  baby_pink     = "#DE8C92",
+  pink          = "#ff75a0",
+  green         = "#98c379",
+  vibrant_green = "#7eca9c",
+  nord_blue     = "#81A1C1",
+  blue          = "#61afef",
+  yellow        = "#e7c787",
+  sun           = "#EBCB8B",
+  purple        = "#de98fd",
+  dark_purple   = "#c882e7",
+  teal          = "#519ABA",
+  orange        = "#fca2aa",
+  cyan          = "#a3b8ef",
+  pmenu_bg      = "#61afef",
+  folder_bg     = "#61afef",
 }
 
+-- base16 配置比较成熟, 一般不需要修改
 M.base_16 = {
   base00 = "#282c34",
   base01 = "#353b45",
@@ -56,7 +62,5 @@ M.base_16 = {
 }
 
 M.type = "dark"
-
---M = require("base46").override_theme(M, "onedark")
 
 return M
