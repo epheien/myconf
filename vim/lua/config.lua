@@ -164,6 +164,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, '@markup.list.unchecked', { link = 'Comment' })
       -- telescope
       vim.api.nvim_set_hl(0, 'TelescopePromptCounter', { link = 'SpecialKey' })
+      vim.cmd.hi('TelescopeMatching guibg=NONE')
       -- edgy.nvim
       vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
       -- nvim-tree
