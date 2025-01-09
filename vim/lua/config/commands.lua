@@ -58,3 +58,11 @@ end, {
     return vim.fn.getcompletion(line, 'cmdline')
   end,
 })
+
+vim.api.nvim_create_user_command('Base46Compile', function()
+  -- 主题以及其他选项在 nvconfig 里面, nvconfig 会从 chadrc 里面读取覆盖的选项
+  -- 主题分别从 base46.themes 和 themes 目录里寻找
+  require('base46').compile(
+    vim.fs.joinpath(vim.fn.stdpath('config') --[[@as string]], 'base46_cache')
+  )
+end, {})
