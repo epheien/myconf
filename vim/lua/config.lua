@@ -165,8 +165,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       -- edgy.nvim
       vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
       -- nvim-tree
-      vim.api.nvim_set_hl(0, 'NvimTreeNormal', { link = 'Normal' })
-      vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', { link = 'Normal' })
+      vim.api.nvim_set_hl(0, 'NvimTreeFolderIcon', { link = 'Directory' })
     end
   end,
 })

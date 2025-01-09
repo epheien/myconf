@@ -18,7 +18,7 @@ local modules = {
 
   -- 必用插件必需
   'cmp',
-  'nvimtree',
+  --'nvimtree',
   'devicons',
 
   'telescope',
