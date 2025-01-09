@@ -118,11 +118,9 @@ vim.api.nvim_create_autocmd('SpellFileMissing', {
   callback = function(args) vim.call('spellfile#LoadFile', args.match) end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd({ 'FileType', 'SessionLoadPost' }, {
   group = vimrc_group,
-  callback = function()
-    require('config/indent-line').indentchar_update(true)
-  end,
+  callback = function() require('config/indent-line').indentchar_update(true) end,
 })
 
 vim.api.nvim_create_autocmd({ 'OptionSet' }, {
