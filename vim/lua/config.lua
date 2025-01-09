@@ -160,13 +160,13 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.cmd.hi({ args = { 'Title', 'gui=bold' } })
       vim.api.nvim_set_hl(0, '@markup.list.checked', { link = 'Added' })
       vim.api.nvim_set_hl(0, '@markup.list.unchecked', { link = 'Comment' })
-      if require('onedark-nvchad').config.style == 'soft' then ---@diagnostic disable-line
-        -- one_bg +030303
-        vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#31353d' })
-        vim.api.nvim_set_hl(0, 'Folded', { link = 'CursorLine' })
-      end
       -- telescope
       vim.api.nvim_set_hl(0, 'TelescopePromptCounter', { link = 'SpecialKey' })
+      -- edgy.nvim
+      vim.api.nvim_set_hl(0, 'EdgyNormal', { link = 'Normal' })
+      -- nvim-tree
+      vim.api.nvim_set_hl(0, 'NvimTreeNormal', { link = 'Normal' })
+      vim.api.nvim_set_hl(0, 'NvimTreeNormalFloat', { link = 'Normal' })
     end
   end,
 })

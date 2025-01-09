@@ -7,23 +7,28 @@ M.config = {
 local prefix = 'onedark-nvchad.default.'
 
 local modules = {
-  'blankline',
-  'cmp',
   --'colors', -- ignore
+
+  -- nvim 内置必需
   'defaults',
-  'devicons',
-  'git',
-  'lsp',
-  'mason',
-  'nvcheatsheet',
-  'nvimtree',
-  'statusline',
   'syntax',
-  'tbline',
-  'telescope',
   'term',
   'treesitter',
-  'whichkey',
+  'lsp',
+
+  -- 必用插件必需
+  'cmp',
+  'nvimtree',
+  'devicons',
+
+  'telescope',
+  --'whichkey',
+  --'blankline',
+  --'git',
+  --'mason',
+  --'nvcheatsheet',
+  --'statusline',
+  --'tbline',
 }
 
 function M.base_load() require(prefix .. 'defaults') end
