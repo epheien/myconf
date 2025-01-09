@@ -258,7 +258,13 @@ local function core_plugins()
   -- 显示 LSP 进度
   table.insert(plugins, { 'j-hui/fidget.nvim', event = 'BufReadPre', opts = {} })
 
-  table.insert(plugins, { 'kshenoy/vim-signature', event = 'BufReadPre' })
+  table.insert(plugins, {
+    'kshenoy/vim-signature',
+    event = 'BufReadPre',
+    config = function()
+      vim.api.nvim_set_hl(0, 'SignatureMarkText', { link = 'Identifier' })
+    end,
+  })
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('plugins/config/incline') })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cmd = 'ColorizerToggle' })
 
