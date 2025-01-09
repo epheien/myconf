@@ -6,7 +6,7 @@ if not vim.g.my_colors_name then
 end
 
 ---@type string
-local config_path = vim.fn.stdpath('config') ---@diagnostic disable-line
+local config_path = vim.fn.stdpath('config') --[[@as string]]
 local loop = vim.uv or vim.loop
 
 -- base46 主题引擎缓存目录
@@ -44,7 +44,6 @@ end
 --  $ mkdir -pv ~/.config/nvim/pack/pckr/opt/
 --  $ git clone --filter=blob:none https://github.com/epheien/pckr.nvim.git ~/.config/nvim/pack/pckr/opt/pckr.nvim
 vim.opt.packpath:append(vim.fn.stdpath('config'))
----@diagnostic disable-next-line
 local path = vim.fs.joinpath(
   config_path,
   'pack',
