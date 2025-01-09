@@ -120,13 +120,17 @@ vim.api.nvim_create_autocmd('SpellFileMissing', {
 
 vim.api.nvim_create_autocmd({ 'FileType', 'SessionLoadPost' }, {
   group = vimrc_group,
-  callback = function() require('config/indent-line').indentchar_update(true) end,
+  callback = function(args)
+    require('config/indent-line').indentchar_update(true, args.match)
+  end,
 })
 
 vim.api.nvim_create_autocmd({ 'OptionSet' }, {
   pattern = { 'shiftwidth', 'expandtab', 'tabstop' },
   group = vimrc_group,
   callback = function()
-    require('config/indent-line').indentchar_update(vim.v.option_type == 'local')
+    if vim.opt_local.listchars:get().leadmultispace then
+      require('config/indent-line').indentchar_update(vim.v.option_type == 'local')
+    end
   end,
 })

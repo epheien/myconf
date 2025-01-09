@@ -17,10 +17,10 @@ for _, ft in ipairs(exclude_filetypes) do
   excludes[ft] = true
 end
 
-local function indentchar_update(is_local)
+local function indentchar_update(is_local, filetype)
   local tab
   local leadmultispace
-  if vim.bo.buftype == 'terminal' or excludes[vim.bo.filetype] then
+  if vim.bo.buftype == 'terminal' or excludes[filetype or ''] then
     vim.b.miniindentscope_disable = true -- 同时禁用 mini.indentscope
     return
   end
