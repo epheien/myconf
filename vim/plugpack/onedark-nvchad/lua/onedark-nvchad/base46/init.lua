@@ -57,6 +57,6 @@ M.base_16 = {
 
 M.type = "dark"
 
-M = require("base46").override_theme(M, "onedark")
+--M = require("base46").override_theme(M, "onedark")
 
 return M
