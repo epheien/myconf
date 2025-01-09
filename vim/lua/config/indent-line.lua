@@ -20,7 +20,7 @@ end
 local function indentchar_update(is_local)
   local tab
   local leadmultispace
-  if excludes[vim.bo.filetype] then
+  if vim.bo.buftype == 'terminal' or excludes[vim.bo.filetype] then
     vim.b.miniindentscope_disable = true -- 同时禁用 mini.indentscope
     return
   end
