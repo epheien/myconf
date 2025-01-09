@@ -154,6 +154,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'NonText', { link = 'WinSeparator' })
       vim.api.nvim_set_hl(0, 'FoldColumn', { link = 'Comment' })
       vim.api.nvim_set_hl(0, 'FloatTitle', { link = 'Title' })
+      vim.api.nvim_set_hl(0, '@operator', { link = 'Operator' })
+      vim.api.nvim_set_hl(0, 'Operator', { link = 'SpecialChar' })
       -- Function 就是 Title 的非粗体颜色
       vim.api.nvim_set_hl(0, 'DiagnosticOk', { link = 'Function' })
       -- Title 循例要粗体
