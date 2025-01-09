@@ -10,9 +10,20 @@ local M = {}
 
 local indentline_char = '│'
 
+local exclude_filetypes = { 'help', 'NvimTree', 'Outline', 'neo-tree' }
+
+local excludes = {}
+for _, ft in ipairs(exclude_filetypes) do
+  excludes[ft] = true
+end
+
 local function indentchar_update(is_local)
   local tab
   local leadmultispace
+  if excludes[vim.bo.filetype] then
+    vim.b.miniindentscope_disable = true -- 同时禁用 mini.indentscope
+    return
+  end
   if vim.api.nvim_get_option_value('expandtab', {}) then
     -- For space indentation
     local spaces = vim.api.nvim_get_option_value('shiftwidth', {})
