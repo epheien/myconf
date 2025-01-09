@@ -169,8 +169,8 @@ vim.g.SignaturePeriodicRefresh = 0
 vim.g.SignatureMap = {
   PlaceNextMark = 'm,',
   PurgeMarks = 'm<Space>',
-  GotoNextSpotByPos = '<F2>',
-  GotoPrevSpotByPos = '<S-F2>',
+  GotoNextSpotByPos = ']m',
+  GotoPrevSpotByPos = '[m',
   ListBufferMarks = 'm/',
 }
 
