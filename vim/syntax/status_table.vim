@@ -33,7 +33,7 @@ hi def link StatusTableNumberBin        Number
 hi def link StatusTableNumberOctal      Number
 hi def link StatusTableNumberHex        Number
 
-hi def link StatusTableSymbol           Special
+hi def link StatusTableSymbol           Delimiter
 hi def link StatusTableDuration         Type
 
 highlight def link StatusTableButton Special
