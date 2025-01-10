@@ -2,7 +2,7 @@
 -- pckr or lazy
 vim.g.package_manager = 'lazy'
 if not vim.g.my_colors_name then
-  vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
+  vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
 end
 
 ---@type string
