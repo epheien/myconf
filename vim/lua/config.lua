@@ -14,7 +14,7 @@ vim.g.base46_cache = config_path .. '/base46_cache/'
 
 -- 简易覆盖 vim.notify, 用来避免 hit enter 信息, 例如 lazy.nvim 启动时的警告
 vim.notify = function(msg, level, opts) ---@diagnostic disable-line
-  print(msg)
+  print(string.format('[%d]', level), msg)
   vim.cmd.redraw() -- 避免 hit enter
 end
 
