@@ -1,5 +1,12 @@
 local M = {}
 
+-- 获取当前时区的偏移, GMT+8 即 28800
+---@return integer
+function M.timezone_offset()
+  local now = os.time()
+  return os.difftime(now, os.time(os.date('!*t', now))) ---@diagnostic disable-line
+end
+
 ---get display width
 ---@param str string
 ---@return integer
@@ -126,7 +133,6 @@ function M.render_table(data)
 end
 
 ---生成常用的时间戳, 时区固定为 GMT+8 (未实现)
--- TODO: 处理时区问题
 ---@param ts string|integer
 ---@return table
 function M.make_tsdt(ts)
@@ -134,6 +140,8 @@ function M.make_tsdt(ts)
   -- return (1577808000, '2020-01-01 00:00:00') # 固定为 GMT+8 时区
   local timefmt = '%Y-%m-%d %H:%M:%S'
   local dt
+  local local_offset = M.timezone_offset()
+  ts = ts or os.time()
 
   if type(ts) == 'string' then
     dt = ts
@@ -151,10 +159,10 @@ function M.make_tsdt(ts)
       min = string.sub(dt, 15, 16),
       sec = string.sub(dt, 18, 19),
     })
+    ts = ts - local_offset + 28800
   else
     -- 我们用秒数偏移来处理时区即可 28800 (GMT+8)
-    --dt = os.date(timefmt, ts + 28800)
-    dt = os.date(timefmt)
+    dt = os.date(timefmt, ts - local_offset + 28800)
   end
 
   return { ts, dt }
