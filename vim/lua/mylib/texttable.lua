@@ -183,4 +183,11 @@ function M.render_status(fname, filters)
   return lines
 end
 
+function M.buffer_render_status(buf, fname, filters)
+  -- NOTE: lines 元素可能包含有换行, 例如表格行
+  local lines = require('mylib.texttable').render_status(fname, filters)
+  local content = table.concat(lines, '\n')
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
+end
+
 return M

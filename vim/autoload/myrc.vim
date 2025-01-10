@@ -984,7 +984,7 @@ function s:RefreshStatusTables(fname, bufid, ...) abort
         call myrc#StopRefreshStatusTables()
         return
     endif
-    exec printf('py3 vim.buffers[%d][:] = render_status("%s")', a:bufid, a:fname)
+    exec printf('lua require("mylib.texttable").buffer_render_status(%d, "%s")', a:bufid, expand(a:fname))
 endfunction
 function myrc#StopRefreshStatusTables()
     call timer_stop(s:status_refresh_timer)
@@ -1000,7 +1000,6 @@ function myrc#RefreshStatusTables(fname, ...) abort
     endif
     let interval = get(a:000, 0, 1000)
     let bufid = get(a:000, 1, bufnr())
-    exec 'py3file' stdpath('config') .. '/python/status.py'
     call nvim_set_option_value('buftype', 'nofile', {'buf': bufid})
     call nvim_set_option_value('swapfile', v:false, {'buf': bufid})
     call nvim_set_option_value('bufhidden', 'wipe', {'buf': bufid})
