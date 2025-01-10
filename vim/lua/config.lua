@@ -10,7 +10,7 @@ local config_path = vim.fn.stdpath('config') --[[@as string]]
 local loop = vim.uv or vim.loop
 
 -- base46 主题引擎缓存目录
-vim.g.base46_cache = config_path .. '/base46_cache/'
+--vim.g.base46_cache = config_path .. '/base46_cache/'
 
 -- 简易覆盖 vim.notify, 用来避免 hit enter 信息, 例如 lazy.nvim 启动时的警告
 vim.notify = function(msg, level, opts) ---@diagnostic disable-line
@@ -218,7 +218,7 @@ if vim.g.my_colors_name == 'gruvbox' and pcall(vim.cmd.packadd, 'gruvbox.nvim') 
   vim.api.nvim_set_hl(0, 'markdownCodeDelimiter', { link = 'Delimiter' })
   vim.api.nvim_set_hl(0, 'markdownOrderedListMarker', { link = 'markdownListMarker' })
   vim.api.nvim_set_hl(0, 'markdownListMarker', { link = 'Tag' })
-elseif vim.g.my_colors_name == 'base46' then
+elseif vim.g.base46_cache and vim.g.my_colors_name == 'base46' then
   dofile(vim.g.base46_cache .. 'defaults')
   local function load_base46_colors()
     for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
