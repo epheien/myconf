@@ -30,8 +30,8 @@ return {
             vim.schedule(function()
               local lnum = vim.api.nvim_win_get_cursor(0)[1]
               if lnum == 1 then
-                vim.fn.search('^▌', 'w')
-                vim.cmd([[normal! ww]])
+                vim.fn.search([[^\S\s\+]], 'w')
+                vim.cmd([[normal! w]])
               end
             end)
           end, opts)
