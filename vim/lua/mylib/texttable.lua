@@ -12,12 +12,23 @@ local function display_width(str)
 end
 
 ---渲染 Python 的 texttable 字典结构
----@param data table
----@return string[]
+---@param data table The table to render.
+-- @param data.title string The title of the table.
+-- @param data.cols string[] The headers of the table.
+-- @param data.rows string[][] The rows of the table.
+-- @param data.aligns string[] 'c' or 'l' or 'r'
+-- @return string[]
 function M.render_table(data)
+  local title = data.title
   local cols = data.cols
   local rows = data.rows
-  local title = data.title
+  local aligns = data.aligns
+  if not aligns then
+    aligns = { 'l' } -- 默认第一个左对齐, 后面的全部向右对齐
+    for i = 2, #cols do
+      aligns[i] = 'r'
+    end
+  end
 
   local colWidths = {}
 
@@ -52,7 +63,7 @@ function M.render_table(data)
     local left = math.floor(span / 2)
     local right = math.floor(span / 2)
     if span % 2 ~= 0 then
-      left = left + 1
+      right = right + 1
     end
     line = line .. string.rep(' ', left) .. cols[i] .. string.rep(' ', right)
     if i == #cols then
@@ -74,7 +85,26 @@ function M.render_table(data)
     line = '| '
     for i = 1, #row do
       local cellStr = type(row[i]) == 'string' and row[i] or tostring(row[i])
-      line = line .. string.rep(' ', colWidths[i] - display_width(cellStr)) .. cellStr
+
+      local width = display_width(cellStr)
+      local span = colWidths[i] - width
+      local align = aligns[i] or 'c'
+      local left, right
+      if align == 'c' then
+        left = math.floor(span / 2)
+        right = math.floor(span / 2)
+        if span % 2 ~= 0 then
+          right = right + 1
+        end
+      elseif align == 'l' then
+        left = 0
+        right = span
+      elseif align == 'r' then
+        left = span
+        right = 0
+      end
+      line = line .. string.rep(' ', left) .. cellStr .. string.rep(' ', right)
+
       if i == #row then
         line = line .. ' |'
       else
