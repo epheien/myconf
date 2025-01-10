@@ -7,6 +7,10 @@ return {
   -- dependencies = { "echasnovski/mini.icons" },
   config = function()
     local opts = {
+      hls = {
+        border = 'FloatBorder',
+        preview_border = 'FloatBorder',
+      },
       winopts = {
         border = 'single',
         preview = {
@@ -16,12 +20,24 @@ return {
         on_create = function()
           -- called once upon creation of the fzf main window
           -- can be used to add custom fzf-lua mappings, e.g:
-          vim.keymap.set('t', '<C-j>', '<Down>', { silent = true, buffer = true })
-          vim.keymap.set('t', '<C-k>', '<Up>', { silent = true, buffer = true })
+          local opts = { silent = true, buffer = true }
+          vim.keymap.set('t', '<C-j>', '<Down>', opts)
+          vim.keymap.set('t', '<C-k>', '<Up>', opts)
+          vim.keymap.set('n', 'q', [[<C-w>q]], opts)
+          vim.keymap.set('n', '<Tab>', 'i', opts)
+          vim.keymap.set('t', '<Tab>', function()
+            vim.cmd.stopinsert()
+            vim.schedule(function()
+              local lnum = vim.api.nvim_win_get_cursor(0)[1]
+              if lnum == 1 then
+                vim.fn.search('^▌', 'w')
+                vim.cmd([[normal! ww]])
+              end
+            end)
+          end, opts)
         end,
       },
     }
-    vim.api.nvim_set_hl(0, 'FzfLuaBorder', { link = 'FloatBorder' })
     require('fzf-lua').setup(opts)
   end,
 }

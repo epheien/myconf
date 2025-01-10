@@ -149,8 +149,10 @@ map('x', '"', 'di""<ESC>Pl')
 -- C 文件的 #if 0 段落注释
 map('x', '0', '<C-c>:call myrc#MacroComment()<CR>')
 
-map('n', '\\f', ':Telescope find_files<CR>')
-map('n', '\\e', ':Leaderf cmdHistory --regexMode<CR>')
+--map('n', '\\f', ':Telescope find_files<CR>')
+map('n', '\\f', ':FzfLua files<CR>')
+--map('n', '\\e', ':Leaderf cmdHistory --regexMode<CR>')
+map('n', '\\e', ':FzfLua command_history<CR>')
 map('n', '\\b', ':Telescope buffers<CR>')
 map('n', '\\t', ':Leaderf bufTag<CR>')
 map('n', '\\T', ':Telescope tags<CR>')
