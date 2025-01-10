@@ -1,5 +1,8 @@
 local M = {}
 
+---get display width
+---@param str string
+---@return integer
 local function display_width(str)
   if vim then
     return vim.fn.strdisplaywidth(str)
@@ -8,6 +11,9 @@ local function display_width(str)
   end
 end
 
+---渲染 Python 的 texttable 字典结构
+---@param data table
+---@return string[]
 function M.render_table(data)
   local cols = data.cols
   local rows = data.rows
@@ -26,19 +32,20 @@ function M.render_table(data)
   end
 
   local lines = {}
+  local line
 
   -- 生成标题
-  lines[#lines + 1] = '===== ' .. title .. ' =====\n'
+  table.insert(lines, '===== ' .. title .. ' =====')
 
   -- 生成表头
-  lines[#lines + 1] = '+'
+  line = '+'
   for i = 1, #cols do
-    lines[#lines + 1] = string.rep('-', colWidths[i] + 2) .. '+'
+    line = line .. string.rep('-', colWidths[i] + 2) .. '+'
   end
-  lines[#lines + 1] = '\n'
+  table.insert(lines, line)
 
   -- headers, 居中偏左对齐
-  lines[#lines + 1] = '| '
+  line = '| '
   for i = 1, #cols do
     local width = display_width(cols[i])
     local span = colWidths[i] - width
@@ -47,43 +54,102 @@ function M.render_table(data)
     if span % 2 ~= 0 then
       left = left + 1
     end
-    lines[#lines + 1] = string.rep(' ', left) .. cols[i] .. string.rep(' ', right)
+    line = line .. string.rep(' ', left) .. cols[i] .. string.rep(' ', right)
     if i == #cols then
-      lines[#lines + 1] = ' |'
+      line = line .. ' |'
     else
-      lines[#lines + 1] = ' | '
+      line = line .. ' | '
     end
   end
-  lines[#lines + 1] = '\n'
+  table.insert(lines, line)
 
-  lines[#lines + 1] = '+'
+  line = '+'
   for i = 1, #cols do
-    lines[#lines + 1] = string.rep('=', colWidths[i] + 2) .. '+'
+    line = line .. string.rep('=', colWidths[i] + 2) .. '+'
   end
-  lines[#lines + 1] = '\n'
+  table.insert(lines, line)
 
   -- 生成数据行, 右对齐
   for _, row in ipairs(rows) do
-    lines[#lines + 1] = '| '
+    line = '| '
     for i = 1, #row do
       local cellStr = type(row[i]) == 'string' and row[i] or tostring(row[i])
-      lines[#lines + 1] = string.rep(' ', colWidths[i] - display_width(cellStr)) .. cellStr
+      line = line .. string.rep(' ', colWidths[i] - display_width(cellStr)) .. cellStr
       if i == #row then
-        lines[#lines + 1] = ' |'
+        line = line .. ' |'
       else
-        lines[#lines + 1] = ' | '
+        line = line .. ' | '
       end
     end
-    lines[#lines + 1] = '\n'
+    table.insert(lines, line)
   end
 
   -- 生成表格底部
-  lines[#lines + 1] = '+'
+  line = '+'
   for i = 1, #cols do
-    lines[#lines + 1] = string.rep('-', colWidths[i] + 2) .. '+'
+    line = line .. string.rep('-', colWidths[i] + 2) .. '+'
   end
+  table.insert(lines, line)
 
   --return table.concat(lines)
+  return lines
+end
+
+---生成常用的时间戳, 时区固定为 GMT+8 (未实现)
+-- TODO: 处理时区问题
+---@param ts string|integer
+---@return table
+function M.make_tsdt(ts)
+  -- ts 为 '2020-01-01 00:00:00' 或 1577808000 的形式
+  -- return (1577808000, '2020-01-01 00:00:00') # 固定为 GMT+8 时区
+  local timefmt = '%Y-%m-%d %H:%M:%S'
+  local dt
+
+  if type(ts) == 'string' then
+    dt = ts
+    if not string.find(dt, ' ') then
+      -- '2020-01-01' => '2020-01-01 00:00:00'
+      dt = dt .. ' 00:00:00'
+    end
+    -- 支持 2020/01/01
+    dt = string.gsub(dt, '/', '-')
+    ts = os.time({
+      year = string.sub(dt, 1, 4),
+      month = string.sub(dt, 6, 7),
+      day = string.sub(dt, 9, 10),
+      hour = string.sub(dt, 12, 13),
+      min = string.sub(dt, 15, 16),
+      sec = string.sub(dt, 18, 19),
+    })
+  else
+    -- 我们用秒数偏移来处理时区即可 28800 (GMT+8)
+    --dt = os.date(timefmt, ts + 28800)
+    dt = os.date(timefmt)
+  end
+
+  return { ts, dt }
+end
+
+---render status file
+---@param fname string
+---@param filters? string[]
+---@return string[]
+function M.render_status(fname, filters)
+  filters = filters or {}
+  local lines = {}
+  table.insert(lines, '当前时间: ' .. M.make_tsdt(os.time())[2])
+
+  for line in io.lines(fname) do
+    if string.sub(line, 1, 1) == '{' then
+      local tbl = vim.json.decode(line)
+      if not vim.tbl_contains(filters, tbl.title) then
+        table.insert(lines, table.concat(M.render_table(tbl), '\n'))
+      end
+    else
+      table.insert(lines, line)
+    end
+  end
+
   return lines
 end
 
