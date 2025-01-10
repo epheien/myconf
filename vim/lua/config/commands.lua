@@ -15,6 +15,11 @@ vim.api.nvim_create_user_command('Title', function(args)
   vim.o.titlestring = args.args
 end, { nargs = '+' })
 
+vim.api.nvim_create_user_command('TabTitle', function(args)
+  vim.t.title = args.args
+  vim.cmd.redrawtabline()
+end, { nargs = '+' })
+
 vim.api.nvim_create_user_command('Dict', function(args)
   vim.call('mydict#Search', args.args)
 end, { nargs = '+' })
