@@ -999,7 +999,7 @@ function myrc#RefreshStatusTables(fname, ...) abort
         return
     endif
     let interval = get(a:000, 0, 1000)
-    let bufid = get(a:000, 1, bufnr())
+    let bufid = str2nr(get(a:000, 1, bufnr()))
     call nvim_set_option_value('buftype', 'nofile', {'buf': bufid})
     call nvim_set_option_value('swapfile', v:false, {'buf': bufid})
     call nvim_set_option_value('bufhidden', 'wipe', {'buf': bufid})
@@ -1013,7 +1013,7 @@ function myrc#RefreshStatusTables(fname, ...) abort
     call s:RefreshStatusTables(a:fname, bufid)
     let s:status_refresh_timer = timer_start(interval,
         \ function('s:RefreshStatusTables', [a:fname, bufid]), {'repeat': -1})
-    autocmd BufUnload <buffer=abuf> call myrc#StopRefreshStatusTables()
+    exec printf('autocmd BufUnload <buffer=%d> call myrc#StopRefreshStatusTables()', bufid)
 endfunction
 
 function! myrc#MouseMark() "{{{2
