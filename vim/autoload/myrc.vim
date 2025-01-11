@@ -989,7 +989,7 @@ function s:RefreshStatusTables(fname, bufid, ...) abort
         call myrc#StopRefreshStatusTables()
         return
     endif
-    exec printf('lua require("mylib.texttable").buffer_render_status(%d, "%s")', a:bufid, expand(a:fname))
+    call v:lua.require'mylib.texttable'.buffer_render_status(a:bufid, expand(a:fname))
 endfunction
 function myrc#StopRefreshStatusTables()
     call timer_stop(s:status_refresh_timer)
