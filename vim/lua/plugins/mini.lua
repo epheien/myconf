@@ -16,6 +16,7 @@ return {
 
   {
     'echasnovski/mini.notify',
+    enabled = not vim.g.enable_noice,
     event = 'VeryLazy',
     config = function()
       require('mini.notify').setup({

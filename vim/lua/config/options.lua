@@ -28,6 +28,9 @@ vim.opt.jumpoptions:append({ 'stack', 'view' })
 vim.o.swapfile = false
 vim.o.mouse = 'a'
 vim.o.laststatus = 2
+if vim.g.enable_noice then
+  vim.o.cmdheight = 0
+end
 -- 这几个选项在 mystl 会重置, 这里设置是为了启动的时候状态栏不闪烁
 --vim.o.statusline=' '
 vim.o.ruler = false

@@ -17,6 +17,9 @@ local function setup_noice() -- {{{
       signature = {
         enabled = false,
       },
+      progress = {
+        enabled = false,
+      },
     },
     popupmenu = {
       enabled = false,
@@ -30,12 +33,22 @@ local function setup_noice() -- {{{
         border = {
           style = 'single',
         },
+        position = {
+          row = 5,
+        },
       },
       mini = {
         timeout = 5000,
         position = {
           row = 1,
           col = -1,
+        },
+      },
+      popup = {
+        border = { style = 'single' },
+        win_options = {
+          winhighlight = { Normal = 'Normal' },
+          cursorline = true,
         },
       },
     },
@@ -56,10 +69,10 @@ local function setup_noice() -- {{{
     },
     messages = {
       enabled = true, -- false 会使用 cmdline, 可避免闪烁
-      view = 'mini',
-      view_error = 'mini',
-      view_warn = 'mini',
-      view_history = 'popup',
+      --view = 'mini',
+      --view_error = 'mini',
+      --view_warn = 'mini',
+      --view_history = 'popup',
     },
     commands = {
       history = {
@@ -81,7 +94,7 @@ local function setup_noice() -- {{{
 end
 -- }}}
 
-local enabled = vim.fn.has('nvim-0.10') == 1 and true
+local enabled = vim.fn.has('nvim-0.10') == 1 and vim.g.enable_noice
 
 return {
   {
@@ -92,6 +105,6 @@ return {
     enabled = enabled,
   },
   -- 替代 fidget.nvim 的 LSP 进度
-  { 'j-hui/fidget.nvim', enabled = not enabled },
+  --{ 'j-hui/fidget.nvim', enabled = not enabled },
   { 'echasnovski/mini.notify', enabled = not enabled },
 }

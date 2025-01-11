@@ -1,6 +1,6 @@
 return {
   'rcarriga/nvim-notify',
-  enabled = false,
+  enabled = vim.g.enable_noice,
   event = 'VeryLazy',
   config = function()
     require('notify').setup({
