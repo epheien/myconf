@@ -268,6 +268,7 @@ local function core_plugins()
   --table.insert(plugins, { 'b0o/incline.nvim', config = require('plugins/config/incline') })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cmd = 'ColorizerToggle' })
 
+  -- FIXME: 和 noice.nvim 一起用的时候, 第一条命令为 :pwd 的时候, 会以错误消息显示
   table.insert(plugins, {
     'dstein64/nvim-scrollview',
     event = 'VeryLazy',
