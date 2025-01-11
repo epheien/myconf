@@ -101,23 +101,6 @@ local function my_on_attach(bufnr)
 
   api.config.mappings.default_on_attach(bufnr)
 
-  -- your removals and mappings go here
-  vim.keymap.del('n', '.', opts('Run Command'))
-  if pcall(require, 'telescope') then
-    vim.keymap.set('n', '.', tree_actions_menu, opts('nvim tree menu'))
-  end
-  vim.keymap.del('n', 'g?', opts('Help'))
-  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
-  vim.keymap.set('n', '[[', api.node.navigate.parent, opts('Parent Directory'))
-  vim.keymap.del('n', '<C-k>', opts('Info'))
-  vim.keymap.del('n', 'U', opts('Toggle Hidden'))
-  vim.keymap.del('n', '<Tab>', opts('Open Preview'))
-  vim.keymap.set('n', 'i', api.node.show_info_popup, opts('Info'))
-  vim.keymap.del('n', 'I', opts('Toggle Git Ignore'))
-  vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts('Toggle Hidden'))
-  vim.keymap.del('n', 'C', opts('Toggle Git Clean'))
-  vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
-
   -- 关键的窗口内定位快捷键不能被占用
   vim.keymap.del('n', 'H', opts('Toggle Filter: Dotfiles'))
   vim.keymap.del('n', 'M', opts('Toggle Filter: No Bookmark'))
@@ -128,6 +111,24 @@ local function my_on_attach(bufnr)
 
   -- 不使用的快捷键, 避免混淆/误操作
   vim.keymap.del('n', 'u', opts(''))
+
+  -- your removals and mappings go here
+  vim.keymap.del('n', '.', opts('Run Command'))
+  if pcall(require, 'telescope') then
+    vim.keymap.set('n', '.', tree_actions_menu, opts('nvim tree menu'))
+  end
+  vim.keymap.del('n', 'g?', opts('Help'))
+  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+  vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
+  vim.keymap.set('n', '[[', api.node.navigate.parent, opts('Parent Directory'))
+  vim.keymap.del('n', '<C-k>', opts('Info'))
+  vim.keymap.del('n', 'U', opts('Toggle Hidden'))
+  vim.keymap.del('n', '<Tab>', opts('Open Preview'))
+  vim.keymap.set('n', 'i', api.node.show_info_popup, opts('Info'))
+  vim.keymap.del('n', 'I', opts('Toggle Git Ignore'))
+  vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts('Toggle Hidden'))
+  vim.keymap.del('n', 'C', opts('Toggle Git Clean'))
+  vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
 end
 
 local nvim_tree_opts = {
