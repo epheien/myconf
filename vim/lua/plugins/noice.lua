@@ -1,17 +1,17 @@
 ---@diagnostic disable-next-line
 local function setup_noice() -- {{{
   require('noice').setup({
-    override = {
-      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-      ['vim.lsp.util.stylize_markdown'] = true,
-      ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-    },
+    --override = {
+    --  ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+    --  ['vim.lsp.util.stylize_markdown'] = true,
+    --  ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+    --},
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
       command_palette = true, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
-      inc_rename = false, -- enables an input dialog for inc-rename.nvim
-      lsp_doc_border = false, -- add a border to hover docs and signature help
+      --inc_rename = false, -- enables an input dialog for inc-rename.nvim
+      --lsp_doc_border = false, -- add a border to hover docs and signature help
     },
     lsp = {
       signature = {
@@ -22,27 +22,21 @@ local function setup_noice() -- {{{
       enabled = false,
     },
     notify = {
-      enabled = false,
+      enabled = true,
     },
+    -- lua/noice/config/views.lua
     views = {
-      align = 'message-left',
-      position = {
-        col = 0,
-      },
-      popup = {
+      cmdline_popup = {
         border = {
-          style = 'none',
+          style = 'single',
         },
       },
-    },
-    cmdline_popup = {
-      position = {
-        row = 5,
-        col = '00%',
-      },
-      size = {
-        width = 60,
-        height = 'auto',
+      mini = {
+        timeout = 5000,
+        position = {
+          row = 1,
+          col = -1,
+        },
       },
     },
     cmdline = {
@@ -52,11 +46,13 @@ local function setup_noice() -- {{{
         lua = false,
         filter = false,
         cmdline = {
-          icon = '>',
+          title = '',
+          icon = ':',
         },
         --search_down = { icon = "/ ⌄" },
         --search_up = { icon = "? ⌃" },
       },
+      opts = {},
     },
     messages = {
       enabled = true, -- false 会使用 cmdline, 可避免闪烁
@@ -80,13 +76,22 @@ local function setup_noice() -- {{{
       },
     },
   })
+  vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { link = 'FloatBorder' })
+  vim.api.nvim_set_hl(0, 'NoiceLspProgressTitle', { link = 'Comment' })
 end
 -- }}}
 
+local enabled = vim.fn.has('nvim-0.10') == 1 and true
+
 return {
-  'folke/noice.nvim',
-  event = 'VeryLazy',
-  dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
-  config = setup_noice,
-  enabled = vim.fn.has('nvim-0.10') == 1 and false,
+  {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    config = setup_noice,
+    enabled = enabled,
+  },
+  -- 替代 fidget.nvim 的 LSP 进度
+  { 'j-hui/fidget.nvim', enabled = not enabled },
+  { 'echasnovski/mini.notify', enabled = not enabled },
 }
