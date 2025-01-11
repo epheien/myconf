@@ -28,7 +28,13 @@ return {
             return string.format('[%s] %s', time, notif.msg)
           end,
         },
+        --window = {
+        --  config = {
+        --    border = 'none',
+        --  },
+        --},
       })
+      vim.api.nvim_set_hl(0, 'MiniNotifyNormal', { link = 'Normal' })
       vim.notify = require('mini.notify').make_notify()
       vim.api.nvim_create_user_command('MiniNotifyHistory', function()
         require('utils').create_scratch_floatwin('MiniNotify History')
