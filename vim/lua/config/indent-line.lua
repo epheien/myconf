@@ -10,7 +10,7 @@ local M = {}
 
 local indentline_char = '│'
 
-local exclude_filetypes = { 'help', 'NvimTree', 'Outline', 'neo-tree', 'man' }
+local exclude_filetypes = { 'help', 'NvimTree', 'Outline', 'neo-tree', 'man', 'TelescopeResults' }
 
 local excludes = {}
 for _, ft in ipairs(exclude_filetypes) do
