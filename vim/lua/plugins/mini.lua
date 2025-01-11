@@ -32,6 +32,9 @@ return {
       vim.notify = require('mini.notify').make_notify()
       vim.api.nvim_create_user_command('MiniNotifyHistory', function()
         require('utils').create_scratch_floatwin('MiniNotify History')
+        vim.opt_local.filetype = 'mininotify-history' -- 避免 mini.notify 新建缓冲区
+        vim.opt_local.fillchars:append({ eob = ' ' })
+        vim.opt_local.cursorline = true
         vim.keymap.set('n', 'q', '<C-w>q')
         require('mini.notify').show_history()
       end, { desc = 'mini.notify history' })
