@@ -14,6 +14,6 @@ if [ "$1" == "-m" ]; then
     cmd="$cmd --exclude 'coc/*' --exclude '*/coc.nvim/*' --exclude videm --exclude '*/vimcdoc/*' --exclude '*/nvim-treesitter/*'"
 fi
 
-eval $cmd -czf "$output" pack/ coc/
+eval $cmd -czf "$output" lazy/ coc/
 
 echo "Done: $output"
