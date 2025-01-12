@@ -58,6 +58,8 @@ local function setup_noice() -- {{{
         help = false,
         lua = false,
         filter = false,
+        calculator = false,
+        --input = false, -- FIXME: 无法设置为 false, 否则报错
         cmdline = {
           title = '',
           icon = ':',
@@ -91,6 +93,7 @@ local function setup_noice() -- {{{
   })
   vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { link = 'FloatBorder' })
   vim.api.nvim_set_hl(0, 'NoiceLspProgressTitle', { link = 'Comment' })
+  vim.api.nvim_set_hl(0, 'NoiceSplit', { link = 'Normal' })
 end
 -- }}}
 
