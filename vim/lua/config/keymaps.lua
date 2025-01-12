@@ -70,10 +70,10 @@ map('n', '\\=', ':set columns+=30<CR>')
 map('n', '\\d', ':call myrc#n_BufferDelete()<CR>')
 
 -- Change local directory to file's directory
-map('n', '\\h', ':lcd %:p:h <Bar> pwd<CR>', nosilent)
+map('n', '\\h', ':lcd %:p:h <Bar> pwd<CR>')
 
 -- Save session
-map('n', '\\]', ':mksession! vimp.vim<CR>', nosilent)
+map('n', '\\]', ':mksession! vimp.vim | echo "mksession! vimp.vim"<CR>')
 
 -- Scroll down
 map('n', '<Space>', '3<C-e>')
@@ -313,7 +313,7 @@ vim.keymap.set('n', '<C-g>', function()
   if fname ~= '' and vim.fn.filereadable(fname) == 1 then
     table.insert(msg_list, vim.fn.strftime('%Y-%m-%d %H:%M:%S', vim.fn.getftime(fname)))
   end
-  vim.cmd.echo(vim.fn.string(vim.fn.join(msg_list, ' ')))
+  vim.notify(table.concat(msg_list, ' '))
 
   if vim.g.outline_loaded == 1 then
     local outline = require('outline') ---@diagnostic disable-line: different-requires
