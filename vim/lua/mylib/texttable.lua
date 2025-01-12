@@ -25,7 +25,7 @@ end
 -- @param data.rows string[][] The rows of the table.
 -- @param data.aligns string[] 'c' or 'l' or 'r'
 -- @return string[]
-function M.render_table(data)
+function M.render_table(data, ascii)
   local title = data.title
   local cols = data.cols
   local rows = data.rows
@@ -56,14 +56,19 @@ function M.render_table(data)
   table.insert(lines, '===== ' .. title .. ' =====')
 
   -- 生成表头
-  line = '+'
+  line = ascii and '+' or '╭'
   for i = 1, #cols do
-    line = line .. string.rep('-', colWidths[i] + 2) .. '+'
+    line = line .. string.rep(ascii and '-' or '─', colWidths[i] + 2)
+    if i == #cols then
+      line = line .. (ascii and '+' or '╮')
+    else
+      line = line .. (ascii and '+' or '┬')
+    end
   end
   table.insert(lines, line)
 
   -- headers, 居中偏左对齐
-  line = '| '
+  line = ascii and '| ' or '│ '
   for i = 1, #cols do
     local width = display_width(cols[i])
     local span = colWidths[i] - width
@@ -74,22 +79,27 @@ function M.render_table(data)
     end
     line = line .. string.rep(' ', left) .. cols[i] .. string.rep(' ', right)
     if i == #cols then
-      line = line .. ' |'
+      line = line .. (ascii and ' |' or ' │')
     else
-      line = line .. ' | '
+      line = line .. (ascii and ' | ' or ' │ ')
     end
   end
   table.insert(lines, line)
 
-  line = '+'
+  line = ascii and '+' or '├'
   for i = 1, #cols do
-    line = line .. string.rep('=', colWidths[i] + 2) .. '+'
+    line = line .. string.rep(ascii and '=' or '─', colWidths[i] + 2)
+    if i == #cols then
+      line = line .. (ascii and '+' or '┤')
+    else
+      line = line .. (ascii and '+' or '┼')
+    end
   end
   table.insert(lines, line)
 
   -- 生成数据行, 右对齐
   for _, row in ipairs(rows) do
-    line = '| '
+    line = ascii and '| ' or '│ '
     for i = 1, #row do
       local cellStr = type(row[i]) == 'string' and row[i] or tostring(row[i])
 
@@ -113,18 +123,23 @@ function M.render_table(data)
       line = line .. string.rep(' ', left) .. cellStr .. string.rep(' ', right)
 
       if i == #row then
-        line = line .. ' |'
+        line = line .. (ascii and ' |' or ' │')
       else
-        line = line .. ' | '
+        line = line .. (ascii and ' | ' or ' │ ')
       end
     end
     table.insert(lines, line)
   end
 
   -- 生成表格底部
-  line = '+'
+  line = ascii and '+' or '╰'
   for i = 1, #cols do
-    line = line .. string.rep('-', colWidths[i] + 2) .. '+'
+    line = line .. string.rep(ascii and '-' or '─', colWidths[i] + 2)
+    if i == #cols then
+      line = line .. (ascii and '+' or '╯')
+    else
+      line = line .. (ascii and '+' or '┴')
+    end
   end
   table.insert(lines, line)
 
