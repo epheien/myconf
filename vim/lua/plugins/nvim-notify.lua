@@ -7,7 +7,7 @@ return {
       render = 'wrapped-compact',
       max_width = function() return math.floor(vim.o.columns * 0.382) end,
       animate = false,
-      fps = 1, -- XXX: 尝试完全禁用动画
+      stages = 'no_animation',
       icons = {
         ERROR = ' ',
         WARN = ' ',
