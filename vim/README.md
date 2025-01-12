@@ -14,7 +14,7 @@
 - [x] 启动速度优化, 要跟 LazyVim 同一级别, 参考 `perf.md`
 - [x] `nvim-cmp`: :com<Tab><C-a><C-e>
 - [x] `vim-gutentags`: 生成 tags 失败
-- [ ] 二分查找 `noice.nvim` 第一条命令为 `:pwd` 时消息为错误类型的问题
+- [x] 二分查找 `noice.nvim` 第一条命令为 `:pwd` 时消息为错误类型的问题 (nvim-scrollview插件导致)
 - [ ] RefreshStatusTables 疑似导致内存泄露
 
 ## 参考资料
