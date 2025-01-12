@@ -313,7 +313,7 @@ vim.keymap.set('n', '<C-g>', function()
   if fname ~= '' and vim.fn.filereadable(fname) == 1 then
     table.insert(msg_list, vim.fn.strftime('%Y-%m-%d %H:%M:%S', vim.fn.getftime(fname)))
   end
-  vim.notify(table.concat(msg_list, ' '))
+  print(table.concat(msg_list, ' '))
 
   if vim.g.outline_loaded == 1 then
     local outline = require('outline') ---@diagnostic disable-line: different-requires

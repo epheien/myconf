@@ -14,10 +14,12 @@ local loop = vim.uv or vim.loop
 --vim.g.base46_cache = config_path .. '/base46_cache/'
 
 -- 简易覆盖 vim.notify, 用来避免 hit enter 信息, 例如 lazy.nvim 启动时的警告
---vim.notify = function(msg, level, opts) ---@diagnostic disable-line
---  print(string.format('[%d]', level), msg)
---  vim.cmd.redraw() -- 避免 hit enter
---end
+if not vim.g.enable_noice then
+  vim.notify = function(msg, level, opts) ---@diagnostic disable-line
+    print(string.format('[%d]', level), msg)
+    vim.cmd.redraw() -- 避免 hit enter
+  end
+end
 
 require('config.options')
 require('config.autocmds')
