@@ -1,5 +1,5 @@
 local function setup_colors()
-  -- 现代的彩色 7 色名称
+  -- 现代的彩虹七色名称
   -- 红橙黄绿青蓝紫
   -- Red Orange  Yellow Green Cyan Blue Violet
   local palette = {
