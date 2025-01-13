@@ -1,6 +1,7 @@
 ---@diagnostic disable-next-line
 local function setup_noice() -- {{{
   require('noice').setup({
+    --debug = true,
     --override = {
     --  ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
     --  ['vim.lsp.util.stylize_markdown'] = true,
@@ -101,7 +102,7 @@ local enabled = vim.fn.has('nvim-0.10') == 1 and vim.g.enable_noice
 
 return {
   {
-    'folke/noice.nvim',
+    'epheien/noice.nvim',
     event = 'VeryLazy',
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
     config = setup_noice,
