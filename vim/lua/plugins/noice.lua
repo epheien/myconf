@@ -35,7 +35,7 @@ local function setup_noice() -- {{{
           style = 'single',
         },
         position = {
-          row = 5,
+          row = 0.382, -- 0.382 = 1 - 0.618
         },
       },
       mini = {
