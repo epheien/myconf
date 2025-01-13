@@ -12,8 +12,9 @@ syntax match StatusTableButton '\V[\[^][]\+]' display
 syntax match StatusTableTitle '\V\^=====\.\+=====\$' display
 " 表头标题
 syntax match StatusTableHeader '[^|]\+ |'hs=s+1,he=e-2 contained
+syntax match StatusTableHeader '[^│]\+ │'hs=s+1,he=e-2 contained
 
-syntax region StatusTitleAndHeaders start="^| " end=" |\n^+=" oneline contains=StatusTableHeader
+syntax region StatusTitleAndHeaders start='\v^(\||│) ' end='\v (\|\n^\+\=|│\n├)' oneline contains=StatusTableHeader
 
 " Numbers
 " ------------------------------
