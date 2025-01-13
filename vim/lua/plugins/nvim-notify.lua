@@ -10,7 +10,10 @@ return {
       -- NOTE: 必需确保 max_width >= minimum_width, 否则会出现奇怪的问题
       max_width = function() return math.max(vim.o.columns, minimum_width) end,
       animate = false,
-      stages = 'no_animation',
+      --stages = 'no_animation',
+      stages = require('plugins.config.nvim-notify').stages(
+        require('notify.stages.util').DIRECTION.TOP_DOWN
+      ),
       icons = {
         ERROR = ' ',
         WARN = ' ',
