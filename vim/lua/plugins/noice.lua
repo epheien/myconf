@@ -1,5 +1,22 @@
 ---@diagnostic disable-next-line
 local function setup_noice() -- {{{
+  -- noice 调试专用函数
+  function LogToFile(...)
+    local file = io.open('temp.txt', 'a')
+    if file then
+      for i = 1, select('#', ...) do
+        local text = select(i, ...)
+        if type(text) == 'string' then
+          file:write(text .. ' ')
+        else
+          file:write(vim.inspect(text) .. ' ')
+        end
+      end
+      file:write('\n')
+      file:close()
+    end
+  end
+
   require('noice').setup({
     --debug = true,
     --override = {
