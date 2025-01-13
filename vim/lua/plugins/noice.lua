@@ -104,11 +104,8 @@ return {
   {
     'epheien/noice.nvim',
     event = 'VeryLazy',
-    dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    dependencies = { 'MunifTanjim/nui.nvim', 'echasnovski/mini.notify' },
     config = setup_noice,
     enabled = enabled,
   },
-  -- 替代 fidget.nvim 的 LSP 进度
-  --{ 'j-hui/fidget.nvim', enabled = not enabled },
-  { 'echasnovski/mini.notify', enabled = not enabled },
 }

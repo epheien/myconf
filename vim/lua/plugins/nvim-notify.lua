@@ -1,3 +1,5 @@
+do return {} end
+
 return {
   'rcarriga/nvim-notify',
   enabled = vim.g.enable_noice,

@@ -16,7 +16,6 @@ return {
 
   {
     'echasnovski/mini.notify',
-    enabled = not vim.g.enable_noice,
     event = 'VeryLazy',
     config = function()
       require('mini.notify').setup({
@@ -27,6 +26,10 @@ return {
           format = function(notif)
             local time = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update))
             return string.format('[%s] %s', time, notif.msg)
+          end,
+          sort = function(notif_arr)
+            table.sort(notif_arr, function(a, b) return a.ts_update > b.ts_update end)
+            return notif_arr
           end,
         },
         --window = {
