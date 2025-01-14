@@ -18,6 +18,51 @@ local function display_width(str)
   end
 end
 
+---table.sort 通用比较函数
+---@param a any
+---@param b any
+---@param descending? boolean
+---@return boolean
+function M.comp(a, b, descending)
+  local type_a, type_b = type(a), type(b)
+
+  if type_a == type_b then
+    -- 如果两个元素类型相同,按照类型进行比较
+    if type_a == 'number' then
+      if descending then
+        return a > b
+      else
+        return a < b
+      end
+    elseif type_a == 'string' then
+      if descending then
+        return a > b
+      else
+        return a < b
+      end
+    else
+      -- 其他类型视为相等
+      return false
+    end
+  else
+    -- 如果两个元素类型不同,按照以下规则比较:
+    -- 数字 < 字符串
+    if type_a == 'number' then
+      if descending then
+        return false
+      else
+        return true
+      end
+    else
+      if descending then
+        return true
+      else
+        return false
+      end
+    end
+  end
+end
+
 ---@param tbl table
 ---@param sort_col? integer
 ---@param descending? boolean
@@ -29,15 +74,7 @@ function M.sort_table(tbl, sort_col, descending)
     return
   end
   -- NOTE: 如果类型之间无法比较的话, 就会报错! 尽量确保同一列为同一种类型
-  table.sort(tbl.rows, function(a, b)
-    local aa = a[sort_col]
-    local bb = b[sort_col]
-    if descending then
-      return aa > bb
-    else
-      return aa < bb
-    end
-  end)
+  table.sort(tbl.rows, function(a, b) return M.comp(a[sort_col], b[sort_col], descending) end)
 end
 
 ---渲染 Python 的 texttable 字典结构
