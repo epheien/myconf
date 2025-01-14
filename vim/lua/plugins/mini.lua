@@ -16,6 +16,8 @@ return {
 
   {
     'epheien/mini.notify',
+    -- mini.notify 无法高亮 :hi 命令的输出, 无法替代 nvim-notify
+    enabled = not vim.g.enable_noice,
     event = 'VeryLazy',
     config = function()
       local MiniNotify = require('mini.notify')

@@ -43,7 +43,7 @@ local function setup_noice() -- {{{
       enabled = false,
     },
     notify = {
-      enabled = true,
+      enabled = false,
     },
     -- lua/noice/config/views.lua
     views = {
@@ -89,10 +89,10 @@ local function setup_noice() -- {{{
     },
     messages = {
       enabled = true, -- false 会使用 cmdline, 可避免闪烁
-      --view = 'mini',
-      --view_error = 'mini',
-      --view_warn = 'mini',
-      --view_history = 'popup',
+      view = 'mini',
+      view_error = 'mini',
+      view_warn = 'mini',
+      view_history = 'popup',
     },
     commands = {
       history = {
