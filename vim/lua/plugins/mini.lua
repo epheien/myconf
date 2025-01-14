@@ -15,7 +15,7 @@ return {
   },
 
   {
-    'echasnovski/mini.notify',
+    'epheien/mini.notify',
     event = 'VeryLazy',
     config = function()
       local MiniNotify = require('mini.notify')
