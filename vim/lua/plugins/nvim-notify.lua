@@ -1,7 +1,5 @@
-do return {} end
-
 return {
-  'rcarriga/nvim-notify',
+  'epheien/nvim-notify',
   enabled = vim.g.enable_noice,
   event = 'VeryLazy',
   config = function()
@@ -9,8 +7,9 @@ return {
     require('notify').setup({
       render = 'wrapped-compact',
       minimum_width = 20,
-      -- NOTE: 必需确保 max_width >= minimum_width, 否则会出现奇怪的问题
-      max_width = function() return math.max(vim.o.columns, minimum_width) end,
+      -- NOTE: 必须确保 max_width >= minimum_width, 否则会出现奇怪的问题
+      -- NOTE: 需要排除掉 border 的宽度 2, 否则会导致显示的内容不全
+      max_width = function() return math.max(vim.o.columns, minimum_width) - 2 end,
       animate = false,
       --stages = 'no_animation',
       stages = require('plugins.config.nvim-notify').stages(

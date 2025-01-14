@@ -919,7 +919,12 @@ function myrc#Cstag() abort
     try
         if &tagfunc ==# 'v:lua.vim.lsp.tagfunc'
             " 只能这样做, 舍弃了 Cstag 的 fallback 功能
-            call feedkeys("g\<C-]>", 'n')
+            " 如果使用 noice.nvim 的话, 只能用原始的 <C-]> 功能
+            if luaeval('package.loaded.noice ~= nil')
+                call feedkeys("\<C-]>", 'n')
+            else
+                call feedkeys("g\<C-]>", 'n')
+            endif
         else
             exec 'tjump' cword
         endif

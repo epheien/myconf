@@ -27,9 +27,16 @@ local function setup_noice() -- {{{
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
       command_palette = true, -- position the cmdline and popupmenu together
-      long_message_to_split = true, -- long messages will be sent to a split
+      --long_message_to_split = true, -- long messages will be sent to a split
       --inc_rename = false, -- enables an input dialog for inc-rename.nvim
       --lsp_doc_border = false, -- add a border to hover docs and signature help
+    },
+    -- long_message_to_popup
+    routes = {
+      {
+        filter = { event = 'msg_show', min_height = 20 },
+        view = 'popup',
+      },
     },
     lsp = {
       signature = {
@@ -43,7 +50,7 @@ local function setup_noice() -- {{{
       enabled = false,
     },
     notify = {
-      enabled = false,
+      enabled = true,
     },
     -- lua/noice/config/views.lua
     views = {
@@ -89,9 +96,9 @@ local function setup_noice() -- {{{
     },
     messages = {
       enabled = true, -- false 会使用 cmdline, 可避免闪烁
-      view = 'mini',
-      view_error = 'mini',
-      view_warn = 'mini',
+      --view = 'mini',
+      --view_error = 'mini',
+      --view_warn = 'mini',
       view_history = 'popup',
     },
     commands = {
@@ -125,4 +132,6 @@ return {
     config = setup_noice,
     enabled = enabled,
   },
+  -- mini.notify 无法高亮 :hi 命令的输出, 无法替代 nvim-notify
+  { 'mini.notify', enabled = not enabled },
 }
