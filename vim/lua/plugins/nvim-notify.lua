@@ -24,7 +24,8 @@ return {
       },
       on_open = function(win)
         vim.api.nvim_set_option_value('winblend', 10, { win = win })
-        vim.api.nvim_win_set_config(win, { zindex = 400, border = 'single' })
+        -- window picker 的 zindex 固定为 300
+        vim.api.nvim_win_set_config(win, { zindex = 299, border = 'single' })
       end,
     })
     vim.notify = function(msg, level, opts) ---@diagnostic disable-line
