@@ -1015,6 +1015,9 @@ function myrc#RefreshStatusTables(fname, ...) abort
     call nvim_set_option_value('list', v:false, {'win': bufwinid(bufid)})
     call nvim_set_option_value('cursorline', v:true, {'win': bufwinid(bufid)})
     call nvim_set_option_value('filetype', 'status_table', {'buf': bufid})
+    call nvim_buf_set_var(bufid, 'status_tables_opts', { 'fname': a:fname })
+    exec printf("lua vim.keymap.set('n', '<CR>', require('mylib.texttable').toggle_sort_on_header, { buffer = %d })", bufid)
+    exec printf("lua vim.keymap.set('n', '<2-LeftMouse>', require('mylib.texttable').toggle_sort_on_header, { buffer = %d })", bufid)
     call s:RefreshStatusTables(a:fname, bufid)
     let s:status_refresh_timer = timer_start(interval,
         \ function('s:RefreshStatusTables', [a:fname, bufid]), {'repeat': -1})

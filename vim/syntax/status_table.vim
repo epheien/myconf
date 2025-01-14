@@ -11,10 +11,11 @@ syntax match StatusTableButton '\V[\[^][]\+]' display
 " 表格标题
 syntax match StatusTableTitle '\V\^=====\.\+=====\$' display
 " 表头标题
-syntax match StatusTableHeader '[^|]\+ |'hs=s+1,he=e-2 contained
-syntax match StatusTableHeader '[^│]\+ │'hs=s+1,he=e-2 contained
+syntax match StatusTableHeader '[^|]\+[↓↑? ]|'hs=s+1,he=e-2 contained
+syntax match StatusTableHeader '[^│]\+[↓↑? ]│'hs=s+1,he=e-2 contained contains=StatusTableSortGlyph
+syntax match StatusTableSortGlyph '[↓↑?]' contained
 
-syntax region StatusTitleAndHeaders start='\v^(\||│) ' end='\v (\|\n^\+\=|│\n├)' oneline contains=StatusTableHeader
+syntax region StatusTableHeaders start='\v^(\||│) ' end='\v[↓↑? ](\|\n^\+\=|│\n├)' oneline contains=StatusTableHeader
 
 " Numbers
 " ------------------------------
@@ -35,9 +36,10 @@ hi def link StatusTableNumberOctal      Number
 hi def link StatusTableNumberHex        Number
 
 hi def link StatusTableSymbol           Delimiter
+hi def link StatusTableSortGlyph        Special
 hi def link StatusTableDuration         Type
 
 highlight def link StatusTableButton Special
 highlight def link StatusTableActiveButton Todo
-highlight def link StatusTableTitle Function
+highlight def link StatusTableTitle Title
 highlight def link StatusTableHeader Identifier
