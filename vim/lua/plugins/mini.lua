@@ -46,8 +46,8 @@ return {
         vim.opt_local.filetype = 'mininotify-history' -- 避免 mini.notify 新建缓冲区
         vim.opt_local.fillchars:append({ eob = ' ' })
         vim.opt_local.cursorline = true
-        vim.keymap.set('n', 'q', '<C-w>q')
-        vim.keymap.set('n', 'R', '<Cmd>MiniNotifyHistory<CR>')
+        vim.keymap.set('n', 'q', '<C-w>q', { buffer = true })
+        vim.keymap.set('n', 'R', '<Cmd>MiniNotifyHistory<CR>', { buffer = true })
         MiniNotify.show_history()
       end, { desc = 'show mini.notify history' })
       vim.api.nvim_create_user_command(

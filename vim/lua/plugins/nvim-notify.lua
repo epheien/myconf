@@ -40,8 +40,8 @@ return {
       require('utils').create_scratch_floatwin('Notify History')
       vim.opt_local.fillchars:append({ eob = ' ' })
       vim.opt_local.cursorline = true
-      vim.keymap.set('n', 'q', '<C-w>q')
-      vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>')
+      vim.keymap.set('n', 'q', '<C-w>q', { buffer = true })
+      vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>', { buffer = true })
       local history = require('notify').get_history()
       local echo_to_buffer = require('mylib.buffer').echo_to_buffer
       local ns_id = vim.api.nvim_create_namespace('NotifyHistory')
