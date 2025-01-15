@@ -1,9 +1,11 @@
 local M = {}
 
-local scratch_winid = -1
+-- NOTE: Capture 命令生成的标题差异化很大, 可能会导致这个结构无限膨胀
+local scratch_winids = {}
 M.create_scratch_floatwin = function(title)
-  local bufid
   title = string.format(' %s ', title) or ' More Prompt '
+  local scratch_winid = scratch_winids[title] or -1
+  local bufid
   if not vim.api.nvim_win_is_valid(scratch_winid) then
     bufid = vim.api.nvim_create_buf(false, true)
     local bo = vim.bo[bufid]
@@ -36,6 +38,7 @@ M.create_scratch_floatwin = function(title)
   if not opt:get().NormalFloat then
     opt:append({ NormalFloat = 'Normal' })
   end
+  scratch_winids[title] = scratch_winid
   return bufid, scratch_winid
 end
 
