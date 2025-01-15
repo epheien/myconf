@@ -5,7 +5,7 @@
 
 ## TODO
 - [ ] 了解 lazy.nvim 的 VeryLazy 原理
-- [ ] `pckr.nvim` 会出现重复 source vim 文件的问题: `nvim --startuptime nvim.txt`
+- [x] `pckr.nvim` 会出现重复 source vim 文件的问题: `nvim --startuptime nvim.txt` (不再使用 pckr, 改用 lazy)
 - [?] `edgy.nvim` 同时打开 nvimtree 和 outline 的时候, 把光标放到 nvimtree 窗口执行 `windo echo`, 就会再开一个 nvimtree 的窗口, autocmd 也会触发. vim-mark 新版本不再使用 `windo`.
 - [x] 支持鼠标拖动浮动窗口
 - [x] nvim-cmp 以及 cmp-cmdline 插件在命令行粘贴命令的时候, 好像有性能问题
@@ -15,7 +15,7 @@
 - [x] `nvim-cmp`: :com<Tab><C-a><C-e>
 - [x] `vim-gutentags`: 生成 tags 失败
 - [x] 二分查找 `noice.nvim` 第一条命令为 `:pwd` 时消息为错误类型的问题 (nvim-scrollview插件导致)
-- [ ] RefreshStatusTables 疑似导致内存泄露
+- [x] RefreshStatusTables 疑似导致内存泄露 (使用纯 lua 实现没有问题, 内存涨到 324M 后就没变化了)
 
 ## 参考资料
 
