@@ -50,11 +50,14 @@ return {
       local bufnr = vim.api.nvim_get_current_buf()
       -- clear buffer
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
+      local offset = 0
       for lnum, message in ipairs(history) do
-        if vim.api.nvim_win_get_cursor(0)[1] ~= lnum then
-          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { '' }) -- 末尾添加空行
+        -- 非首行都要在末尾添加空行
+        if lnum ~= 1 then
+          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { '' })
         end
-        echo_to_buffer(ns_id, bufnr, lnum, message, true)
+        local count = echo_to_buffer(ns_id, bufnr, lnum + offset, message, true)
+        offset = offset + count - 1
       end
     end, { desc = 'show nvim-notify history' })
   end,
