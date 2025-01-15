@@ -35,5 +35,25 @@ return {
       --opts.timeout = 1000
       require('notify')(msg, level, opts)
     end
+
+    vim.api.nvim_create_user_command('NotifyHistory', function()
+      require('utils').create_scratch_floatwin('Notify History')
+      vim.opt_local.fillchars:append({ eob = ' ' })
+      vim.opt_local.cursorline = true
+      vim.keymap.set('n', 'q', '<C-w>q')
+      vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>')
+      local history = require('notify').get_history()
+      local echo_to_buffer = require('mylib.buffer').echo_to_buffer
+      local ns_id = vim.api.nvim_create_namespace('NotifyHistory')
+      local bufnr = vim.api.nvim_get_current_buf()
+      -- clear buffer
+      vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
+      for lnum, message in ipairs(history) do
+        if vim.api.nvim_win_get_cursor(0)[1] ~= lnum then
+          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { '' }) -- 末尾添加空行
+        end
+        echo_to_buffer(ns_id, bufnr, lnum, message, true)
+      end
+    end, { desc = 'show nvim-notify history' })
   end,
 }
