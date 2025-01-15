@@ -4,9 +4,11 @@ return {
   event = 'VeryLazy',
   config = function()
     local minimum_width = 20
+    vim.api.nvim_set_hl(0, 'NotifyINFOTitle', { link = 'DiagnosticInfo' })
+    vim.api.nvim_set_hl(0, 'NotifyINFOIcon', { link = 'DiagnosticInfo' })
     require('notify').setup({
       render = 'wrapped-compact',
-      minimum_width = 20,
+      minimum_width = minimum_width,
       -- NOTE: 必须确保 max_width >= minimum_width, 否则会出现奇怪的问题
       -- NOTE: 需要排除掉 border 的宽度 2, 否则会导致显示的内容不全
       max_width = function() return math.max(vim.o.columns, minimum_width) - 2 end,
