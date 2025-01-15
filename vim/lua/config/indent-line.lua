@@ -18,6 +18,7 @@ local exclude_filetypes = {
   'man',
   'TelescopeResults',
   'noice',
+  'notify',
 }
 
 local excludes = {}

@@ -45,6 +45,9 @@ local function setup_noice() -- {{{
       progress = {
         enabled = false,
       },
+      hover = {
+        enabled = false,
+      },
     },
     popupmenu = {
       enabled = false,
