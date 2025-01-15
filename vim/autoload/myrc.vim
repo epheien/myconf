@@ -885,11 +885,6 @@ function! myrc#MyTabLine() abort
 endfunction
 
 function! s:tab_filename(n) abort
-    " 支持使用 t:title 指定标签名称
-    let title = gettabvar(a:n, 'title', 0)
-    if type(title) == v:t_string
-        return title
-    endif
     let buflist = tabpagebuflist(a:n)
     let winnr = tabpagewinnr(a:n)
     let _ = expand('#'.buflist[winnr - 1].':t')
@@ -902,6 +897,11 @@ function! s:tab_modified(n) abort
 endfunction
 
 function myrc#MyTabLabel(n, active)
+    " 支持使用 t:title 指定标签名称
+    let title = gettabvar(a:n, 'title', 0)
+    if type(title) == v:t_string
+        return title
+    endif
     let _ = []
     call add(_, a:n)
     call add(_, s:tab_filename(a:n))
