@@ -66,6 +66,23 @@ local function echo_to_buffer(ns_id, bufnr, lnum, messages, bang)
   return count
 end
 
+---把 nvim_echo 参数的列表全部写到缓冲区
+---@param ns_id any
+---@param bufnr integer
+---@param chunks_list table[][] 每个元素都是 nvim_echo 的第一个参数 chunks
+local function echo_chunks_list_to_buffer(ns_id, bufnr, chunks_list)
+  local offset = 0
+  for lnum, message in ipairs(chunks_list) do
+    -- 非首行都要在末尾添加空行
+    if lnum ~= 1 then
+      vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { '' })
+    end
+    local count = echo_to_buffer(ns_id, bufnr, lnum + offset, message, true)
+    offset = offset + count - 1
+  end
+end
+
 M.echo_to_buffer = echo_to_buffer
+M.echo_chunks_list_to_buffer = echo_chunks_list_to_buffer
 
 return M

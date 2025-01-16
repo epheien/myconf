@@ -45,20 +45,11 @@ return {
       vim.keymap.set('n', 'q', '<C-w>q', { buffer = true })
       vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>', { buffer = true })
       local history = require('notify').get_history()
-      local echo_to_buffer = require('mylib.buffer').echo_to_buffer
       local ns_id = vim.api.nvim_create_namespace('NotifyHistory')
       local bufnr = vim.api.nvim_get_current_buf()
       -- clear buffer
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
-      local offset = 0
-      for lnum, message in ipairs(history) do
-        -- 非首行都要在末尾添加空行
-        if lnum ~= 1 then
-          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { '' })
-        end
-        local count = echo_to_buffer(ns_id, bufnr, lnum + offset, message, true)
-        offset = offset + count - 1
-      end
+      require('mylib.buffer').echo_chunks_list_to_buffer(ns_id, bufnr, history)
     end, { desc = 'show nvim-notify history' })
   end,
 }
