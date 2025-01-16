@@ -1,3 +1,5 @@
+local ns_id = vim.api.nvim_create_namespace('NotifyHistory')
+
 return {
   'epheien/nvim-notify',
   enabled = vim.g.enable_noice,
@@ -45,9 +47,9 @@ return {
       vim.keymap.set('n', 'q', '<C-w>q', { buffer = true })
       vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>', { buffer = true })
       local history = require('notify').get_history()
-      local ns_id = vim.api.nvim_create_namespace('NotifyHistory')
       local bufnr = vim.api.nvim_get_current_buf()
       -- clear buffer
+      vim.api.nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
       require('mylib.buffer').echo_chunks_list_to_buffer(ns_id, bufnr, history)
     end, { desc = 'show nvim-notify history' })
