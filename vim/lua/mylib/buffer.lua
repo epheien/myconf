@@ -60,6 +60,7 @@ local function echo_to_buffer(ns_id, bufnr, lnum, messages, bang)
 
   -- 如果设置了 bang, 则将光标移动到消息的开头
   if bang then
+    -- NOTE: nvim 的 API 允许渲染不显示的 buffer, 所以操作窗口是不安全的
     vim.api.nvim_win_set_cursor(0, { row + 1, 0 })
   end
 
@@ -70,14 +71,14 @@ end
 ---@param ns_id any
 ---@param bufnr integer
 ---@param chunks_list table[][] 每个元素都是 nvim_echo 的第一个参数 chunks
-local function echo_chunks_list_to_buffer(ns_id, bufnr, chunks_list)
+local function echo_chunks_list_to_buffer(ns_id, bufnr, chunks_list, bang)
   local offset = 0
   for lnum, message in ipairs(chunks_list) do
     -- 非首行都要在末尾添加空行
     if lnum ~= 1 then
       vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { '' })
     end
-    local count = echo_to_buffer(ns_id, bufnr, lnum + offset, message, true)
+    local count = echo_to_buffer(ns_id, bufnr, lnum + offset, message, bang)
     offset = offset + count - 1
   end
 end

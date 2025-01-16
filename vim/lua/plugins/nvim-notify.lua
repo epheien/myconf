@@ -48,10 +48,12 @@ return {
       vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>', { buffer = true })
       local history = require('notify').get_history()
       local bufnr = vim.api.nvim_get_current_buf()
+      local pos = vim.api.nvim_win_get_cursor(0)
       -- clear buffer
       vim.api.nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
       require('mylib.buffer').echo_chunks_list_to_buffer(ns_id, bufnr, history)
+      vim.api.nvim_win_set_cursor(0, pos)
     end, { desc = 'show nvim-notify history' })
   end,
 }
