@@ -202,9 +202,7 @@ vim.g.coc_data_home = vim.fs.joinpath(vim.fn.stdpath('config'), 'coc')
 vim.api.nvim_create_autocmd('User', {
   pattern = 'CocJumpPlaceholder',
   callback = function()
-    vim.schedule(function()
-      vim.fn.CocActionAsync('showSignatureHelp')
-    end)
+    vim.schedule(function() vim.fn.CocActionAsync('showSignatureHelp') end)
   end,
 })
 
