@@ -258,9 +258,7 @@ local function core_plugins()
   table.insert(plugins, {
     'kshenoy/vim-signature',
     event = 'BufReadPre',
-    config = function()
-      vim.api.nvim_set_hl(0, 'SignatureMarkText', { link = 'Identifier' })
-    end,
+    config = function() vim.api.nvim_set_hl(0, 'SignatureMarkText', { link = 'Identifier' }) end,
   })
   table.insert(plugins, { 'norcalli/nvim-colorizer.lua', cmd = 'ColorizerToggle' })
 
@@ -300,6 +298,10 @@ local function core_plugins()
           {
             ft = 'neo-tree',
             open = 'Neotree',
+          },
+          {
+            ft = 'ConnManager',
+            open = 'ConnManagerOpen',
           },
           {
             ft = 'tagbar',
