@@ -91,7 +91,7 @@ local function my_on_attach(bufnr)
 
   local function opts(desc)
     return {
-      desc = 'nvim-tree: ' .. desc,
+      desc = 'nvim-tree: ' .. (desc or ''),
       buffer = bufnr,
       noremap = true,
       silent = true,
@@ -108,6 +108,9 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', '-', opts('Up'))
   vim.keymap.del('n', 'P', opts('Parent Directory'))
   vim.keymap.del('n', 'p', opts('Paste'))
+  vim.keymap.del('n', 'bt', opts())
+  vim.keymap.del('n', 'bd', opts())
+  vim.keymap.del('n', 'bmv', opts())
 
   -- 不使用的快捷键, 避免混淆/误操作
   vim.keymap.del('n', 'u', opts(''))
