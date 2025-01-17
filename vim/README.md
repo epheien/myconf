@@ -16,6 +16,7 @@
 - [x] `vim-gutentags`: 生成 tags 失败
 - [x] 二分查找 `noice.nvim` 第一条命令为 `:pwd` 时消息为错误类型的问题 (nvim-scrollview插件导致)
 - [x] RefreshStatusTables 疑似导致内存泄露 (使用纯 lua 实现没有问题, 内存涨到 324M 后就没变化了)
+- [ ] nvim-notify 在切换 tab 后, 即时的窗口刷新不会在新的 tab 渲染
 
 ## 参考资料
 
