@@ -146,12 +146,12 @@ function MyStatusLine()
     local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
     local head_string = string.format('%%#%s#%s', 'Normal_' .. mode_group, head_glyph)
     local mode_string = string.format('%%#%s#%s%s ', mode_group, gap, mode)
-    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L,%%v%s', 'MyStlNormal', mod, gap)
+    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L:%%v%s', 'MyStlNormal', mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormal_Normal', tail_glyph)
     return head_string .. mode_string .. file_string .. tail_string
   else
     local head_string = string.format('%%#%s#%s', 'Normal_MyStlNormalNC', head_glyph)
-    local file_string = string.format('%%#%s#%s%%f%s │ %%l/%%L,%%v%s', 'MyStlNormalNC', gap, mod, gap)
+    local file_string = string.format('%%#%s#%s%%f%s │ %%l/%%L:%%v%s', 'MyStlNormalNC', gap, mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormalNC_Normal', tail_glyph)
     return head_string .. file_string .. tail_string
   end
