@@ -8,7 +8,8 @@ return {
     local minimum_width = 20
     vim.api.nvim_set_hl(0, 'NotifyINFOTitle', { link = 'DiagnosticInfo' })
     vim.api.nvim_set_hl(0, 'NotifyINFOIcon', { link = 'DiagnosticInfo' })
-    require('notify').setup({
+    local notify = require('notify')
+    notify.setup({
       render = 'wrapped-compact',
       minimum_width = minimum_width,
       -- NOTE: 必须确保 max_width >= minimum_width, 否则会出现奇怪的问题
@@ -37,7 +38,7 @@ return {
       opts = opts or {}
       --opts.keep = function() return false end
       --opts.timeout = 1000
-      require('notify')(msg, level, opts)
+      notify(msg, level, opts)
     end
 
     vim.api.nvim_create_user_command('NotifyHistory', function()
@@ -46,7 +47,7 @@ return {
       vim.opt_local.cursorline = true
       vim.keymap.set('n', 'q', '<C-w>q', { buffer = true })
       vim.keymap.set('n', 'R', '<Cmd>NotifyHistory<CR>', { buffer = true })
-      local history = require('notify').get_history()
+      local history = notify.get_history()
       local bufnr = vim.api.nvim_get_current_buf()
       local pos = vim.api.nvim_win_get_cursor(0)
       -- clear buffer
@@ -55,5 +56,8 @@ return {
       require('mylib.buffer').echo_chunks_list_to_buffer(ns_id, bufnr, history)
       vim.api.nvim_win_set_cursor(0, pos)
     end, { desc = 'show nvim-notify history' })
+    vim.api.nvim_create_autocmd('TabEnter', {
+      callback = function() notify.dismiss({ pending = false, silent = true }) end,
+    })
   end,
 }
