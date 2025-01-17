@@ -238,3 +238,6 @@ vim.api.nvim_open_win = function(buffer, enter, config)
   end
   return nvim_open_win(buffer, enter, config)
 end
+
+-- Undercurl group for test
+vim.api.nvim_set_hl(0, 'Undercurl', { undercurl = true })
