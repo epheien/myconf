@@ -3,7 +3,7 @@ return {
   cmd = 'ConnManagerOpen',
   config = function()
     require('conn-manager').setup({
-      config_path = vim.fs.joinpath(vim.fn.stdpath('config') --[[@as string]], 'conn-manager.json'),
+      config_file = vim.fs.joinpath(vim.fn.stdpath('config') --[[@as string]], 'conn-manager.json'),
       window_config = {
         width = 36,
         split = 'left',
