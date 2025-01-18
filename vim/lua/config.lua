@@ -29,6 +29,9 @@ local function load_config()
   require('config.float-help')
   require('config.mystl')
   require('config.alacritty-mouse-fix')
+  if vim.g.enable_noice then
+    require('extmark-ruler').setup()
+  end
 end
 
 vim.api.nvim_create_autocmd('User', {
