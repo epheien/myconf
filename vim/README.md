@@ -18,6 +18,8 @@
 - [x] RefreshStatusTables 疑似导致内存泄露 (使用纯 lua 实现没有问题, 内存涨到 324M 后就没变化了)
 - [x] nvim-notify 在切换 tab 后, 即时的窗口刷新不会在新的 tab 渲染 (workaround)
 - [ ] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列
+- [x] 使用 noice.nvim 后, 没有 'showcmd' 的信息 (可使用 incline 来实现, 也可以直接用 extmarks)
+- [ ] 使用 noice.nvim 后, `<C-g>` 显示通知并开始搜索 `/`, 输入 3 个字符左右开始闪烁并且占用过多的 CPU
 
 ## 参考资料
 
