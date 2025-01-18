@@ -1,5 +1,5 @@
 return {
   'b0o/incline.nvim',
   lazy = true,
-  config = require('plugins/config/incline'),
+  config = function() require('plugins/config/incline') end,
 }

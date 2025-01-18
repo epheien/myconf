@@ -86,7 +86,6 @@ local function make_mode_display(m)
   }
 end
 local function setup_incline()
-  vim.opt.laststatus = 3
   -- 生成需要用到的高亮组
   --vim.cmd([[hi InclineNormalMode guifg=#282828 guibg=#E0E000 ctermfg=235 ctermbg=184]])
   vim.api.nvim_set_hl(
@@ -99,8 +98,6 @@ local function setup_incline()
   vim.cmd([[hi! InclineVisualMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
   vim.cmd([[hi! InclineSelectMode ctermfg=235 ctermbg=216 guifg=#282828 guibg=#f2c68a]])
   vim.cmd([[hi! InclineReplaceMode ctermfg=235 ctermbg=203 guifg=#282828 guibg=#e5786d]])
-  -- set noshowmode
-  vim.o.showmode = false
   require('incline').setup({
     debounce_threshold = {
       falling = 50,
@@ -213,7 +210,7 @@ local function setup_incline()
       }
 
       -- 简单地添加 ruler 信息
-      local ruler = vim.api.nvim_eval_statusline(' %l/%L,%v ', { winid = props.win })['str']
+      local ruler = vim.api.nvim_eval_statusline(' %l/%L:%v ', { winid = props.win })['str']
       ruler = ' │' .. ruler
       table.insert(result, ruler)
 
@@ -224,4 +221,4 @@ local function setup_incline()
 end
 -- }}}
 
-return setup_incline
+setup_incline()
