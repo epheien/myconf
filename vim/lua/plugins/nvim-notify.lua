@@ -15,7 +15,9 @@ return {
       -- NOTE: 必须确保 max_width >= minimum_width, 否则会出现奇怪的问题
       -- NOTE: 需要排除掉 border 的宽度 2, 否则会导致显示的内容不全
       max_width = function() return math.max(vim.o.columns, minimum_width) - 2 end,
+      fps = 5,
       animate = false,
+      timeout = 4000,
       --stages = 'no_animation',
       stages = require('plugins.config.nvim-notify').stages(
         require('notify.stages.util').DIRECTION.TOP_DOWN
