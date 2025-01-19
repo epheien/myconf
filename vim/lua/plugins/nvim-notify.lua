@@ -2,7 +2,8 @@ local ns_id = vim.api.nvim_create_namespace('NotifyHistory')
 
 return {
   'epheien/nvim-notify',
-  enabled = vim.g.enable_noice,
+  --enabled = vim.g.enable_noice,
+  enabled = false,
   event = 'VeryLazy',
   config = function()
     local minimum_width = 20

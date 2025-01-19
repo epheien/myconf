@@ -6,6 +6,25 @@ local opts = {
         fillchars = 'eob: ', -- end of buffer 填充的字符, 默认为 ~
       },
     },
+    notification = {
+      border = 'single',
+      title_pos = 'left',
+      ft = '',
+    },
+    notification_history = {
+      border = 'single',
+      ft = '',
+    },
+    float = {
+      backdrop = false
+    }
+  },
+
+  notifier = {
+    --enabled = false,
+    timeout = 4000,
+    width = { min = 20, max = 0.999 },
+    date_format = '%T',
   },
 
   dashboard = {
@@ -53,6 +72,15 @@ return {
   priority = 1000,
   lazy = false,
   config = function()
+    local notify = vim.notify
     require('snacks').setup(opts)
+    -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
+    -- this is needed to have early notifications show up in noice history
+    vim.notify = notify
+    vim.api.nvim_create_user_command(
+      'SnacksNotifierHistory',
+      function() require('snacks.notifier').show_history() end,
+      { nargs = 0 }
+    )
   end,
 }
