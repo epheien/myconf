@@ -991,7 +991,7 @@ endfunction
 let s:status_refresh_timer = -1
 function s:RefreshStatusTables(fname, bufid, ...) abort
     if bufwinid(a:bufid) < 0
-        call myrc#StopRefreshStatusTables()
+        "call myrc#StopRefreshStatusTables()
         return
     endif
     call v:lua.require'mylib.texttable'.buffer_render_status(a:bufid, expand(a:fname))
