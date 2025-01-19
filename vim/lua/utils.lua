@@ -214,4 +214,6 @@ function M.add_plugins(specs)
   require('pckr').add(specs)
 end
 
+function M.empty(v) return vim.fn.empty(v) == 1 end
+
 return M
