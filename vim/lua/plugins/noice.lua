@@ -90,7 +90,7 @@ local function setup_noice() -- {{{
         --input = false, -- FIXME: 无法设置为 false, 否则报错
         cmdline = {
           title = '',
-          icon = ':',
+          icon = '>',
         },
         --search_down = { icon = "/ ⌄" },
         --search_up = { icon = "? ⌃" },
