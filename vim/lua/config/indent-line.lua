@@ -20,6 +20,7 @@ local exclude_filetypes = {
   'noice',
   'notify',
   'ConnManager',
+  'snacks_notif',
 }
 
 local excludes = {}
