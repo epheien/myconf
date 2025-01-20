@@ -281,6 +281,44 @@ map('i', ';', function()
   end
 end, { expr = true })
 
+local function get_win_count()
+  local count = 0
+  for i = 1, vim.fn.winnr('$') do
+    if not vim.api.nvim_win_get_config(vim.fn.win_getid(i)).zindex then
+      count = count + 1
+    end
+  end
+  return count
+end
+
+local function wincmd_adjust(adjust)
+  vim.cmd.wincmd('=')
+  if adjust then
+    vim.cmd.wincmd('-')
+  end
+end
+
+map('n', '<C-w>=', function()
+  local count = get_win_count()
+  local winnr = vim.fn.winnr()
+  if winnr < 2 or count ~= winnr then
+    return wincmd_adjust()
+  end
+  -- 当前光标在下方窗口
+  local up_winnr = winnr - 1
+  if vim.fn.winwidth(up_winnr) ~= vim.fn.winwidth(winnr) then
+    return wincmd_adjust()
+  end
+  local max_height = vim.o.lines - vim.o.cmdheight
+  if vim.o.showtabline == 2 or (vim.o.showtabline == 1 and vim.fn.tabpagenr("$") > 1) then
+    max_height = max_height - 1
+  end
+  if max_height % 2 == 0 then
+    return wincmd_adjust()
+  end
+  wincmd_adjust(true)
+end)
+
 -- 未用到
 --vim.cmd([[
 --for n in ['', 'l', 't']
