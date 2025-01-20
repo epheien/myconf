@@ -50,6 +50,10 @@ vim.api.nvim_create_user_command('RefreshStatusTables', function(args)
   vim.call('myrc#RefreshStatusTables', unpack(args.fargs))
 end, { nargs = '+', complete = 'file' })
 
+vim.api.nvim_create_user_command('StopRefreshStatusTables', function()
+  vim.call('myrc#StopRefreshStatusTables')
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command('Rg', function(args)
   vim.call('myrc#rg', args.args)
 end, { nargs = '+', complete = 'file' })

@@ -18,6 +18,17 @@ local function display_width(str)
   end
 end
 
+---@param a number
+---@param b number
+---@param descending? boolean
+local function comp_number(a, b, descending)
+  if descending then
+    return a > b
+  else
+    return a < b
+  end
+end
+
 ---table.sort 通用比较函数
 ---@param a any
 ---@param b any
@@ -25,6 +36,12 @@ end
 ---@return boolean
 function M.comp(a, b, descending)
   local type_a, type_b = type(a), type(b)
+
+  -- 无脑尝试转为数字再比较
+  local number_a, number_b = tonumber(a), tonumber(b)
+  if number_a and number_b then
+    return comp_number(number_a, number_b, descending)
+  end
 
   if type_a == type_b then
     -- 如果两个元素类型相同,按照类型进行比较
