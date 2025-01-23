@@ -32,7 +32,7 @@ local opts = {
     preset = {
       -- stylua: ignore
       keys = {
-        { icon = " ", key = "F", desc = "Find Manager", action = ":enew | NvimTreeOpen" },
+        { icon = " ", key = "F", desc = "File Manager", action = ":enew | NvimTreeOpen" },
         { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
         { icon = " ", key = "n", desc = "New File", action = ":ene" },
         --{ icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
