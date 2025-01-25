@@ -107,7 +107,7 @@ end
 
 -- 需要导出到子环境的环境变量
 vim.env.VIM_SERVERNAME = vim.v.servername
-vim.env.VIM_EXE = vim.v.progpath
+vim.env.VIM_PROGPATH = vim.v.progpath
 
 -- scrollview
 vim.g.scrollview_auto_mouse = false
