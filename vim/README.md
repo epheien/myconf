@@ -5,6 +5,7 @@
 
 ## TODO
 - [ ] 了解 lazy.nvim 的 VeryLazy 原理
+- [ ] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列
 - [x] `pckr.nvim` 会出现重复 source vim 文件的问题: `nvim --startuptime nvim.txt` (不再使用 pckr, 改用 lazy)
 - [?] `edgy.nvim` 同时打开 nvimtree 和 outline 的时候, 把光标放到 nvimtree 窗口执行 `windo echo`, 就会再开一个 nvimtree 的窗口, autocmd 也会触发. vim-mark 新版本不再使用 `windo`.
 - [x] 支持鼠标拖动浮动窗口
@@ -17,7 +18,6 @@
 - [x] 二分查找 `noice.nvim` 第一条命令为 `:pwd` 时消息为错误类型的问题 (nvim-scrollview插件导致)
 - [x] RefreshStatusTables 疑似导致内存泄露 (使用纯 lua 实现没有问题, 内存涨到 324M 后就没变化了)
 - [x] nvim-notify 在切换 tab 后, 即时的窗口刷新不会在新的 tab 渲染 (workaround)
-- [ ] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列
 - [x] 使用 noice.nvim 后, 没有 'showcmd' 的信息 (可使用 incline 来实现, 也可以直接用 extmarks)
 - [x] 使用 noice.nvim 后, `<C-g>` 显示通知并开始搜索 `/`, 输入 3 个字符左右开始闪烁并且占用过多的 CPU, 降低 fps 可以缓解, 无法完美解决, 需要换插件
 
