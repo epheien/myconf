@@ -358,7 +358,7 @@ local cmdline_opts = {
   enabled = true,
   window = {
     completion = {
-      border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+      border = 'single',
       winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel,Search:None',
     },
   },
