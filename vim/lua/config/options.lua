@@ -56,7 +56,7 @@ vim.o.selectmode = 'key'
 vim.o.keymodel = 'startsel,stopsel'
 
 vim.o.completeopt = 'menuone,noinsert'
-vim.o.pumheight = 5
+vim.o.pumheight = 8
 
 vim.g.mapleader = vim.api.nvim_replace_termcodes('<F12>', true, false, true)
 -- 设置 vim 脚本的续行缩进
