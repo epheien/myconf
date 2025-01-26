@@ -108,6 +108,8 @@ end
 -- 需要导出到子环境的环境变量
 vim.env.VIM_SERVERNAME = vim.v.servername
 vim.env.VIM_PROGPATH = vim.v.progpath
+-- 添加 ~/.vim/bin/ 目录到 PATH
+vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath('config') --[[@as string]], '/bin:') .. vim.env.PATH
 
 -- scrollview
 vim.g.scrollview_auto_mouse = false
