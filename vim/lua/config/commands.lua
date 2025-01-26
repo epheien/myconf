@@ -35,6 +35,7 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command('Terminal', function(args)
   vim.cmd.split()
   vim.cmd.terminal(args.args == '' and {} or args.args)
+  vim.b.miniindentscope_disable = true -- disable mini.indentscope
 end, { nargs = '*' })
 
 -- 清理后置的多余的空白
