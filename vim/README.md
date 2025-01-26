@@ -6,6 +6,7 @@
 ## TODO
 - [ ] 了解 lazy.nvim 的 VeryLazy 原理
 - [ ] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列
+- [x] 了解 go-client 主动传数据到 nvim 的机制 (使用`v.ExecLua("RecvJson(...)", nil, "helloworld")`)
 - [x] `pckr.nvim` 会出现重复 source vim 文件的问题: `nvim --startuptime nvim.txt` (不再使用 pckr, 改用 lazy)
 - [?] `edgy.nvim` 同时打开 nvimtree 和 outline 的时候, 把光标放到 nvimtree 窗口执行 `windo echo`, 就会再开一个 nvimtree 的窗口, autocmd 也会触发. vim-mark 新版本不再使用 `windo`.
 - [x] 支持鼠标拖动浮动窗口
