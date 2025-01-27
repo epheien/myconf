@@ -1,6 +1,4 @@
--- 自用全局变量 `package_manager` `nodashboard` `my_colors_name`
--- pckr or lazy
-vim.g.package_manager = 'lazy'
+-- 自用全局变量 `nodashboard` `my_colors_name`
 vim.g.enable_noice = false
 if not vim.g.my_colors_name then
   vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
