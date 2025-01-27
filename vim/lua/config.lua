@@ -5,6 +5,9 @@ vim.g.enable_noice = false
 if not vim.g.my_colors_name then
   vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
 end
+if not vim.g.nodashboard then
+  vim.g.nodashboard = true
+end
 
 ---@type string
 local config_path = vim.fn.stdpath('config') --[[@as string]]
