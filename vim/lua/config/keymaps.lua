@@ -14,7 +14,8 @@ local nosilent = { silent = false }
 map('n', 'j', 'gj')
 map('n', 'k', 'gk')
 
-map('n', '<RightRelease>', function() vim.cmd('call myrc#ContextPopup(1)') end)
+-- 使用 nvchad/menu 替代实现
+--map('n', '<RightRelease>', function() vim.cmd('call myrc#ContextPopup(1)') end)
 
 -- 禁用这些鼠标的点击
 map('n', '<RightMouse>', '<Nop>')
