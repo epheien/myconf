@@ -380,25 +380,29 @@ local function core_plugins()
     'OXY2DEV/markview.nvim',
     ft = 'markdown',
     opts = {
-      --initial_state = false,
+      preview = {
+        enable = false,
+      },
       code_blocks = {
         sign = false,
       },
-      headings = {
-        heading_1 = {
-          sign = '',
-        },
-        heading_2 = {
-          sign = '',
-        },
-        heading_3 = {
-          sign = '',
-        },
-        setext_1 = {
-          sign = '',
-        },
-        setext_2 = {
-          sign = '',
+      markdown = {
+        headings = {
+          heading_1 = {
+            sign = '',
+          },
+          heading_2 = {
+            sign = '',
+          },
+          heading_3 = {
+            sign = '',
+          },
+          setext_1 = {
+            sign = '',
+          },
+          setext_2 = {
+            sign = '',
+          },
         },
       },
     },
