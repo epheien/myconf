@@ -1052,7 +1052,7 @@ call plug#begin(s:joinpath(s:USERRUNTIME, 'plugged'))
 Plug 'ojroques/vim-oscyank', {'on': 'OSCYankVisual'}
 command! -nargs=0 EnableOSCYank call myrc#enable_oscyank()
 command! -nargs=0 DisableOSCYank call myrc#disable_oscyank()
-if !empty($SSH_TTY)
+if !empty($SSH_CONNECTION)
     autocmd InsertLeave * silent call myrc#OSCYank('toEnIM()')
 endif
 
@@ -1505,7 +1505,7 @@ endif
 
 " macOS 下, neovide 和 alacritty 在中文输入法下强制输入全角标点符号,
 " 但好消息是可以用映射修正这个问题
-if has('mac') || exists('$SSH_TTY')
+if has('mac') || exists('$SSH_CONNECTION')
     let keymaps = {
         \   '，': ',',
         \   '；': ';',

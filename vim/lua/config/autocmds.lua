@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   end,
 })
 
-if vim.env.SSH_TTY then
+if vim.env.SSH_CONNECTION then
   vim.api.nvim_create_autocmd('InsertLeave', {
     callback = function() vim.cmd.OSCYank('toEnIM()') end,
   })

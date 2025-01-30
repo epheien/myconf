@@ -655,7 +655,7 @@ endfunction
 
 " clipboard yank
 function! myrc#cby() abort
-    if (exists('$SSH_TTY') || s:enable_oscyank) && exists(':OSCYankVisual')
+    if (exists('$SSH_CONNECTION') || s:enable_oscyank) && exists(':OSCYankVisual')
         OSCYankVisual
         return
     endif
@@ -668,7 +668,7 @@ endfunction
 
 " clipboard paste
 function! myrc#cbp() abort
-    if (exists('$SSH_TTY') || s:enable_oscyank) && exists(':OSCYankVisual')
+    if (exists('$SSH_CONNECTION') || s:enable_oscyank) && exists(':OSCYankVisual')
         return ''
     endif
     let cmd = myrc#pastecmd()
