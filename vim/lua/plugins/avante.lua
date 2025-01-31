@@ -15,6 +15,14 @@ return {
       },
     },
   },
+  config = function(plug, opts) ---@diagnostic disable-line
+    require('avante').setup(opts)
+    -- 需要自己主动启用 Avante 文件类型的 treesitter 语法高亮
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'Avante',
+      callback = function() vim.treesitter.start() end,
+    })
+  end,
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
