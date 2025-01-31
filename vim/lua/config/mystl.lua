@@ -204,8 +204,39 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     if stl ~= '' and stl ~= '─' then
       vim.opt_local.statusline = ''
     end
-  end
+  end,
 })
--- }}}
+
+local filetypes = { 'Avante', 'AvanteInput', 'AvanteSelectedFiles' }
+local filetypes_mapping = {}
+for _, ft in ipairs(filetypes) do
+  filetypes_mapping[ft] = true
+end
+
+local augroup = vim.api.nvim_create_augroup('mystl', {})
+vim.api.nvim_create_autocmd('OptionSet', {
+  pattern = { 'statusline', 'fillchars' },
+  group = augroup,
+  callback = function(event)
+    local ft = vim.bo.filetype
+    if not filetypes_mapping[ft] then
+      return
+    end
+    local opt = event.match
+    if opt == 'statusline' then
+      vim.opt_local.statusline = '─'
+    elseif opt == 'fillchars' then
+      vim.opt_local.fillchars:append({ stl = '─', stlnc = '─' })
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = filetypes,
+  callback = function()
+    vim.opt_local.statusline = '─'
+    vim.opt_local.fillchars:append({ stl = '─', stlnc = '─' })
+  end,
+})
 
 return M
