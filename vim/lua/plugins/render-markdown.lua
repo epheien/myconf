@@ -10,5 +10,8 @@ return {
       enabled = true,
       sign = false,
     },
+    heading = {
+      sign = false,
+    },
   },
 }
