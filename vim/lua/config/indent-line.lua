@@ -21,6 +21,8 @@ local exclude_filetypes = {
   'notify',
   'ConnManager',
   'snacks_notif',
+  'Avante',
+  'AvanteInput',
 }
 
 local excludes = {}
