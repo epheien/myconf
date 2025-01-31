@@ -86,6 +86,7 @@ local function post_process_status_line_theme()
   create_transitional_hl('Normal', 'MyStlNormalNC')
 end
 
+-- stylua: ignore
 local function status_line_theme_gruvbox() ---@diagnostic disable-line
   vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#a89984', bg = '#504945' })      -- 246 239
   vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#7c6f64', bg = '#3c3836' })    -- 243 237
@@ -97,28 +98,31 @@ local function status_line_theme_gruvbox() ---@diagnostic disable-line
   post_process_status_line_theme()
 end
 
+-- stylua: ignore
 local function status_line_theme_mywombat() ---@diagnostic disable-line
-  vim.api.nvim_set_hl(0, 'MyStlNormal', { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
-  vim.api.nvim_set_hl(0, 'MyStlNormalNC', { fg = '#303030', bg = '#6a6a6a', ctermfg = 236, ctermbg = 242 })
-  vim.api.nvim_set_hl(0, 'MyStlNormalMode', { fg = '#282828', bg = '#eeee00', ctermfg = 235, ctermbg = 226, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlInsertMode', { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlVisualMode', { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlReplaceMode', { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203, bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlCommandMode', { link = 'MyStlNormalMode', default = true })
+  vim.api.nvim_set_hl(0, 'MyStlNormal',       { fg = '#282828', bg = '#8ac6f2', ctermfg = 235, ctermbg = 117 })
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC',     { fg = '#303030', bg = '#6a6a6a', ctermfg = 236, ctermbg = 242 })
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode',   { fg = '#282828', bg = '#eeee00', ctermfg = 235, ctermbg = 226, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode',   { fg = '#282828', bg = '#95e454', ctermfg = 235, ctermbg = 119, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode',   { fg = '#282828', bg = '#f2c68a', ctermfg = 235, ctermbg = 216, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode',  { fg = '#282828', bg = '#e5786d', ctermfg = 235, ctermbg = 203, bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlCommandMode',  { link = 'MyStlNormalMode', default = true })
   post_process_status_line_theme()
 end
 
+-- stylua: ignore
 local function status_line_theme_catppuccin() ---@diagnostic disable-line
-  vim.api.nvim_set_hl(0, 'MyStlNormalNC',       { fg = '#303030', bg = '#6a6a6a' })
-  vim.api.nvim_set_hl(0, 'MyStlNormal',         { fg = '#181818', bg = '#82aaff' }) -- tokyonight
-  vim.api.nvim_set_hl(0, 'MyStlNormalMode',     { fg = '#181818', bg = '#dddd00', bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlCommandMode',    { fg = '#181818', bg = '#fab388', bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlInsertMode',     { fg = '#181818', bg = '#a6e3a2', bold = true })
-  vim.api.nvim_set_hl(0, 'MyStlVisualMode',     { fg = '#181818', bg = '#c099ff', bold = true }) -- tokyonight
-  vim.api.nvim_set_hl(0, 'MyStlReplaceMode',    { fg = '#181818', bg = '#f38ba9', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlNormalNC',     { fg = '#303030', bg = '#6a6a6a' })
+  vim.api.nvim_set_hl(0, 'MyStlNormal',       { fg = '#181818', bg = '#82aaff' }) -- tokyonight
+  vim.api.nvim_set_hl(0, 'MyStlNormalMode',   { fg = '#181818', bg = '#dddd00', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlCommandMode',  { fg = '#181818', bg = '#fab388', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlInsertMode',   { fg = '#181818', bg = '#a6e3a2', bold = true })
+  vim.api.nvim_set_hl(0, 'MyStlVisualMode',   { fg = '#181818', bg = '#c099ff', bold = true }) -- tokyonight
+  vim.api.nvim_set_hl(0, 'MyStlReplaceMode',  { fg = '#181818', bg = '#f38ba9', bold = true })
   post_process_status_line_theme()
 end
 
+-- stylua: ignore
 local stl_hl_map = {
   C       = 'MyStlCommandMode',
   I       = 'MyStlInsertMode',
@@ -151,7 +155,8 @@ function MyStatusLine()
     return head_string .. mode_string .. file_string .. tail_string
   else
     local head_string = string.format('%%#%s#%s', 'Normal_MyStlNormalNC', head_glyph)
-    local file_string = string.format('%%#%s#%s%%f%s │ %%l/%%L:%%v%s', 'MyStlNormalNC', gap, mod, gap)
+    local file_string =
+      string.format('%%#%s#%s%%f%s │ %%l/%%L:%%v%s', 'MyStlNormalNC', gap, mod, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormalNC_Normal', tail_glyph)
     return head_string .. file_string .. tail_string
   end
