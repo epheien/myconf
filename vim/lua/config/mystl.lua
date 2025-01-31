@@ -61,20 +61,6 @@ local function create_transitional_hl(left, right, reverse)
   return true
 end
 
-local function create_reverse_hl(name)
-  local target_name = name .. 'Reverse'
-  if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = target_name })) then
-    return false -- 已存在的话就忽略
-  end
-  local opts = vim.api.nvim_get_hl(0, { name = name, link = false })
-  if vim.tbl_isempty(opts) then
-    return false
-  end
-  opts = vim.tbl_deep_extend('force', opts, { reverse = not opts.reverse })
-  vim.api.nvim_set_hl(0, target_name, opts) ---@diagnostic disable-line
-  return true
-end
-
 local function post_process_status_line_theme()
   create_transitional_hl('MyStlNormal', 'Normal', true)
   create_transitional_hl('MyStlNormalNC', 'Normal', true)
