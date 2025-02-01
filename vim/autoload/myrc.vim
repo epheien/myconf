@@ -391,17 +391,11 @@ func myrc#FileComplete(ArgLead, CmdLine, CursorPos)
     return map(result, {idx, val -> isdirectory(val) ? fnameescape(val).'/' : fnameescape(val)})
 endfunc
 
-" 用于处理 deoplete 弹出补全菜单时，<C-e> 会重复弹菜单的问题
-" 因为 <C-e> 的时候，会触发 CompleteDone CursorMovedI TextChangedI 时间
-" TODO: 只能处理几种 case，要完全解决的话，只能报 bug 给 deoplete
 func myrc#i_CTRL_E()
     if get(g:, 'did_coc_loaded') && coc#pum#visible()
         return coc#pum#cancel()
     endif
     if pumvisible()
-        if exists('*deoplete#close_popup')
-            call deoplete#close_popup()
-        endif
         return "\<C-e>"
     else
         return "\<End>"
