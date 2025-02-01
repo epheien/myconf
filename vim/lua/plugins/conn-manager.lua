@@ -4,6 +4,12 @@ local function on_node_open(node, fallback, opts) ---@diagnostic disable-line
     fallback()
     return
   end
+  if opts.open_with == 'tab' then
+    require('conn-manager').open_in_tab()
+    vim.api.nvim_set_option_value('winfixbuf', true, { win = 0 })
+    vim.t.title = node.config.display_name
+    return
+  end
   local title = node.config.display_name
   -- @提取需要运行的命令
   local args = { 'ssh' }
@@ -27,6 +33,17 @@ local function on_node_open(node, fallback, opts) ---@diagnostic disable-line
   vim.system(args, { stdout = false, stderr = false, detach = true })
 end
 
+local function window_picker(node)
+  local winid = require('conn-manager.window').pick_window_for_node_open(false)
+  if winid == 0 then
+    vim.cmd.tabnew()
+    vim.api.nvim_set_option_value('winfixbuf', true, { win = 0 })
+    vim.t.title = node.config.display_name
+    return vim.api.nvim_get_current_win()
+  end
+  return winid
+end
+
 return {
   'epheien/conn-manager.nvim',
   cmd = 'ConnManagerOpen',
@@ -42,11 +59,19 @@ return {
       on_window_open = function(win)
         vim.api.nvim_set_option_value('statusline', '─', { win = win })
         vim.api.nvim_set_option_value('fillchars', vim.o.fillchars .. ',eob: ', { win = win })
+        vim.api.nvim_set_option_value('winfixbuf', true, { win = win })
       end,
       node = {
         on_open = on_node_open,
+        window_picker = window_picker,
       },
       on_buffer_create = function(bufnr)
+        vim.keymap.set(
+          'n',
+          't',
+          function() require('conn-manager').open({ open_with = 'tab' }) end,
+          { buffer = bufnr }
+        )
         vim.keymap.set(
           'n',
           '.',

@@ -5,6 +5,11 @@ return {
     rtxt = 'on',
   },
   {
+    name = '  Open with nvim terminal in new tab',
+    cmd = function() require('conn-manager').open({ open_with = 'tab' }) end,
+    rtxt = 'ot',
+  },
+  {
     name = '  Open with Alacritty.app',
     cmd = function() require('conn-manager').open({ open_with = 'alacritty' }) end,
     rtxt = 'oa',
