@@ -364,10 +364,12 @@ end)
 -- }}}
 
 map('i', '<C-e>', function()
-  if vim.fn.pumvisible() then
+  if vim.fn.pumvisible() ~= 0 then
     return '<C-e>'
-  elseif not require('utils').empty(vim.g.did_coc_loaded) and vim.fn['coc#pum#visible']() then
-    return 'coc#pum#cancel'
+  elseif vim.g.loaded_cmp and require('cmp').visible() then
+    vim.schedule(require('cmp').abort)
+  elseif vim.g.did_coc_loaded == 1 and vim.fn['coc#pum#visible']() ~= 0 then
+    return vim.fn['coc#pum#cancel']()
   else
     return '<End>'
   end

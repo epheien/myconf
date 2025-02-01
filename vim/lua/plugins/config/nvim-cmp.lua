@@ -327,23 +327,6 @@ vim.keymap.set('i', '<Up>', '', {
   --expr = true,
 })
 
-vim.keymap.set('i', '<C-e>', '', {
-  callback = function()
-    if vim.fn.pumvisible() ~= 0 then
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-e>', true, true, true), 'n', false)
-    elseif cmp.visible() then -- NOTE: cmp.visible() 包含了 pumvisible()
-      cmp.abort()
-    elseif vim.fn.exists(':CocRestart') == 2 and vim.fn['coc#pum#visible'] ~= 0 then
-      vim.fn['coc#pum#close']('cancel')
-    else
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<End>', true, true, true), 'in', false)
-    end
-  end,
-  noremap = true,
-  silent = true,
-  --expr = true,
-})
-
 -- load friendly-snippets
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
