@@ -95,4 +95,9 @@ end
 
 function M.empty(v) return vim.fn.empty(v) == 1 end
 
+function M.feedkeys(keys, mode)
+  local str = vim.api.nvim_replace_termcodes(keys, true, false, true)
+  vim.api.nvim_feedkeys(str, mode, false)
+end
+
 return M
