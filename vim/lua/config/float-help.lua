@@ -2,8 +2,8 @@ local help_winid = -1
 local create_help_floatwin = function()
   if not vim.api.nvim_win_is_valid(help_winid) then
     local bufid = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = bufid }) -- 会被 :h 覆盖掉
-    vim.api.nvim_set_option_value("buftype", "help", { buf = bufid })
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufid }) -- 会被 :h 覆盖掉
+    vim.api.nvim_set_option_value('buftype', 'help', { buf = bufid })
     local width = math.min(vim.o.columns, 100)
     local col = math.floor((vim.o.columns - width) / 2)
     help_winid = vim.api.nvim_open_win(bufid, false, {
@@ -16,6 +16,7 @@ local create_help_floatwin = function()
     })
   end
   vim.api.nvim_set_current_win(help_winid)
+  vim.api.nvim_set_option_value('winbar', '', { win = help_winid })
   -- NOTE: floating window 的 winhighlight 选项会继承自调用此函数的窗口
   --       但是用下面的方法设置选项就没有问题
   vim.wo.winhighlight = '' -- 无脑清空, 因为这个窗口不允许修改配色
@@ -59,9 +60,9 @@ vim.keymap.set('c', '<CR>', function()
     return ''
   end
   return '<CR>'
-end, {silent = true, expr = true})
+end, { silent = true, expr = true })
 vim.keymap.set('n', '<F1>', function()
   create_help_floatwin()
   vim.cmd('help')
 end)
-vim.keymap.set('i', "<F1>", "<Nop>")
+vim.keymap.set('i', '<F1>', '<Nop>')
