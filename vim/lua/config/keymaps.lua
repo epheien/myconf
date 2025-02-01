@@ -258,7 +258,6 @@ map('n', 'K', function() vim.call('myrc#ShowDocumentation') end)
 map('i', '<C-g>', '<C-r>=myrc#i_InsertHGuard()<CR>', nosilent)
 map('i', '<CR>', function() vim.call('myrc#SmartEnter') end)
 
-map('i', '<C-e>', 'myrc#i_CTRL_E()', { expr = true })
 -- 切换光标前的单词的大小写
 map('i', '<C-y>', [=[pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"]=], { expr = true })
 
@@ -363,5 +362,15 @@ vim.keymap.set('n', '<C-g>', function()
   end
 end)
 -- }}}
+
+map('i', '<C-e>', function()
+  if vim.fn.pumvisible() then
+    return '<C-e>'
+  elseif not require('utils').empty(vim.g.did_coc_loaded) and vim.fn['coc#pum#visible']() then
+    return 'coc#pum#cancel'
+  else
+    return '<End>'
+  end
+end, { expr = true })
 
 -- vim:set fdm=marker fen fdl=0:
