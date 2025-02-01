@@ -241,3 +241,33 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     end
   end,
 })
+
+-- workaround of https://github.com/neovim/neovim/issues/23165
+vim.api.nvim_create_autocmd('OptionSet', {
+  pattern = 'winbar',
+  group = vimrc_group,
+  desc = 'winbar bugfix',
+  callback = function()
+    if vim.v.option_type ~= 'local' then
+      return
+    end
+    if vim.v.option_old == vim.v.option_new then
+      return
+    end
+    local winid = vim.api.nvim_get_current_win()
+    vim.w[winid].winbar = vim.v.option_new
+  end,
+})
+-- 使用 w:winbar 进行 winbar 绑定, 并在每次切换缓冲区的时候重刷
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  group = vimrc_group,
+  desc = 'winbar bugfix',
+  callback = function()
+    local winid = vim.api.nvim_get_current_win()
+    local winbar = vim.w.winbar
+    if not winbar then
+      return
+    end
+    vim.api.nvim_set_option_value('winbar', winbar, { win = winid })
+  end,
+})
