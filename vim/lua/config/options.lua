@@ -87,6 +87,7 @@ vim.o.foldtext = ''
 vim.o.foldcolumn = 'auto'
 --vim.opt.fillchars:append({ fold = ' ', foldclose = '', foldopen = '', foldsep = ' ' })
 vim.opt.fillchars:append({ fold = ' ', foldclose = '+', foldopen = '-', foldsep = ' ' })
+vim.opt.fillchars:append({ eob = ' ' })
 
 -- vim -d a b 启动的时候, 不设置 'list'
 if not vim.o.diff then
