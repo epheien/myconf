@@ -289,6 +289,7 @@ local function core_plugins()
         animate = {
           enabled = false,
         },
+        keys = false,
         left = {
           {
             ft = 'NvimTree',
