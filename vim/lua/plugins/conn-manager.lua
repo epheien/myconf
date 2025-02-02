@@ -70,13 +70,13 @@ return {
           'n',
           't',
           function() require('conn-manager').open({ open_with = 'tab' }) end,
-          { buffer = bufnr }
+          { buffer = bufnr, desc = 'Open in Tab' }
         )
         vim.keymap.set(
           'n',
           '.',
           function() require('menu').open('conn-manager', { mouse = false, border = false }) end,
-          { buffer = bufnr }
+          { buffer = bufnr, desc = 'Menu' }
         )
       end,
     })
