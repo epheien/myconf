@@ -79,6 +79,30 @@ return {
           { buffer = bufnr, desc = 'Menu' }
         )
       end,
+      save = {
+        on_read = function(text) return text end,
+        on_write = function(text)
+          if not vim.fn.executable('jq') then
+            return text
+          end
+          vim.system({ 'jq' }, {
+            stdin = text,
+          }, function(obj)
+            if obj.code ~= 0 then
+              vim.api.nvim_err_writeln(string.format('jq exit %d: %s', obj.code, obj.stderr))
+              return
+            end
+            local fname = require('conn-manager.config').config.config_file
+            local temp = fname .. '.tmp'
+            local file = io.open(temp, 'w')
+            if file then
+              file:write(obj.stdout)
+              file:close()
+              os.rename(temp, fname)
+            end
+          end)
+        end,
+      },
     })
   end,
 }
