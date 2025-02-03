@@ -13,5 +13,8 @@ return {
     heading = {
       sign = false,
     },
+    dash = {
+      icon = '━',
+    },
   },
 }
