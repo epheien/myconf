@@ -10,8 +10,8 @@ return {
       ollama = {
         __inherited_from = 'openai',
         api_key_name = 'OLLAMA_API_KEY', -- export OLLAMA_API_KEY=...
-        endpoint = 'http://127.0.0.1:3000/v1',
-        model = 'deepseek-r1:7b',
+        endpoint = 'http://127.0.0.1:11434/v1', -- 直接使用 ollama 需要设置 api_key 为 ollama
+        model = 'deepseek-r1:32b',
       },
     },
   },
