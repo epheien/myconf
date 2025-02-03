@@ -199,6 +199,8 @@ if has('nvim')
     set noswapfile
 endif
 
+set smoothscroll
+
 " 启动对鼠标的支持
 set mouse=a
 if exists('$TMUX') && !has('nvim')

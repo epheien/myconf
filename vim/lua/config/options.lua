@@ -26,6 +26,7 @@ vim.o.smartcase = true
 vim.opt.jumpoptions:append({ 'stack', 'view' })
 -- nvim 没有删除对话框选项, 直接禁用算了
 vim.o.swapfile = false
+vim.o.smoothscroll = true -- 终于部分解决长行滚动的问题, 还不支持 gj, gk
 vim.o.mouse = 'a'
 vim.o.laststatus = 2
 if vim.g.enable_noice then
