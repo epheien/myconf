@@ -35,7 +35,7 @@ local function indentchar_update(is_local, filetype)
   local leadmultispace
   -- 由于无法区分不同作用的 scratch buffer, 所以直接统一禁用
   if vim.bo.buftype == 'terminal' or vim.bo.buftype == 'nofile' or excludes[filetype or ''] then
-    vim.b.miniindentscope_disable = true -- 同时禁用 mini.indentscope
+    --vim.b.miniindentscope_disable = true -- 同时禁用 mini.indentscope
     return
   end
   if vim.api.nvim_get_option_value('expandtab', {}) then
@@ -57,6 +57,8 @@ local function indentchar_update(is_local, filetype)
   local opt = is_local and vim.opt_local or vim.opt
   opt.listchars:append({ tab = tab })
   opt.listchars:append({ leadmultispace = leadmultispace })
+  -- NOTE: 其实使用白名单的方式更可控, 默认全局禁用, 仅仅指定为 false 时可用
+  vim.b.miniindentscope_disable = false
 end
 
 M.indentchar_update = indentchar_update

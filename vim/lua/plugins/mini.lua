@@ -5,6 +5,7 @@ return {
     version = '*',
     event = 'FileType',
     config = function()
+      vim.g.miniindentscope_disable = true
       require('mini.indentscope').setup({
         symbol = '│',
         draw = {
