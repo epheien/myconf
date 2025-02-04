@@ -33,7 +33,8 @@ end
 local function indentchar_update(is_local, filetype)
   local tab
   local leadmultispace
-  if vim.bo.buftype == 'terminal' or excludes[filetype or ''] then
+  -- 由于无法区分不同作用的 scratch buffer, 所以直接统一禁用
+  if vim.bo.buftype == 'terminal' or vim.bo.buftype == 'nofile' or excludes[filetype or ''] then
     vim.b.miniindentscope_disable = true -- 同时禁用 mini.indentscope
     return
   end
