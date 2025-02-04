@@ -71,6 +71,7 @@ end
 ---@param ns_id any
 ---@param bufnr integer
 ---@param chunks_list table[][] 每个元素都是 nvim_echo 的第一个参数 chunks
+---@param bang? boolean
 local function echo_chunks_list_to_buffer(ns_id, bufnr, chunks_list, bang)
   local offset = 0
   for lnum, message in ipairs(chunks_list) do
