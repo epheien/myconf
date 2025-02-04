@@ -16,9 +16,9 @@ local mode_table = {
   ['\19']  = 'S-BLOCK',
 }
 
-local function clear_extmark(buf, lnum)
+local function clear_extmark(buf)
   if extmark_id then
-    vim.api.nvim_buf_clear_namespace(buf, ns_id, lnum - 1, lnum)
+    vim.api.nvim_buf_clear_namespace(buf, ns_id, 0, -1)
     extmark_id = nil
   end
 end
@@ -31,7 +31,7 @@ local function refresh_ruler_extmark(win)
   local mode = vim.api.nvim_get_mode().mode
   local m = (mode_table[mode] or ''):sub(1, 1)
   if not (m == 'V' or m == 'S') then -- 仅支持在可视/选择模式显示
-    clear_extmark(buf, pos[1])
+    clear_extmark(buf)
     return
   end
   local str = vim.api.nvim_eval_statusline('%S', { winid = win }).str
@@ -39,7 +39,7 @@ local function refresh_ruler_extmark(win)
     return
   end
   if str == '' then
-    clear_extmark(buf, pos[1])
+    clear_extmark(buf)
     return
   end
   extmark_id = vim.api.nvim_buf_set_extmark(buf, ns_id, pos[1] - 1, 0, {
