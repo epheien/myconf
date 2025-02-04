@@ -100,4 +100,21 @@ function M.feedkeys(keys, mode)
   vim.api.nvim_feedkeys(str, mode, false)
 end
 
+-- 固定打印日志到当前目录的 temp.txt
+function M.log_to_file(...)
+  local file = io.open('temp.txt', 'a')
+  if file then
+    for i = 1, select('#', ...) do
+      local text = select(i, ...)
+      if type(text) == 'string' then
+        file:write(text .. ' ')
+      else
+        file:write(vim.inspect(text) .. ' ')
+      end
+    end
+    file:write('\n')
+    file:close()
+  end
+end
+
 return M
