@@ -289,7 +289,6 @@ local function core_plugins()
         animate = {
           enabled = false,
         },
-        keys = false,
         left = {
           {
             ft = 'NvimTree',
@@ -302,7 +301,7 @@ local function core_plugins()
           },
           {
             ft = 'ConnManager',
-            open = 'ConnManagerOpen',
+            open = 'ConnManager open',
           },
           {
             ft = 'tagbar',

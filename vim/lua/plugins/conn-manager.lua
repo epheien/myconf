@@ -11,7 +11,7 @@ local function on_node_open(node, fallback, opts) ---@diagnostic disable-line
     return
   end
   local title = node.config.display_name
-  -- @提取需要运行的命令
+  -- dump args to execute
   local args = { 'ssh' }
   if node.config.port then
     vim.list_extend(args, { '-p', tostring(node.config.port) })
@@ -46,7 +46,7 @@ end
 
 return {
   'epheien/conn-manager.nvim',
-  cmd = 'ConnManagerOpen',
+  cmd = 'ConnManager',
   config = function()
     require('conn-manager').setup({
       config_file = vim.fs.joinpath(vim.fn.stdpath('config') --[[@as string]], 'conn-manager.json'),
