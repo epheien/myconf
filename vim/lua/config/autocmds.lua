@@ -227,8 +227,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       })
       -- Function 就是 Title 的非粗体颜色
       vim.api.nvim_set_hl(0, 'DiagnosticOk', { link = 'Function' })
-      vim.api.nvim_set_hl(0, 'DiagnosticWarn', { link = 'WarningMsg' })
-      vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = 'red' })
+      -- checkhealth 界面的警告信息不明显, 微调一下配色
+      vim.api.nvim_set_hl(0, 'helpHeader', { link = 'Title' })
       -- Title 循例要粗体
       vim.cmd.hi({ args = { 'Title', 'gui=bold' } })
       vim.api.nvim_set_hl(0, '@markup.list.checked', { link = 'Added' })
