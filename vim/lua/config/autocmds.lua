@@ -227,6 +227,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       })
       -- Function 就是 Title 的非粗体颜色
       vim.api.nvim_set_hl(0, 'DiagnosticOk', { link = 'Function' })
+      vim.api.nvim_set_hl(0, 'DiagnosticWarn', { link = 'WarningMsg' })
+      vim.api.nvim_set_hl(0, 'DiagnosticError', { link = 'Error' })
       -- Title 循例要粗体
       vim.cmd.hi({ args = { 'Title', 'gui=bold' } })
       vim.api.nvim_set_hl(0, '@markup.list.checked', { link = 'Added' })
