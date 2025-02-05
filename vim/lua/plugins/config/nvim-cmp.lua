@@ -253,6 +253,13 @@ local opts = {
     --['<CR>'] = M.confirm({ select = true }), -- 由 myrc#SmartEnter() 接管了
     ['<C-b>'] = cmp.mapping.scroll_docs(-3),
     ['<C-f>'] = cmp.mapping.scroll_docs(3),
+    ['<C-y>'] = function(fallback)
+      if cmp.visible() then
+        cmp.confirm()
+      else
+        fallback()
+      end
+    end,
   },
   -- NOTE: 同一个 source 不能出现在不同分组, 会重名, 导致 group_index 值错误
   sources = cmp.config.sources({
