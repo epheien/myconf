@@ -1,6 +1,6 @@
 local cmp = require('cmp')
-local keymap = require("cmp.utils.keymap")
-local feedkeys = require("cmp.utils.feedkeys")
+local keymap = require('cmp.utils.keymap')
+local feedkeys = require('cmp.utils.feedkeys')
 
 local M = {}
 
@@ -12,8 +12,8 @@ local enabled = true
 ---@param fn fun(placeholder:Placeholder):string
 ---@return string
 function M.snippet_replace(snippet, fn)
-  return snippet:gsub("%$%b{}", function(m)
-    local n, name = m:match("^%${(%d+):(.+)}$")
+  return snippet:gsub('%$%b{}', function(m)
+    local n, name = m:match('^%${(%d+):(.+)}$')
     return n and fn({ n = n, text = name }) or m
   end) or snippet
 end
@@ -22,13 +22,13 @@ end
 ---@param snippet string
 ---@return string
 function M.snippet_preview(snippet)
-  local ok, parsed = pcall(function()
-    return vim.lsp._snippet_grammar.parse(snippet)
-  end)
+  local ok, parsed = pcall(function() return vim.lsp._snippet_grammar.parse(snippet) end)
   return ok and tostring(parsed)
-      or M.snippet_replace(snippet, function(placeholder)
-        return M.snippet_preview(placeholder.text)
-      end):gsub("%$0", "")
+    or M.snippet_replace(
+      snippet,
+      function(placeholder) return M.snippet_preview(placeholder.text) end
+    )
+      :gsub('%$0', '')
 end
 
 -- This function replaces nested placeholders in a snippet with LSP placeholders.
@@ -36,7 +36,7 @@ function M.snippet_fix(snippet)
   local texts = {} ---@type table<number, string>
   return M.snippet_replace(snippet, function(placeholder)
     texts[placeholder.n] = texts[placeholder.n] or M.snippet_preview(placeholder.text)
-    return "${" .. placeholder.n .. ":" .. texts[placeholder.n] .. "}"
+    return '${' .. placeholder.n .. ':' .. texts[placeholder.n] .. '}'
   end)
 end
 
@@ -47,10 +47,11 @@ function M.auto_brackets(entry)
   local item = entry:get_completion_item()
   if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
     local cursor = vim.api.nvim_win_get_cursor(0)
-    local prev_char = vim.api.nvim_buf_get_text(0, cursor[1] - 1, cursor[2], cursor[1] - 1, cursor[2] + 1, {})[1]
-    if prev_char ~= "(" then
-      local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
-      vim.api.nvim_feedkeys(keys, "in", true)
+    local prev_char =
+      vim.api.nvim_buf_get_text(0, cursor[1] - 1, cursor[2], cursor[1] - 1, cursor[2] + 1, {})[1]
+    if prev_char ~= '(' then
+      local keys = vim.api.nvim_replace_termcodes('()<left>', false, false, true)
+      vim.api.nvim_feedkeys(keys, 'in', true)
     end
   end
 end
@@ -67,19 +68,24 @@ function M.add_missing_snippet_docs(window)
       if not item.documentation and item.insertText then
         item.documentation = {
           kind = cmp.lsp.MarkupKind.Markdown,
-          value = string.format("```%s\n%s\n```", vim.bo.filetype, M.snippet_preview(item.insertText)),
+          value = string.format(
+            '```%s\n%s\n```',
+            vim.bo.filetype,
+            M.snippet_preview(item.insertText)
+          ),
         }
       end
     end
   end
 end
 
-function M.visible()
-  return cmp.core.view:visible()
-end
+function M.visible() return cmp.core.view:visible() end
 
 local keymap_cinkeys = function(expr)
-  return string.format(keymap.t("<Cmd>setlocal cinkeys=%s<CR>"), expr and vim.fn.escape(expr, "| \t\\") or "")
+  return string.format(
+    keymap.t('<Cmd>setlocal cinkeys=%s<CR>'),
+    expr and vim.fn.escape(expr, '| \t\\') or ''
+  )
 end
 
 -- This is a better implementation of `cmp.confirm`:
@@ -88,7 +94,7 @@ end
 -- This function is both faster and more reliable.
 ---@param opts? {select: boolean, behavior: cmp.ConfirmBehavior}
 function M.confirm(opts)
-  opts = vim.tbl_extend("force", {
+  opts = vim.tbl_extend('force', {
     select = true,
     behavior = cmp.ConfirmBehavior.Insert,
   }, opts or {})
@@ -96,9 +102,9 @@ function M.confirm(opts)
     if cmp.core.view:visible() or vim.fn.pumvisible() == 1 then
       M.create_undo()
       -- https://github.com/hrsh7th/nvim-cmp/issues/1035 的临时解决方案, 不完美
-      feedkeys.call(keymap_cinkeys(), "n")
+      feedkeys.call(keymap_cinkeys(), 'n')
       local rc = cmp.confirm(opts) -- 返回 true 表示成功, false 表示失败
-      feedkeys.call(keymap_cinkeys(vim.bo.cinkeys), "n")
+      feedkeys.call(keymap_cinkeys(vim.bo.cinkeys), 'n')
       if rc then
         return
       end
@@ -121,8 +127,8 @@ function M.expand(snippet)
     local fixed = M.snippet_fix(snippet)
     ok = pcall(vim.snippet.expand, fixed)
 
-    local msg = ok and "Failed to parse snippet,\nbut was able to fix it automatically."
-        or ("Failed to parse snippet.\n" .. err)
+    local msg = ok and 'Failed to parse snippet,\nbut was able to fix it automatically.'
+      or ('Failed to parse snippet.\n' .. err)
     print(msg)
     print(snippet)
   end
@@ -139,8 +145,8 @@ function M.setup(opts)
   --  source.group_index = source.group_index or 1
   --end
 
-  local parse = require("cmp.utils.snippet").parse
-  require("cmp.utils.snippet").parse = function(input)
+  local parse = require('cmp.utils.snippet').parse
+  require('cmp.utils.snippet').parse = function(input)
     local ok, ret = pcall(parse, input)
     if ok then
       return ret
@@ -155,15 +161,13 @@ function M.setup(opts)
       M.auto_brackets(event.entry)
     end
   end)
-  cmp.event:on("menu_opened", function(event)
-    M.add_missing_snippet_docs(event.window)
-  end)
+  cmp.event:on('menu_opened', function(event) M.add_missing_snippet_docs(event.window) end)
 end
 
-M.CREATE_UNDO = vim.api.nvim_replace_termcodes("<c-G>u", true, true, true)
+M.CREATE_UNDO = vim.api.nvim_replace_termcodes('<c-G>u', true, true, true)
 function M.create_undo()
-  if vim.api.nvim_get_mode().mode == "i" then
-    vim.api.nvim_feedkeys(M.CREATE_UNDO, "n", false)
+  if vim.api.nvim_get_mode().mode == 'i' then
+    vim.api.nvim_feedkeys(M.CREATE_UNDO, 'n', false)
   end
 end
 
@@ -200,7 +204,7 @@ lspkind_opts = {
       vim_item.menu = string.format('[%s]', entry.source.name) -- menu 显示源名称
     end
     return vim_item
-  end
+  end,
 }
 local opts = {
   enabled = function()
@@ -288,7 +292,7 @@ local opts = {
             end
           end
           return bufs
-        end
+        end,
       },
     },
     { name = 'path' },
@@ -335,8 +339,10 @@ vim.keymap.set('i', '<Up>', '', {
 })
 
 -- load friendly-snippets
-require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
+require('luasnip.loaders.from_vscode').lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load({
+  paths = { vim.fn.stdpath('config') .. '/snippets' },
+})
 
 vim.keymap.set('s', '<Tab>', function() require('luasnip').jump(1) end, { silent = true })
 vim.keymap.set('s', '<S-Tab>', function() require('luasnip').jump(-1) end, { silent = true })
@@ -382,9 +388,9 @@ local cmdline_opts = {
     },
   }),
   sources = cmp.config.sources({
-    { name = 'path' }
+    { name = 'path' },
   }, {
-    { name = 'cmdline' }
+    { name = 'cmdline' },
   }),
   matcher = {
     name = 'fzy',
@@ -392,10 +398,10 @@ local cmdline_opts = {
   matching = {
     -- NOTE: 需要全部关闭才能保证进入真正的 fuzzy match 流程
     -- NOTE: 作为一个可选的临时可用性解决方案, 也可以换 fuzzy matcher 算法
-    disallow_partial_fuzzy_matching = false,    -- default: true
+    disallow_partial_fuzzy_matching = false, -- default: true
     -- input = '-cmp', word = 'nvim-cmp', 此选项为 true 时, 无法匹配, 否则可匹配
     disallow_symbol_nonprefix_matching = false, -- default: true
-  }
+  },
 }
 -- `:` cmdline setup.
 cmp.setup.cmdline(':', cmdline_opts)
@@ -410,27 +416,33 @@ local search_buffer_source = {
         return {}
       end
       return { buf }
-    end
+    end,
   },
 }
 
-cmp.setup.cmdline('/', vim.tbl_deep_extend('force', cmdline_opts, {
-  matcher = {
-    name = 'fzy',
-  },
-  sources = {
-    search_buffer_source,
-  },
-}))
+cmp.setup.cmdline(
+  '/',
+  vim.tbl_deep_extend('force', cmdline_opts, {
+    matcher = {
+      name = 'fzy',
+    },
+    sources = {
+      search_buffer_source,
+    },
+  })
+)
 
-cmp.setup.cmdline('?', vim.tbl_deep_extend('force', cmdline_opts, {
-  matcher = {
-    name = 'fzy',
-  },
-  sources = {
-    search_buffer_source,
-  },
-}))
+cmp.setup.cmdline(
+  '?',
+  vim.tbl_deep_extend('force', cmdline_opts, {
+    matcher = {
+      name = 'fzy',
+    },
+    sources = {
+      search_buffer_source,
+    },
+  })
+)
 
 vim.api.nvim_create_user_command('CmpToggle', function()
   if enabled then
@@ -442,13 +454,9 @@ vim.api.nvim_create_user_command('CmpToggle', function()
   end
 end, {})
 
-vim.api.nvim_create_user_command('CmpDisable', function()
-  enabled = false
-end, {})
+vim.api.nvim_create_user_command('CmpDisable', function() enabled = false end, {})
 
-vim.api.nvim_create_user_command('CmpEnable', function()
-  enabled = true
-end, {})
+vim.api.nvim_create_user_command('CmpEnable', function() enabled = true end, {})
 
 -- https://github.com/L3MON4D3/LuaSnip/issues/747
 -- 即修正按 <Tab> 的时候, 避免 <Tab> 乱跳
@@ -457,10 +465,7 @@ local ls = require('luasnip')
 vim.api.nvim_create_autocmd('CursorMovedI', {
   pattern = '*',
   callback = function(ev)
-    if not ls.session
-        or ls.session.jump_active
-        or not ls.session.current_nodes[ev.buf]
-    then
+    if not ls.session or ls.session.jump_active or not ls.session.current_nodes[ev.buf] then
       return
     end
 
@@ -470,14 +475,15 @@ vim.api.nvim_create_autocmd('CursorMovedI', {
     current_end[1] = current_end[1] + 1 -- (1, 0) indexed
     local cursor = vim.api.nvim_win_get_cursor(0)
 
-    if cursor[1] < current_start[1]
+    if
+      cursor[1] < current_start[1]
       or cursor[1] > current_end[1]
       or cursor[2] < current_start[2]
       or cursor[2] > current_end[2]
     then
       ls.unlink_current()
     end
-  end
+  end,
 })
 
 return M
