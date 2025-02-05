@@ -1,6 +1,6 @@
 return {
   {
-    'echasnovski/mini.indentscope',
+    'epheien/mini.indentscope',
     --enabled = false,
     version = '*',
     event = 'FileType',
