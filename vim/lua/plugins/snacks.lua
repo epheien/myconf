@@ -68,7 +68,7 @@ if false then
 end
 
 return {
-  'folke/snacks.nvim',
+  'epheien/snacks.nvim',
   priority = 1000,
   lazy = false,
   config = function()
