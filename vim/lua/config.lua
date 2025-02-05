@@ -1,6 +1,6 @@
 -- 这些变量可通过 nvim --cmd "let ${var} = ${val}" 启动来提前设置
 if vim.g.enable_noice == nil then
-  vim.g.enable_noice = false
+  vim.g.enable_noice = true
 end
 if vim.g.my_colors_name == nil then
   vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
