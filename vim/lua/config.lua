@@ -1,9 +1,11 @@
--- 自用全局变量 `nodashboard` `my_colors_name`
-vim.g.enable_noice = false
-if not vim.g.my_colors_name then
+-- 这些变量可通过 nvim --cmd "let ${var} = ${val}" 启动来提前设置
+if vim.g.enable_noice == nil then
+  vim.g.enable_noice = false
+end
+if vim.g.my_colors_name == nil then
   vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
 end
-if not vim.g.nodashboard then
+if vim.g.nodashboard == nil then
   vim.g.nodashboard = true
 end
 
