@@ -1,1 +1,1 @@
-tnoremap <buffer> <C-l> <C-\><C-n>
+tnoremap <buffer> <C-l> <C-\><C-n>M0

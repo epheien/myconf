@@ -375,4 +375,6 @@ map('i', '<C-e>', function()
   end
 end, { expr = true })
 
+map('n', [[\l]], '<Cmd>LazyGit<CR>')
+
 -- vim:set fdm=marker fen fdl=0:
