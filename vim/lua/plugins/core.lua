@@ -4,6 +4,8 @@ local function core_plugins()
 
     { 'drybalka/tree-climber.nvim', lazy = true },
 
+    { 'nvim-lua/plenary.nvim', cmd = { 'PlenaryBustedFile', 'PlenaryBustedDirectory' } },
+
     { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
     {
       'lukas-reineke/indent-blankline.nvim',
