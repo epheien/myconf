@@ -49,11 +49,11 @@ local function get_buffer_components(obj) ---@diagnostic disable-line
   return components
 end
 
-local wintab = {}
+local wintab = { state = {} }
 local function window_picker(node)
   local winid = -1
-  if wintab.winid and vim.api.nvim_win_is_valid(wintab.winid) then
-    winid = wintab.winid
+  if wintab.state.winid and vim.api.nvim_win_is_valid(wintab.state.winid) then
+    winid = wintab.state.winid
   end
   if vim.api.nvim_win_is_valid(winid) then
     if not require('conn-manager.window').is_window_usable(winid) then
