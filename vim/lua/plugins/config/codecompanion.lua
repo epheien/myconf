@@ -29,10 +29,17 @@ local opts = {
     -- NOTE: Change the adapter as required
     chat = { adapter = 'ollama' },
     inline = { adapter = 'ollama' },
+    cmd = { adapter = 'ollama' },
   },
   display = {
     action_palette = {
       provider = 'telescope',
+    },
+    chat = {
+      window = {
+        layout = 'horizontal',
+        height = 0.5,
+      },
     },
   },
   opts = {},
@@ -73,6 +80,51 @@ local opts = {
             )
             return fmt(
               [[请解释缓冲区 %d 中的此代码:
+
+```%s
+%s
+```
+]],
+              context.bufnr,
+              context.filetype,
+              code
+            )
+          end,
+          opts = {
+            contains_code = true,
+          },
+        },
+      },
+    },
+    ['Unit Tests'] = {
+      prompts = {
+        {
+          role = constants.SYSTEM_ROLE,
+          content = [[When generating unit tests, follow these steps:
+
+1. Identify the programming language.
+2. Identify the purpose of the function or module to be tested.
+3. List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
+4. Generate unit tests using an appropriate testing framework for the identified programming language.
+5. Ensure the tests cover:
+      - Normal cases
+      - Edge cases
+      - Error handling (if applicable)
+6. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.]],
+          opts = {
+            visible = false,
+          },
+        },
+        {
+          role = constants.USER_ROLE,
+          content = function(context)
+            local code = require('codecompanion.helpers.actions').get_code(
+              context.start_line,
+              context.end_line
+            )
+
+            return fmt(
+              [[请为缓冲区 %d 中的此代码生成单元测试:
 
 ```%s
 %s
