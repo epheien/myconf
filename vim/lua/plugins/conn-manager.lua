@@ -1,4 +1,4 @@
-local function on_node_open(node, fallback, opts) ---@diagnostic disable-line
+local function on_node_open(node, fallback, opts)
   local empty = require('utils').empty
   if not opts or empty(opts.open_with) then
     fallback()
