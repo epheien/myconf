@@ -2,9 +2,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = { 'FileType' },
-    config = function()
-      require('plugins.config.nvim-lspconfig')
-    end,
+    config = function() require('plugins.config.nvim-lspconfig') end,
     dependencies = { 'ray-x/lsp_signature.nvim' }, -- 需要在 lsp attach 之前加载
   },
   {
@@ -24,7 +22,7 @@ return {
       --'garymjr/nvim-snippets',
       --'windwp/nvim-autopairs',
     },
-    event = 'InsertEnter',
+    event = { 'InsertEnter', 'CmdlineEnter' },
     cmd = 'CmpDisable',
     keys = { ':', '/', '?' },
     config = function()
