@@ -7,7 +7,7 @@ return {
   'catppuccin/nvim',
   name = 'catppuccin',
   priority = 1000,
-  lazy = vim.g.my_colors_name ~= 'catppuccin',
+  enabled = vim.g.my_colors_name == 'catppuccin',
   config = function()
     require('catppuccin').setup(opts)
     require('catppuccin').load()
