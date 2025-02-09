@@ -57,6 +57,12 @@ if [ -n "$ZSH_VERSION" ]; then
             # output current executed command with parameters
             echo -en "\e]0;${1}\a"
         }
+    elif [[ "$TERM_PROGRAM" == "kitty" ]]; then
+        # 直接覆盖默认 title 实现
+        title()
+        {
+            kitten @ set-window-title "$@"
+        }
     fi
     # command not found handler
     [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
