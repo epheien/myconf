@@ -1,6 +1,7 @@
 local cmp = require('cmp')
 local keymap = require('cmp.utils.keymap')
 local feedkeys = require('cmp.utils.feedkeys')
+local enable_noice = vim.g.enable_noice
 
 local M = {}
 
@@ -356,10 +357,11 @@ local cmdline_opts = {
     completion = {
       border = 'single',
       winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel,Search:None',
+      col_offset = enable_noice and -3 or 0,
     },
   },
   formatting = {
-    fields = { 'abbr', 'kind', 'menu' },
+    fields = enable_noice and { 'kind', 'abbr', 'menu' } or { 'abbr', 'kind', 'menu' },
   },
   completion = {
     completeopt = 'menuone,noinsert,noselect',
