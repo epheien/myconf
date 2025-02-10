@@ -117,9 +117,10 @@ local function my_on_attach(bufnr)
 
   -- your removals and mappings go here
   vim.keymap.del('n', '.', opts('Run Command'))
-  if pcall(require, 'telescope') then
-    vim.keymap.set('n', '.', tree_actions_menu, opts('nvim tree menu'))
-  end
+  --if pcall(require, 'telescope') then
+  --  vim.keymap.set('n', '.', tree_actions_menu, opts('menu'))
+  --end
+  vim.keymap.set('n', '.', function() vim.api.nvim_feedkeys('Z', 't', false) end, opts('Menu'))
   vim.keymap.del('n', 'g?', opts('Help'))
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
   vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
