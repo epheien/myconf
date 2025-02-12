@@ -94,12 +94,14 @@ function M.sort_table(tbl, sort_col, descending)
   table.sort(tbl.rows, function(a, b) return M.comp(a[sort_col], b[sort_col], descending) end)
 end
 
+---@class texttable.Table
+---@field title string The title of the table.
+---@field cols string[] The headers of the table.
+---@field rows string[][] The rows of the table.
+---@field aligns? string[] 'c' or 'l' or 'r'
+
 ---渲染 Python 的 texttable 字典结构
----@param data table The table to render.
--- @param data.title string The title of the table.
--- @param data.cols string[] The headers of the table.
--- @param data.rows string[][] The rows of the table.
--- @param data.aligns string[] 'c' or 'l' or 'r'
+---@param data texttable.Table The table to render.
 ---@param sort_col? integer > 0
 ---@param descending? boolean
 -- @return string[]
@@ -134,6 +136,10 @@ function M.render_table(data, ascii, sort_col, descending)
 
   -- 生成标题
   table.insert(lines, '===== ' .. title .. ' =====')
+
+  if #cols == 0 then
+    return lines
+  end
 
   -- 生成表头
   line = ascii and '+' or '╭'
@@ -267,10 +273,18 @@ function M.make_tsdt(ts)
   return { ts, dt }
 end
 
+---@class texttable.Opts.View
+---@field sort_col integer
+---@field descending boolean
+
+---@class texttable.Opts
+---@field filters string[]
+---@field views table<string, texttable.Opts.View>
+
 ---render status file
 --- opts = { views = { ['盘口状态'] = { sort_col = 2, descending = false } } }
 ---@param fname string
----@param opts table
+---@param opts table<string, texttable.Opts.View>
 ---@return string[]
 function M.render_status(fname, opts)
   opts = opts or {}
@@ -310,6 +324,7 @@ function M.status_tables_sort(title, sort_col, descending)
   vim.api.nvim_buf_set_var(0, 'status_tables_opts', opts)
 end
 
+-- NOTE: vim.b.status_tables_opts.fname 正确设置后才能正常工作, 否则不能立即刷新
 function M.toggle_sort_on_header()
   local pos = vim.api.nvim_win_get_cursor(0)
   -- NOTE; pos[2] 和 col('.') 不一致的
@@ -337,11 +352,16 @@ function M.toggle_sort_on_header()
   end
   M.status_tables_sort(title, sort_col, descending)
   local charpos = vim.fn.getcursorcharpos()
-  M.buffer_render_status(vim.api.nvim_get_current_buf(), opts.fname)
-  -- NOTE: 由于引入了 unicode 字符, 所以需要用字符索引而不是字节索引复位光标位置
-  vim.fn.setcursorcharpos(charpos[2], charpos[3], charpos[4])
+  if opts.fname and opts.fname ~= '' then
+    M.buffer_render_status(vim.api.nvim_get_current_buf(), opts.fname)
+    -- NOTE: 由于引入了 unicode 字符, 所以需要用字符索引而不是字节索引复位光标位置
+    vim.fn.setcursorcharpos(charpos[2], charpos[3], charpos[4])
+  end
 end
 
+---@param buf integer
+---@param fname string|texttable.Table
+---@param filters? string[]
 function M.buffer_render_status(buf, fname, filters)
   -- NOTE: lines 元素可能包含有换行, 例如表格行
   local opts = {
@@ -349,7 +369,14 @@ function M.buffer_render_status(buf, fname, filters)
   }
   local ok, bopts = pcall(vim.api.nvim_buf_get_var, buf, 'status_tables_opts')
   opts = vim.tbl_deep_extend('force', opts, ok and bopts or {})
-  local lines = require('mylib.texttable').render_status(fname, opts)
+  local lines = {}
+  if type(fname) == 'string' then
+    lines = M.render_status(fname, opts)
+  else
+    local tbl = fname
+    local o = opts.views and (opts.views[tbl.title] or {}) or {}
+    lines = M.render_table(tbl, o.ascii, o.sort_col, o.descending)
+  end
   local content = table.concat(lines, '\n')
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
 end
