@@ -99,6 +99,7 @@ end
 ---@field cols string[] The headers of the table.
 ---@field rows string[][] The rows of the table.
 ---@field aligns? string[] 'c' or 'l' or 'r'
+---@field remark? string
 
 ---渲染 Python 的 texttable 字典结构
 ---@param data texttable.Table The table to render.
@@ -135,7 +136,14 @@ function M.render_table(data, ascii, sort_col, descending)
   local line
 
   -- 生成标题
-  table.insert(lines, '===== ' .. title .. ' =====')
+  table.insert(
+    lines,
+    string.format(
+      '===== %s =====%s',
+      title,
+      vim.fn.empty(data.remark) == 0 and string.format(' (%s)', data.remark) or ''
+    )
+  )
 
   if #cols == 0 then
     return lines
@@ -333,7 +341,7 @@ function M.toggle_sort_on_header()
     return
   end
   local prev_line = vim.fn.getline(pos[1] - 2)
-  local title = prev_line:gsub('===== ', ''):gsub(' =====', '')
+  local title = prev_line:match('^===== (.+) =====')
   local opts = vim.b.status_tables_opts or {}
   local view = opts.views and opts.views[title] or {}
   local sort_col = require('status-table').get_table_col()

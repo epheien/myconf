@@ -9,7 +9,9 @@ syntax match StatusTableActiveButton '\V[[\[^][]\+]]' display
 syntax match StatusTableButton '\V[\[^][]\+]' display
 
 " 表格标题
-syntax match StatusTableTitle '\V\^=====\.\+=====\$' display
+syntax match StatusTableTitle '\V\^=====\.\+=====\ze\[^=]\*' contains=StatusTableRemark
+" 表格备注
+syntax match StatusTableRemark ' ===== .\+$'hs=s+6 contained
 " 表头标题
 syntax match StatusTableHeader '[^|]\+[↓↑? ]|'hs=s+1,he=e-2 contained
 syntax match StatusTableHeader '[^│]\+[↓↑? ]│'hs=s+1,he=e-2 contained contains=StatusTableSortGlyph
@@ -42,4 +44,5 @@ hi def link StatusTableDuration         Type
 highlight def link StatusTableButton Special
 highlight def link StatusTableActiveButton Todo
 highlight def link StatusTableTitle Title
+highlight def link StatusTableRemark Comment
 highlight def link StatusTableHeader Identifier
