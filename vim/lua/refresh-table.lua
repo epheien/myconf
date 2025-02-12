@@ -35,7 +35,10 @@ function M.refresh_status_table(winid, tbl, interval)
   wo.cursorline = true
   wo.wrap = false
   wo.virtualedit = 'none'
-  vim.keymap.set('n', '<CR>', require('mylib.texttable').toggle_sort_on_header, { buffer = bufnr })
+  vim.keymap.set('n', '<CR>', function()
+    local t = type(tbl) == 'function' and tbl() or tbl --[[@as texttable.Table]]
+    require('mylib.texttable').toggle_sort_on_header(t)
+  end, { buffer = bufnr })
   vim.keymap.set('n', '<2-LeftMouse>', '<CR>', { buffer = bufnr, remap = true })
   vim.api.nvim_create_autocmd('BufUnload', {
     buffer = bufnr,
@@ -45,8 +48,8 @@ function M.refresh_status_table(winid, tbl, interval)
   local timer = vim.uv.new_timer() ---@diagnostic disable-line
   timer:start(0, interval, function()
     vim.schedule(function()
-      local t = type(tbl) == 'function' and tbl() or tbl --[[@as string]]
-      require('mylib.texttable').buffer_render_status(bufnr, t, { timestamp = true })
+      local t = type(tbl) == 'function' and tbl() or tbl --[[@as texttable.Table]]
+      require('mylib.texttable').buffer_render_status(bufnr, t)
     end)
   end)
   M.timers[bufnr] = timer

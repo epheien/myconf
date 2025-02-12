@@ -298,7 +298,6 @@ function M.render_status(fname, opts)
   opts = opts or {}
   local filters = opts.filters or {}
   local lines = {}
-  table.insert(lines, '当前时间: ' .. M.make_tsdt(os.time())[2])
 
   for line in io.lines(fname) do
     if string.sub(line, 1, 1) == '{' then
@@ -332,8 +331,8 @@ function M.status_tables_sort(title, sort_col, descending)
   vim.api.nvim_buf_set_var(0, 'status_tables_opts', opts)
 end
 
--- NOTE: vim.b.status_tables_opts.fname 正确设置后才能正常工作, 否则不能立即刷新
-function M.toggle_sort_on_header()
+---@param fname texttable.Table|string
+function M.toggle_sort_on_header(fname)
   local pos = vim.api.nvim_win_get_cursor(0)
   -- NOTE; pos[2] 和 col('.') 不一致的
   local hl = vim.fn.synIDattr(vim.fn.synID(pos[1], pos[2] + 1, 1), 'name')
@@ -359,9 +358,9 @@ function M.toggle_sort_on_header()
     descending = false
   end
   M.status_tables_sort(title, sort_col, descending)
-  local charpos = vim.fn.getcursorcharpos()
-  if opts.fname and opts.fname ~= '' then
-    M.buffer_render_status(vim.api.nvim_get_current_buf(), opts.fname)
+  if vim.fn.empty(fname) == 0 then
+    local charpos = vim.fn.getcursorcharpos()
+    M.buffer_render_status(vim.api.nvim_get_current_buf(), fname)
     -- NOTE: 由于引入了 unicode 字符, 所以需要用字符索引而不是字节索引复位光标位置
     vim.fn.setcursorcharpos(charpos[2], charpos[3], charpos[4])
   end
@@ -386,9 +385,7 @@ function M.buffer_render_status(buf, fname, opts)
     local o = options.views and (options.views[tbl.title] or {}) or {}
     lines = M.render_table(tbl, o.ascii, o.sort_col, o.descending)
   end
-  if opts.timestamp then
-    table.insert(lines, 1, '当前时间: ' .. vim.fn.strftime('%Y-%m-%d %T'))
-  end
+  table.insert(lines, 1, '当前时间: ' .. M.make_tsdt(os.time())[2])
   local content = table.concat(lines, '\n')
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
 end
