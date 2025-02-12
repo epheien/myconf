@@ -369,21 +369,25 @@ end
 
 ---@param buf integer
 ---@param fname string|texttable.Table
----@param filters? string[]
-function M.buffer_render_status(buf, fname, filters)
-  -- NOTE: lines 元素可能包含有换行, 例如表格行
-  local opts = {
-    filters = filters,
+---@param opts? table
+function M.buffer_render_status(buf, fname, opts)
+  opts = opts or {}
+  local options = {
+    filters = opts.filters,
   }
   local ok, bopts = pcall(vim.api.nvim_buf_get_var, buf, 'status_tables_opts')
-  opts = vim.tbl_deep_extend('force', opts, ok and bopts or {})
+  options = vim.tbl_deep_extend('force', options, ok and bopts or {})
+  -- NOTE: lines 元素可能包含有换行, 例如表格行
   local lines = {}
   if type(fname) == 'string' then
-    lines = M.render_status(fname, opts)
+    lines = M.render_status(fname, options)
   else
     local tbl = fname
-    local o = opts.views and (opts.views[tbl.title] or {}) or {}
+    local o = options.views and (options.views[tbl.title] or {}) or {}
     lines = M.render_table(tbl, o.ascii, o.sort_col, o.descending)
+  end
+  if opts.timestamp then
+    table.insert(lines, 1, '当前时间: ' .. vim.fn.strftime('%Y-%m-%d %T'))
   end
   local content = table.concat(lines, '\n')
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))

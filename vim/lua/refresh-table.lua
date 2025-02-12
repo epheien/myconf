@@ -46,7 +46,7 @@ function M.refresh_status_table(winid, tbl, interval)
   timer:start(0, interval, function()
     vim.schedule(function()
       local t = type(tbl) == 'function' and tbl() or tbl --[[@as string]]
-      require('mylib.texttable').buffer_render_status(bufnr, t)
+      require('mylib.texttable').buffer_render_status(bufnr, t, { timestamp = true })
     end)
   end)
   M.timers[bufnr] = timer
