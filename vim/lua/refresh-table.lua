@@ -3,9 +3,8 @@ local M = {}
 -- bufnr => timer
 M.timers = {}
 
----@param winid integer
-function M.stop_refresh(winid)
-  local bufnr = vim.api.nvim_win_get_buf(winid)
+---@param bufnr integer
+function M.stop_refresh(bufnr)
   local t = M.timers[bufnr]
   if t then
     t:stop()
