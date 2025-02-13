@@ -4,11 +4,12 @@
     pip3 install pynvim
 
 ## TODO
-- [ ] 了解 lazy.nvim 的 VeryLazy 原理
 - [ ] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列
+- [x] nvim-cmp 补全的 preview 窗口的语法高亮有红色的错误 (vim.lsp.util.stylize_markdown() 会自动导入 syntax 文件, 所以会导致这种奇怪的问题, 本质还是 syntax 文件有 BUG)
+- [x] 了解 lazy.nvim 的 VeryLazy 原理 (基本确实是 UI 初始化后, 发送 VeryLazy User 自动命令)
 - [x] 了解 go-client 主动传数据到 nvim 的机制 (使用`v.ExecLua("RecvJson(...)", nil, "helloworld")`)
 - [x] `pckr.nvim` 会出现重复 source vim 文件的问题: `nvim --startuptime nvim.txt` (不再使用 pckr, 改用 lazy)
-- [?] `edgy.nvim` 同时打开 nvimtree 和 outline 的时候, 把光标放到 nvimtree 窗口执行 `windo echo`, 就会再开一个 nvimtree 的窗口, autocmd 也会触发. vim-mark 新版本不再使用 `windo`.
+- [x] `edgy.nvim` 同时打开 nvimtree 和 outline 的时候, 把光标放到 nvimtree 窗口执行 `windo echo`, 就会再开一个 nvimtree 的窗口, autocmd 也会触发. vim-mark 新版本不再使用 `windo`.
 - [x] 支持鼠标拖动浮动窗口
 - [x] nvim-cmp 以及 cmp-cmdline 插件在命令行粘贴命令的时候, 好像有性能问题
 - [x] `setl nowra` 无法补全, 因为原版是以 `setl no` 作为起点匹配补全的
