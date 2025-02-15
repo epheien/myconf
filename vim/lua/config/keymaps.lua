@@ -262,11 +262,27 @@ map('i', '<CR>', function() vim.call('myrc#SmartEnter') end)
 map('i', '<C-y>', [=[pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"]=], { expr = true })
 
 -- 选择后立即搜索
-map(
-  'x',
-  '/',
-  [[y:let @" = substitute(@", '\\', '\\\\', "g")<CR>:let @" = substitute(@", '\/', '\\\/', "g")<CR>/\V<C-r>"<CR>N]]
-)
+map('x', '/', function()
+  -- 保存当前选区到寄存器
+  local saved_reg = vim.fn.getreg('"')
+  local saved_reg_type = vim.fn.getregtype('"')
+
+  -- 复制选中内容
+  vim.cmd('normal! y')
+  local selected = vim.fn.getreg('"')
+
+  -- 恢复寄存器
+  vim.fn.setreg('"', saved_reg, saved_reg_type)
+
+  -- 转义特殊字符
+  selected = vim.fn.escape(selected, [[/\]])
+
+  -- 执行搜索
+  local keys = [[/\V]] .. selected .. vim.api.nvim_replace_termcodes('<CR>', true, false, true)
+  vim.api.nvim_feedkeys(keys, 'n', false)
+end)
+-- 普通模式按 <Esc> 去除搜索高亮
+map('n', '<Esc>', '<Cmd>noh<CR><Esc>')
 
 map('i', ';', function()
   local line = vim.api.nvim_get_current_line()
@@ -310,7 +326,7 @@ map('n', '<C-w>=', function()
     return wincmd_adjust()
   end
   local max_height = vim.o.lines - vim.o.cmdheight
-  if vim.o.showtabline == 2 or (vim.o.showtabline == 1 and vim.fn.tabpagenr("$") > 1) then
+  if vim.o.showtabline == 2 or (vim.o.showtabline == 1 and vim.fn.tabpagenr('$') > 1) then
     max_height = max_height - 1
   end
   if max_height % 2 == 0 then
