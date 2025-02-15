@@ -9,11 +9,13 @@ local function setup_telescope()
     local preview_bufnr = previewer and previewer.state.bufnr or nil
     -- preview_win => prompt_win
     if preview_win then
+      -- stylua: ignore
       vim.keymap.set('n', '<Tab>', function()
         vim.cmd(string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', prompt_win))
       end, { buffer = preview_bufnr })
     end
     -- results_win => preview_win
+    -- stylua: ignore
     vim.keymap.set('n', '<Tab>', function()
       vim.cmd(
         string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', preview_win or prompt_win)
@@ -22,19 +24,21 @@ local function setup_telescope()
     -- prompt_win => results_win
     vim.cmd(string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', results_win))
   end
+  local actions = require('telescope.actions')
   local opts = {
     -- Default configuration for telescope goes here:
     -- config_key = value,
     mappings = {
       i = {
-        ['<Esc>'] = require('telescope.actions').close,
-        ['<C-j>'] = require('telescope.actions').move_selection_next,
-        ['<C-k>'] = require('telescope.actions').move_selection_previous,
+        ['<Esc>'] = actions.close,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-k>'] = actions.move_selection_previous,
         ['<C-l>'] = false,
         ['<C-u>'] = false,
-        ['<C-b>'] = require('telescope.actions').preview_scrolling_up,
-        ['<C-f>'] = require('telescope.actions').preview_scrolling_down,
+        ['<C-b>'] = actions.preview_scrolling_up,
+        ['<C-f>'] = actions.preview_scrolling_down,
         ['<Tab>'] = toggle_focus,
+        ['<S-Tab>'] = actions.toggle_selection + actions.move_selection_worse,
       },
     },
     sorting_strategy = 'ascending',
@@ -42,7 +46,7 @@ local function setup_telescope()
       prompt_position = 'top',
     },
     -- border = 'single'
-    borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
+    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
   }
   require('telescope').setup({
     --defaults = require('telescope.themes').get_dropdown(opts),
