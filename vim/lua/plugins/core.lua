@@ -120,7 +120,8 @@ local function core_plugins()
     table.insert(plugins, 'epheien/bg.nvim')
   end
 
-  if vim.fn.has('gui_running') ~= 1 then
+  -- NOTE: 打开 markdown 的时候可能导致卡死, 例如 glrnvim 的 README.md
+  if false and vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
       '3rd/image.nvim',
       cmd = 'ImageRender',
