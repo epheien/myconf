@@ -199,7 +199,7 @@ if has('nvim')
     set noswapfile
 endif
 
-set smoothscroll
+silent! set smoothscroll
 
 " 启动对鼠标的支持
 set mouse=a
