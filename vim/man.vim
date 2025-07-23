@@ -76,6 +76,8 @@ set nobackup
 " 保留原始文件
 "set patchmode=.orig
 
+silent! set smoothscroll
+
 " 启动对鼠标的支持
 set mouse=a
 
@@ -101,7 +103,7 @@ set wrap
 " 回绕行的前导符号
 "set showbreak=<-->
 " 光标上下需要保留的行数，滚动时用
-set scrolloff=3
+"set scrolloff=3
 
 " 设置鼠标和选择的行为
 set selectmode=key
