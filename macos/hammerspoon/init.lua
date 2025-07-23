@@ -266,6 +266,7 @@ local g_disableApps = {
   'NoMachine',
   'WezTerm',
   'UTM',
+  "Moonlight",
 }
 
 local g_disableApps_dict = {}
