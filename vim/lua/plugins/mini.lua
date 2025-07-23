@@ -26,7 +26,7 @@ return {
         },
         content = {
           format = function(notif)
-            local time = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update))
+            local time = vim.fn.strftime('%Y-%m-%d %H:%M:%S', math.floor(notif.ts_update))
             return string.format('[%s] %s', time, notif.msg)
           end,
           sort = function(notif_arr)
