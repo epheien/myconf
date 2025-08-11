@@ -22,7 +22,7 @@ syntax region StatusTableHeaders start='\v^(\||│) ' end='\v[↓↑? ](\|\n^\+\
 " Numbers
 " ------------------------------
 syn match StatusTableNumber         display     '\<\d\+\>'
-syn match StatusTableNumberFloat    display     '\<\d\+\.\d\+\([eE][+-]\?\d\+\)\?\>'
+syn match StatusTableNumberFloat    display     '[-]\?\<\d\+\(\.\d\+\)\?\([eE][+-]\?\d\+\)\?\>'
 syn match StatusTableNumberBin      display     '\<0[bB][01]\+\>'
 syn match StatusTableNumberOctal    display     '\<0[oO]\o\+\>'
 syn match StatusTableNumberHex      display     '\<0[xX]\x\+\>'
