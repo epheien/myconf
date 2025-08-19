@@ -13,3 +13,4 @@ GTAGS
 # lazy.nvim 的安装路径 NOTE: 这里忽略的话, 会影响 lua lsp 的搜索路径
 /lazy/
 conn-manager.json
+*.bak
