@@ -66,6 +66,8 @@ local function setup_telescope()
   })
   -- telescope 的 undo 插件
   require('telescope').load_extension('undo')
+  -- telescope 的 gtags 插件, 但是貌似不能正常工作, 待完善
+  require('telescope').load_extension('gtags')
 end
 
 setup_telescope()
