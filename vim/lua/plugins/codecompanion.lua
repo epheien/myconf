@@ -6,6 +6,9 @@ return {
     'nvim-lua/plenary.nvim',
     'j-hui/fidget.nvim',
   },
-  config = function() require('plugins.config.codecompanion') end,
-  init = function() require('plugins.config.fidget-spinner'):init() end,
+  config = function()
+    --require('plugins.config.fidget-spinner'):init()
+    require('plugins.config.codecompanion')
+  end,
+  --init = function() require('plugins.config.fidget-spinner'):init() end,
 }
