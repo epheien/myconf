@@ -262,6 +262,7 @@ local g_disableApps = {
   'goneovim',
   'kitty',
   'Alacritty',
+  'Ghostty',
   'Neovide',
   'NoMachine',
   'WezTerm',
