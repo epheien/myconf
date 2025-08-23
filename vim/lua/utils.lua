@@ -58,7 +58,7 @@ function M.only_ascii()
   if only_ascii ~= nil then
     return only_ascii
   end
-  local pat = vim.regex([=[\V\<iTerm\|\<Apple_Terminal\|\<kitty\|\<alacritty\|\<tmux]=])
+  local pat = vim.regex([=[\V\<iTerm\|\<Apple_Terminal\|\<kitty\|\<alacritty\|\<tmux\|\<ghostty]=])
   if vim.fn.has('gui_running') == 1 or pat:match_str(vim.env.TERM_PROGRAM or '') then
     only_ascii = false
   else

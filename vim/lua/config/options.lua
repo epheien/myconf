@@ -102,7 +102,7 @@ vim.o.tabline = '%!myrc#MyTabLine()'
 
 if
   vim.env.TERM_PROGRAM
-  and vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty]=]):match_str(vim.env.TERM_PROGRAM or '')
+  and vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty\|\<ghostty]=]):match_str(vim.env.TERM_PROGRAM or '')
 then
   vim.o.termguicolors = true
 end
