@@ -8,7 +8,7 @@ local inited = {}
 local server_exts = {
   clangd = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
   lua_ls = { 'lua' },
-  pyright = { 'python' },
+  basedpyright = { 'python' },
   gopls = { 'go' },
   cmake = { 'cmake' },
 }
