@@ -341,6 +341,9 @@ func myrc#MyEnter()
     elseif !empty(getcmdwintype())
         exec "normal! \<CR>"
         return
+    elseif &ft == 'floggraph'
+        exec "normal \<CR>"
+        return
     endif
     if empty(@:)
         return
@@ -1028,7 +1031,7 @@ function! myrc#MouseMark() "{{{2
         return
     endif
     let c = getline('.')[col('.')-1]
-    if &buftype ==# 'quickfix'
+    if &buftype ==# 'quickfix' || &ft == 'floggraph'
         call myrc#MyEnter()
         return
     elseif c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}'
