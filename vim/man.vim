@@ -60,7 +60,7 @@ filetype plugin indent on
 set nonumber
 
 " 设定文件编码类型，彻底解决中文编码问题
-let &termencoding=&encoding
+silent! let &termencoding=&encoding
 "set fileencodings=utf-8,gbk,gb18030,utf-16,ucs-bom,cp936
 
 " 设置搜索结果高亮显示
