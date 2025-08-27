@@ -156,8 +156,8 @@ elif [ -d "$HOME/.nvm/versions/node" ]; then
 fi
 # ======================================
 
-export HOMEBREW_NO_AUTO_UPDATE=true
-export TLDR_AUTO_UPDATE_DISABLED=true
+export HOMEBREW_NO_AUTO_UPDATE=1
+export TLDR_AUTO_UPDATE_DISABLED=1
 
 unset LESS
 # 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
