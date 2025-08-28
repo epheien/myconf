@@ -42,7 +42,9 @@ local opts = {
       },
     },
   },
-  opts = {},
+  opts = {
+    language = "Chinese",
+  },
   prompt_library = {
     ['Explain'] = {
       strategy = 'chat',
