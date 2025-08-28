@@ -12,11 +12,11 @@ local opts = {
     ollama = function()
       return require('codecompanion.adapters').extend('ollama', {
         env = {
-          url = 'http://localhost:11434',
+          url = 'http://pve:1434',
         },
         schema = {
           model = {
-            default = 'starcoder2:instruct', -- 'deepseek-r1:32b'
+            default = 'qwen3-coder:30b', -- 'deepseek-r1:32b'
           },
         },
         parameters = {
@@ -24,12 +24,24 @@ local opts = {
         },
       })
     end,
+    openai_compatible = function()
+      return require("codecompanion.adapters").extend("openai_compatible", {
+        env = {
+          url = 'http://pve:1434',
+        },
+        schema = {
+          model = {
+            default = "qwen3-coder:30b",
+          },
+        },
+      })
+    end,
   },
   strategies = {
     -- NOTE: Change the adapter as required
-    chat = { adapter = 'ollama' },
-    inline = { adapter = 'ollama' },
-    cmd = { adapter = 'ollama' },
+    chat = { adapter = 'openai_compatible' },
+    inline = { adapter = 'openai_compatible' },
+    cmd = { adapter = 'openai_compatible' },
   },
   display = {
     action_palette = {
