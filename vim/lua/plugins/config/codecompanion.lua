@@ -9,33 +9,35 @@ local constants = {
 local opts = {
   -- refer to: https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/config.lua
   adapters = {
-    ollama = function()
-      return require('codecompanion.adapters').extend('ollama', {
-        env = {
-          url = 'http://pve:1434',
-        },
-        schema = {
-          model = {
-            default = 'qwen3-coder:30b', -- 'deepseek-r1:32b'
+    http = {
+      ollama = function()
+        return require('codecompanion.adapters').extend('ollama', {
+          env = {
+            url = 'http://pve:1434',
           },
-        },
-        parameters = {
-          sync = true,
-        },
-      })
-    end,
-    openai_compatible = function()
-      return require("codecompanion.adapters").extend("openai_compatible", {
-        env = {
-          url = 'http://pve:1434',
-        },
-        schema = {
-          model = {
-            default = "qwen3-coder:30b",
+          schema = {
+            model = {
+              default = 'qwen3-coder:30b', -- 'deepseek-r1:32b'
+            },
           },
-        },
-      })
-    end,
+          parameters = {
+            sync = true,
+          },
+        })
+      end,
+      openai_compatible = function()
+        return require("codecompanion.adapters").extend("openai_compatible", {
+          env = {
+            url = 'http://pve:1434',
+          },
+          schema = {
+            model = {
+              default = "qwen3-coder:30b",
+            },
+          },
+        })
+      end,
+    },
   },
   strategies = {
     -- NOTE: Change the adapter as required
