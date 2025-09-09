@@ -364,6 +364,9 @@ end)
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", nil, function()
   hs.reload()
 end)
+
+require('mylib/window-manager').setup()
+
 hs.alert.show("Config of Hammerspoon loaded")
 
 -- vim:set sts=2 sw=2 et:
