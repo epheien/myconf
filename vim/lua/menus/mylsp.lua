@@ -81,12 +81,16 @@ return {
     end,
   },
   {
-    name = 'Diagnostic Open in Float',
-    cmd = vim.diagnostic.open_float,
+    name = 'Diagnostic Open in QuickFix List',
+    cmd = vim.diagnostic.setqflist,
   },
   {
     name = 'Diagnostic Open in Location List',
     cmd = vim.diagnostic.setloclist,
+  },
+  {
+    name = 'Diagnostic Open in Float',
+    cmd = vim.diagnostic.open_float,
   },
   {
     name = 'Diagnostic Goto Prev',
