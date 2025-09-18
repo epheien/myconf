@@ -4,7 +4,9 @@ return {
   dependencies = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
   cmd = 'BlinkEnable',
   config = function()
+    local enabled = false
     require('blink.cmp').setup({
+      enabled = function() return enabled end,
       keymap = {
         preset = 'none', ---@diagnostic disable-line
         -- 最基本要求
@@ -35,8 +37,8 @@ return {
         },
       },
     })
-    -- dummy, TODO
-    vim.api.nvim_create_user_command('BlinkEnable', function() end, {})
+    vim.api.nvim_create_user_command('BlinkEnable', function() enabled = true end, {})
+    vim.api.nvim_create_user_command('BlinkDisable', function() enabled = false end, {})
     -- 启用 blink.cmp 的话就禁用掉 nvim-cmp 的编辑文本补全
     vim.cmd('silent! CmpDisable')
   end,
