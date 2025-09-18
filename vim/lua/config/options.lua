@@ -217,6 +217,7 @@ vim.g['clang_format#style_options'] = {
   AccessModifierOffset = -4,
   AllowShortFunctionsOnASingleLine = 'Empty',
   AllowShortIfStatementsOnASingleLine = false,
+  AllowShortLoopsOnASingleLine = false,
   AlwaysBreakTemplateDeclarations = true,
   BinPackArguments = false,
   BinPackParameters = false,
