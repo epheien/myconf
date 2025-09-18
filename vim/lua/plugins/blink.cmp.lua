@@ -7,6 +7,7 @@ return {
     local enabled = false
     require('blink.cmp').setup({
       enabled = function() return enabled end,
+      fuzzy = { implementation = "lua" }, -- 为了简化, 仅使用 lua 实现
       keymap = {
         preset = 'none', ---@diagnostic disable-line
         -- 最基本要求
