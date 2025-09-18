@@ -86,8 +86,8 @@ local function core_plugins()
             ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
             ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
           },
-          sources = {
-            cmdline = {},
+          cmdline = {
+            sources = {},
           },
           completion = {
             list = {
