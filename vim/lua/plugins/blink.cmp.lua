@@ -25,7 +25,7 @@ return {
       },
       cmdline = {
         enabled = true,
-        completion = { menu = { auto_show = true } },
+        completion = { menu = { auto_show = function() return enabled end } },
         keymap = { preset = 'cmdline' },
         sources = { 'buffer', 'cmdline' },
       },
