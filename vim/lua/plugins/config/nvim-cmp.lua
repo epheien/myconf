@@ -352,7 +352,7 @@ vim.keymap.set('s', '<S-Tab>', function() require('luasnip').jump(-1) end, { sil
 M.setup(opts)
 
 local cmdline_opts = {
-  enabled = true,
+  enabled = function() return enabled end,
   window = {
     completion = {
       border = 'single',
