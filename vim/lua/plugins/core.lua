@@ -74,7 +74,7 @@ local function core_plugins()
   }
 
   -- NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
-  if vim.env.TERM_PROGRAM == 'Apple_Terminal' then
+  if vim.env.TERM_PROGRAM == 'Apple_Terminal' or vim.env.TERM_PROGRAM == 'ghostty' then
     table.insert(plugins, 'epheien/bg.nvim')
   end
 
