@@ -54,6 +54,10 @@ local opts = {
         auto_insert = false,
       },
     },
+    menu = {
+      -- FIXME: 仅用于 cmdline 的补全窗口, 但是 blink.cmp 尚不支持独立设置 cmdline 的此选项
+      border = 'single',
+    }
   },
 }
 
@@ -61,5 +65,8 @@ require('blink.cmp').setup(opts)
 
 vim.api.nvim_create_user_command('BlinkEnable', function() enabled = true end, {})
 vim.api.nvim_create_user_command('BlinkDisable', function() enabled = false end, {})
+
+vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { link = 'Normal' })
+vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'FloatBorder' })
 
 return M
