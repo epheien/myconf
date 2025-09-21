@@ -26,6 +26,9 @@ local opts = {
     completion = {
       menu = {
         auto_show = function() return true end,
+        draw = {
+          columns = { { 'label', 'label_description' } },
+        },
       },
       list = {
         selection = {
