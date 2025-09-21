@@ -65,4 +65,7 @@ quit-after-last-window-closed = true
 # left or right or true
 macos-option-as-alt = left
 
+theme = Gruvbox Dark
+bold-color = bright
+
 # vim:set ft=config:
