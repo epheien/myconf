@@ -384,6 +384,7 @@ local function core_plugins()
         highlight = {
           multiline = false,
           pattern = [[.*\s<(KEYWORDS)>\s*]], -- vim regex with prefix '\v\C'
+          after = '',
         },
         search = {
           pattern = [[\b(KEYWORDS)\b]], -- ripgrep regex
