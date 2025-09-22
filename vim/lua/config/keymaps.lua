@@ -32,7 +32,13 @@ map('i', '<S-Tab>', function() vim.call('myrc#ShiftTab') end)
 
 map('n', '<C-f>', function() vim.call('mydict#Search', vim.fn.expand('<cword>')) end)
 
-map('n', '<C-f>', function() vim.call('mydict#Search', vim.fn.expand('<cword>')) end)
+map('n', '<C-f>', function()
+  if vim.g.termdbg_running == 1 then
+    vim.cmd('TFinish')
+  else
+    vim.call('mydict#Search', vim.fn.expand('<cword>'))
+  end
+end)
 map('v', '<C-f>', 'y:call mydict#Search(@")<CR>')
 
 map('n', '<C-]>', function() vim.call('myrc#Cstag') end)
