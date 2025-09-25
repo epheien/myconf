@@ -244,3 +244,5 @@ end
 
 -- Undercurl group for test
 vim.api.nvim_set_hl(0, 'Undercurl', { undercurl = true })
+
+vim.diagnostic.config({ virtual_lines = true })
