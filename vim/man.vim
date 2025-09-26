@@ -162,8 +162,7 @@ set foldmethod=manual
 " 设置折叠级别: 高于此级别的折叠会被关闭
 set foldlevel=9999
 
-" 允许光标移动到刚刚超过行尾字符之后的位置
-set virtualedit=onemore,block
+set virtualedit=block
 
 " 标签页显示。0:1:2 = 总是不显示:超过一个才显示:总是显示
 "set showtabline=2
