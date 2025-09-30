@@ -220,7 +220,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, '@operator', { link = 'Operator' })
       vim.api.nvim_set_hl(0, 'Operator', { link = 'SpecialChar' })
       vim.api.nvim_set_hl(0, 'CurSearch', { link = 'Search' })
-      vim.api.nvim_set_hl(0, 'Search', { fg = '#181818', bg = '#dddd00' })
+      --vim.api.nvim_set_hl(0, 'Search', { fg = '#181818', bg = '#dddd00' })
       vim.api.nvim_set_hl(0, 'NormalFloat', {
         fg = vim.api.nvim_get_hl(0, { name = 'Normal' }).fg,
         bg = vim.api.nvim_get_hl(0, { name = 'CursorLine' }).bg,
