@@ -8,6 +8,7 @@ function M.stop_refresh(bufnr)
   local t = M.timers[bufnr]
   if t then
     t:stop()
+    t:close()
   end
   M.timers[bufnr] = nil
 end
