@@ -1,5 +1,6 @@
 local M = {}
 
+-- 将当前窗口调整为5:4比例，宽度为屏幕高度的75%，并居中
 function M.resize_center()
   -- 获取当前焦点窗口
   local win = hs.window.focusedWindow()
@@ -39,8 +40,6 @@ function M.resize_center()
   -- 显示提示信息（可选）
   hs.alert.show(string.format('窗口已调整: %.0fx%.0f', newWidth, newHeight))
 end
-
--- 将当前窗口调整为5:4比例，宽度为屏幕高度的75%，并居中
 
 function M.setup()
   hs.hotkey.bind({ 'option' }, 'c', M.resize_center)
