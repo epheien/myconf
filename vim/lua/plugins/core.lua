@@ -416,6 +416,7 @@ local function core_plugins()
         formatters_by_ft = {
           lua = { 'stylua', lsp_format = 'fallback' },
           cpp = { 'clang-format' },
+          python = { 'black' },
         },
         format_on_save = function() end,
         format_after_save = function() end,
