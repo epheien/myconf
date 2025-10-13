@@ -79,7 +79,8 @@ local function core_plugins()
   end
 
   -- NOTE: 打开 markdown 的时候可能导致卡死, 例如 glrnvim 的 README.md
-  if true and vim.fn.has('gui_running') ~= 1 then
+  -- NOTE: tmux 环境下使用 image.nvim 问题多多, 主要是不能自动消失, 所以暂时禁用
+  if not vim.env.TMUX and vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
       '3rd/image.nvim',
       cmd = 'ImageRender',
