@@ -79,7 +79,7 @@ local function core_plugins()
   end
 
   -- NOTE: 打开 markdown 的时候可能导致卡死, 例如 glrnvim 的 README.md
-  if false and vim.fn.has('gui_running') ~= 1 then
+  if true and vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
       '3rd/image.nvim',
       cmd = 'ImageRender',
@@ -97,7 +97,7 @@ local function core_plugins()
               download_remote_images = false,
               only_render_image_at_cursor = false,
               -- if true, images will be rendered in floating markdown windows
-              floating_windows = false,
+              floating_windows = true,
               filetypes = { 'markdown', 'vimwiki' },
             },
           },
