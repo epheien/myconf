@@ -34,10 +34,10 @@ return {
     end,
   },
   {
-    'ray-x/lsp_signature.nvim',
+    'epheien/lsp_signature.nvim',
     keys = '<Plug>lsp-signature',
     opts = {
-      handler_opts = { border = nil },
+      handler_opts = { border = 'single' },
       max_width = 80,
       floating_window_off_x = -1,
       zindex = 2,

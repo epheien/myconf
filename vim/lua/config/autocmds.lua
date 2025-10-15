@@ -148,7 +148,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       -- 这个配色默认情况下，字符串和函数共用一个配色，要换掉！
       vim.api.nvim_set_hl(0, 'String', { link = 'Constant' })
       -- 终端下的光标颜色貌似不受主题的控制，受制于终端自身的设置
-      vim.cmd.hi('Cursor guifg=black guibg=#dddd00 gui=NONE ctermfg=16 ctermbg=226 cterm=NONE')
+      --vim.cmd.hi('Cursor guifg=black guibg=#dddd00 gui=NONE ctermfg=16 ctermbg=226 cterm=NONE')
       vim.cmd.hi('Todo guifg=orangered guibg=yellow2 gui=NONE ctermfg=202 ctermbg=226 cterm=NONE')
       --vim.cmd.hi('IncSearch guifg=#b0ffff guibg=#2050d0 ctermfg=159 ctermbg=26')
       vim.cmd.hi('Search guifg=gray80 guibg=#445599 gui=NONE ctermfg=252 ctermbg=61 cterm=NONE')
@@ -220,7 +220,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, '@operator', { link = 'Operator' })
       vim.api.nvim_set_hl(0, 'Operator', { link = 'SpecialChar' })
       vim.api.nvim_set_hl(0, 'CurSearch', { link = 'Search' })
-      vim.api.nvim_set_hl(0, 'Search', { fg = '#181818', bg = '#dddd00' })
+      --vim.api.nvim_set_hl(0, 'Search', { fg = '#181818', bg = '#dddd00' })
       vim.api.nvim_set_hl(0, 'NormalFloat', {
         fg = vim.api.nvim_get_hl(0, { name = 'Normal' }).fg,
         bg = vim.api.nvim_get_hl(0, { name = 'CursorLine' }).bg,

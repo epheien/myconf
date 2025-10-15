@@ -74,12 +74,13 @@ local function core_plugins()
   }
 
   -- NOTE: 为了避免无谓的闪烁, 把终端的背景色设置为和 vim/nvim 一致即可
-  if vim.env.TERM_PROGRAM == 'Apple_Terminal' then
+  if vim.env.TERM_PROGRAM == 'Apple_Terminal' or vim.env.TERM_PROGRAM == 'ghostty' then
     table.insert(plugins, 'epheien/bg.nvim')
   end
 
   -- NOTE: 打开 markdown 的时候可能导致卡死, 例如 glrnvim 的 README.md
-  if false and vim.fn.has('gui_running') ~= 1 then
+  -- NOTE: tmux 环境下使用 image.nvim 问题多多, 主要是不能自动消失, 所以暂时禁用
+  if not vim.env.TMUX and vim.fn.has('gui_running') ~= 1 then
     table.insert(plugins, {
       '3rd/image.nvim',
       cmd = 'ImageRender',
@@ -97,7 +98,7 @@ local function core_plugins()
               download_remote_images = false,
               only_render_image_at_cursor = false,
               -- if true, images will be rendered in floating markdown windows
-              floating_windows = false,
+              floating_windows = true,
               filetypes = { 'markdown', 'vimwiki' },
             },
           },
@@ -384,6 +385,7 @@ local function core_plugins()
         highlight = {
           multiline = false,
           pattern = [[.*\s<(KEYWORDS)>\s*]], -- vim regex with prefix '\v\C'
+          after = '',
         },
         search = {
           pattern = [[\b(KEYWORDS)\b]], -- ripgrep regex
@@ -415,6 +417,7 @@ local function core_plugins()
         formatters_by_ft = {
           lua = { 'stylua', lsp_format = 'fallback' },
           cpp = { 'clang-format' },
+          python = { 'black' },
         },
         format_on_save = function() end,
         format_after_save = function() end,

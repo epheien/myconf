@@ -16,5 +16,8 @@ return {
     dash = {
       icon = '━',
     },
+    anti_conceal = {
+      enabled = false,
+    },
   },
 }

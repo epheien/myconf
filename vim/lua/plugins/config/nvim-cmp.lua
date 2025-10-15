@@ -405,8 +405,6 @@ local cmdline_opts = {
     disallow_symbol_nonprefix_matching = false, -- default: true
   },
 }
--- `:` cmdline setup.
-cmp.setup.cmdline(':', cmdline_opts)
 
 local search_buffer_source = {
   name = 'buffer',
@@ -422,29 +420,32 @@ local search_buffer_source = {
   },
 }
 
-cmp.setup.cmdline(
-  '/',
-  vim.tbl_deep_extend('force', cmdline_opts, {
-    matcher = {
-      name = 'fzy',
-    },
-    sources = {
-      search_buffer_source,
-    },
-  })
-)
-
-cmp.setup.cmdline(
-  '?',
-  vim.tbl_deep_extend('force', cmdline_opts, {
-    matcher = {
-      name = 'fzy',
-    },
-    sources = {
-      search_buffer_source,
-    },
-  })
-)
+-- `:` `/` `?` cmdline setup.
+if true then
+  cmp.setup.cmdline(':', cmdline_opts)
+  cmp.setup.cmdline(
+    '/',
+    vim.tbl_deep_extend('force', cmdline_opts, {
+      matcher = {
+        name = 'fzy',
+      },
+      sources = {
+        search_buffer_source,
+      },
+    })
+  )
+  cmp.setup.cmdline(
+    '?',
+    vim.tbl_deep_extend('force', cmdline_opts, {
+      matcher = {
+        name = 'fzy',
+      },
+      sources = {
+        search_buffer_source,
+      },
+    })
+  )
+end
 
 vim.api.nvim_create_user_command('CmpToggle', function()
   if enabled then

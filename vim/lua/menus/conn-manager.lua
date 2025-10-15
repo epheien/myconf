@@ -63,6 +63,6 @@ return {
   {
     name = '  Paste before node',
     cmd = function() require('conn-manager').paste_node(true) end,
-    rtxt = 'p',
+    rtxt = 'P',
   },
 }
