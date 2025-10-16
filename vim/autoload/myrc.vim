@@ -9,7 +9,7 @@ let s:enable_oscyank = v:false
 
 " 初始化本脚本的依赖项
 function! s:init() abort
-    if g:colors_name =~# '^catppuccin'
+    if get(g:, 'colors_name', '') =~# '^catppuccin'
         return
     endif
     " tabline 高亮, gruvbox 主题
