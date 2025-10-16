@@ -14,11 +14,12 @@ set cpo&vim
 " ---------------------------------------------------------------------
 " Functions:
 function Escalt_console()
-  if &term !=# 'xterm-kitty'
-    for i in range(65, 90) + range(97, 122)
-      exe "set <M-".nr2char(i).">=\<Esc>".nr2char(i)
-    endfor
-  endif
+  " 一般来说, <M- 系列快捷键已经不需要额外的设置了
+  "if &term !=# 'xterm-kitty'
+  "  for i in range(65, 90) + range(97, 122)
+  "    exe "set <M-".nr2char(i).">=\<Esc>".nr2char(i)
+  "  endfor
+  "endif
   set ttimeoutlen=50
   if &term =~ 'xterm'
     set <F1>=OP
