@@ -647,7 +647,9 @@ endfunction
 
 function! myrc#OSCYank(str) abort
     call plug#load('vim-oscyank')
-    call OSCYank(a:str)
+    if exists('*OSCYank')
+        call OSCYank(a:str)
+    endif
 endfunction
 
 " clipboard yank
