@@ -68,6 +68,9 @@ if has('gui_macvim')
 elseif has('gui_vimr')
     " 解决终端颜色问题
     set termguicolors
+elseif &term == 'xterm-256color'
+    " kitty 终端下, 设置为这个值能兼容, alacritty 也可以
+    set term=screen-256color
 endif
 " 禁用菜单栏等，不放在 .gvimrc 以避免启动时晃动
 "set guioptions-=m
