@@ -49,6 +49,9 @@ local opts = {
       { section = 'startup' },
     },
   },
+  picker = {
+    enabled = true,
+  },
 }
 
 if false then
@@ -68,9 +71,10 @@ if false then
 end
 
 return {
-  'epheien/snacks.nvim',
+  'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  enabled = false,
   config = function()
     local notify = vim.notify
     require('snacks').setup(opts)
