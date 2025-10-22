@@ -37,6 +37,9 @@ return {
           end, opts)
         end,
       },
+      files = {
+        git_icons = false, -- 避免搜索文件前执行 git 操作影响性能
+      },
     }
     require('fzf-lua').setup(opts)
   end,
