@@ -19,3 +19,5 @@ rm -rf ~/opt/nvim-$kernel-$arch/
 tar -xf nvim-$kernel-$arch.tar.gz
 [ -L ~/bin/nvim ] && ln -sfv ~/opt/nvim-$kernel-$arch/bin/nvim ~/bin/
 rm -f nvim-$kernel-$arch.tar.gz
+
+# NOTE: macOS 系统下如果不能运行, 执行: xattr -d com.apple.quarantine ~/bin/nvim
