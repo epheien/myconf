@@ -268,6 +268,8 @@ local g_disableApps = {
   'WezTerm',
   'UTM',
   "Moonlight",
+  "Remote Desktop Manager",
+  "aSPICE Pro",
 }
 
 local g_disableApps_dict = {}
