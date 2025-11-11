@@ -11,6 +11,7 @@ local server_exts = {
   basedpyright = { 'python' },
   gopls = { 'go' },
   cmake = { 'cmake' },
+  rust_analyzer = { 'rust' },
 }
 
 local already_setup = {}
