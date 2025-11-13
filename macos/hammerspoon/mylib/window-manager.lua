@@ -49,7 +49,7 @@ function M.resize_full()
     return
   end
 
-  local left_padding = 35
+  local left_padding = 34
 
   -- 获取当前屏幕
   local screen = win:screen()
