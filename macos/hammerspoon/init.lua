@@ -1,3 +1,5 @@
+---@diagnostic disable: unused-local
+
 -- NOTE: hs.hotkey.bind() 的参数需要仔细看文档
 --  - 如果 (mods, key, func), 那么 pressedfn, releasefn, repeatfn 都是 func, 可能会出现奇怪的问题
 --  - 如果 (mods, key, nil, func), 那么 releasefn 为 func, 另外2个是 nil
@@ -11,37 +13,6 @@ hs.hotkey.bind({"cmd", "ctrl"}, "i", nil, function()
   hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
   hs.alert.show(hs.keycodes.currentSourceID())
 end)
-
-local g_last_clipboard_content = ''
-local g_clipboard_history_write_ts = 0
-local g_clipboard_history_file = io.open(os.getenv('HOME') .. '/.clipboard_history', 'a')
-clipboard_watcher = hs.pasteboard.watcher.new(function(str)
-  --print('clipboard changed: ', string.format('"%s"', str))
-  if str == 'toEnIM()' then
-    toEnIM()
-    -- 恢复为之前的内容; 会再次进入这个函数
-    hs.pasteboard.setContents(g_last_clipboard_content)
-    return
-  end
-  -- 不再实现剪切板历史, 使用 Alfred 的剪切板历史即可
-  --if str ~= g_last_clipboard_content and str then
-  --  -- 最多保存 1000 个字符, 避免文件膨胀过快
-  --  g_clipboard_history_file:write(string.sub(str, 1, 1000))
-  --  g_clipboard_history_file:write("\n")
-  --  g_clipboard_history_write_ts = hs.timer.absoluteTime()
-  --end
-  g_last_clipboard_content = str
-end)
-clipboard_watcher:start()
-
---local g_clipboard_history_flush_ts = 0
---clipboard_history_flush_timer = hs.timer.new(10, function()
---  if g_clipboard_history_write_ts > g_clipboard_history_flush_ts then
---    g_clipboard_history_file:flush()
---    g_clipboard_history_flush_ts = hs.timer.absoluteTime()
---  end
---end)
---clipboard_history_flush_timer:start()
 
 -- hook cmd-w 快捷键的 app
 local hookApps = {
@@ -62,7 +33,7 @@ end
 local wf = hs.window.filter.new()
 local previousWindow = nil
 local focusedWindow = nil
-function updateWindow(win, title)
+local function updateWindow(win, title)
   -- 将当前窗口保存为上一个窗口
   if win ~= focusedWindow then
     previousWindow = focusedWindow
@@ -122,7 +93,7 @@ end
 
 -- 需要使用这种按键方式才能避免各种副作用
 -- NOTE: 选择“输入法”菜单中的下一个输入法 这个功能在删除再添加输入法后可恢复
-function toggleInputMethod()
+local function toggleInputMethod()
   --hs.eventtap.keyStroke({}, hs.keycodes.map['f17'])
   --hs.eventtap.keyStroke({"ctrl"}, "space")
   if true then
@@ -155,7 +126,7 @@ local g_major = 10000 -- 此版本号之后 currentSourceID() 没有任何 BUG
 local g_zh_im_name = 'com.tencent.inputmethod.wetype.pinyin'
 -- 切换到英文输入法
 -- force: 表示使用 currentSourceID() 函数切换
-function toEnIM(force)
+local function toEnIM(force)
   local now = hs.timer.absoluteTime()
   local diff = now - g_lastToEn
   --print("F18", string.format('%f, %f', g_lastToEn, now))
@@ -178,7 +149,7 @@ function toEnIM(force)
 end
 
 -- 切换到中文输入法
-function toZhIM()
+local function toZhIM()
   local now = hs.timer.absoluteTime()
   local diff = now - g_lastToZh
   --print("F19", string.format('%f, %f', g_lastToZh, now))
@@ -201,8 +172,8 @@ function toZhIM()
   --hs.alert.show(hs.keycodes.currentSourceID())
 end
 
-g_keyBinds = {}
-function enableKeyBind()
+local g_keyBinds = {}
+local function enableKeyBind()
   local function keyCode(key, modifiers)
     modifiers = modifiers or {}
 
@@ -236,7 +207,7 @@ function enableKeyBind()
   end
 end
 
-function disableKeybind()
+local function disableKeybind()
   for _, val in pairs(g_keyBinds) do
     val:disable()
   end
@@ -277,14 +248,14 @@ for _, app in pairs(g_disableApps) do
   g_disableApps_dict[app] = true
 end
 
-function isInDisableApp()
+local function isInDisableApp()
   local win = hs.window.focusedWindow()
   local appName = win:application():name()
   return g_disableApps_dict[appName] ~= nil
 end
 
-g_watchers = {}
-function initDisableForApp()
+local g_watchers = {}
+local function initDisableForApp()
   local watcher = hs.application.watcher.new(function(applicationName, eventType, application)
     if eventType == hs.application.watcher.activated then
       if g_disableApps_dict[applicationName] ~= nil then
@@ -317,15 +288,17 @@ hs.hotkey.bind({}, hs.keycodes.map["f19"], nil, function()
   toZhIM()
 end)
 
+-- 导出 toEnIM
 hs.urlevent.bind('toEnIM', function(eventName, params)
   toEnIM()
 end)
 
+-- 导出 toZhIM
 hs.urlevent.bind('toZhIM', function(eventName, params)
   toZhIM()
 end)
 
-function resizeWindow(op, width, height)
+local function resizeWindow(op, width, height)
   local win = hs.window.focusedWindow()
   local f = win:frame()
 
@@ -387,6 +360,19 @@ hs.urlevent.bind('openNewWindow', function(eventName, params)
     openNewWindow(params.app)
   end
 end)
+
+-- @ 支持 ssh 环境下的 nvim 通过 osc52 剪切板触发切换输入法
+local g_last_clipboard_content = ''
+hs.pasteboard.watcher.new(function(str)
+  --print('clipboard changed: ', string.format('"%s"', str))
+  if str == 'toEnIM()' then
+    toEnIM()
+    -- 恢复为之前的内容; 会再次进入这个函数
+    hs.pasteboard.setContents(g_last_clipboard_content)
+    return
+  end
+  g_last_clipboard_content = str
+end):start()
 
 require('mylib/window-manager').setup()
 
