@@ -367,6 +367,27 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", nil, function()
   hs.reload()
 end)
 
+local function openNewWindow(appName)
+  local app = hs.application.get(appName)
+
+  -- 如果应用未运行，先启动
+  if not app then
+    hs.application.launchOrFocus(appName)
+  else
+    app:activate()
+    --hs.timer.usleep(100000)
+    -- 尝试使用快捷键
+    hs.eventtap.keyStroke({ 'cmd' }, 'n')
+  end
+end
+
+-- 导出 openNewWindow
+hs.urlevent.bind('openNewWindow', function(eventName, params)
+  if params.app then
+    openNewWindow(params.app)
+  end
+end)
+
 require('mylib/window-manager').setup()
 
 hs.alert.show("Config of Hammerspoon loaded")
