@@ -291,7 +291,8 @@ M.pasteboardWatcher = hs.pasteboard.watcher
 M.modules = {}
 require('mylib/window-manager').setup()
 M.modules['sidebar-fixer'] = require('mylib/sidebar-fixer')
-M.modules['window-fixer'] = require('mylib/window-fixer')
+-- NOTE: 处理还是不完美, 很多不能处理的情况, 不如不改算了
+--M.modules['window-fixer'] = require('mylib/window-fixer')
 
 -- 保持住这个脚本的对象避免被垃圾回收
 MyConf = M
