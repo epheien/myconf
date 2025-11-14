@@ -42,4 +42,60 @@ M.windowCreatedFilter:subscribe(hs.window.filter.windowCreated, function(window,
   end
 end)
 
+-- 完整的Sidebar右键菜单检测
+local sidebarPID = nil
+
+-- 获取Sidebar的PID
+function updateSidebarPID()
+  local sidebar = hs.application.get('Sidebar')
+  if sidebar then
+    sidebarPID = sidebar:pid()
+    print('found PID of Sidebar.app: ' .. sidebarPID)
+  end
+end
+
+-- 初始化
+updateSidebarPID()
+
+-- 监听应用启动
+hs.application.watcher
+  .new(function(appName, eventType, appObject)
+    if appName == 'Sidebar' then
+      updateSidebarPID()
+    end
+  end)
+  :start()
+
+M.contextMenuWatcher = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown }, function(event)
+  if not sidebarPID then
+    return false
+  end
+
+  local pos = hs.mouse.absolutePosition()
+  local element = hs.axuielement.systemElementAtPosition(pos.x, pos.y)
+  if not element then
+    return false
+  end
+
+  -- 检查是否属于Sidebar进程
+  if sidebarPID ~= element:pid() then
+    return false
+  end
+
+  local role = element:attributeValue('AXRole')
+  -- AXGroup 表示点击图标, AXButton 表示点击菜单
+  if role == 'AXButton' then
+    -- 大概率点击了图标右键菜单
+    local desc = element:attributeValue('AXDescription') -- 菜单标题
+    if desc and desc ~= '' then
+      element:performAction('AXPress')
+      return true
+    end
+  end
+
+  return false
+end)
+
+M.contextMenuWatcher:start()
+
 return M
