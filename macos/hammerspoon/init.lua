@@ -12,10 +12,11 @@ hs.hotkey.bind({ 'cmd', 'ctrl' }, 'i', nil, function()
   local appName = win:application():name()
   local bundleID = win:application():bundleID()
   local f = win:frame()
-  local delay = 10
-  hs.alert.show(appName, nil, nil, delay)
-  hs.alert.show(string.format('%s %s', bundleID, f), nil, nil, delay)
-  hs.alert.show(hs.keycodes.currentSourceID())
+  local seconds = 10
+  local screen = hs.screen.mainScreen()
+  hs.alert.show(string.format('%s (%s)', appName, bundleID), {}, screen, seconds)
+  hs.alert.show(string.format('[%s, %s, %s, %s]', f.x, f.y, f.w, f.h), {}, screen, seconds)
+  hs.alert.show(hs.keycodes.currentSourceID(), {}, screen, seconds)
 end)
 
 -- 需要使用这种按键方式才能避免各种副作用
