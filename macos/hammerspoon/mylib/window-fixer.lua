@@ -74,4 +74,44 @@ end)
 
 M.winButtonInterceptor:start()
 
+-- 拦截 Cmd+M 和 Cmd+W 快捷键
+minimizeKeyWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
+  local flags = event:getFlags()
+  local keyCode = event:getKeyCode()
+
+  if
+    flags.cmd
+    and not flags.shift
+    and not flags.alt
+    and not flags.ctrl
+    and (keyCode == 46 or keyCode == 13) -- hs.keycodes.map.m => 46, hs.keycodes.map.w => 13
+  then
+    local window = hs.window.focusedWindow()
+    if not window then
+      return false
+    end
+    -- 某些特殊窗口暂时无法处理, 例如 Hammerspoon Console
+    if hs.window.orderedWindows()[1] ~= window then
+      return false
+    end
+    local nextWindow = hs.window.orderedWindows()[2]
+    if not nextWindow then
+      return false
+    end
+
+    nextWindow:focus()
+    if keyCode == 46 then
+      window:minimize()
+    else
+      window:close()
+    end
+
+    return true
+  end
+
+  return false
+end)
+
+minimizeKeyWatcher:start()
+
 return M
