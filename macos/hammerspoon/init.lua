@@ -100,7 +100,7 @@ local function toZhIM()
 end
 
 M.keyBinds = {}
-local function enableKeyBind()
+local function initKeyBinds()
   local function keyCode(key, modifiers)
     return function()
       hs.eventtap.event.newKeyEvent(modifiers or {}, string.lower(key), true):post()
@@ -108,39 +108,29 @@ local function enableKeyBind()
       hs.eventtap.event.newKeyEvent(modifiers or {}, string.lower(key), false):post()
     end
   end
-  if #M.keyBinds > 0 then
-    for _, val in pairs(M.keyBinds) do
-      val:enable()
-    end
-  else
-    -- vim
-    M.keyBinds['h'] = hs.hotkey.bind({ 'ctrl' }, 'h', keyCode('left'), nil, keyCode('left'))
-    M.keyBinds['j'] = hs.hotkey.bind({ 'ctrl' }, 'j', keyCode('down'), nil, keyCode('down'))
-    M.keyBinds['k'] = hs.hotkey.bind({ 'ctrl' }, 'k', keyCode('up'), nil, keyCode('up'))
-    M.keyBinds['l'] = hs.hotkey.bind({ 'ctrl' }, 'l', keyCode('right'), nil, keyCode('right'))
+  -- vim
+  M.keyBinds['h'] = hs.hotkey.new({ 'ctrl' }, 'h', keyCode('left'), nil, keyCode('left'))
+  M.keyBinds['j'] = hs.hotkey.new({ 'ctrl' }, 'j', keyCode('down'), nil, keyCode('down'))
+  M.keyBinds['k'] = hs.hotkey.new({ 'ctrl' }, 'k', keyCode('up'), nil, keyCode('up'))
+  M.keyBinds['l'] = hs.hotkey.new({ 'ctrl' }, 'l', keyCode('right'), nil, keyCode('right'))
 
-    -- emacs
-    M.keyBinds['b'] = hs.hotkey.bind({ 'ctrl' }, 'b', keyCode('left'), nil, keyCode('left'))
-    M.keyBinds['n'] = hs.hotkey.bind({ 'ctrl' }, 'n', keyCode('down'), nil, keyCode('down'))
-    M.keyBinds['p'] = hs.hotkey.bind({ 'ctrl' }, 'p', keyCode('up'), nil, keyCode('up'))
-    M.keyBinds['f'] = hs.hotkey.bind({ 'ctrl' }, 'f', keyCode('right'), nil, keyCode('right'))
+  -- emacs
+  M.keyBinds['b'] = hs.hotkey.new({ 'ctrl' }, 'b', keyCode('left'), nil, keyCode('left'))
+  M.keyBinds['n'] = hs.hotkey.new({ 'ctrl' }, 'n', keyCode('down'), nil, keyCode('down'))
+  M.keyBinds['p'] = hs.hotkey.new({ 'ctrl' }, 'p', keyCode('up'), nil, keyCode('up'))
+  M.keyBinds['f'] = hs.hotkey.new({ 'ctrl' }, 'f', keyCode('right'), nil, keyCode('right'))
 
-    --M.keyBinds['a'] = hs.hotkey.bind({'ctrl'}, 'a', keyCode('home'), nil, keyCode('home'))
-    --M.keyBinds['e'] = hs.hotkey.bind({'ctrl'}, 'e', keyCode('end'),   nil, keyCode('end'))
-    M.keyBinds['w'] = hs.hotkey.bind(
-      { 'ctrl' },
-      'w',
-      keyCode('delete', { 'alt' }),
-      nil,
-      keyCode('delete', { 'alt' })
-    )
-    M.keyBinds['u'] = hs.hotkey.bind(
-      { 'ctrl' },
-      'u',
-      keyCode('delete', { 'cmd' }),
-      nil,
-      keyCode('delete', { 'cmd' })
-    )
+  --M.keyBinds['a'] = hs.hotkey.new({'ctrl'}, 'a', keyCode('home'), nil, keyCode('home'))
+  --M.keyBinds['e'] = hs.hotkey.new({'ctrl'}, 'e', keyCode('end'),   nil, keyCode('end'))
+  M.keyBinds['w'] =
+    hs.hotkey.new({ 'ctrl' }, 'w', keyCode('delete', { 'alt' }), nil, keyCode('delete', { 'alt' }))
+  M.keyBinds['u'] =
+    hs.hotkey.new({ 'ctrl' }, 'u', keyCode('delete', { 'cmd' }), nil, keyCode('delete', { 'cmd' }))
+end
+
+local function enableKeyBind()
+  for _, val in pairs(M.keyBinds) do
+    val:enable()
   end
 end
 
@@ -185,7 +175,7 @@ for _, app in pairs(keyBindExcludeApps) do
   M.keyBindExcludeAppsDict[app] = true
 end
 
-local function initKeybindWatcher()
+local function initKeyBindWatcher()
   local watcher = hs.application.watcher.new(function(applicationName, eventType, application)
     if eventType == hs.application.watcher.activated then
       if M.keyBindExcludeAppsDict[applicationName] then
@@ -205,7 +195,8 @@ end
 
 -- 仅打印 warning 以上的 hotkey 日志
 hs.hotkey.setLogLevel(2)
-M.keyBindsWatcher = initKeybindWatcher()
+initKeyBinds()
+M.keyBindsWatcher = initKeyBindWatcher()
 enableKeyBind()
 
 -- 切换到英文输入法
