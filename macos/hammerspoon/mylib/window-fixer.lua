@@ -60,7 +60,7 @@ M.winButtonInterceptor = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown
     end
 
     nextWindow:focus()
-    if Subrole == 'AXMinimizeButton' then
+    if subrole == 'AXMinimizeButton' then
       window:minimize()
     else
       window:close()
