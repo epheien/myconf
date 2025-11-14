@@ -12,7 +12,7 @@ hs.hotkey.bind({ 'cmd', 'ctrl' }, 'i', nil, function()
   local appName = win:application():name()
   local bundleID = win:application():bundleID()
   local f = win:frame()
-  local seconds = 10
+  local seconds = 5
   local screen = hs.screen.mainScreen()
   hs.alert.show(string.format('%s (%s)', appName, bundleID), {}, screen, seconds)
   hs.alert.show(string.format('[%s, %s, %s, %s]', f.x, f.y, f.w, f.h), {}, screen, seconds)
