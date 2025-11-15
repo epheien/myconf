@@ -8,17 +8,17 @@ local function getOrderedWindows()
     local result = {}
     local allWindows = hs.window.allWindows()
     for idx, win in ipairs(windows) do
-      if idx > 2 then
-        break -- 仅需要 2 个条目即可
-      end
       local found = false
       for _, hsWin in ipairs(allWindows) do
         if win.windowNumber == hsWin:id() then
+          found = true
           -- 排除一些应用的特殊窗口, 例如 Sidebar 的 Settings 窗口无法正常工作
           -- Sidebar 的 Settings 窗口很奇怪, 聚焦后再调用 window:minimize() 会失效
-          if hsWin:application():name() ~= 'Sidebar' then
+          local appName = hsWin:application():name()
+          if appName == 'Sidebar' then
+            -- ignore
+          else
             table.insert(result, hsWin)
-            found = true
             break
           end
         end
@@ -27,12 +27,17 @@ local function getOrderedWindows()
         hs.alert.show(string.format('window %s not found', win.windowNumber))
         print(string.format('window not found: %s', hs.json.encode(win)))
       end
+      -- 仅需要 2 个条目即可
+      if #result == 2 then
+        break
+      end
     end
     --print(string.format('result: %s', #result))
     return result
   else
-    hs.alert.show('**NOTE:** window-fixer fallback to hs.window.orderedWindows()')
-    return hs.window.orderedWindows()
+    print('**NOTE:** window-fixer fallback to hs.window.orderedWindows()')
+    --return hs.window.orderedWindows()
+    return {}
   end
 end
 
@@ -88,21 +93,12 @@ M.winButtonInterceptor = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown
       return false
     end
 
-    --local app = window:application()
-    --local appName = app:name()
-
     local nextWindow = orderedWindows[2]
     if not nextWindow then
       return false
     end
 
-    print(
-      string.format(
-        '拦截并修改 %s 的最小化操作, 激活窗口为 %s',
-        window:title(),
-        nextWindow:title()
-      )
-    )
+    --print(string.format('拦截修改 %s 的最小化, 激活窗口为 %s', window:title(), nextWindow:title()))
 
     nextWindow:focus()
     if subrole == 'AXMinimizeButton' then
