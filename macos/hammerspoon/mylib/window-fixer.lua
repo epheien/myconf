@@ -10,13 +10,13 @@ M.windowMinOrClsoeHook = function(window, isMinimized, hotkey)
     return false
   end
 
-  -- FIXME: 不知为何, 无法监控到微信窗口的新建和关闭事件, 只能用这个方法 hack
-  if not isMinimized and window:application():name() == '微信' then
-    if #window:application():allWindows() == 1 and window:title() == '微信' then
-      hs.timer.doAfter(0.08, function() window:application():hide() end)
-      return true
-    end
-  end
+  -- NOTE: 不知为何, 无法监控到微信窗口的新建和关闭事件, 只能用这个方法 hack; 1.0.0 貌似无此问题
+  --if not isMinimized and window:application():name() == '微信' then
+  --  if #window:application():allWindows() == 1 and window:title() == '微信' then
+  --    hs.timer.doAfter(0.08, function() window:application():hide() end)
+  --    return true
+  --  end
+  --end
 
   -- 暂时不处理关闭事件
   if not isMinimized then
