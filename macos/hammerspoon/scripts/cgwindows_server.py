@@ -21,7 +21,7 @@ class WindowInfo:
         alpha = window.get("kCGWindowAlpha", 1.0)
 
         # 无效的窗口拥有者
-        invalid_owners = ["Window Server", "程序坞", "Dock"]
+        invalid_owners = ["Window Server", "程序坞", "Dock", "通知中心"]
 
         # 层级范围
         valid_layer = -10 < layer < 1000
@@ -44,7 +44,7 @@ class WindowInfo:
         return valid_layer and valid_owner and valid_size and valid_alpha
 
     @staticmethod
-    def get_all_windows():
+    def get_all_windows(check_valid=True):
         """获取所有有效窗口(包括所有层级)"""
         window_list = Quartz.CGWindowListCopyWindowInfo(
             Quartz.kCGWindowListOptionOnScreenOnly, Quartz.kCGNullWindowID
@@ -52,7 +52,7 @@ class WindowInfo:
 
         result = []
         for window in window_list:
-            if WindowInfo.is_valid_window(window):
+            if not check_valid or WindowInfo.is_valid_window(window):
                 bounds = window.get("kCGWindowBounds", {})
 
                 result.append(
@@ -84,6 +84,25 @@ class WindowServerHandler(BaseHTTPRequestHandler):
         if self.path == "/orderedWindows":
             try:
                 windows = WindowInfo.get_all_windows()
+
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+
+                response = json.dumps(windows, ensure_ascii=False)
+                self.wfile.write(response.encode("utf-8"))
+
+            except Exception as e:
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+
+                error = {"error": str(e)}
+                self.wfile.write(json.dumps(error).encode("utf-8"))
+
+        elif self.path == "/allWindows":
+            try:
+                windows = WindowInfo.get_all_windows(check_valid=False)
 
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -136,6 +155,7 @@ def run_server(port=7749):
     print(f"CGWindow HTTP Server started on http://127.0.0.1:{port}")
     print(f"Available endpoints:")
     print(f"  - http://127.0.0.1:{port}/orderedWindows")
+    print(f"  - http://127.0.0.1:{port}/allWindows")
     print(f"  - http://127.0.0.1:{port}/ping")
     print(f"  - http://127.0.0.1:{port}/shutdown")
     print(f"\nPress Ctrl+C to stop")
