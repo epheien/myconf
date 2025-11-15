@@ -15,7 +15,12 @@ hs.hotkey.bind({ 'cmd', 'ctrl' }, 'i', nil, function()
   local seconds = 5
   local screen = hs.screen.mainScreen()
   hs.alert.show(string.format('%s (%s)', appName, bundleID), {}, screen, seconds)
-  hs.alert.show(string.format('[%s, %s, %s, %s]', f.x, f.y, f.w, f.h), {}, screen, seconds)
+  hs.alert.show(
+    string.format('%s [%s, %s, %s, %s]', win:title(), f.x, f.y, f.w, f.h),
+    {},
+    screen,
+    seconds
+  )
   hs.alert.show(hs.keycodes.currentSourceID(), {}, screen, seconds)
 end)
 
