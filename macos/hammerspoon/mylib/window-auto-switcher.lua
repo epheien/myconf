@@ -5,7 +5,7 @@ local WindowAutoSwitcherV2 = {
   isProcessing = false,
   config = {
     enabled = true,
-    delay = 0.1, -- 检查延迟(秒)
+    delay = 0.05, -- 检查延迟(秒)
     excludeApps = { -- 排除的应用
       ['Sidebar'] = true,
       ['微信输入法'] = true,
@@ -162,7 +162,7 @@ function WindowAutoSwitcherV2.start()
 
   WindowAutoSwitcherV2.filter:subscribe({
     hs.window.filter.windowDestroyed,
-    --hs.window.filter.windowMinimized,
+    hs.window.filter.windowMinimized,
   }, WindowAutoSwitcherV2.handleWindowEvent)
 
   WindowAutoSwitcherV2.config.enabled = true
