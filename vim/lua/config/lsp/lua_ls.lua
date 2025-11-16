@@ -50,6 +50,13 @@ return {
     })
   end,
   settings = {
-    Lua = {},
+    Lua = {
+      diagnostics = {
+        -- 下划线前缀变量不提示未使用变量
+        unusedLocalExclude = {
+          '_*',
+        },
+      },
+    },
   },
 }
