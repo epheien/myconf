@@ -57,4 +57,26 @@ function M.getWindowFromElement(element)
   end
 end
 
+-- log(msg)
+-- log(fmt, a, b, c)
+function M.log(...)
+  local args = { ... }
+  if #args == 0 then
+    return
+  elseif #args == 1 then
+    -- 单个参数,直接打印
+    print(tostring(args[1]))
+  else
+    -- 多个参数,第一个作为格式字符串
+    local fmt = tostring(args[1])
+    local params = {}
+
+    for i = 2, #args do
+      table.insert(params, args[i])
+    end
+
+    print(string.format(fmt, table.unpack(params)))
+  end
+end
+
 return M

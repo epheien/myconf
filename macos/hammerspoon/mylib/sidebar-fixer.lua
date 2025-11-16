@@ -1,6 +1,28 @@
 -- 修正 Sidebar.app 的一些问题
 local M = {}
 
+M.config = {
+  debug = false,
+}
+
+-- 调试输出
+function M.log(...)
+  if M.config.debug then
+    require('mylib.utils').log(...)
+  end
+end
+
+function M.toggleDebug()
+  M.config.debug = not M.config.debug
+  hs.alert.show(
+    string.format(
+      '%s 调试模式: %s',
+      debug.getinfo(1, 'S').source,
+      M.config.debug and '开启' or '关闭'
+    )
+  )
+end
+
 -- 仅处理 macOS 13
 if hs.host.operatingSystemVersion().major ~= 13 then
   return M
@@ -36,7 +58,7 @@ end
 
 -- 监听窗口创建事件
 M.windowFilter:subscribe(hs.window.filter.windowCreated, function(window, appName, eventName)
-  --print(string.format('新窗口创建(%s): %s (%s)', eventName, appName, window:title()))
+  M.log('新窗口创建(%s): %s (%s)', eventName, appName, window:title())
   if toFixAppsDict[appName] then
     --window:focus()
     hs.timer.doAfter(0.01, function() window:focus() end)
@@ -47,11 +69,11 @@ end)
 local sidebarPID = nil
 
 -- 获取Sidebar的PID
-function updateSidebarPID()
+local function updateSidebarPID()
   local sidebar = hs.application.get('Sidebar')
   if sidebar then
     sidebarPID = sidebar:pid()
-    print('found PID of Sidebar.app: ' .. sidebarPID)
+    M.log('found PID of Sidebar.app: ' .. sidebarPID)
   end
 end
 
