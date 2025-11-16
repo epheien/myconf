@@ -5,7 +5,7 @@ local getOrderedWindows = function()
 end
 local getWindowFromElement = require('mylib.utils').getWindowFromElement
 
-M.windowMinOrClsoeHook = function(window, isMinimized, hotkey)
+M.windowMinOrClsoeHook = function(window, isMinimized, _hotkey)
   if window ~= hs.window.focusedWindow() then
     return false
   end
@@ -48,7 +48,7 @@ M.windowMinOrClsoeHook = function(window, isMinimized, hotkey)
 end
 
 -- 拦截窗口关闭和最小化按钮, 模拟成 Windows 的切换逻辑
-M.winButtonInterceptor = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown }, function(event)
+M.winButtonInterceptor = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown }, function(_event)
   local pos = hs.mouse.absolutePosition()
   local element = hs.axuielement.systemElementAtPosition(pos.x, pos.y)
 
