@@ -1,7 +1,8 @@
 local M = {}
 
 local getOrderedWindows = function()
-  return require('mylib.utils').getOrderedWindows(false, { ['Sidebar'] = true })
+  --return require('mylib.utils').getOrderedWindows(false, { ['Sidebar'] = true })
+  return hs.window.orderedWindows()
 end
 local getWindowFromElement = require('mylib.utils').getWindowFromElement
 

@@ -297,7 +297,8 @@ M.modules = {}
 require('mylib/window-manager').setup()
 M.modules['sidebar-fixer'] = require('mylib/sidebar-fixer')
 -- NOTE: 处理还是不完美, 很多不能处理的情况
-M.modules['window-fixer'] = require('mylib/window-fixer')
+-- 由于影响了点击最小化以及快捷键最小化的操作体验, 所以暂时搁置
+--M.modules['window-fixer'] = require('mylib/window-fixer')
 M.modules['window-auto-switcher'] = require('mylib/window-auto-switcher')
 
 -- 保持住这个脚本的对象避免被垃圾回收
