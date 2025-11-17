@@ -2,7 +2,7 @@ local M = {}
 
 function M.getOrderedWindows(fallback, excludeApps)
   excludeApps = excludeApps or {}
-  local code, resp, _ = hs.http.get('http://127.0.0.1:7749/orderedWindows')
+  local code, resp, _ = hs.http.get('http://127.0.0.1:7749/orderedWindows') -- 22-35 ms
   if code == 200 then
     --print(resp)
     local windows = hs.json.decode(resp)
