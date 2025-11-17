@@ -60,8 +60,8 @@ end
 M.windowFilter:subscribe(hs.window.filter.windowCreated, function(window, appName, eventName)
   M.log('新窗口创建(%s): %s (%s)', eventName, appName, window:title())
   if toFixAppsDict[appName] then
-    --window:focus()
-    hs.timer.doAfter(0.01, function() window:focus() end)
+    window:focus()
+    --hs.timer.doAfter(0.01, function() window:focus() end)
   end
 end)
 
