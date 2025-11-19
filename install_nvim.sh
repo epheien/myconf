@@ -17,7 +17,7 @@ arch=$(uname -m)
 wget -c https://github.com/neovim/neovim/releases/latest/download/nvim-$kernel-$arch.tar.gz -O nvim-$kernel-$arch.tar.gz
 rm -rf ~/opt/nvim-$kernel-$arch/
 tar -xf nvim-$kernel-$arch.tar.gz
-[ -L ~/bin/nvim ] && ln -sfv ~/opt/nvim-$kernel-$arch/bin/nvim ~/bin/
+[ ! -e ~/bin/nvim -o -L ~/bin/nvim ] && ln -sfv ~/opt/nvim-$kernel-$arch/bin/nvim ~/bin/
 rm -f nvim-$kernel-$arch.tar.gz
 
 # NOTE: macOS 系统下如果不能运行, 执行: xattr -d com.apple.quarantine ~/bin/nvim
