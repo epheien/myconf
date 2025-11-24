@@ -14,7 +14,8 @@ if [ $(uname -s) != "Linux" ]; then
 fi
 arch=$(uname -m)
 
-wget -c https://github.com/neovim/neovim/releases/latest/download/nvim-$kernel-$arch.tar.gz -O nvim-$kernel-$arch.tar.gz
+#wget -c https://github.com/neovim/neovim/releases/latest/download/nvim-$kernel-$arch.tar.gz -O nvim-$kernel-$arch.tar.gz
+curl -L -C - -o nvim-$kernel-$arch.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-$kernel-$arch.tar.gz
 rm -rf ~/opt/nvim-$kernel-$arch/
 tar -xf nvim-$kernel-$arch.tar.gz
 [ ! -e ~/bin/nvim -o -L ~/bin/nvim ] && ln -sfv ~/opt/nvim-$kernel-$arch/bin/nvim ~/bin/
