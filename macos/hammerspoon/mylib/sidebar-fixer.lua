@@ -50,6 +50,10 @@ local toFixApps = {
   'Vmware Fusion',
   'Telegram',
   'Proxifier',
+  'IINA',
+  '预览',
+  'VMware Fusion',
+  '迅雷',
 }
 local toFixAppsDict = {}
 for _, name in ipairs(toFixApps) do
@@ -59,6 +63,7 @@ end
 -- 监听窗口创建事件
 M.windowFilter:subscribe(hs.window.filter.windowCreated, function(window, appName, eventName)
   M.log('新窗口创建(%s): %s (%s)', eventName, appName, window:title())
+  -- NOTE: 必须要使用白名单机制, 否则很多临时窗口无法判断
   if toFixAppsDict[appName] then
     window:focus()
     --hs.timer.doAfter(0.01, function() window:focus() end)
