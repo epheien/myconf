@@ -27,8 +27,11 @@ ln -s myconf/bash/inputrc ../.inputrc
 ln -s myconf/bash/myshrc ../.myshrc
 
 # hammerspoon
-mkdir -p ~/.hammerspoon
-ln -s ../myconf/macos/hammerspoon/init.lua ../.hammerspoon/
+[ ! -e ~/.hammerspoon ] && ln -s myconf/macos/hammerspoon ~/.hammerspoon
+# alacritty
+[ ! -e ~/.config/alacritty ] && ln -s ~/myconf/macos/config/alacritty ~/.config/
+# kitty
+[ ! -e ~/.config/kitty ] && ln -s ~/myconf/macos/config/kitty ~/.config/
 
 target=~/.bashrc
 if [ "$SHELL" == "/bin/zsh" ]; then
