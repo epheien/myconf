@@ -22,8 +22,6 @@ if [ -n "$ZSH_VERSION" ]; then
     fi
     # enable color support of ls and also add handy aliases
     alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -145,7 +143,7 @@ function node()
 }
 
 unset -f node
-DEFAULT_NODE_VERSION=18.16.1
+DEFAULT_NODE_VERSION=22.20.0
 # Ensure we have a default node version in our PATH at startup
 if [ -d "$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin" ]; then
     PATH="$HOME/.nvm/versions/node/v$DEFAULT_NODE_VERSION/bin:$PATH"
