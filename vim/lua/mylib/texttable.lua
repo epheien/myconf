@@ -286,7 +286,7 @@ end
 ---@field descending boolean
 
 ---@class texttable.Opts
----@field filters string[]
+---@field filters string[] 隐藏的表格, title 作为标识
 ---@field views table<string, texttable.Opts.View>
 
 ---render status file

@@ -48,8 +48,12 @@ function M.refresh_status_table(winid, tbl, interval)
   local timer = vim.uv.new_timer() ---@diagnostic disable-line
   timer:start(0, interval, function()
     vim.schedule(function()
-      local t = type(tbl) == 'function' and tbl() or tbl --[[@as texttable.Table]]
-      require('mylib.texttable').buffer_render_status(bufnr, t)
+      local t = tbl --[[@as texttable.Table]]
+      local opts = nil
+      if type(tbl) == 'function' then
+        t, opts = tbl()
+      end
+      require('mylib.texttable').buffer_render_status(bufnr, t, opts)
     end)
   end)
   M.timers[bufnr] = timer
