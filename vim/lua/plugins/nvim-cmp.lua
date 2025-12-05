@@ -8,6 +8,7 @@ return {
   {
     --'hrsh7th/nvim-cmp',
     'epheien/nvim-cmp', -- 使用自己的版本
+    enabled = not vim.g.nocmp, -- nocmp 控制 nvim-cmp 是否启用, 怀疑 nvim-cmp 的 watcher 容易导致内存泄露
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'onsails/lspkind.nvim',
