@@ -54,6 +54,8 @@ local toFixApps = {
   '预览',
   'VMware Fusion',
   '迅雷',
+  'Pages 文稿',
+  '文本编辑',
 }
 local toFixAppsDict = {}
 for _, name in ipairs(toFixApps) do
