@@ -224,6 +224,10 @@ local opts = {
       -- 影响了 cmdline 补全的宽度, 未想到好的解决办法, 暂时关掉
       --maxwidth = 60, -- Linux 系统下, 函数参数列表放到了 menu 项
     },
+    documentation = {
+      border = 'single',
+      winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel',
+    },
   },
   formatting = {
     format = lspkind.cmp_format(lspkind_opts),
