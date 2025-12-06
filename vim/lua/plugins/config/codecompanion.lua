@@ -182,3 +182,5 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 require('codecompanion').setup(opts)
+-- 保存/读取命令的实现 CodeCompanionSave/CodeCompanionLoad
+require('plugins.config.codecompanion-save')
