@@ -1,5 +1,6 @@
 return {
   'saghen/blink.cmp',
+  enabled = false,
   version = '*',
   dependencies = { 'rafamadriz/friendly-snippets', 'epheien/nvim-cmp' },
   cmd = 'BlinkEnable',

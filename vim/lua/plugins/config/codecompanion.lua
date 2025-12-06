@@ -7,17 +7,18 @@ local constants = {
 }
 
 local opts = {
+  ignore_warnings = true,
   -- refer to: https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/config.lua
   adapters = {
     http = {
       ollama = function()
         return require('codecompanion.adapters').extend('ollama', {
           env = {
-            url = 'http://pve:1434',
+            url = 'http://10.74.121.244:11434',
           },
           schema = {
             model = {
-              default = 'qwen3-coder:30b', -- 'deepseek-r1:32b'
+              default = 'hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:UD-Q4_K_XL',
             },
           },
           parameters = {
@@ -26,13 +27,13 @@ local opts = {
         })
       end,
       openai_compatible = function()
-        return require("codecompanion.adapters").extend("openai_compatible", {
+        return require('codecompanion.adapters').extend('openai_compatible', {
           env = {
-            url = 'http://pve:1434',
+            url = 'http://10.74.121.244:8080',
           },
           schema = {
             model = {
-              default = "qwen3-coder:30b",
+              default = 'gpt-oss-120b',
             },
           },
         })
@@ -41,9 +42,19 @@ local opts = {
   },
   strategies = {
     -- NOTE: Change the adapter as required
-    chat = { adapter = 'openai_compatible' },
-    inline = { adapter = 'openai_compatible' },
-    cmd = { adapter = 'openai_compatible' },
+    chat = {
+      adapter = 'ollama',
+      opts = {
+        completion_provider = 'cmp', -- 使用 nvim-cmp
+      },
+      keymaps = {
+        send = {
+          modes = { n = { '<C-s>' }, i = {} },
+        },
+      },
+    },
+    inline = { adapter = 'ollama' },
+    cmd = { adapter = 'ollama' },
   },
   display = {
     action_palette = {
@@ -57,7 +68,7 @@ local opts = {
     },
   },
   opts = {
-    language = "Chinese",
+    language = 'Chinese',
   },
   prompt_library = {
     ['Explain'] = {
@@ -162,6 +173,12 @@ local opts = {
 -- 只要插件执行了 vim.treesitter.language.register("markdown", "codecompanion") 就可以直接启用
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'codecompanion',
-  callback = function() vim.treesitter.start() end,
+  callback = function()
+    vim.treesitter.start()
+    vim.keymap.set('i', '<C-s>', function()
+      vim.cmd('stopinsert')
+      vim.cmd([[call feedkeys("\<C-s>")]])
+    end, { buffer = true, desc = 'Send message' })
+  end,
 })
 require('codecompanion').setup(opts)

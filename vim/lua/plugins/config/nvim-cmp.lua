@@ -298,6 +298,7 @@ local opts = {
     },
     { name = 'path' },
     { name = 'luasnip' },
+    { name = 'codecompanion' },
     --{ name = 'vsnip' },
     --{ name = 'snippets' },
   }),
