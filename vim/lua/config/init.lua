@@ -1,3 +1,6 @@
+-- 实例 ID, 某些插件需要使用
+vim.g.vim_instance_id = vim.fn.localtime() .. '-' .. vim.fn.getpid()
+
 -- 这些变量可通过 nvim --cmd "let ${var} = ${val}" 启动来提前设置
 if vim.g.enable_noice == nil then
   vim.g.enable_noice = false -- 默认禁用, 因为最终是简化所有的插件使用, 太复杂的插件维护成本高

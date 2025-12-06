@@ -169,10 +169,16 @@ local opts = {
       },
     },
   },
+  extensions = {
+    history = {
+      enabled = true,
+    },
+  },
 }
+local augroup = vim.api.nvim_create_augroup('MyCodeCompAuGroup', {})
 -- 只要插件执行了 vim.treesitter.language.register("markdown", "codecompanion") 就可以直接启用
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'codecompanion',
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'CodeCompanionChatCreated',
   callback = function()
     vim.treesitter.start()
     vim.keymap.set('i', '<C-s>', function()
@@ -181,6 +187,15 @@ vim.api.nvim_create_autocmd('FileType', {
     end, { buffer = true, desc = 'Send message' })
   end,
 })
+-- 由于有 codecompanion-history 了, 这个实现暂时可不需要
+--vim.api.nvim_create_autocmd('User', {
+--  pattern = 'CodeCompanion*Finished',
+--  group = augroup,
+--  callback = function()
+--    local bufid = vim.api.nvim_get_current_buf()
+--    vim.cmd(string.format('CodeCompanionSave %s %s', vim.g.vim_instance_id, vim.fn.bufname(bufid)))
+--  end,
+--})
 require('codecompanion').setup(opts)
 -- 保存/读取命令的实现 CodeCompanionSave/CodeCompanionLoad
 require('plugins.config.codecompanion-save')
