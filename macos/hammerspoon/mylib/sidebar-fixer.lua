@@ -56,6 +56,7 @@ local toFixApps = {
   '迅雷',
   'Pages 文稿',
   '文本编辑',
+  '活动监视器',
 }
 local toFixAppsDict = {}
 for _, name in ipairs(toFixApps) do
