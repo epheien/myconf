@@ -43,6 +43,10 @@ vim.api.nvim_create_user_command('CleanSpaces', function()
   vim.cmd([[silent! %s/\s\+$//g | noh | normal! ``]])
 end, { nargs = 0 })
 
+vim.api.nvim_create_user_command('FixNullChars', function()
+  vim.cmd([=[silent! %s/\%x00/\r/g]=])
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command('CsFind', function(args)
   vim.call('myrc#CscopeFind', args.args)
 end, { nargs = '+', complete = 'file' })
