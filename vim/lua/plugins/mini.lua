@@ -69,8 +69,8 @@ return {
         signs = { add = '┃', change = '┃', delete = '_' },
       },
       mappings = {
-        goto_prev = '[c',
-        goto_next = ']c',
+        goto_prev = '[h', -- h for hunk
+        goto_next = ']h',
       },
     },
   },
