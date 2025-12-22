@@ -3,9 +3,12 @@ local vimrc_group = vim.api.nvim_create_augroup('vimrc', {})
 -- smartim by hammerspoon
 if vim.fn.has('mac') == 1 then
   vim.api.nvim_create_augroup('smartim', {})
-  vim.api.nvim_create_autocmd({ 'VimEnter', 'VimLeavePre', 'InsertLeave', 'FocusGained' }, {
-    callback = function() vim.system({ 'open', '-g', 'hammerspoon://toEnIM' }) end,
-  })
+  vim.api.nvim_create_autocmd(
+    { 'VimEnter', 'VimLeavePre', 'InsertLeave', 'FocusGained', 'TermLeave' },
+    {
+      callback = function() vim.system({ 'open', '-g', 'hammerspoon://toEnIM' }) end,
+    }
+  )
 end
 
 -- rfc 文件格式支持
