@@ -494,6 +494,8 @@ command -nargs=0 LogSetup call myrc#LogSetup()
 
 command -nargs=+ -complete=file RefreshStatusTables call myrc#RefreshStatusTables(<f-args>)
 
+command -nargs=0 FixNullChars silent! %s/\%x00/\r/g
+
 " user PATH
 if $PATH !~ expand('~/bin')
     let $PATH .= ':' . expand('~/bin')
