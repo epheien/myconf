@@ -1,8 +1,5 @@
 stty -ixon
 
-# set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-
 # 256color
 if [ -n "$TMUX" ]; then
     export TERM=screen-256color
@@ -185,5 +182,9 @@ function findn()
     find . -iname "*$1*"
     return $?
 }
+
+# ======================================
+# set PATH so it includes user's private bin directories
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # vi:set et sts=4 ft=sh:
