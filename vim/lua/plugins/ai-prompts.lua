@@ -9,7 +9,7 @@ return {
       custom_prompts = {
         {
           name = 'commit',
-          content = '把当前添加到git暂存的修改提交，撰写合适的提交信息。',
+          content = '把当前添加到git暂存的修改提交，撰写合适的提交信息，其他文件不要管。',
           description = '',
         },
       },
