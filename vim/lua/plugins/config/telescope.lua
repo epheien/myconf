@@ -68,6 +68,8 @@ local function setup_telescope()
   require('telescope').load_extension('undo')
   -- telescope 的 gtags 插件, 但是貌似不能正常工作, 待完善
   require('telescope').load_extension('gtags')
+  -- telescope 的 ai prompts 插件
+  require('telescope').load_extension('ai_prompts')
 end
 
 setup_telescope()

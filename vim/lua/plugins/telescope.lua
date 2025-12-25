@@ -6,6 +6,7 @@ return {
     'nvim-tree/nvim-web-devicons',
     'debugloop/telescope-undo.nvim',
     'ukyouz/telescope-gtags',
+    'epheien/ai-prompts.nvim',
   },
   cmd = 'Telescope',
   config = function()
