@@ -198,7 +198,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
-local filetypes = { 'Avante', 'AvanteInput', 'AvanteSelectedFiles' }
+local filetypes = { 'Avante', 'AvanteInput', 'AvanteSelectedFiles', 'AvanteTodos' }
 local filetypes_mapping = {}
 for _, ft in ipairs(filetypes) do
   filetypes_mapping[ft] = true
