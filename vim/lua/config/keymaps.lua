@@ -194,8 +194,15 @@ map('n', '<C-n>', function()
   end
 end, { remap = true })
 
+map('n', '<C-p>', function()
+  if vim.g.termdbg_running == 1 then
+    vim.cmd([[exec 'TSendCommand p' expand('<cword>')]])
+  else
+    vim.api.nvim_set_current_win(require("avante").get().containers.input.winid)
+  end
+end)
+
 -- termdbg
-map('n', '<C-p>', [[:exec 'TSendCommand p' expand('<cword>')<CR>]])
 map('v', '<C-p>', [[y:exec 'TSendCommand p' @"<CR>]])
 -- 参考 magic keyboard 的媒体按键, F8 暂停用于 step, F9 下一曲用于 next
 map('n', '<F9>', ':TNext<CR>')
