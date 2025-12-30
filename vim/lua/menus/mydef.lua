@@ -1,4 +1,21 @@
 return {
+  --{
+  --  name ='Mark Set',
+  --  cmd = function()
+  --    vim.cmd([[call feedkeys("\<Plug>MarkSet")]])
+  --  end,
+  --  rtxt = '\\c',
+  --},
+
+  {
+    name ='Mark All Clear',
+    cmd = function()
+      vim.cmd([[nohlsearch]])
+      vim.cmd([[call feedkeys("\<Plug>MarkAllClear")]])
+    end,
+    rtxt = '\\c',
+  },
+
   {
     name = "Format Buffer",
     cmd = function()
