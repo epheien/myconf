@@ -269,7 +269,7 @@ map(
 map('n', 'K', function() vim.call('myrc#ShowDocumentation') end)
 
 map('i', '<C-g>', '<C-r>=myrc#i_InsertHGuard()<CR>', nosilent)
-map('i', '<CR>', function() vim.call('myrc#SmartEnter') end)
+map('i', '<CR>', function() vim.call('myrc#SmartEnter') end, { noremap = true })
 
 -- 切换光标前的单词的大小写
 map('i', '<C-y>', [=[pumvisible()?"\<C-y>":"\<C-r>=myrc#ToggleCase()\<CR>"]=], { expr = true })

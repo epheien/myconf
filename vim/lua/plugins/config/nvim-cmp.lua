@@ -227,6 +227,7 @@ local opts = {
     documentation = {
       border = 'single',
       winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel',
+      zindex = 250,
     },
   },
   formatting = {
@@ -308,11 +309,11 @@ local opts = {
   }),
 }
 
-vim.api.nvim_set_keymap('i', '<CR>', '', {
-  callback = vim.fn['myrc#SmartEnter'],
-  noremap = true,
-  silent = true,
-})
+--vim.keymap.set('i', '<CR>', '', {
+--  callback = vim.fn['myrc#SmartEnter'],
+--  noremap = true,
+--  silent = true,
+--})
 
 vim.keymap.set('i', '<Down>', '', {
   callback = function()
