@@ -2,7 +2,7 @@ stty -ixon
 
 # 256color
 if [ -n "$TMUX" ]; then
-    export TERM=screen-256color
+    : # .tmux.conf 负责设置, 这里不要修改 TERM
 elif [[ "$TERM" == "screen-256color" ]]; then
     : # ignore
 elif [ "$TERM" != "xterm-kitty" ]; then
