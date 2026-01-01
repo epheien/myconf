@@ -11,26 +11,19 @@ return {
     instructions_file = 'avante.md',
     -- add any opts here
     system_prompt = '**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese.\n',
-    provider = 'vllm_minimax-m2.1',
+    provider = 'vllm',
     providers = {
-      ['vllm_glm-4.7'] = {
-        __inherited_from = 'openai',
-        api_key_name = '',
-        endpoint = 'http://192.168.3.244:8000/v1',
-        model = 'glm-4.7',
-        extra_request_body = {
-          temperature = 1.0,
-          max_tokens = 32768,
-        },
-      },
-      ['vllm_minimax-m2.1'] = {
+      vllm = {
         __inherited_from = 'openai',
         api_key_name = '',
         endpoint = 'http://192.168.3.244:8000/v1',
         model = 'minimax-m2.1',
+        model_names = { 'minimax-m2.1', 'glm-4.7' },
         extra_request_body = {
           temperature = 1.0,
           max_tokens = 32768,
+          top_p = 0.95,
+          top_k = 40,
         },
       },
     },
