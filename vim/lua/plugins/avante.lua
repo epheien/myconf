@@ -59,6 +59,9 @@ return {
       spinner = {
         generating = { '·', '✢', '✳', '·', '✢', '✳' },
       },
+      input = {
+        height = 6,
+      },
       sidebar_header = {
         enabled = false,
       },
