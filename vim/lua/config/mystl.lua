@@ -151,18 +151,19 @@ end
 local function mystl_setup()
   -- 修改 StatusLine 和 StatusLineNC 高亮组, 以适配 mystl 状态栏
   --hi Normal guibg=NONE ctermbg=NONE " 把 Normal 高亮组的背景色去掉, 可避免一些配色问题
-  local normalHl = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
-  local winSepHl = vim.api.nvim_get_hl(0, { name = 'WinSeparator', link = false })
-  local fg = winSepHl[winSepHl.reverse and 'bg' or 'fg'] or 'NONE'
-  local bg = normalHl[normalHl.reverse and 'fg' or 'bg'] or 'NONE'
-  local ctermfg = winSepHl[winSepHl.reverse and 'ctermbg' or 'ctermfg'] or 'NONE'
-  local ctermbg = normalHl[normalHl.reverse and 'ctermfg' or 'ctermbg'] or 'NONE'
-  vim.api.nvim_set_hl(0, 'StatusLine', {
-    fg = fg,
-    bg = bg,
-    ctermfg = ctermfg,
-    ctermbg = ctermbg,
-  })
+  --local normalHl = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+  --local winSepHl = vim.api.nvim_get_hl(0, { name = 'WinSeparator', link = false })
+  --local fg = winSepHl[winSepHl.reverse and 'bg' or 'fg'] or 'NONE'
+  --local bg = normalHl[normalHl.reverse and 'fg' or 'bg'] or 'NONE'
+  --local ctermfg = winSepHl[winSepHl.reverse and 'ctermbg' or 'ctermfg'] or 'NONE'
+  --local ctermbg = normalHl[normalHl.reverse and 'ctermfg' or 'ctermbg'] or 'NONE'
+  --vim.api.nvim_set_hl(0, 'StatusLine', {
+  --  fg = fg,
+  --  bg = bg,
+  --  ctermfg = ctermfg,
+  --  ctermbg = ctermbg,
+  --})
+  vim.api.nvim_set_hl(0, 'StatusLine', { link = 'WinSeparator' })
   vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'StatusLine' })
   if not vim.regex([[^%!\|^%{%]]):match_str(vim.o.statusline) then
     vim.o.statusline = '─'
