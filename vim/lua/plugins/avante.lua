@@ -19,6 +19,20 @@ return {
         endpoint = 'http://192.168.3.244:8000/v1',
         model = 'minimax-m2.1',
         model_names = { 'minimax-m2.1', 'glm-4.7' },
+        context_window = 192 * 1024,
+        extra_request_body = {
+          temperature = 1.0,
+          max_tokens = 32768,
+          top_p = 0.95,
+          top_k = 40,
+        },
+      },
+      ['vllm-docker'] = {
+        __inherited_from = 'openai',
+        api_key_name = '',
+        endpoint = 'http://192.168.3.244:8800/v1',
+        model = 'minimax-m2.1',
+        context_window = 192 * 1024,
         extra_request_body = {
           temperature = 1.0,
           max_tokens = 32768,
