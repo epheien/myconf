@@ -12,7 +12,7 @@ return {
         operators = false,
         folds = false,
       },
-      terminal_colors = vim.fn.has('gui_running') == 1,
+      terminal_colors = vim.env['SSH_CONNECTION'] and true,
       overrides = {
         GruvboxRedSign = { bg = 'NONE' },
         GruvboxGreenSign = { bg = 'NONE' },
@@ -30,7 +30,7 @@ return {
         CurSearch = { link = 'Search' },
         SpecialKey = { link = 'Special' },
         FoldColumn = { bg = 'NONE' },
-        SignColumn = { bg = 'NONE' },
+        SignColumn = { link = 'FoldColumn' },
         StatusLine = { link = '@none' }, -- 避免闪烁, 最终会被 mystl 覆盖
         WinBarNC = { bg = 'NONE' },
 
