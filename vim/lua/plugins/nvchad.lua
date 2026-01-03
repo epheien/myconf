@@ -9,7 +9,7 @@ return {
       'nvchad/ui',
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
-      'nvchad/volt',
+      'epheien/volt',
     },
   },
 
