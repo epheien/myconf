@@ -60,7 +60,7 @@ return {
         generating = { '·', '✢', '✳', '·', '✢', '✳' },
       },
       input = {
-        height = 6,
+        height = 2, -- 需要修复 avante 的布局调整的 bug 才能正常工作
       },
       sidebar_header = {
         enabled = false,
