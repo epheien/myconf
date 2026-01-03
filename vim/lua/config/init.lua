@@ -6,7 +6,7 @@ if vim.g.enable_noice == nil then
   vim.g.enable_noice = false -- 默认禁用, 因为最终是简化所有的插件使用, 太复杂的插件维护成本高
 end
 if vim.g.my_colors_name == nil then
-  vim.g.my_colors_name = 'onedark-nvchad' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
+  vim.g.my_colors_name = 'gruvbox' -- gruvbox | catppuccin | tokyonight | onedark-nvchad
 end
 if vim.g.nodashboard == nil then
   vim.g.nodashboard = true
