@@ -31,6 +31,7 @@ return {
         SpecialKey = { link = 'Special' },
         FoldColumn = { bg = 'NONE' },
         SignColumn = { bg = 'NONE' },
+        StatusLine = { link = '@none' }, -- 避免闪烁, 最终会被 mystl 覆盖
 
         -- NonText 和 WinSeparator 同时降低一个色阶, 避免过于明显
         NonText = { link = 'GruvboxBg1' },
