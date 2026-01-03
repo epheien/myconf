@@ -81,6 +81,7 @@ return {
     },
   },
   config = function(_plug, opts)
+    local api = vim.api
     vim.api.nvim_set_hl(0, 'AvanteSidebarWinSeparator', { link = 'WinSeparator' })
     vim.api.nvim_set_hl(0, 'AvanteSidebarWinHorizontalSeparator', { link = 'WinSeparator' })
     vim.api.nvim_set_hl(0, 'AvanteSidebarNormal', { link = 'Normal' })
@@ -92,7 +93,8 @@ return {
       pattern = { 'Avante' },
       callback = function()
         vim.treesitter.start()
-        vim.api.nvim_set_option_value('cc', '', { win = vim.api.nvim_get_current_win() })
+        api.nvim_set_option_value('cc', '', { win = api.nvim_get_current_win() })
+        api.nvim_set_option_value('winfixheight', false, { win = api.nvim_get_current_win() })
       end,
     })
     vim.api.nvim_create_autocmd('FileType', {
