@@ -333,7 +333,7 @@ local function core_plugins()
       vim.keymap.set('n', 'Z', callback(false), { nowait = true })
       vim.o.mousemodel = 'extend'
     end,
-    dependencies = { 'nvchad/volt' },
+    dependencies = { 'epheien/volt' },
   })
 
   -- 在 nvim 内直接预览 markdown, 效果凑合可用
