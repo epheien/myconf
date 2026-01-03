@@ -58,6 +58,12 @@ return {
         --TelescopePrompt = { link = 'TelescopeNormal' },
         TelescopePromptCounter = { link = 'TelescopeBorder' },
 
+        -- volt highlights
+        ExRed = { link = 'GruvboxRed' },
+        ExBlue = { link = 'GruvboxBlue' },
+        ExGreen = { link = 'GruvboxGreen' },
+        ExYellow = { link = 'GruvboxYellow' },
+
         -- 修改 treesiter 部分配色
         ['@variable'] = { link = '@none' },
         ['@constructor'] = { link = '@function' },
