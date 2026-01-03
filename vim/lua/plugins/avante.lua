@@ -59,6 +59,9 @@ return {
       spinner = {
         generating = { '·', '✢', '✳', '·', '✢', '✳' },
       },
+      sidebar_header = {
+        enabled = false,
+      },
     },
     slash_commands = {
       {
@@ -94,12 +97,28 @@ return {
     })
     vim.api.nvim_create_autocmd('FileType', {
       pattern = 'AvanteInput',
-      callback = function()
+      callback = function(ev)
         vim.api.nvim_set_option_value('cc', '', { win = vim.api.nvim_get_current_win() })
         vim.cmd('inoremap <silent> <buffer> <C-h> <Esc><C-w>h')
         --vim.cmd('inoremap <silent> <buffer> <C-j> <Esc><C-w>j')
         --vim.cmd('inoremap <silent> <buffer> <C-k> <Esc><C-w>k')
         vim.cmd('inoremap <silent> <buffer> <C-l> <Esc><C-w>l')
+        vim.keymap.set('i', '<C-j>', function()
+          local ok, val = pcall(function() return require('cmp').core.view:visible() end)
+          if ok and val then
+            vim.cmd([[call feedkeys("\<Down>")]])
+          else
+            vim.cmd([[call feedkeys("\<Esc>\<C-w>j")]])
+          end
+        end, { buffer = ev.buf })
+        vim.keymap.set('i', '<C-k>', function()
+          local ok, val = pcall(function() return require('cmp').core.view:visible() end)
+          if ok and val then
+            vim.cmd([[call feedkeys("\<Up>")]])
+          else
+            vim.cmd([[call feedkeys("\<Esc>\<C-w>k")]])
+          end
+        end, { buffer = ev.buf })
       end,
     })
     vim.cmd([[command! AvanteToggleDebug lua require('avante').toggle.debug()]])
