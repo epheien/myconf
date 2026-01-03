@@ -1,4 +1,5 @@
 local help_winid = -1
+
 local create_help_floatwin = function()
   if not vim.api.nvim_win_is_valid(help_winid) then
     local bufid = vim.api.nvim_create_buf(false, true)
@@ -26,6 +27,21 @@ local create_help_floatwin = function()
     opt:append({ NormalFloat = 'Normal' })
   end
 end
+
+-- 使用浮动窗口的 footer 显示当前文件名
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+  pattern = { '*.txt', '*.cnx' },
+  callback = function(_ev)
+    if not vim.api.nvim_win_is_valid(help_winid) then
+      return
+    end
+    vim.api.nvim_win_set_config(
+      help_winid,
+      { footer = vim.api.nvim_eval_statusline('%f', { winid = help_winid }).str }
+    )
+  end,
+})
+
 vim.keymap.set('c', '<CR>', function()
   if vim.fn.getcmdtype() ~= ':' then
     return '<CR>'
@@ -61,8 +77,10 @@ vim.keymap.set('c', '<CR>', function()
   end
   return '<CR>'
 end, { silent = true, expr = true })
+
 vim.keymap.set('n', '<F1>', function()
   create_help_floatwin()
   vim.cmd('help')
 end)
+
 vim.keymap.set('i', '<F1>', '<Nop>')
