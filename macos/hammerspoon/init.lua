@@ -258,7 +258,7 @@ end)
 hs.hotkey.bind({ 'cmd', 'alt', 'ctrl' }, 'R', nil, function() hs.reload() end)
 
 local function openNewWindow(appName)
-  local app = hs.application.get(appName)
+  local app = hs.application.find(appName, true, true)
 
   -- 如果应用未运行，先启动
   if not app then
