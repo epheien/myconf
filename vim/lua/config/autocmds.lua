@@ -178,6 +178,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       --vim.api.nvim_set_hl(0, 'NonText', { link = 'GruvboxBg1' })
       --vim.api.nvim_set_hl(0, 'WinSeparator', { link = 'GruvboxBg2' })
 
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH4Bg', { link = 'Pmenu' })
+
       -- GitGutter
       vim.api.nvim_set_hl(0, 'GitGutterAdd', { link = 'GruvboxGreen' })
       vim.api.nvim_set_hl(0, 'GitGutterChange', { link = 'GruvboxAqua' })
