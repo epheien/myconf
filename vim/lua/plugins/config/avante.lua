@@ -13,7 +13,7 @@ function M.avante_input_statusline()
     return ''
   end
   local api = vim.api
-  local content = ' Tokens: ' .. tostring(tokens) .. ' '
+  local content = ' Tokens: ' .. math.floor(tokens / 1000) .. ',' .. (tokens % 1000) .. ' '
   local padding = math.floor(
     (api.nvim_win_get_width(sidebar.containers.input.winid) - api.nvim_strwidth(content)) / 2
   )

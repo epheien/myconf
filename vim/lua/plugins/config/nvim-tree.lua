@@ -133,6 +133,16 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts('Toggle Hidden'))
   vim.keymap.del('n', 'C', opts('Toggle Git Clean'))
   vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+
+  vim.keymap.set('n', '@', function()
+    local node = api.tree.get_node_under_cursor()
+    -- 'file', 'directory'
+    if node.type == 'directory' then
+      return
+    end
+    local tree_ext = require('avante.extensions.nvim_tree')
+    tree_ext.add_file()
+  end, opts('Add to avante.nvim'))
 end
 
 local nvim_tree_opts = {
