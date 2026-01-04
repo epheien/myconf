@@ -65,8 +65,8 @@ return {
         ExYellow = { link = 'GruvboxYellow' },
 
         -- 修改 treesiter 部分配色
-        ['@variable'] = { link = '@none' },
         ['@constructor'] = { link = '@function' },
+        ['@function.builtin'] = { link = '@function' },
         ['markdownCodeBlock'] = { link = 'markdownCode' },
         ['markdownCode'] = { link = 'String' },
         ['markdownCodeDelimiter'] = { link = 'Delimiter' },
