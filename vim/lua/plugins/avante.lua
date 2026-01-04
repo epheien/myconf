@@ -53,6 +53,7 @@ return {
     },
     windows = {
       position = 'left',
+      fillchars = 'eob: ,stl:─,stlnc:─',
       ask = {
         border = 'single',
       },
@@ -96,8 +97,10 @@ return {
       pattern = { 'Avante' },
       callback = function()
         vim.treesitter.start()
-        api.nvim_set_option_value('cc', '', { win = api.nvim_get_current_win() })
-        api.nvim_set_option_value('winfixheight', false, { win = api.nvim_get_current_win() })
+        local winid = api.nvim_get_current_win()
+        api.nvim_set_option_value('cc', '', { win = winid })
+        api.nvim_set_option_value('winfixheight', false, { win = winid })
+        api.nvim_set_option_value('statusline', '─', { win = winid })
       end,
     })
     vim.api.nvim_create_autocmd('FileType', {
