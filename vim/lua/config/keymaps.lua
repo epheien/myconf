@@ -88,6 +88,10 @@ map('n', '<Space>', '3<C-e>')
 -- Scroll up
 map('n', ',', '3<C-y>')
 
+-- 用于鼠标的横轴滚动, 一般鼠标都是 shift+滚轮 触发横向滚动
+map('n', '<S-ScrollWheelLeft>', '6zh')
+map('n', '<S-ScrollWheelRight>', '6zl')
+
 -- Window navigation
 map('n', '<C-h>', '<C-w>h')
 map('n', '<C-j>', '<C-w>j')
@@ -198,7 +202,7 @@ map('n', '<C-p>', function()
   if vim.g.termdbg_running == 1 then
     vim.cmd([[exec 'TSendCommand p' expand('<cword>')]])
   else
-    vim.api.nvim_set_current_win(require("avante").get().containers.input.winid)
+    vim.api.nvim_set_current_win(require('avante').get().containers.input.winid)
   end
 end)
 
