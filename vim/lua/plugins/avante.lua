@@ -128,6 +128,19 @@ return {
     })
     vim.cmd([[command! AvanteToggleDebug lua require('avante').toggle.debug()]])
 
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'AvanteInput' },
+      callback = function()
+        vim.api.nvim_set_option_value(
+          'statusline',
+          '%!v:lua.require\'plugins.config.avante\'.avante_input_statusline()',
+          {
+            win = vim.api.nvim_get_current_win(),
+          }
+        )
+      end,
+    })
+
     require('avante').setup(opts)
   end,
   dependencies = {
