@@ -51,11 +51,14 @@ font-thicken-strength = 128
 
 shell-integration-features = no-cursor
 cursor-style = block
+#cursor-style-blink = true
 
 adjust-cell-width = -1
 copy-on-select = clipboard
 
+custom-shader-animation = always
 custom-shader = shaders/cursor_warp.glsl
+custom-shader = ghostty-cursor-shaders/ripple_cursor.glsl
 #custom-shader = shaders/cursor_smear.glsl
 
 window-height = 40
@@ -67,5 +70,7 @@ macos-option-as-alt = left
 
 theme = Gruvbox Dark
 bold-color = bright
+
+mouse-scroll-multiplier = 1
 
 # vim:set ft=config:
