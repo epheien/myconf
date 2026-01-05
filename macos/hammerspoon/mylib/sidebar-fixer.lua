@@ -89,15 +89,21 @@ end
 updateSidebarPID()
 
 -- 监听应用启动
-hs.application.watcher
-  .new(function(appName, eventType, appObject)
+M.appWatcher = hs.application.watcher.new(function(appName, eventType, appObject)
+  --print(appName, eventType, appObject:pid())
+  if eventType == hs.application.watcher.launched then
     if appName == 'Sidebar' then
-      updateSidebarPID()
+      sidebarPID = appObject:pid()
     end
-  end)
-  :start()
+  elseif eventType == hs.application.watcher.terminated then
+    if appName == 'Sidebar' then
+      sidebarPID = nil
+    end
+  end
+end)
+M.appWatcher:start()
 
-M.contextMenuWatcher = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown }, function(event)
+M.contextMenuWatcher = hs.eventtap.new({ hs.eventtap.event.types.leftMouseDown }, function(_event)
   if not sidebarPID then
     return false
   end
