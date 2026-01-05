@@ -79,6 +79,9 @@ local opts = {
     input = {
       height = 2, -- 需要修复 avante 的布局调整的 bug 才能正常工作
     },
+    input_hint = {
+      enabled = false,
+    },
     sidebar_header = {
       enabled = false,
     },
