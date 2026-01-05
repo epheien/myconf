@@ -13,6 +13,9 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command('Title', function(args)
   vim.o.title = true
   vim.o.titlestring = args.args
+  if vim.env.TMUX then
+    vim.system({ 'tmux', 'rename-window', '--', vim.o.titlestring })
+  end
 end, { nargs = '+' })
 
 vim.api.nvim_create_user_command('TabTitle', function(args)
