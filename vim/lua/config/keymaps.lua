@@ -272,6 +272,10 @@ map(
 
 map('n', 'K', function() vim.call('myrc#ShowDocumentation') end)
 
+-- 使用 + - 替代 <C-a> 和 <C-x>, 这样就可以用作他用
+vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment', noremap = true })
+vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement', noremap = true })
+
 map('i', '<C-g>', '<C-r>=myrc#i_InsertHGuard()<CR>', nosilent)
 map('i', '<CR>', function() vim.call('myrc#SmartEnter') end, { noremap = true })
 
