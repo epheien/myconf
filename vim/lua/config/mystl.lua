@@ -123,6 +123,17 @@ local mode_table = M.mode_table
 --  
 local head_glyph = require('utils').only_ascii() and '' or ''
 local tail_glyph = require('utils').only_ascii() and '' or ''
+
+-- 支持使用 b:buf_name 指定名称
+function M.stl_buf_name()
+  local buf_name = vim.b.buf_name
+  if not buf_name or buf_name == '' then
+    return '%f'
+  else
+    return buf_name
+  end
+end
+
 function MyStatusLine()
   local m = vim.api.nvim_get_mode().mode
   local mode = 'NORMAL'
@@ -132,17 +143,19 @@ function MyStatusLine()
   local active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
   local mod = vim.o.modified and ' [+]' or ''
   local gap = tail_glyph == '' and ' ' or ' '
+  local buf_name = [[%{%v:lua.require'config.mystl'.stl_buf_name()%}]]
   if active then
     local mode_group = stl_hl_map[m:upper():sub(1, 1)] or 'MyStlNormalMode'
     local head_string = string.format('%%#%s#%s', 'Normal_' .. mode_group, head_glyph)
     local mode_string = string.format('%%#%s#%s%s ', mode_group, gap, mode)
-    local file_string = string.format('%%#%s# %%f%s │ %%l/%%L:%%v%s', 'MyStlNormal', mod, gap)
+    local file_string =
+      string.format('%%#%s# %s%s │ %%l/%%L:%%v%s', 'MyStlNormal', mod, buf_name, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormal_Normal', tail_glyph)
     return head_string .. mode_string .. file_string .. tail_string
   else
     local head_string = string.format('%%#%s#%s', 'Normal_MyStlNormalNC', head_glyph)
     local file_string =
-      string.format('%%#%s#%s%%f%s │ %%l/%%L:%%v%s', 'MyStlNormalNC', gap, mod, gap)
+      string.format('%%#%s#%s%s%s │ %%l/%%L:%%v%s', 'MyStlNormalNC', gap, mod, buf_name, gap)
     local tail_string = string.format('%%#%s#%s%%#StatusLine#', 'MyStlNormalNC_Normal', tail_glyph)
     return head_string .. file_string .. tail_string
   end
