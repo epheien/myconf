@@ -59,6 +59,8 @@ function M.resize_center2()
 
   if screenFrame.h > 1000 then
     newHeight = 900
+  else
+    newHeight = screenFrame.h * 0.9
   end
 
   -- 宽度 = 高度 / (宽高比例)
@@ -88,7 +90,8 @@ function M.resize_full()
     return
   end
 
-  local left_padding = 34
+  --local left_padding = 34
+  local left_padding = 0
 
   -- 获取当前屏幕
   local screen = win:screen()
@@ -102,7 +105,8 @@ function M.resize_full()
   local newY = screenFrame.y
 
   -- Dock 已隐藏并且使用了 Sidebar 替代; 25 表示菜单栏占用的高度
-  if fullFrame.h - screenFrame.h == 25 then
+  local diff = fullFrame.h - screenFrame.h
+  if diff == 25 or diff == 38 then
     newWidth = screenFrame.w
     newHeight = screenFrame.h - 50
     newX = screenFrame.x
