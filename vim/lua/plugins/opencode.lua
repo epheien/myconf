@@ -1,7 +1,6 @@
 return {
   'sudo-tee/opencode.nvim',
   cmd = { 'Opencode' },
-  config = function(_plug, _opts) require('opencode').setup(_opts) end,
   dependencies = {
     'nvim-lua/plenary.nvim',
     'MeanderingProgrammer/render-markdown.nvim',
@@ -59,4 +58,11 @@ return {
       input_height = 0.1,
     },
   },
+  config = function(_plug, _opts)
+    require('opencode').setup(_opts)
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'opencode', 'opencode_output' },
+      callback = function(_event) vim.b[_event.buf].buf_name = _event.match end,
+    })
+  end,
 }

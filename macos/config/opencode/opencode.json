@@ -1,0 +1,165 @@
+// vim:set ft=json5 sw=2 sts=2:
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "vllm/glm-4.7-awq", // 默认模型
+  "share": "disabled",
+  "autoupdate": false,
+  "experimental": {
+    "openTelemetry": false,
+  },
+  "permission": {
+    "edit": "ask",
+    "bash": {
+      "git *": "ask",
+      "*": "ask"
+    },
+    "WebFetch": "ask",
+  },
+  "keybinds": {
+    "leader": "ctrl+x",
+    "messages_page_up": "pageup,ctrl+y",
+    "messages_page_down": "pagedown,ctrl+d",
+    "messages_first": "ctrl+g,home",
+    "messages_last": "<leader>ctrl+g,end",
+    "app_exit": "none",
+  },
+  "agent": {
+    "build": {
+      "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese.\nNever describe tools in text (e.g., \"I will use multiedit to...\", \"Let me add...\").\nAlways invoke tools directly via the proper tool calling format.\n",
+    },
+    "title": {
+      "model": "vllm/glm-4.7-awq",
+      "disable": true,
+    }
+  },
+  "provider": {
+    "ollama": {
+      "name": "Ollama (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "models": {
+        "Qwen3-Coder-30B-A3B-Instruct": {
+          "id": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:UD-Q4_K_XL",
+          "name": "Qwen3-Coder-30B-A3B-Instruct"
+        }
+      },
+      "options": {
+        "baseURL": "http://192.168.3.244:11434/v1"
+      }
+    },
+    "llama.cpp": {
+      "name": "llama-server (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.3.244:8080/v1"
+      },
+      "models": {
+        "qwen3-coder-30b": {
+          "name": "Qwen3-Coder: a3b-30b (local)",
+          "limit": {
+            "context": 131072,
+            "output": 15000
+          }
+        },
+        "gpt-oss-120b": {
+          "name": "gpt-oss-120b (local)",
+          "limit": {
+            "context": 65536,
+            "output": 15000
+          }
+        },
+        "qwen3-32b": {
+          "name": "qwen3-32b (local)",
+          "limit": {
+            "context": 32768,
+            "output": 15000
+          }
+        }
+      }
+    },
+    "vllm": {
+      "name": "vllm (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.3.244:8000/v1"
+      },
+      "models": {
+        "minimax-m2.1-fp8": {
+          "id": "minimax-m2.1-fp8",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 40
+          },
+          "limit": {
+            "context": 196608,
+            "output": 15000
+          }
+        },
+        "glm-4.7-awq": {
+          "id": "glm-4.7",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            // Default Settings (Most Tasks) temperature: 1.0 top-p: 0.95 max new tokens: 131072
+            // Terminal Bench, SWE Bench Verified temperature: 0.7 top-p: 1.0 max new tokens: 16384
+            // τ^2-Bench Temperature: 0 Max new tokens: 16384
+            "temperature": 0.7,
+            "top_p": 1.0
+          },
+          "limit": {
+            "context": 163840,
+            "output": 15000
+          }
+        }
+      }
+    },
+    "vllm:8001": {
+      "name": "vllm:8001 (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.3.244:8001/v1"
+      },
+      "models": {
+        "devstral2": {
+          "id": "devstral2",
+          "reasoning": false,
+          "temperature": true,
+          "options": {
+            "temperature": 0.15,
+          },
+          "limit": {
+            "context": 65516,
+            "output": 15000
+          }
+        }
+      }
+    },
+    "llm-api-relay": {
+      "name": "llm-api-relay",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.3.244:8008/v1"
+      },
+      "models": {
+        "glm-4.7-awq": {
+          "id": "glm-4.7",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            // Default Settings (Most Tasks) temperature: 1.0 top-p: 0.95 max new tokens: 131072
+            // Terminal Bench, SWE Bench Verified temperature: 0.7 top-p: 1.0 max new tokens: 16384
+            // τ^2-Bench Temperature: 0 Max new tokens: 16384
+            "temperature": 0.7,
+            "top_p": 1.0
+          },
+          "limit": {
+            "context": 163840,
+            "output": 15000
+          }
+        }
+      }
+    }
+  }
+}
