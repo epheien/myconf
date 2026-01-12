@@ -1,5 +1,6 @@
 return {
   'sudo-tee/opencode.nvim',
+  enabled = vim.g.enable_opencode_nvim or false,
   cmd = { 'Opencode' },
   dependencies = {
     'nvim-lua/plenary.nvim',

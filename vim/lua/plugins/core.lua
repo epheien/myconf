@@ -6,6 +6,8 @@ local function core_plugins()
 
     { 'nvim-lua/plenary.nvim', cmd = { 'PlenaryBustedFile', 'PlenaryBustedDirectory' } },
 
+    { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+
     { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
     {
       'lukas-reineke/indent-blankline.nvim',
