@@ -12,6 +12,7 @@ local server_exts = {
   gopls = { 'go' },
   cmake = { 'cmake' },
   rust_analyzer = { 'rust' },
+  ts_ls = { 'javascript', 'typescript' },
 }
 
 local already_setup = {}
