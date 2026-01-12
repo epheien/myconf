@@ -56,6 +56,8 @@ return {
 
         if subcmd == 'clear-cached-port' then
           return require('opencode.cli.server').clear_cached_port()
+        elseif subcmd == 'prompt' then
+          return opencode[subcmd](vim.fn.substitute(opts.args, [[^\s*prompt\s]], '', ''))
         end
 
         -- 获取对应的函数
@@ -103,6 +105,13 @@ return {
       '<C-a>',
       function() require('opencode').ask('@this: ', { submit = true }) end,
       { desc = 'Ask opencode' }
+    )
+
+    vim.keymap.set(
+      { 'n', 'x' },
+      '<C-x>',
+      function() require('opencode').select() end,
+      { desc = 'Execute opencode action…' }
     )
 
     vim.keymap.set(
