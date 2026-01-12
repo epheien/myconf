@@ -6,7 +6,47 @@ local function core_plugins()
 
     { 'nvim-lua/plenary.nvim', cmd = { 'PlenaryBustedFile', 'PlenaryBustedDirectory' } },
 
-    { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+    {
+      'stevearc/dressing.nvim',
+      event = 'VeryLazy',
+      opts = {
+        input = {
+          border = 'single',
+          win_options = {
+            winhighlight = 'NormalFloat:Normal',
+          },
+          mappings = {
+            i = {
+              --['<CR>'] = false,
+              ['<C-s>'] = 'Confirm',
+            },
+          },
+        },
+        select = {
+          backend = {
+            'telescope',
+            'builtin',
+          },
+          builtin = {
+            border = 'single',
+            win_options = {
+              wrap = false,
+              winhighlight = 'MatchParen:,NormalFloat:Normal',
+            },
+            mappings = {
+              ['q'] = 'Close',
+            },
+            override = function(conf)
+              if vim.startswith(conf.title, ' Permit opencode to: ') then
+                -- 默认窗口高度是 10, 考虑上 border 以及奇数
+                conf.row = conf.row + 6
+              end
+              return conf
+            end,
+          },
+        },
+      },
+    },
 
     { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
     {
