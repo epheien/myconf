@@ -1,6 +1,6 @@
 -- 简易集成, 不涉及渲染
 return {
-  'NickvanDyke/opencode.nvim',
+  'epheien/opencode-plugin.nvim',
   name = 'opencode-plugin',
   enabled = not vim.g.enable_opencode_nvim,
   cmd = { 'Opencode' },
