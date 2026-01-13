@@ -17,8 +17,21 @@ local function core_plugins()
           },
           mappings = {
             i = {
-              --['<CR>'] = false,
+              ['<CR>'] = function()
+                if vim.fn.pumvisible() == 1 or require('cmp').visible() then
+                  require('plugins.config.nvim-cmp').confirm({
+                    select = false,
+                    behavior = require('cmp').ConfirmBehavior.Insert,
+                  })()
+                else
+                  vim.cmd([[call feedkeys("\<C-s>", 'm')]])
+                end
+              end,
               ['<C-s>'] = 'Confirm',
+              ['<Up>'] = false,
+              ['<Down>'] = false,
+              ['<C-p>'] = 'HistoryPrev',
+              ['<C-n>'] = 'HistoryNext',
             },
           },
         },
