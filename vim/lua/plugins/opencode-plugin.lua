@@ -9,12 +9,21 @@ return {
     'stevearc/dressing.nvim', -- for input provider dressing
   },
   config = function(_plug, _opts)
+    vim.g.loaded_opencode_plugin = 1
+
     ---@type opencode.Opts
     vim.g.opencode_opts = {
       -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
       provider = {
+        enabled = 'terminal',
         terminal = {
           split = 'above',
+        },
+      },
+      prompts = {
+        commit = {
+          prompt = '把当前添加到git暂存的修改提交，撰写合适的提交信息，其他文件不要管。',
+          submit = true,
         },
       },
     }
@@ -41,12 +50,7 @@ return {
       -- 创建 Opencode 命令
       vim.api.nvim_create_user_command('Opencode', function(opts)
         local args = opts.fargs
-        local subcmd = args[1]
-
-        if not subcmd then
-          vim.notify('用法: Opencode <subcommand> [args...]', vim.log.levels.WARN)
-          return
-        end
+        local subcmd = args[1] or 'toggle'
 
         -- 检查子命令是否存在
         if not vim.tbl_contains(subcommands, subcmd) then
@@ -73,7 +77,7 @@ return {
         -- 调用对应的函数
         fn(unpack(fn_args))
       end, {
-        nargs = '+',
+        nargs = '*',
         complete = function(arg_lead, cmd_line, cursor_pos)
           local input_text = vim.fn.trim(cmd_line:sub(1, cursor_pos), ' \t', 1)
           -- 解析已输入的内容
@@ -99,11 +103,19 @@ return {
 
     setup_commands()
 
+    -- 支持 @ 补全
+    require('plugins.config.cmp-opencode-plugin').setup()
+    require('cmp').setup.filetype({ 'DressingInput' }, {
+      sources = {
+        { name = 'cmp_opencode_plugin' },
+      },
+    })
+
     -- Recommended/example keymaps.
     vim.keymap.set(
       { 'n', 'x' },
       '<C-a>',
-      function() require('opencode').ask('@this: ', { submit = true }) end,
+      function() require('opencode').ask('', { submit = true, clear = true }) end,
       { desc = 'Ask opencode' }
     )
 
