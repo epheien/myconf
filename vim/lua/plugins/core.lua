@@ -44,6 +44,13 @@ local function core_plugins()
               return conf
             end,
           },
+          get_config = function(opts)
+            if vim.startswith(opts.prompt, 'Permit opencode to: ') then
+              return {
+                backend = 'builtin',
+              }
+            end
+          end,
         },
       },
     },
