@@ -1,6 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
-  tag = '0.1.8',
+  tag = 'v0.2.1',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
@@ -9,7 +9,5 @@ return {
     'epheien/ai-prompts.nvim',
   },
   cmd = 'Telescope',
-  config = function()
-    require('plugins.config.telescope')
-  end,
+  config = function() require('plugins.config.telescope') end,
 }
