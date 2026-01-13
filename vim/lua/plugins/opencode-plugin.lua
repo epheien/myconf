@@ -108,6 +108,22 @@ return {
     require('cmp').setup.filetype({ 'DressingInput' }, {
       sources = {
         { name = 'cmp_opencode_plugin' },
+        {
+          name = 'buffer',
+          option = {
+            get_bufnrs = function()
+              local bufs = {}
+              for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                local buf = vim.api.nvim_win_get_buf(win)
+                local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+                if byte_size <= 1024 * 1024 then -- 1 MiB max
+                  table.insert(bufs, buf)
+                end
+              end
+              return bufs
+            end,
+          },
+        },
       },
     })
 
@@ -142,14 +158,14 @@ return {
     vim.keymap.set(
       'n',
       '<S-C-b>',
-      function() require('opencode').command('session.half.page.up') end,
-      { desc = 'opencode half page up' }
+      function() require('opencode').command('session.page.up') end,
+      { desc = 'opencode page up' }
     )
     vim.keymap.set(
       'n',
       '<S-C-f>',
-      function() require('opencode').command('session.half.page.down') end,
-      { desc = 'opencode half page down' }
+      function() require('opencode').command('session.page.down') end,
+      { desc = 'opencode page down' }
     )
   end,
 }
