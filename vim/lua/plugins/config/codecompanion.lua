@@ -7,7 +7,7 @@ local constants = {
 }
 
 local opts = {
-  ignore_warnings = true,
+  --ignore_warnings = true,
   -- refer to: https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/config.lua
   adapters = {
     http = {
@@ -29,11 +29,11 @@ local opts = {
       openai_compatible = function()
         return require('codecompanion.adapters').extend('openai_compatible', {
           env = {
-            url = 'http://10.74.121.244:8080',
+            url = 'http://10.74.121.244:8000',
           },
           schema = {
             model = {
-              default = 'gpt-oss-120b',
+              default = 'glm-4.7',
             },
           },
         })
@@ -43,7 +43,7 @@ local opts = {
   strategies = {
     -- NOTE: Change the adapter as required
     chat = {
-      adapter = 'ollama',
+      adapter = 'openai_compatible',
       opts = {
         completion_provider = 'cmp', -- 使用 nvim-cmp
       },
@@ -53,8 +53,8 @@ local opts = {
         },
       },
     },
-    inline = { adapter = 'ollama' },
-    cmd = { adapter = 'ollama' },
+    inline = { adapter = 'openai_compatible' },
+    cmd = { adapter = 'openai_compatible' },
   },
   display = {
     action_palette = {
