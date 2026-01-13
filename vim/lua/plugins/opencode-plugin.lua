@@ -6,7 +6,7 @@ return {
   cmd = { 'Opencode' },
   dependencies = {
     -- Recommended for `ask()` and `select()`.
-    'stevearc/dressing.nvim', -- for input provider dressing
+    'epheien/dressing.nvim', -- for input provider dressing
   },
   config = function(_plug, _opts)
     vim.g.loaded_opencode_plugin = 1

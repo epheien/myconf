@@ -7,7 +7,7 @@ local function core_plugins()
     { 'nvim-lua/plenary.nvim', cmd = { 'PlenaryBustedFile', 'PlenaryBustedDirectory' } },
 
     {
-      'stevearc/dressing.nvim',
+      'epheien/dressing.nvim',
       event = 'VeryLazy',
       opts = {
         input = {
