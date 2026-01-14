@@ -105,7 +105,7 @@ return {
 
     -- 支持 @ 补全
     require('plugins.config.cmp-opencode-plugin').setup()
-    require('cmp').setup.filetype({ 'DressingInput' }, {
+    require('cmp').setup.filetype({ 'DressingInput', 'MultiLineInput' }, {
       sources = {
         { name = 'cmp_opencode_plugin' },
         {
@@ -128,12 +128,11 @@ return {
     })
 
     -- Recommended/example keymaps.
-    vim.keymap.set(
-      { 'n', 'x' },
-      '<C-a>',
-      function() require('opencode').ask('', { submit = true, clear = true }) end,
-      { desc = 'Ask opencode' }
-    )
+    vim.keymap.set({ 'n', 'x' }, '<C-a>', function()
+      -- FIXME: 第一次提交经常会不成功, 原因未知
+      require('utils').multi_line_input('Ask opencode', { submit = true })
+      --require('opencode').ask('', { submit = true, clear = true })
+    end, { desc = 'Ask opencode' })
 
     vim.keymap.set(
       { 'n', 'x' },

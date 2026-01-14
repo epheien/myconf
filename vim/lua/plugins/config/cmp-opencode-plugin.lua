@@ -7,7 +7,8 @@ function source.new() return setmetatable({}, { __index = source }) end
 function source:get_trigger_characters() return { '@' } end
 
 function source:is_available()
-  return vim.g.loaded_opencode_plugin and vim.bo.filetype == 'DressingInput'
+  return vim.g.loaded_opencode_plugin
+    and (vim.bo.filetype == 'DressingInput' or vim.bo.filetype == 'MultiLineInput')
 end
 
 function source:complete(params, callback)
