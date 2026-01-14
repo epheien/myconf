@@ -85,7 +85,7 @@ return {
         require("nvchad.term").new { cmd = cmd, pos = "sp" }
       else
         vim.cmd "enew"
-        vim.fn.termopen { vim.o.shell, "-c", cmd .. " ; " .. vim.o.shell }
+        vim.fn.jobstart({ vim.o.shell, "-c", cmd .. " ; " .. vim.o.shell }, { term = true })
       end
     end,
   },

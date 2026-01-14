@@ -226,7 +226,7 @@ local function core_plugins()
       dap.adapters.nlua = function(callback, config)
         callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
       end
-      vim.fn.setenv('NVIM_DEBUG_LUA', 1) -- 设置环境变量让 run_this 正常工作
+      vim.fn.setenv('NVIM_DEBUG_LUA', '1') -- 设置环境变量让 run_this 正常工作
       vim.api.nvim_create_user_command(
         'DapLuaRunThis',
         function() require('osv').run_this() end,

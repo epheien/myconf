@@ -113,8 +113,8 @@ map('n', '`', '\'')
 map('n', ']q', ':cn<CR>')
 map('n', '[q', ':cp<CR>')
 -- diagnostic 跳转 (包装成函数避免初始化的时候载入 vim.diagnostic 模块)
-map('n', ']w', function() return vim.diagnostic.goto_next() end)
-map('n', '[w', function() return vim.diagnostic.goto_prev() end)
+map('n', ']w', function() return vim.diagnostic.jump({ count = 1, float = true }) end)
+map('n', '[w', function() return vim.diagnostic.jump({ count = -1, float = true }) end)
 
 -- stty -ixon
 map('n', '<C-s>', function()
@@ -202,7 +202,15 @@ map('n', '<C-p>', function()
   if vim.g.termdbg_running == 1 then
     vim.cmd([[exec 'TSendCommand p' expand('<cword>')]])
   else
-    vim.api.nvim_set_current_win(require('avante').get().containers.input.winid)
+    if package.loaded['opencode'] then
+      local winid = require('opencode.config').provider.winid
+      if vim.api.nvim_win_is_valid(winid) then
+        vim.api.nvim_set_current_win(winid)
+        vim.cmd('startinsert')
+      end
+    elseif package.loaded['avante'] then
+      vim.api.nvim_set_current_win(require('avante').get().containers.input.winid)
+    end
   end
 end)
 

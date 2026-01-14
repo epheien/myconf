@@ -456,10 +456,10 @@ end
 vim.api.nvim_create_user_command('CmpToggle', function()
   if enabled then
     enabled = false
-    vim.api.nvim_notify('nvim-cmp disabled', vim.log.levels.INFO, {})
+    vim.notify('nvim-cmp disabled', vim.log.levels.INFO, {})
   else
     enabled = true
-    vim.api.nvim_notify('nvim-cmp enabled', vim.log.levels.INFO, {})
+    vim.notify('nvim-cmp enabled', vim.log.levels.INFO, {})
   end
 end, {})
 
