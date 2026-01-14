@@ -5,6 +5,7 @@ return {
   opts = {
     -- Whether Markdown should be rendered by default or not
     enabled = true,
+    render_modes = { 'n', 'c', 't', 'nt' },
     file_types = { 'markdown', 'Avante', 'codecompanion', 'opencode_output' },
     code = {
       enabled = true,
