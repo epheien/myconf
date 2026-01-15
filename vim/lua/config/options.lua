@@ -73,7 +73,7 @@ vim.g.python_slow_sync = 0
 -- 对于 lisp，使用彩虹高亮括号匹配
 vim.g.lisp_rainbow = 1
 -- 基于 syntax 的 markdown 代码块高亮可用的语言类型
-vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'lua', 'cpp', 'c', 'go' }
+vim.g.markdown_fenced_languages = { 'html', 'python', 'vim', 'lua', 'cpp', 'c', 'go', 'sh', 'bash' }
 vim.g.markdown_syntax_conceal = 1
 
 -- 设置折叠级别: 高于此级别的折叠会被关闭
@@ -102,7 +102,9 @@ vim.o.tabline = '%!myrc#MyTabLine()'
 
 if
   vim.env.TERM_PROGRAM
-  and vim.regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty\|\<ghostty]=]):match_str(vim.env.TERM_PROGRAM or '')
+  and vim
+    .regex([=[\V\<iTerm\|\<tmux\|\<kitty\|\<alacritty\|\<ghostty]=])
+    :match_str(vim.env.TERM_PROGRAM or '')
 then
   vim.o.termguicolors = true
 end
