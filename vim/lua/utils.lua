@@ -7,7 +7,7 @@ local scratch_winids = {}
 ---@return integer bufid
 ---@return integer winid
 function M.create_scratch_floatwin(title, opts)
-  title = string.format(' %s ', title) or ' More Prompt '
+  title = string.format(' %s ', title or 'More Prompt')
   local scratch_winid = scratch_winids[title] or -1
   local bufid
   if not vim.api.nvim_win_is_valid(scratch_winid) then
@@ -155,7 +155,7 @@ function M.multi_line_input(title, opts)
 
   local buf_lines = {}
 
-  vim.keymap.set('i', '<C-s>', function()
+  vim.keymap.set({ 'n', 'i' }, '<C-s>', function()
     local lines = vim.api.nvim_buf_get_lines(bufid, 0, -1, false)
     vim.cmd('stopinsert')
     vim.api.nvim_win_close(winid, false)
