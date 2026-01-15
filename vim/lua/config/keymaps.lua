@@ -201,7 +201,7 @@ end, { remap = true })
 map('n', '<C-p>', function()
   if vim.g.termdbg_running == 1 then
     vim.cmd([[exec 'TSendCommand p' expand('<cword>')]])
-  else
+  elseif not vim.g.enable_opencode_nvim then
     if package.loaded['opencode'] then
       local winid = require('opencode.config').provider.winid
       if vim.api.nvim_win_is_valid(winid) then
@@ -421,5 +421,29 @@ map('i', '<C-e>', function()
 end, { expr = true })
 
 map('n', [[\l]], '<Cmd>LazyGit<CR>')
+
+map('n', '<ScrollWheelUp>', function()
+  if vim.g.enable_opencode_nvim then
+    return '<ScrollWheelUp>'
+  end
+  local winid = vim.fn.getmousepos().winid
+  if not package.loaded['opencode'] or winid ~= require('opencode.config').provider.winid then
+    return '<ScrollWheelUp>'
+  end
+  require('opencode').command('session.half.page.up')
+  return ''
+end, { expr = true, remap = false })
+
+map('n', '<ScrollWheelDown>', function()
+  if vim.g.enable_opencode_nvim then
+    return '<ScrollWheelDown>'
+  end
+  local winid = vim.fn.getmousepos().winid
+  if not package.loaded['opencode'] or winid ~= require('opencode.config').provider.winid then
+    return '<ScrollWheelDown>'
+  end
+  require('opencode').command('session.half.page.down')
+  return ''
+end, { expr = true, remap = false })
 
 -- vim:set fdm=marker fen fdl=0:
