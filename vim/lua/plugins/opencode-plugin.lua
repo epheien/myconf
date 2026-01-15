@@ -26,9 +26,66 @@ return {
           submit = true,
         },
       },
+      events = {
+        permissions = {
+          idle_delay_ms = 0,
+          confirm = {
+            enabled = true,
+            window = {
+              config = {
+                border = 'single',
+              },
+              options = {
+                winhighlight = 'NormalFloat:Normal',
+              },
+              mappings = {
+                ['d'] = 'Reject',
+                ['a'] = false,
+              },
+            },
+          },
+        },
+      },
     }
 
     -- 在 plugin/opencode.lua 或你的插件加载文件中
+
+    local debug_autocmd_id = nil
+
+    local function create_debug_autocmd()
+      if debug_autocmd_id then
+        return
+      end
+      debug_autocmd_id = vim.api.nvim_create_autocmd("User", {
+        pattern = "OpencodeEvent:*",
+        callback = function(args)
+          local event = args.data.event
+          vim.notify(
+            vim.inspect(event),
+            vim.log.levels.INFO,
+            { title = "opencode.debug" }
+          )
+        end,
+        desc = "Debug all opencode events",
+      })
+    end
+
+    local function clear_debug_autocmd()
+      if debug_autocmd_id then
+        vim.api.nvim_del_autocmd(debug_autocmd_id)
+        debug_autocmd_id = nil
+      end
+    end
+
+    local function toggle_debug()
+      if debug_autocmd_id then
+        clear_debug_autocmd()
+        vim.notify('Opencode debug 已关闭', vim.log.levels.INFO)
+      else
+        create_debug_autocmd()
+        vim.notify('Opencode debug 已开启', vim.log.levels.INFO)
+      end
+    end
 
     local function setup_commands()
       local opencode = require('opencode')
@@ -45,6 +102,7 @@ return {
         'stop',
         'statusline',
         'clear-cached-port',
+        'toggle-debug',
       }
 
       -- 创建 Opencode 命令
@@ -62,6 +120,8 @@ return {
           return require('opencode.cli.server').clear_cached_port()
         elseif subcmd == 'prompt' then
           return opencode[subcmd](vim.fn.substitute(opts.args, [[^\s*prompt\s]], '', ''))
+        elseif subcmd == 'toggle-debug' then
+          return toggle_debug()
         end
 
         -- 获取对应的函数
