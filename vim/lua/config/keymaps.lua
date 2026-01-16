@@ -201,16 +201,16 @@ end, { remap = true })
 map('n', '<C-p>', function()
   if vim.g.termdbg_running == 1 then
     vim.cmd([[exec 'TSendCommand p' expand('<cword>')]])
-  elseif not vim.g.enable_opencode_nvim then
-    if package.loaded['opencode'] then
-      local winid = require('opencode.config').provider.winid
-      if vim.api.nvim_win_is_valid(winid) then
-        vim.api.nvim_set_current_win(winid)
-        vim.cmd('startinsert')
-      end
-    elseif package.loaded['avante'] then
-      vim.api.nvim_set_current_win(require('avante').get().containers.input.winid)
+  elseif vim.g.loaded_opencode_plugin then
+    local winid = require('opencode.config').provider.winid
+    if vim.api.nvim_win_is_valid(winid) then
+      vim.api.nvim_set_current_win(winid)
+      vim.cmd('startinsert')
     end
+  elseif vim.g.loaded_opencode_nvim then
+    require('opencode.api').open_input()
+  elseif package.loaded['avante'] then
+    vim.api.nvim_set_current_win(require('avante').get().containers.input.winid)
   end
 end)
 
@@ -427,7 +427,7 @@ map('n', '<ScrollWheelUp>', function()
     return '<ScrollWheelUp>'
   end
   local winid = vim.fn.getmousepos().winid
-  if not package.loaded['opencode'] or winid ~= require('opencode.config').provider.winid then
+  if not vim.g.loaded_opencode_plugin or winid ~= require('opencode.config').provider.winid then
     return '<ScrollWheelUp>'
   end
   require('opencode').command('session.half.page.up')
@@ -439,7 +439,7 @@ map('n', '<ScrollWheelDown>', function()
     return '<ScrollWheelDown>'
   end
   local winid = vim.fn.getmousepos().winid
-  if not package.loaded['opencode'] or winid ~= require('opencode.config').provider.winid then
+  if not vim.g.loaded_opencode_plugin or winid ~= require('opencode.config').provider.winid then
     return '<ScrollWheelDown>'
   end
   require('opencode').command('session.half.page.down')

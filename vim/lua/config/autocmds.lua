@@ -101,7 +101,7 @@ vim.api.nvim_create_autocmd('FileType', {
       -- 非 floating window 用 treesiter 高亮, 否则就用 syntax 高亮
       local config = vim.api.nvim_win_get_config(0)
       local title = type(config.title) == 'table' and config.title[1][1] or config.title
-      if config.relative == '' or vim.startswith(title, ' Permit opencode to:') then
+      if config.relative == '' or vim.startswith(title or '', ' Permit opencode to:') then
         vim.treesitter.start()
       end
     else
