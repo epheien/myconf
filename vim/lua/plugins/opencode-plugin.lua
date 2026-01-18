@@ -16,7 +16,8 @@ return {
       provider = {
         enabled = 'terminal',
         terminal = {
-          split = 'above',
+          split = 'right',
+          width = function() return math.floor(vim.o.columns * 0.35) end,
         },
       },
       prompts = {
@@ -182,8 +183,17 @@ return {
       },
     })
 
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'OpencodeWinNew',
+      ---@param ev { bufnr: integer, winid: integer }
+      callback = function(ev)
+        local winid = ev.winid
+        vim.api.nvim_set_option_value('winfixwidth', true, { win = winid, scope = 'local' })
+      end,
+    })
+
     -- Recommended/example keymaps.
-    vim.keymap.set({ 'n', 'x' }, '<C-a>', function()
+    vim.keymap.set({ 'n', 'x' }, '\\a', function()
       -- FIXME: 第一次提交经常会不成功, 原因未知
       require('utils').multi_line_input('Ask opencode', { submit = true })
       --require('opencode').ask('', { submit = true, clear = true })
@@ -197,16 +207,10 @@ return {
     )
 
     vim.keymap.set(
-      { 'n', 'x' },
-      'go',
+      { 'x' },
+      '\\a',
       function() return require('opencode').operator('@this ') end,
       { expr = true, desc = 'Add range to opencode' }
-    )
-    vim.keymap.set(
-      'n',
-      'goo',
-      function() return require('opencode').operator('@this ') .. '_' end,
-      { expr = true, desc = 'Add line to opencode' }
     )
 
     vim.keymap.set(
