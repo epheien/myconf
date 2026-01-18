@@ -130,7 +130,8 @@ function M.stl_buf_name()
   if not buf_name or buf_name == '' then
     return '%f'
   else
-    return buf_name
+    local content = string.gsub(buf_name, '%%', '%%%%')
+    return '%(' .. content .. '%)'
   end
 end
 
