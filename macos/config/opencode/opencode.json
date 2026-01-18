@@ -10,8 +10,13 @@
   "permission": {
     "edit": "ask",
     "bash": {
+      "*": "ask",
       "git *": "ask",
-      "*": "ask"
+      "git status": "allow",
+      "git diff": "allow",
+      "git diff --cached": "allow",
+      "git diff --staged": "allow",
+      "git log *": "allow", // NOTE: opencode 貌似有 bash 解析器, 所以可以避免 && 命令注入
     },
     "WebFetch": "ask",
   },
@@ -22,6 +27,11 @@
     "messages_first": "ctrl+g,home",
     "messages_last": "<leader>ctrl+g,end",
     "app_exit": "none",
+    "command_list": "none",
+    "input_move_up": "up,ctrl+p",
+    "input_move_down": "down,ctrl+n",
+    "history_previous": "up,ctrl+p",
+    "history_next": "down,ctrl+n",
   },
   "agent": {
     "build": {
