@@ -185,10 +185,11 @@ return {
 
     vim.api.nvim_create_autocmd('User', {
       pattern = 'OpencodeWinNew',
-      ---@param ev { bufnr: integer, winid: integer }
+      ---@param ev { data: { bufnr: integer, winid: integer } }
       callback = function(ev)
-        local winid = ev.winid
+        local winid = ev.data.winid
         vim.api.nvim_set_option_value('winfixwidth', true, { win = winid, scope = 'local' })
+        vim.api.nvim_buf_set_var(ev.data.bufnr, 'buf_name', 'opencode --port')
       end,
     })
 
