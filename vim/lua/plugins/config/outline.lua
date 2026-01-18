@@ -41,6 +41,20 @@ local opts = {
     width = 30,
     relative_width = false,
     focus_on_open = false,
+    float = {
+      win_config = function(cfg)
+        return {
+          relative = 'win',
+          border = 'single',
+          title = ' Outline ',
+          title_pos = 'center',
+          col = vim.o.columns - cfg.width - 3, -- border 1+1, gap 1
+        }
+      end,
+      win_options = {
+        winhighlight = 'NormalFloat:Normal',
+      },
+    },
   },
   keymaps = {
     close = { 'q' },

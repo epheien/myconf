@@ -99,7 +99,7 @@ local function core_plugins()
 
     {
       'epheien/outline.nvim',
-      cmd = { 'Outline', 'OutlineOpen' },
+      cmd = { 'Outline', 'OutlineOpenFloat' },
       config = function() require('plugins.config.outline') end,
       dependencies = {
         'epheien/outline-ctags-provider.nvim',
