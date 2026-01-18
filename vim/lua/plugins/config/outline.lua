@@ -43,12 +43,15 @@ local opts = {
     focus_on_open = false,
     float = {
       win_config = function(cfg)
+        local winid = vim.api.nvim_get_current_win()
         return {
           relative = 'win',
           border = 'single',
           title = ' Outline ',
           title_pos = 'center',
-          col = vim.o.columns - cfg.width - 3, -- border 1+1, gap 1
+          win = winid,
+          --col = vim.o.columns - cfg.width - 3, -- border 1+1, gap 1
+          col = math.max(0, vim.api.nvim_win_get_width(winid) - cfg.width - 3),
         }
       end,
       win_options = {
