@@ -1,10 +1,12 @@
 # Vim / Neovim Configuration
 
 ## Requirements
-    pip3 install pynvim
+```sh
+pip3 install pynvim
+```
 
 ## TODO
-- [ ] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列
+- [x] lua 文件类型按 `o` 开新行有缩进的时候再按 `<Esc>`, 这时候光标无法跳到首列 (2026-01-19 0.11.5自动恢复正常了)
 - [x] NoiceHistory 无限膨胀的问题 (直接弃用noice了, 因为nvim升级后这个东西维护容易跟不上)
 - [x] nvim-cmp 补全的 preview 窗口的语法高亮有红色的错误 (vim.lsp.util.stylize_markdown() 会自动导入 syntax 文件, 所以会导致这种奇怪的问题, 本质还是 syntax 文件有 BUG)
 - [x] 了解 lazy.nvim 的 VeryLazy 原理 (基本确实是 UI 初始化后, 发送 VeryLazy User 自动命令)
