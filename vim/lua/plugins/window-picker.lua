@@ -13,6 +13,11 @@ return {
         },
       },
       show_prompt = false,
+      picker_config = {
+        floating_big_letter = {
+          position = 'top-left',
+        },
+      },
     })
     local function pick_window()
       local win = require('window-picker').pick_window()
