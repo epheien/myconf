@@ -2,8 +2,7 @@
 return {
   'epheien/opencode-plugin.nvim',
   name = 'opencode-plugin',
-  enabled = not vim.g.enable_opencode_nvim,
-  cmd = { 'Opencode' },
+  cmd = {},
   dependencies = {
     -- Recommended for `ask()` and `select()`.
     'epheien/dressing.nvim', -- for input provider dressing
@@ -56,17 +55,13 @@ return {
       if debug_autocmd_id then
         return
       end
-      debug_autocmd_id = vim.api.nvim_create_autocmd("User", {
-        pattern = "OpencodeEvent:*",
+      debug_autocmd_id = vim.api.nvim_create_autocmd('User', {
+        pattern = 'OpencodeEvent:*',
         callback = function(args)
           local event = args.data.event
-          vim.notify(
-            vim.inspect(event),
-            vim.log.levels.INFO,
-            { title = "opencode.debug" }
-          )
+          vim.notify(vim.inspect(event), vim.log.levels.INFO, { title = 'opencode.debug' })
         end,
-        desc = "Debug all opencode events",
+        desc = 'Debug all opencode events',
       })
     end
 

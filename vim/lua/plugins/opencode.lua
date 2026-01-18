@@ -1,7 +1,6 @@
 return {
   'sudo-tee/opencode.nvim',
-  enabled = vim.g.enable_opencode_nvim or false,
-  cmd = { 'Opencode' },
+  cmd = {},
   dependencies = {
     'nvim-lua/plenary.nvim',
     'MeanderingProgrammer/render-markdown.nvim',
@@ -63,7 +62,13 @@ return {
     require('opencode').setup(_opts)
     vim.api.nvim_create_autocmd('FileType', {
       pattern = { 'opencode', 'opencode_output' },
-      callback = function(_event) vim.b[_event.buf].buf_name = _event.match end,
+      callback = function(event)
+        if event.match == 'opencode_output' then
+          -- NOTE: 必须启用 ts, 否则 render-markdown.nvim 无法正常工作
+          vim.treesitter.start(event.buf, 'markdown')
+        end
+        vim.b[event.buf].buf_name = event.match
+      end,
     })
   end,
 }
