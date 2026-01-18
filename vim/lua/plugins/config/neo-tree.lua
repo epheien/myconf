@@ -1,11 +1,18 @@
-local utils = require('utils')
+vim.api.nvim_set_hl(0, 'NeoTreeFloatBorder', { link = 'FloatBorder' })
+vim.api.nvim_set_hl(0, 'NeoTreeFloatNormal', { link = 'Normal' })
+vim.api.nvim_set_hl(0, 'NeoTreeRootName', { bold = true })
 
 require('neo-tree').setup({
-  open_file_with_relative = true,
+  open_files_using_relative_paths = true,
+  popup_border_style = 'single',
   window = {
     width = 36,
     mappings = {
       ['<space>'] = 'noop',
+    },
+    popup = {
+      title = 'Neo-tree Filesystem', -- title 无效, NuiPopup 的限制
+      border = 'single',
     },
   },
   filesystem = {
@@ -16,7 +23,3 @@ require('neo-tree').setup({
     },
   },
 })
-
--- 禁用斜体
-utils.modify_hl('NeoTreeRootName', { italic = false })
-utils.modify_hl('NeoTreeGitUntracked', { italic = false })
