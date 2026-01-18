@@ -125,7 +125,7 @@ vim.api.nvim_create_user_command('Opencode', function(opts)
     return
   end
 
-  if arg == 'plugin' then
+  if vim.fn.empty(arg) == 1 or arg == 'plugin' then
     require('lazy').load({ plugins = { 'opencode-plugin' } })
     vim.notify('Opencode plugin 已加载')
     vim.cmd('Opencode toggle')
@@ -137,7 +137,7 @@ vim.api.nvim_create_user_command('Opencode', function(opts)
     vim.notify('用法: Opencode plugin 或 Opencode frontend', vim.log.levels.ERROR)
   end
 end, {
-  nargs = 1,
+  nargs = '*',
   complete = function()
     if vim.g.loaded_opencode_plugin or vim.g.loaded_opencode_nvim then
       return {}

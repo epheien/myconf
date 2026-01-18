@@ -446,4 +446,7 @@ map('n', '<ScrollWheelDown>', function()
   return ''
 end, { expr = true, remap = false })
 
+map('n', [[\n]], function() vim.cmd('NvimTreeOpen') end, { desc = 'Open NvimTree' })
+map('n', [[\o]], function() vim.cmd('OutlineToggleFloat') end, { desc = 'Toggle Outline' })
+
 -- vim:set fdm=marker fen fdl=0:
