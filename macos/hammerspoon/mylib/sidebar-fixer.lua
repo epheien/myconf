@@ -90,12 +90,15 @@ updateSidebarPID()
 
 -- 监听应用启动
 M.appWatcher = hs.application.watcher.new(function(appName, eventType, appObject)
+  local watcher = hs.application.watcher
   --print(appName, eventType, appObject:pid())
-  if eventType == hs.application.watcher.launched then
+  -- NOTE: 无法监控到 Sidebar 的 launched, 作为临时的解决方案, 就是打开一次它的配置界面以刷新 sidebarPID
+  if eventType == watcher.launched or eventType == watcher.activated then
     if appName == 'Sidebar' then
       sidebarPID = appObject:pid()
+      print(string.format('Update the pid of Sidebar.app to %s', sidebarPID))
     end
-  elseif eventType == hs.application.watcher.terminated then
+  elseif eventType == watcher.terminated then
     if appName == 'Sidebar' then
       sidebarPID = nil
     end
