@@ -9,6 +9,7 @@
   },
   "permission": {
     "edit": "ask",
+      // NOTE: opencode 貌似有 bash 解析器, 理论上可以避免 && 命令注入, 但是可靠性未知
     "bash": {
       "*": "ask",
       "git *": "ask",
@@ -16,7 +17,9 @@
       "git diff": "allow",
       "git diff --cached": "allow",
       "git diff --staged": "allow",
-      "git log *": "allow", // NOTE: opencode 貌似有 bash 解析器, 所以可以避免 && 命令注入
+      "git log *": "allow",
+      "ls": "allow",
+      "grep": "allow",
     },
     "WebFetch": "ask",
   },
@@ -53,14 +56,14 @@
         }
       },
       "options": {
-        "baseURL": "http://192.168.3.244:11434/v1"
+        "baseURL": "http://10.74.121.244:11434/v1"
       }
     },
     "llama.cpp": {
       "name": "llama-server (local)",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://192.168.3.244:8080/v1"
+        "baseURL": "http://10.74.121.244:8080/v1"
       },
       "models": {
         "qwen3-coder-30b": {
@@ -90,7 +93,7 @@
       "name": "vllm (local)",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://192.168.3.244:8000/v1"
+        "baseURL": "http://10.74.121.244:8000/v1"
       },
       "models": {
         "minimax-m2.1-fp8": {
@@ -129,7 +132,7 @@
       "name": "vllm:8001 (local)",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://192.168.3.244:8001/v1"
+        "baseURL": "http://10.74.121.244:8001/v1"
       },
       "models": {
         "devstral2": {
@@ -150,7 +153,7 @@
       "name": "llm-api-relay",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://192.168.3.244:8008/v1"
+        "baseURL": "http://10.74.121.244:8008/v1"
       },
       "models": {
         "glm-4.7-awq": {
