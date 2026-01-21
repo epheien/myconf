@@ -294,7 +294,7 @@ local function core_plugins()
 
   table.insert(plugins, {
     'folke/edgy.nvim',
-    enabled = false,
+    --enabled = false,
     event = 'VeryLazy',
     config = function()
       --vim.opt.splitkeep = "screen"
@@ -305,7 +305,7 @@ local function core_plugins()
           winfixbuf = true,
         },
         options = {
-          left = { size = 36 },
+          left = { size = 30 },
           bottom = { size = 10 },
           right = { size = 30 },
           top = { size = 10 },
