@@ -68,16 +68,18 @@ local function toEnIM(force)
     return
   end
 
-  if hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC' then
-    if hs.host.operatingSystemVersion().major >= M.majorVersion or force then
-      hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
-    else
-      --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
-      toggleInputMethod()
-    end
-    M.lastToEnTs = now
-    M.lastToZhTs = 0
+  if hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC' then
+    return
   end
+
+  if hs.host.operatingSystemVersion().major >= M.majorVersion or force then
+    hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+  else
+    --hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+    toggleInputMethod()
+  end
+  M.lastToEnTs = now
+  M.lastToZhTs = 0
   --hs.alert.show(hs.keycodes.currentMethod())
 end
 
@@ -91,17 +93,19 @@ local function toZhIM()
     return
   end
 
-  if hs.keycodes.currentSourceID() == 'com.apple.keylayout.ABC' then
-    -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
-    if hs.host.operatingSystemVersion().major >= M.majorVersion then
-      hs.keycodes.currentSourceID(M.zhImName)
-    else
-      --hs.keycodes.currentSourceID(M.zhImName)
-      toggleInputMethod()
-    end
-    M.lastToZhTs = now
-    M.lastToEnTs = 0
+  if hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC' then
+    return
   end
+
+  -- BUG: 对于第三方的输入法, 使用 currentSourceID 函数来切换的话, 会出现奇怪的问题
+  if hs.host.operatingSystemVersion().major >= M.majorVersion then
+    hs.keycodes.currentSourceID(M.zhImName)
+  else
+    --hs.keycodes.currentSourceID(M.zhImName)
+    toggleInputMethod()
+  end
+  M.lastToZhTs = now
+  M.lastToEnTs = 0
   --hs.alert.show(hs.keycodes.currentSourceID())
 end
 
@@ -277,6 +281,36 @@ hs.urlevent.bind('openNewWindow', function(eventName, params)
     openNewWindow(params.app)
   end
 end)
+
+-- 使用 eventtap 监听按键, 部分修正 ghostty 在中文输入法下 alt 快捷键不能使用的问题
+-- 主要用于 nvim 环境
+M.inputSwitchTap = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
+  local keyCode = event:getKeyCode()
+  local flags = event:getFlags()
+
+  -- stylua: ignore
+  local targetKeys = {
+    [4] = true,   -- h
+    [38] = true,  -- j
+    [40] = true,  -- k
+    [37] = true,  -- l
+  }
+
+  -- 检查是否是 alt + h 或 alt + l
+  if targetKeys[keyCode] and flags:containExactly({ 'alt' }) then
+    if hs.application.frontmostApplication():name() == 'Ghostty' then
+      if hs.keycodes.currentSourceID() ~= 'com.apple.keylayout.ABC' then
+        hs.keycodes.currentSourceID('com.apple.keylayout.ABC')
+      end
+      -- 返回 false 放行按键
+      return false
+    end
+  end
+
+  return false
+end)
+
+M.inputSwitchTap:start()
 
 -- @ 支持 ssh 环境下的 nvim 通过 osc52 剪切板触发切换输入法
 M.lastClipboardContent = ''
