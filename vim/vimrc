@@ -344,8 +344,13 @@ if !has('gui_running')
                     let &t_SI = "\<Esc>]12;" . color_insert . "\x7" " 插入模式的光标颜色
                 endif
             elseif &term =~# "^screen"
-                " tmux 下没有测试成功，保守起见，不处理
-                "set ttymouse=xterm2
+                let &t_SI = "\e[6 q"
+                let &t_EI = "\e[2 q"
+                let &t_SR = "\e[4 q"
+            elseif &term =~# '^tmux'
+                let &t_SI = "\e[6 q"
+                let &t_EI = "\e[2 q"
+                let &t_SR = "\e[4 q"
             elseif &term =~ 'xterm.\+'
                 " xterm
                 " 0 or 1 -> blinking block
@@ -1530,6 +1535,14 @@ if has('mac') || exists('$SSH_CONNECTION')
         exec 'imap' lhs rhs
         exec 'tmap' lhs rhs
     endfor
+endif
+
+" 粘贴的时候不再需要 set paste
+if &term =~ '^screen\|^tmux' && exists('&t_BE')
+    let &t_BE = "\033[?2004h"
+    let &t_BD = "\033[?2004l"
+    exec "set t_PS=\033[200~"
+    exec "set t_PE=\033[201~"
 endif
 
 " ----------------------------------------------------------------------------
