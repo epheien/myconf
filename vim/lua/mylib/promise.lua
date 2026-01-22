@@ -1,3 +1,29 @@
+-- stylua: ignore start
+-- 源自: https://github.com/Billiam/promise.lua
+
+-- Port of https://github.com/rhysbrettbowen/promise_impl/blob/master/promise.js
+-- and https://github.com/rhysbrettbowen/Aplus
+
+--[[
+必须在 nvim 环境下运行, 因为依赖 vim.schedule.
+注意事项: 不支持 resolve(nil) 和 reject(nil).
+使用方法:
+```lua
+local Promise = require('mylib.promise')
+
+local promise = Promise.new(function(resolve, _reject)
+  vim.defer_fn(function() resolve('hello') end, 5000)
+end)
+
+promise
+  :next(function(result)
+    print('promise resolved', result)
+    return Promise.new(function(resolve, _reject) resolve('world') end)
+  end, function(reason) print('promise was rejected', reason) end)
+  :next(function(result) print(result) end)
+```
+--]]
+
 -- Port of https://github.com/rhysbrettbowen/promise_impl/blob/master/promise.js
 -- and https://github.com/rhysbrettbowen/Aplus
 --
@@ -79,16 +105,16 @@ resolve = function(promise, x)
     reject(promise, 'TypeError: cannot resolve a promise with itself')
     return
   end
-  
+
   local x_type = type(x)
 
   if x_type ~= 'table' then
     fulfill(promise, x)
     return
   end
-  
+
   -- x is a promise in the current implementation
-  if x.is_promise then 
+  if x.is_promise then
     -- 2.3.2.1 if x is pending, resolve or reject this promise after completion
     if x.state == State.PENDING then
       x:next(
@@ -113,7 +139,7 @@ resolve = function(promise, x)
     if is_callable(next) then
       next(
         x,
-        function(y) 
+        function(y)
           if not called then
             resolve(promise, y)
             called = true
@@ -268,4 +294,9 @@ function Promise.race(...)
   return promise
 end
 
+Promise.async = function(callback)
+  vim.schedule(callback)
+end
+
 return Promise
+-- stylua: ignore end
