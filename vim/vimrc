@@ -1546,4 +1546,4 @@ if &term =~ '^screen\|^tmux' && exists('&t_BE')
 endif
 
 " ----------------------------------------------------------------------------
-" vim: fdm=marker fen fdl=0 sw=4 sts=-1 et
+" vim:set fdm=marker fen sw=4 sts=-1 et:
