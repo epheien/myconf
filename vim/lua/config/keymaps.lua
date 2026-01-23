@@ -89,8 +89,14 @@ map('n', '<Space>', '3<C-e>')
 map('n', ',', '3<C-y>')
 
 -- 用于鼠标的横轴滚动, 一般鼠标都是 shift+滚轮 触发横向滚动
-map('n', '<S-ScrollWheelLeft>', '6zh')
-map('n', '<S-ScrollWheelRight>', '6zl')
+map('n', '<S-ScrollWheelLeft>', function()
+  local win = vim.fn.getmousepos().winid
+  vim.api.nvim_win_call(win, function() vim.cmd('normal! 6zh') end)
+end)
+map('n', '<S-ScrollWheelRight>', function()
+  local win = vim.fn.getmousepos().winid
+  vim.api.nvim_win_call(win, function() vim.cmd('normal! 6zl') end)
+end)
 
 -- Window navigation
 map('n', '<C-h>', '<C-w>h')
