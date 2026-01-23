@@ -1079,4 +1079,4 @@ function! myrc#FixDosFmt() "{{{2
 endfunction
 "}}}2
 
-" vim: fdm=indent fen fdl=0 sw=4 sts=-1 et
+" vim:set fdm=indent fen sw=4 sts=-1 et:
