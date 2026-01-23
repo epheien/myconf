@@ -162,11 +162,6 @@ map('s', '<BS>', '<BS>i')
 map('x', ';', ':', { silent = false })
 map('x', '<Space>', '3j')
 map('x', ',', '3k')
-map('x', '(', 'di()<ESC>Pl')
-map('x', '[', 'di[]<ESC>Pl')
-map('x', '{', 'di{}<ESC>Pl')
-map('x', '\'', 'di\'\'<ESC>Pl')
-map('x', '"', 'di""<ESC>Pl')
 -- C 文件的 #if 0 段落注释
 map('x', '0', '<C-c>:call myrc#MacroComment()<CR>')
 

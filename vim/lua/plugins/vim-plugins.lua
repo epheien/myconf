@@ -1,5 +1,5 @@
 local vim_plugins = {
-  { 'tpope/vim-surround', event = 'VeryLazy' },
+  --{ 'tpope/vim-surround', event = 'VeryLazy' },
   {
     --'yianwillis/vimcdoc',
     'epheien/vimcdoc',
@@ -10,10 +10,10 @@ local vim_plugins = {
   { 'sunaku/vim-dasht', cmd = 'Dasht' },
   { 'yuratomo/w3m.vim', cmd = 'W3m' },
   { 'Yggdroot/LeaderF', cmd = 'Leaderf' },
-  { 'mbbill/undotree', cmd = 'UndotreeShow' },
+  --{ 'mbbill/undotree', cmd = 'UndotreeShow' },
   { 'dhruvasagar/vim-table-mode', cmd = 'TableModeToggle' },
   { 'skywind3000/asyncrun.vim', cmd = 'AsyncRun' },
-  { 'kassio/neoterm', cmd = 'Tnew' },
+  --{ 'kassio/neoterm', cmd = 'Tnew' },
   { 'epheien/vim-clang-format', cmd = 'ClangFormat' },
   --{ 'epheien/videm', cmd = 'VidemOpen' },
   { 'iamcco/markdown-preview.vim', ft = 'markdown' },
