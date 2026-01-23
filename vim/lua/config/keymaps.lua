@@ -113,8 +113,18 @@ map('n', '`', '\'')
 map('n', ']q', ':cn<CR>')
 map('n', '[q', ':cp<CR>')
 -- diagnostic 跳转 (包装成函数避免初始化的时候载入 vim.diagnostic 模块)
-map('n', ']w', function() return vim.diagnostic.jump({ count = 1, float = true }) end)
-map('n', '[w', function() return vim.diagnostic.jump({ count = -1, float = true }) end)
+map(
+  'n',
+  ']w',
+  function() return vim.diagnostic.jump({ count = 1, float = true }) end,
+  { desc = 'Jumps to the previous diagnostic' }
+)
+map(
+  'n',
+  '[w',
+  function() return vim.diagnostic.jump({ count = -1, float = true }) end,
+  { desc = 'Jumps to the previous diagnostic' }
+)
 
 -- stty -ixon
 map('n', '<C-s>', function()

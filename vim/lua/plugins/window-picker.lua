@@ -26,5 +26,9 @@ return {
       end
     end
     vim.keymap.set('n', [[\w]], pick_window, { desc = 'window-picker' })
+    local ok, wk = pcall(require, 'which-key')
+    if ok then
+      wk.add({ { [[\w]], desc = 'window-picker' } })
+    end
   end,
 }
