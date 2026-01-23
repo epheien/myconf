@@ -19,7 +19,9 @@ local already_setup = {}
 local ext_to_server = {}
 
 local if_nil = function(val, default)
-  if val == nil then return default end
+  if val == nil then
+    return default
+  end
   return val
 end
 
@@ -38,27 +40,27 @@ local default_capabilities = function(override)
           tagSupport = if_nil(override.tagSupport, {
             valueSet = {
               1, -- Deprecated
-            }
+            },
           }),
           insertReplaceSupport = if_nil(override.insertReplaceSupport, true),
           resolveSupport = if_nil(override.resolveSupport, {
-              properties = {
-                  "documentation",
-                  "detail",
-                  "additionalTextEdits",
-                  "sortText",
-                  "filterText",
-                  "insertText",
-                  "textEdit",
-                  "insertTextFormat",
-                  "insertTextMode",
-              },
+            properties = {
+              'documentation',
+              'detail',
+              'additionalTextEdits',
+              'sortText',
+              'filterText',
+              'insertText',
+              'textEdit',
+              'insertTextFormat',
+              'insertTextMode',
+            },
           }),
           insertTextModeSupport = if_nil(override.insertTextModeSupport, {
             valueSet = {
               1, -- asIs
               2, -- adjustIndentation
-            }
+            },
           }),
           labelDetailsSupport = if_nil(override.labelDetailsSupport, true),
         },
@@ -71,8 +73,8 @@ local default_capabilities = function(override)
             'insertTextFormat',
             'insertTextMode',
             'data',
-          }
-        })
+          },
+        }),
       },
     },
   }
@@ -108,7 +110,7 @@ local function _lsp_setup(server)
     return
   end
   already_setup[server] = true
-  local ok, opts = pcall(require, 'config/lsp/'..server)
+  local ok, opts = pcall(require, 'config/lsp/' .. server)
   if not ok then
     opts = {}
   end
@@ -118,7 +120,8 @@ local function _lsp_setup(server)
     --vim.lsp.protocol.make_client_capabilities(),
     default_capabilities({
       snippetSupport = false,
-    }))
+    })
+  )
   opts = vim.tbl_deep_extend('force', opts, {
     capabilities = capabilities,
   })
@@ -133,17 +136,18 @@ local lsp_setup = function(event)
   inited[ext] = true
   _lsp_setup(ext_to_lsp_server(ext))
   -- 必须重发一次 autocmd, 否则 lspconfig 无法正确工作
-  vim.api.nvim_exec_autocmds(event.event, {buffer = event.buf, modeline = false})
+  vim.api.nvim_exec_autocmds(event.event, { buffer = event.buf, modeline = false })
 end
 
-vim.diagnostic.config({signs = false})
-vim.diagnostic.config({underline = false})
-vim.api.nvim_create_autocmd("LspAttach", {
+vim.diagnostic.config({ signs = false })
+vim.diagnostic.config({ underline = false })
+vim.diagnostic.config({ virtual_text = true })
+vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     client.server_capabilities.semanticTokensProvider = nil
   end,
-});
+})
 
 vim.api.nvim_create_autocmd('FileType', { callback = lsp_setup })
 -- 关闭 lsp 日志, 仅在需要的时候再开启, 最终都需要关闭
