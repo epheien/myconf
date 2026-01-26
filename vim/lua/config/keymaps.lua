@@ -357,7 +357,8 @@ end
 map('n', '<C-w>=', function()
   local count = get_win_count()
   local winnr = vim.fn.winnr()
-  if winnr < 2 or count ~= winnr then
+  -- 支持右侧有个 opencode 窗口
+  if winnr < 2 or not (count == winnr or (count == 5 and winnr == 4)) then
     return wincmd_adjust()
   end
   -- 当前光标在下方窗口
