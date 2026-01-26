@@ -48,7 +48,7 @@ return {
       },
     }
 
-    -- 在 plugin/opencode.lua 或你的插件加载文件中
+    local augroup = vim.api.nvim_create_augroup('opencode-plugin', { clear = true })
 
     local debug_autocmd_id = nil
 
@@ -58,6 +58,7 @@ return {
       end
       debug_autocmd_id = vim.api.nvim_create_autocmd('User', {
         pattern = 'OpencodeEvent:*',
+        group = augroup,
         callback = function(args)
           local event = args.data.event
           vim.notify(vim.inspect(event), vim.log.levels.INFO, { title = 'opencode.debug' })
@@ -183,14 +184,23 @@ return {
       },
     })
 
+    local checktime_auid = nil
     vim.api.nvim_create_autocmd('User', {
       pattern = 'OpencodeWinNew',
+      group = augroup,
       ---@param ev { data: { bufnr: integer, winid: integer } }
       callback = function(ev)
         local winid = ev.data.winid
         vim.api.nvim_win_set_width(winid, 55)
         vim.api.nvim_set_option_value('winfixwidth', true, { win = winid, scope = 'local' })
         vim.api.nvim_buf_set_var(ev.data.bufnr, 'buf_name', 'opencode --port')
+        if not checktime_auid then
+          checktime_auid = vim.api.nvim_create_autocmd({ 'TermLeave' }, {
+            group = augroup,
+            buffer = ev.data.bufnr,
+            callback = function() vim.cmd('checktime') end,
+          })
+        end
       end,
     })
 
