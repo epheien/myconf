@@ -23,7 +23,12 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 
 if vim.env.SSH_CONNECTION then
   vim.api.nvim_create_autocmd({ 'InsertLeave', 'TermLeave' }, {
-    callback = function() vim.cmd.OSCYank('toEnIM()') end,
+    callback = function()
+      local bak = vim.g.oscyank_silent
+      vim.g.oscyank_silent = 1
+      vim.cmd.OSCYank('toEnIM()')
+      vim.g.oscyank_silent = bak
+    end,
   })
 end
 
