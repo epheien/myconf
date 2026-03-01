@@ -1,7 +1,7 @@
 // vim:set ft=json5 sw=2 sts=2:
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "vllm/glm-4.7-awq", // 默认模型
+  "model": "sglang/qwen3.5-397b", // 默认模型
   "share": "disabled",
   "autoupdate": false,
   "experimental": {
@@ -43,7 +43,7 @@
       "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese.\nNever describe tools in text (e.g., \"I will use multiedit to...\", \"Let me add...\").\nAlways invoke tools directly via the proper tool calling format.\n",
     },
     "title": {
-      "model": "vllm/glm-4.7-awq",
+      "model": "sglang/qwen3.5-397b",
       "disable": true,
     }
   },
