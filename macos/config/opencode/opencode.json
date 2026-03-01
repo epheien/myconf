@@ -148,8 +148,46 @@
             "context": 65516,
             "output": 15000
           }
-        }
+        },
+        "qwen3-coder-next": {
+          "id": "qwen3-coder-next",
+          "reasoning": false,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 40,
+          },
+          "limit": {
+            "context": 163840,
+            "output": 15000,
+          },
+        },
       }
+    },
+    "sglang": {
+      "name": "sglang",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://10.74.121.244:30000/v1"
+      },
+      "models": {
+        // We suggest using Temperature=0.6, TopP=0.95, TopK=20, and MinP=0 for thinking mode and using Temperature=0.7, TopP=0.8, TopK=20, and MinP=0 for non-thinking mode.
+        "qwen3.5-397b": {
+          "id": "qwen3.5-397b",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 20,
+          },
+          "limit": {
+            "context": 163840,
+            "output": 15000,
+          },
+        },
+      },
     },
     "llm-api-relay": {
       "name": "llm-api-relay",
