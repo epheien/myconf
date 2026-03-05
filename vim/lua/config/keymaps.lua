@@ -216,6 +216,8 @@ map('n', '<C-p>', function()
     local winid = require('opencode.config').provider.winid
     if vim.api.nvim_win_is_valid(winid) then
       vim.api.nvim_set_current_win(winid)
+      -- 强制切换输入法为英文
+      vim.api.nvim_exec_autocmds('InsertLeave', { modeline = false })
       vim.cmd('startinsert')
     end
   elseif vim.g.loaded_opencode_nvim then
