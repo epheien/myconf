@@ -402,6 +402,7 @@ local function core_plugins()
   -- 在 nvim 内直接预览 markdown, 效果凑合可用
   table.insert(plugins, {
     'OXY2DEV/markview.nvim',
+    enabled = false,
     ft = 'markdown',
     opts = {
       preview = {
