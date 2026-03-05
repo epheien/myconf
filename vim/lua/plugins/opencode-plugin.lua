@@ -14,6 +14,7 @@ return {
     vim.g.opencode_opts = {
       -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
       provider = {
+        --cmd = "tmux new -A -s 'opencode session' opencode --port ';' set-option status off ';' set-option detach-on-destroy on",
         enabled = 'terminal',
         terminal = {
           split = 'right',
