@@ -29,6 +29,7 @@ return {
       },
       events = {
         permissions = {
+          enabled = false, -- 很多时候, opencode 正在干活, 自己正在看代码, 不希望被干扰
           idle_delay_ms = 0,
           confirm = {
             enabled = true,
