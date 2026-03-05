@@ -32,6 +32,12 @@ if vim.env.SSH_CONNECTION then
   })
 end
 
+-- 需要用于 terminal 的 opencode 的自动刷新 buffer, 这种处理基本足够
+vim.api.nvim_create_autocmd('TermLeave', {
+  group = vimrc_group,
+  callback = function() vim.cmd('checktime') end,
+})
+
 -- from vimrc sample by Bram
 -- When editing a file, always jump to the last known cursor position.
 -- Don't do it when the position is invalid or when inside an event handler
