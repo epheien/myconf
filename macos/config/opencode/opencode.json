@@ -132,13 +132,17 @@
           "id": "qwen3.5-397b",
           "reasoning": true,
           "temperature": true,
+          "modalities": {
+            "input": ["text", "image", "audio", "video", "pdf"],
+            "output": ["text"],
+          },
           "options": {
             "temperature": 0.6,
             "top_p": 0.95,
             "top_k": 20,
           },
           "limit": {
-            "context": 163840,
+            "context": 262144,
             "output": 15000,
           },
         },
