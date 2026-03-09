@@ -1,3 +1,4 @@
+// vim:set ft=json5 sw=2 sts=2:
 {
   "$schema": "https://opencode.ai/tui.json",
   "keybinds": {
@@ -7,12 +8,12 @@
     "messages_first": "ctrl+g,home",
     "messages_last": "<leader>ctrl+g,end",
     "app_exit": "none",
-    "command_list": "none",
+    "command_list": "<leader>p",
     "input_move_up": "up,ctrl+p",
     "input_move_down": "down,ctrl+n",
     "history_previous": "up,ctrl+p",
     "history_next": "down,ctrl+n",
     "input_submit": "ctrl+s",
-    "input_newline": "shift+return,ctrl+return,alt+return,ctrl+j,return"
-  }
+    "input_newline": "shift+return,ctrl+return,alt+return,ctrl+j,return",
+  },
 }
