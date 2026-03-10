@@ -62,7 +62,7 @@
       }
     },
     "llama.cpp": {
-      "name": "llama-server (local)",
+      "name": "llama.cpp (local)",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://10.74.121.244:8080/v1"
@@ -88,7 +88,14 @@
             "context": 32768,
             "output": 15000
           }
-        }
+        },
+        "minimax-m2.5": {
+          "name": "minimax-m2.5 (local)",
+          "limit": {
+            "context": 100000,
+            "output": 15000
+          }
+        },
       }
     },
     "vllm": {
