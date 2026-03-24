@@ -130,6 +130,10 @@ return {
           return
         end
 
+        if subcmd == 'toggle' or subcmd == 'start' then
+          require('opencode.cli.server').clear_cached_port()
+        end
+
         -- 移除子命令本身，传递剩余参数
         local fn_args = { unpack(args, 2) }
 
