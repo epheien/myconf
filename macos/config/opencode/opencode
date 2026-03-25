@@ -1,0 +1,6 @@
+#!/bin/bash
+export OPENCODE_DISABLE_AUTOUPDATE=1        # 禁止连接 registry.npmjs.org（自动更新和插件安装）
+export OPENCODE_DISABLE_MODELS_FETCH=1      # 禁止连接 models.dev
+export OPENCODE_DISABLE_LSP_DOWNLOAD=1      # 禁止 LSP 服务器的自动下载
+export OPENCODE_EXPERIMENTAL_LSP_TOOL=1     # 启用实验性 LSP 工具
+exec ~/opt/opencode "$@"
