@@ -1,11 +1,20 @@
 // vim:set ft=json5 sw=2 sts=2:
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "vllm/minimax-m2.5", // 默认模型
+  "model": "vllm/qwen3.5-397b", // 默认模型
   "share": "disabled",
   "autoupdate": false,
   "experimental": {
     "openTelemetry": false,
+  },
+  "skills": {
+    // 默认:
+    // .opencode/skills, .opencode/skill,
+    // ~/.claude/skills, ~/.agents/skills, ~/.opencode/skills, ~/.opencode/skill,
+    // ~/.config/opencode/skills, ~/.config/opencode/skill,
+    "paths": [
+      "~/.openclaw/skills", // 包含 openclaw 的 skills
+    ],
   },
   "permission": {
     "edit": "ask",
@@ -147,6 +156,9 @@
             "temperature": 0.6,
             "top_p": 0.95,
             "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0,
+            "repetition_penalty": 1.0,
           },
           "limit": {
             "context": 262144,
