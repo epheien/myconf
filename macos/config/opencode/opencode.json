@@ -320,5 +320,7 @@
   },
   "plugin": [
     //"oh-my-opencode",
+    //"superpowers", // git clone https://github.com/obra/superpowers.git ~/.config/opencode/superpowers && ln -sf ~/.config/opencode/superpowers/.opencode/plugins/superpowers.js ~/.config/opencode/plugins/superpowers.js
+
   ],
 }
