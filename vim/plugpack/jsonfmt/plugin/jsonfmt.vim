@@ -9,7 +9,7 @@ if exists('g:loaded_jsonfmt')
 endif
 let g:loaded_jsonfmt = 1
 
-if !has('python3')
+if !(has('python3') || has('nvim'))
     echoerr "Error: jsonfmt required vim compiled with +python3"
     finish
 endif
