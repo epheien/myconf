@@ -245,6 +245,37 @@
         },
       }
     },
+    // vllm 的第三个实例
+    "vllm:8002": {
+      "name": "vllm:8002 (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://10.74.121.244:8002/v1"
+      },
+      "models": {
+        "qwen3.5-122b": {
+          "id": "qwen3.5-122b",
+          "reasoning": true,
+          "temperature": true,
+          "modalities": {
+            "input": ["text", "image", "audio", "video", "pdf"],
+            "output": ["text"],
+          },
+          "options": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0,
+            "repetition_penalty": 1.0,
+          },
+          "limit": {
+            "context": 262144,
+            "output": 15000,
+          },
+        },
+      }
+    },
     "vllm-docker": {
       "name": "vllm-docker (local)",
       "npm": "@ai-sdk/openai-compatible",
