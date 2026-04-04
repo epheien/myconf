@@ -49,7 +49,10 @@
   },
   "agent": {
     "build": {
-      "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese.\nNever describe tools in text (e.g., \"I will use multiedit to...\", \"Let me add...\").\nAlways invoke tools directly via the proper tool calling format.\n",
+      "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese. Always invoke tools directly via the proper tool calling format.\n",
+    },
+    "plan": {
+      "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese. Always invoke tools directly via the proper tool calling format.\n",
     },
     "title": {
       //"model": "", // 默认标题模型, 使用 session-auto-title 插件完成, 不依赖于模型
