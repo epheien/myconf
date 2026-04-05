@@ -221,7 +221,7 @@
             "repetition_penalty": 1.0,
           },
           "limit": {
-            "context": 131072,
+            "context": 196608,
             "output": 15000,
           },
         },
@@ -291,7 +291,7 @@
             "top_k": 64,
           },
           "limit": {
-            "context": 262144,
+            "context": 163840,
             "output": 15000,
           },
         },
