@@ -366,7 +366,25 @@
             "context": 163840,
             "output": 15000
           }
-        }
+        },
+        "gemma-4-31b-it": {
+          "id": "gemma-4-31b-it",
+          "reasoning": true,
+          "temperature": true,
+          "modalities": {
+            "input": ["text", "image", "audio", "video", "pdf"],
+            "output": ["text"],
+          },
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 64,
+          },
+          "limit": {
+            "context": 163840,
+            "output": 15000,
+          },
+        },
       }
     },
   },
