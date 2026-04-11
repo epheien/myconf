@@ -22,7 +22,7 @@
     "bash": {
       "*": "ask",
       "git *": "ask",
-      "git status": "allow",
+      "git status *": "allow",
       "git diff": "allow",
       "git diff --cached": "allow",
       "git diff --staged": "allow",
