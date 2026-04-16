@@ -49,10 +49,13 @@
   },
   "agent": {
     "build": {
-      "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese. Always invoke tools directly via the proper tool calling format.\n",
+      // NOTE: gemma-4-31b-it 在看到有语言要求的 prompt 的时候, 会出现语言错误: uma
+      // 让它自动选择语言就不会有奇怪的问题, 可能是要求语言的内容写到系统提示符触发的 BUG.
+      // 然而在普通 prompt 中要求说中文也容易触发这个 BUG, 看来只能让它自动选择语言
+      //"prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese. Always invoke tools directly via the proper tool calling format.\n",
     },
     "plan": {
-      "prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese. Always invoke tools directly via the proper tool calling format.\n",
+      //"prompt": "**Important**: Both thinking and answering must be in Chinese and write the file content in Chinese. Always invoke tools directly via the proper tool calling format.\n",
     },
     "title": {
       //"model": "", // 默认标题模型, 使用 session-auto-title 插件完成, 不依赖于模型
