@@ -398,6 +398,20 @@
             "output": 15000
           }
         },
+        "minimax-m2.7": {
+          "id": "minimax-m2.7",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 40
+          },
+          "limit": {
+            "context": 196608,
+            "output": 30000
+          }
+        },
         "qwen3.5-27b": {
           "id": "qwen3.5-27b",
           "reasoning": true,
