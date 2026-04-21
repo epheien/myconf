@@ -474,6 +474,34 @@
         },
       }
     },
+    "openrouter.ai": {
+      "name": "openrouter.ai",
+      "npm": "@ai-sdk/openai-compatible",
+      // export OPENROUTER_API_KEY=sk-xxx
+      "env": ["OPENROUTER_API_KEY"],
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+      },
+      "models": {
+        "minimax-m2.7": {
+          "id": "minimax-m2.7",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 40,
+            "provider": {
+              "only": ["minimax"],
+            },
+          },
+          "limit": {
+            "context": 196608,
+            "output": 30000
+          }
+        },
+      }
+    }
   },
   "plugin": [
     //"oh-my-opencode",
