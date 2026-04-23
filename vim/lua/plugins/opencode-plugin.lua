@@ -207,6 +207,12 @@ return {
             callback = function() vim.cmd('checktime') end,
           })
         end
+        vim.keymap.set(
+          't',
+          '<C-z>',
+          '<Nop>',
+          { buffer = ev.data.bufnr, desc = 'Disable Ctrl-z in Opencode' }
+        )
       end,
     })
 
