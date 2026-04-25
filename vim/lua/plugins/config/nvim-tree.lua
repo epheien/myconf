@@ -213,7 +213,7 @@ local nvim_tree_opts = {
     },
   },
   filesystem_watchers = {
-    enable = false, -- 开启的话, 在大目录退出 nvim 的时候会卡一下
+    enable = true, -- 开启的话, 在大目录退出 nvim 的时候会卡一下, 好像新版本优化了性能
   },
 
   -- 试验性的功能
