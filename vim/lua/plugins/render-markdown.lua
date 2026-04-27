@@ -20,5 +20,15 @@ return {
     anti_conceal = {
       enabled = false,
     },
+    checkbox = {
+      custom = {
+        partial = {
+          raw = '[~]',
+          rendered = '󰥔 ',
+          highlight = 'RenderMarkdownTodo',
+          scope_highlight = nil,
+        },
+      },
+    },
   },
 }
