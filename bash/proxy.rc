@@ -1,0 +1,32 @@
+# vim: set ft=sh:
+proxy() {
+    local HTTP_PROXY_ADDR="http://192.168.3.131:7890"
+    local HTTPS_PROXY_ADDR="http://192.168.3.131:7890"
+    local ALL_PROXY_ADDR="socks5://192.168.3.131:7890"
+    local NO_PROXY_ADDR="localhost,127.0.0.1,::1"
+
+    case "$1" in
+        on)
+            export http_proxy="$HTTP_PROXY_ADDR"
+            export https_proxy="$HTTPS_PROXY_ADDR"
+            export all_proxy="$ALL_PROXY_ADDR"
+            export no_proxy="$NO_PROXY_ADDR"
+            export HTTP_PROXY="$HTTP_PROXY_ADDR"
+            export HTTPS_PROXY="$HTTPS_PROXY_ADDR"
+            export ALL_PROXY="$ALL_PROXY_ADDR"
+            export NO_PROXY="$NO_PROXY_ADDR"
+            echo "Proxy enabled."
+            ;;
+        off)
+            unset http_proxy https_proxy all_proxy no_proxy
+            unset HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY
+            echo "Proxy disabled."
+            ;;
+        status)
+            env | grep -i '_proxy\|no_proxy' || echo "No proxy variables set."
+            ;;
+        *)
+            echo "Usage: proxy {on|off|status}"
+            ;;
+    esac
+}

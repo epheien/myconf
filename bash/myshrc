@@ -166,6 +166,10 @@ if [ -f "$HOME/.shalias" ]; then
     source "$HOME/.shalias"
 fi
 
+if [ -f "$HOME/myconf/bash/proxy.rc" ]; then
+    source "$HOME/myconf/bash/proxy.rc"
+fi
+
 # fuck 命令
 if command -v thefuck &>/dev/null; then
     eval $(thefuck --alias)
