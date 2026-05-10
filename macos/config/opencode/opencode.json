@@ -116,6 +116,19 @@
         "baseURL": "http://10.74.121.244:8000/v1"
       },
       "models": {
+        "deepseek-v4-flash": {
+          "id": "deepseek-v4-flash",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+          },
+          "limit": {
+            "context": 163840,
+            "output": 15000
+          }
+        },
         "minimax-m2.5": {
           "id": "minimax-m2.5",
           "reasoning": true,
@@ -214,27 +227,6 @@
           "limit": {
             "context": 163840,
             "output": 15000,
-          },
-        },
-        "qwen3.5-27b": {
-          "id": "qwen3.5-27b",
-          "reasoning": true,
-          "temperature": true,
-          "modalities": {
-            "input": ["text", "image", "audio", "video", "pdf"],
-            "output": ["text"],
-          },
-          "options": {
-            "temperature": 0.6,
-            "top_p": 0.95,
-            "top_k": 20,
-            "min_p": 0.0,
-            "presence_penalty": 0.0,
-            "repetition_penalty": 1.0,
-          },
-          "limit": {
-            "context": 262144,
-            "output": 30000,
           },
         },
         "qwen3.6-27b": {
