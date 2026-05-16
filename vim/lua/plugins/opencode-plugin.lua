@@ -18,7 +18,7 @@ return {
         enabled = 'terminal',
         terminal = {
           split = 'right',
-          width = function() return math.floor(vim.o.columns * 0.35) end,
+          width = function() return math.floor(vim.o.columns * 0.40) end,
         },
       },
       prompts = {
@@ -197,7 +197,7 @@ return {
       ---@param ev { data: { bufnr: integer, winid: integer } }
       callback = function(ev)
         local winid = ev.data.winid
-        vim.api.nvim_win_set_width(winid, 55)
+        --vim.api.nvim_win_set_width(winid, 55)
         vim.api.nvim_set_option_value('winfixwidth', true, { win = winid, scope = 'local' })
         vim.api.nvim_buf_set_var(ev.data.bufnr, 'buf_name', 'opencode --port')
         if not checktime_auid then
