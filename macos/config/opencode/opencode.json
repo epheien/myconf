@@ -211,6 +211,19 @@
             "output": 15000,
           },
         },
+        "mimo-v2.5": {
+          "id": "mimo-v2.5",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+          },
+          "limit": {
+            "context": 262144,
+            "output": 15000,
+          },
+        },
       }
     },
     "vllm:8001": {
