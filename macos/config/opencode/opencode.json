@@ -129,6 +129,23 @@
             "output": 30000
           }
         },
+        "deepseek-v4-flash-max": {
+          "id": "deepseek-v4-flash",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "chat_template_kwargs": {
+              "thinking": true,
+              "reasoning_effort": "max",
+            }
+          },
+          "limit": {
+            "context": 262144,
+            "output": 30000
+          }
+        },
         "minimax-m2.5": {
           "id": "minimax-m2.5",
           "reasoning": true,
