@@ -213,6 +213,18 @@ return {
           '<Nop>',
           { buffer = ev.data.bufnr, desc = 'Disable Ctrl-z in Opencode' }
         )
+        vim.keymap.set(
+          'n',
+          '<C-u>',
+          function() require('opencode').command('session.page.up') end,
+          { buffer = ev.data.bufnr, desc = 'opencode page up' }
+        )
+        vim.keymap.set(
+          'n',
+          '<C-d>',
+          function() require('opencode').command('session.page.down') end,
+          { buffer = ev.data.bufnr, desc = 'opencode page down' }
+        )
       end,
     })
 
