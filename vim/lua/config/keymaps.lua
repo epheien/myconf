@@ -178,7 +178,7 @@ map('n', '\\e', ':FzfLua command_history<CR>')
 map('n', '\\b', ':Telescope buffers<CR>')
 map('n', '\\t', ':Leaderf bufTag<CR>')
 map('n', '\\T', ':Telescope tags<CR>')
-map('n', '\\g', ':Telescope tags<CR>')
+map('n', '\\g', ':Telescope gtags<CR>')
 map('n', '\\/', ':Telescope current_buffer_fuzzy_find<CR>')
 map('n', '\\s', ':Telescope lsp_workspace_symbols<CR>', { nowait = true })
 
