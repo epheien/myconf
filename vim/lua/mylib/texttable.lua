@@ -94,6 +94,50 @@ function M.sort_table(tbl, sort_col, descending)
   table.sort(tbl.rows, function(a, b) return M.comp(a[sort_col], b[sort_col], descending) end)
 end
 
+---@param input? string
+---@return string[]
+function M.parse_title_filters(input)
+  if not input or input == '' then
+    return {}
+  end
+
+  local filters = {}
+  for _, filter in ipairs(vim.split(input, ',', { plain = true })) do
+    filter = vim.trim(filter)
+    if filter ~= '' then
+      table.insert(filters, filter)
+    end
+  end
+  return filters
+end
+
+---@param title? string
+---@param filters? string[]
+---@return boolean
+local function title_matches_filters(title, filters)
+  title = title or ''
+  for _, filter in ipairs(filters or {}) do
+    filter = type(filter) == 'string' and filter or tostring(filter)
+    if filter ~= '' and title == filter then
+      return true
+    end
+  end
+  return false
+end
+
+---@param filters? string[]
+---@return string
+local function format_title_filters(filters)
+  local visible_filters = {}
+  for _, filter in ipairs(filters or {}) do
+    filter = type(filter) == 'string' and filter or tostring(filter)
+    if filter ~= '' then
+      table.insert(visible_filters, filter)
+    end
+  end
+  return table.concat(visible_filters, ',')
+end
+
 ---@class texttable.Table
 ---@field title string The title of the table.
 ---@field cols string[] The headers of the table.
@@ -286,13 +330,13 @@ end
 ---@field descending boolean
 
 ---@class texttable.Opts
----@field filters string[] 隐藏的表格, title 作为标识
+---@field filters string[] 隐藏标题精确匹配任一过滤字符串的表格
 ---@field views table<string, texttable.Opts.View>
 
 ---render status file
 --- opts = { views = { ['盘口状态'] = { sort_col = 2, descending = false } } }
 ---@param fname string
----@param opts table<string, texttable.Opts.View>
+---@param opts? texttable.Opts
 ---@return string[]
 function M.render_status(fname, opts)
   opts = opts or {}
@@ -302,7 +346,7 @@ function M.render_status(fname, opts)
   for line in io.lines(fname) do
     if string.sub(line, 1, 1) == '{' then
       local tbl = vim.json.decode(line)
-      if not vim.tbl_contains(filters, tbl.title) then
+      if not title_matches_filters(tbl.title, filters) then
         local o = opts.views and (opts.views[tbl.title] or {}) or {}
         table.insert(
           lines,
@@ -367,25 +411,67 @@ function M.toggle_sort_on_header(fname)
 end
 
 ---@param buf integer
+---@param filters string[]
+function M.status_tables_set_filters(buf, filters)
+  local ok, opts = pcall(vim.api.nvim_buf_get_var, buf, 'status_tables_opts')
+  opts = ok and opts or {}
+  opts.filters = filters
+  vim.api.nvim_buf_set_var(buf, 'status_tables_opts', opts)
+end
+
+---@param buf integer
+---@param fname string|texttable.Table
+function M.prompt_title_filters(buf, fname)
+  local ok, opts = pcall(vim.api.nvim_buf_get_var, buf, 'status_tables_opts')
+  opts = ok and opts or {}
+  local filters = opts.filters
+  if filters == nil then
+    local effective_ok, effective_filters =
+      pcall(vim.api.nvim_buf_get_var, buf, 'status_tables_effective_filters')
+    filters = effective_ok and effective_filters or {}
+  end
+  local default = format_title_filters(filters)
+  local input = vim.fn.input('Filter status table title: ', default)
+  M.status_tables_set_filters(buf, M.parse_title_filters(input))
+  M.buffer_render_status(buf, fname)
+end
+
+---@param buf integer
+---@param fname string|texttable.Table
+local function set_filter_keymap(buf, fname)
+  vim.keymap.set('n', 'F', function()
+    M.prompt_title_filters(buf, fname)
+  end, { buffer = buf, desc = 'Filter status table titles' })
+end
+
+---@param buf integer
 ---@param fname string|texttable.Table
 ---@param opts? table
 function M.buffer_render_status(buf, fname, opts)
+  set_filter_keymap(buf, fname)
   opts = opts or {}
   local options = {
     filters = opts.filters,
   }
   local ok, bopts = pcall(vim.api.nvim_buf_get_var, buf, 'status_tables_opts')
   options = vim.tbl_deep_extend('force', options, ok and bopts or {})
+  vim.api.nvim_buf_set_var(buf, 'status_tables_effective_filters', options.filters or {})
   -- NOTE: lines 元素可能包含有换行, 例如表格行
   local lines = {}
   if type(fname) == 'string' then
     lines = M.render_status(fname, options)
   else
     local tbl = fname
-    local o = options.views and (options.views[tbl.title] or {}) or {}
-    lines = M.render_table(tbl, o.ascii, o.sort_col, o.descending)
+    if not title_matches_filters(tbl.title, options.filters) then
+      local o = options.views and (options.views[tbl.title] or {}) or {}
+      lines = M.render_table(tbl, o.ascii, o.sort_col, o.descending)
+    end
   end
   table.insert(lines, 1, '当前时间: ' .. M.make_tsdt(os.time())[2])
+  local filter_text = format_title_filters(options.filters)
+  if filter_text ~= '' then
+    table.insert(lines, 2, '过滤标题: ' .. filter_text)
+  end
   local content = table.concat(lines, '\n')
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
 end
