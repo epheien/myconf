@@ -437,8 +437,10 @@ local function core_plugins()
     },
   })
 
+  -- 这玩意严重影响性能, 在大文件中会卡死一段时间, 直接干掉
   table.insert(plugins, {
     'folke/todo-comments.nvim',
+    enabled = false,
     event = 'FileType',
     config = function()
       -- NOTE: todo-comments 会从已有的高亮组中自动生成高亮组,
