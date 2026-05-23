@@ -68,7 +68,12 @@ local function core_plugins()
       },
     },
 
-    { 'nvim-treesitter/nvim-treesitter', cmd = 'TSBufToggle', event = 'BufReadPre' },
+    {
+      'nvim-treesitter/nvim-treesitter',
+      branch = 'main',
+      cmd = 'TSBufToggle',
+      event = 'BufReadPre',
+    },
     {
       'lukas-reineke/indent-blankline.nvim',
       cmd = 'IBLEnable',
