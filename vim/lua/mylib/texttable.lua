@@ -467,7 +467,8 @@ function M.buffer_render_status(buf, fname, opts)
       lines = M.render_table(tbl, o.ascii, o.sort_col, o.descending)
     end
   end
-  table.insert(lines, 1, '当前时间: ' .. M.make_tsdt(os.time())[2])
+  local file_info = type(fname) == 'string' and ('文件: ' .. fname) or ('表格: ' .. fname.title)
+  table.insert(lines, 1, '当前时间: ' .. M.make_tsdt(os.time())[2] .. ', ' .. file_info)
   local filter_text = format_title_filters(options.filters)
   if filter_text ~= '' then
     table.insert(lines, 2, '过滤标题: ' .. filter_text)
