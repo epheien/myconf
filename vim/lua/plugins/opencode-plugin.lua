@@ -200,6 +200,7 @@ return {
         --vim.api.nvim_win_set_width(winid, 55)
         vim.api.nvim_set_option_value('winfixwidth', true, { win = winid, scope = 'local' })
         vim.api.nvim_buf_set_var(ev.data.bufnr, 'buf_name', 'opencode --port')
+        vim.api.nvim_set_option_value('modeline', false, { buf = ev.data.bufnr, scope = 'local' })
         if not checktime_auid then
           checktime_auid = vim.api.nvim_create_autocmd({ 'TermLeave' }, {
             group = augroup,
