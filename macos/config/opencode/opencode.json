@@ -418,6 +418,19 @@
         "baseURL": "http://10.74.121.244:8008/v1"
       },
       "models": {
+        "deepseek-v4-flash": {
+          "id": "deepseek-v4-flash",
+          "reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+          },
+          "limit": {
+            "context": 262144,
+            "output": 30000
+          }
+        },
         "glm-4.7-awq": {
           "id": "glm-4.7",
           "reasoning": true,
