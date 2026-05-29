@@ -295,8 +295,14 @@ map(
 map('n', 'K', function() vim.call('myrc#ShowDocumentation') end)
 
 -- 使用 + - 替代 <C-a> 和 <C-x>, 这样就可以用作他用
-vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment', noremap = true })
-vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement', noremap = true })
+-- 按 0 的时候容易按到 - 导致修改文本, 这个功能还是禁掉
+--vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment', noremap = true })
+--vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement', noremap = true })
+
+-- 0 有点难按, 用 <C-a> 代替
+vim.keymap.set('n', '<C-a>', '0', { noremap = true, silent = true })
+-- 禁用 <C-x> 避免乱改
+vim.keymap.set('n', '<C-x>', '<Nop>', { noremap = true, silent = true })
 
 map('i', '<C-g>', '<C-r>=myrc#i_InsertHGuard()<CR>', nosilent)
 map('i', '<CR>', function() vim.call('myrc#SmartEnter') end, { noremap = true })
