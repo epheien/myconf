@@ -245,6 +245,23 @@
         "baseURL": "http://10.74.121.244:8001/v1"
       },
       "models": {
+        "step-3.7-flash": {
+          "id": "step-3.7-flash",
+          "reasoning": true,
+          "temperature": true,
+          "modalities": {
+            "input": ["text", "image", "audio", "video", "pdf"],
+            "output": ["text"],
+          },
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+          },
+          "limit": {
+            "context": 262144,
+            "output": 30000,
+          },
+        },
         "devstral2": {
           "id": "devstral2",
           "reasoning": false,
