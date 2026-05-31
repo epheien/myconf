@@ -60,15 +60,23 @@
   },
   "agent": {
     "build": {
-      "prompt": "- Both thinking and reply must be in Chinese.\n- Never use LaTeX/TeX syntax in any reply.",
+      // NOTE: 设置 prompt 的话会直接替换掉内置的 system prompt, 一般不要这样做!
+      //"prompt": "- Both thinking and reply must be in Chinese.\n- Never use LaTeX/TeX syntax in any reply.",
     },
     "plan": {
-      "prompt": "- Both thinking and reply must be in Chinese.\n- Never use LaTeX/TeX syntax in any reply.",
+      //"prompt": "- Both thinking and reply must be in Chinese.\n- Never use LaTeX/TeX syntax in any reply.",
     },
     "title": {
       //"model": "", // 默认标题模型, 使用 session-auto-title 插件完成, 不依赖于模型
       "disable": true,
-    }
+    },
+    "yolo": {
+      "description": "yolo mode - unlimited access",
+      "color": "#fb4934",
+      "permission": {
+        "*": "allow",
+      },
+    },
   },
   "provider": {
     "ollama": {
