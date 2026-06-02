@@ -75,6 +75,10 @@
       "color": "#fb4934",
       "permission": {
         "*": "allow",
+        "bash": {
+          "*": "allow",
+          "git push *": "ask",
+        },
       },
     },
   },
