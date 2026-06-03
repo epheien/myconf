@@ -208,6 +208,10 @@ return {
             callback = function() vim.cmd('checktime') end,
           })
         end
+        vim.api.nvim_create_autocmd('WinEnter', {
+          buffer = ev.data.bufnr,
+          callback = function() vim.cmd('startinsert') end,
+        })
         vim.keymap.set(
           't',
           '<C-z>',
