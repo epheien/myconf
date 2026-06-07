@@ -78,13 +78,13 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_create_user_command(
   'RefreshStatusTables',
-  function(args) vim.call('myrc#RefreshStatusTables', unpack(args.fargs)) end,
+  function(args) require('refresh-table').refresh_status_tables(unpack(args.fargs)) end,
   { nargs = '+', complete = 'file' }
 )
 
 vim.api.nvim_create_user_command(
   'StopRefreshStatusTables',
-  function() vim.call('myrc#StopRefreshStatusTables') end,
+  function() require('refresh-table').stop_refresh_status_tables() end,
   { nargs = 0 }
 )
 
