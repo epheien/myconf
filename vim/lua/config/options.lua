@@ -114,6 +114,10 @@ vim.env.VIM_SERVERNAME = vim.v.servername
 vim.env.VIM_PROGPATH = vim.v.progpath
 -- 添加 ~/.vim/bin/ 目录到 PATH
 vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath('config') --[[@as string]], '/bin:') .. vim.env.PATH
+if vim.fn.has('gui_running') == 1 then
+  -- ~/bin/ 目录添加到 PATH, 主要用于 neovide 这类 gui 前端
+  vim.env.PATH = vim.fn.expand('~/bin:') .. vim.env.PATH
+end
 
 -- scrollview
 vim.g.scrollview_auto_mouse = false
