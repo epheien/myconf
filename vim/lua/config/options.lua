@@ -48,6 +48,9 @@ vim.opt.guicursor = {
   'sm:block-blinkwait175-blinkoff150-blinkon175',
 }
 
+-- 最简单的剪切板设置就这样就够了, 但是如果要多个剪切板的话就不适合了
+--vim.opt.clipboard:append('unnamedplus')
+
 -- 缩进相关
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
