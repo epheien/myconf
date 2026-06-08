@@ -191,44 +191,58 @@ return {
     })
 
     local checktime_auid = nil
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'OpencodeWinNew',
+    vim.api.nvim_create_autocmd('TermOpen', {
+      pattern = '*',
       group = augroup,
-      ---@param ev { data: { bufnr: integer, winid: integer } }
-      callback = function(ev)
-        local winid = ev.data.winid
+      callback = function(_event)
+        -- {
+        --   argv = { "/bin/zsh", "-c", "opencode --port" },
+        --   buf = 20,
+        --   buffer = 20,
+        --   exitcode = -1,
+        --   id = 3,
+        --   mode = "terminal",
+        --   pty = "/dev/ttys016",
+        --   stream = "job"
+        -- }
+        local info = vim.api.nvim_get_chan_info(vim.bo.channel)
+        if not info.argv or info.argv[#info.argv] ~= 'opencode --port' then
+          return
+        end
+        local bufnr = info.buffer
+        local winid = vim.fn.bufwinid(bufnr)
         --vim.api.nvim_win_set_width(winid, 55)
         vim.api.nvim_set_option_value('winfixwidth', true, { win = winid, scope = 'local' })
-        vim.api.nvim_buf_set_var(ev.data.bufnr, 'buf_name', 'opencode --port')
-        vim.api.nvim_set_option_value('modeline', false, { buf = ev.data.bufnr, scope = 'local' })
+        vim.api.nvim_buf_set_var(bufnr, 'buf_name', 'opencode --port')
+        vim.api.nvim_set_option_value('modeline', false, { buf = bufnr, scope = 'local' })
         if not checktime_auid then
           checktime_auid = vim.api.nvim_create_autocmd({ 'TermLeave' }, {
             group = augroup,
-            buffer = ev.data.bufnr,
+            buffer = bufnr,
             callback = function() vim.cmd('checktime') end,
           })
         end
         vim.api.nvim_create_autocmd('WinEnter', {
-          buffer = ev.data.bufnr,
+          buffer = bufnr,
           callback = function() vim.cmd('startinsert') end,
         })
         vim.keymap.set(
           't',
           '<C-z>',
           '<Nop>',
-          { buffer = ev.data.bufnr, desc = 'Disable Ctrl-z in Opencode' }
+          { buffer = bufnr, desc = 'Disable Ctrl-z in Opencode' }
         )
         vim.keymap.set(
           'n',
           '<C-u>',
           function() require('opencode').command('session.page.up') end,
-          { buffer = ev.data.bufnr, desc = 'opencode page up' }
+          { buffer = bufnr, desc = 'opencode page up' }
         )
         vim.keymap.set(
           'n',
           '<C-d>',
           function() require('opencode').command('session.page.down') end,
-          { buffer = ev.data.bufnr, desc = 'opencode page down' }
+          { buffer = bufnr, desc = 'opencode page down' }
         )
       end,
     })
