@@ -41,13 +41,13 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_create_user_command(
   'EnableOSCYank',
-  function() vim.call('myrc#enable_oscyank') end,
+  function() require('mylib.clipboard').enable_oscyank() end,
   { nargs = 0 }
 )
 
 vim.api.nvim_create_user_command(
   'DisableOSCYank',
-  function() vim.call('myrc#disable_oscyank') end,
+  function() require('mylib.clipboard').disable_oscyank() end,
   { nargs = 0 }
 )
 
