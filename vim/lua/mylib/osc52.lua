@@ -1,5 +1,4 @@
 -------------------- VARIABLES -----------------------------
-local base64 = require('osc52.base64')
 local fmt = string.format
 local commands = {
   operator = {block = "`[\\<C-v>`]y", char = "`[v`]y", line = "'[V']y"},
@@ -82,7 +81,7 @@ function M.copy(text)
     return
   end
 
-  local text_b64 = base64.enc(text)
+  local text_b64 = vim.base64.encode(text)
   local osc52 = fmt(options.osc52, text_b64)
   local msg = '%d characters copied'
   if options.tmux_passthrough and (os.getenv("TERM"):match("^tmux") or os.getenv("TERM"):match("^screen")) then
