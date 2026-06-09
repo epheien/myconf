@@ -525,11 +525,6 @@ local function core_plugins()
     end,
   })
 
-  table.insert(plugins, {
-    'ojroques/vim-oscyank',
-    cmd = { 'OSCYankVisual', 'OSCYank' },
-  })
-
   table.insert(plugins, { 'epheien/termdbg', cmd = 'Termdbg' })
 
   return plugins
