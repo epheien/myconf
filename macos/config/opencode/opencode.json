@@ -149,8 +149,8 @@
             "top_p": 1.0,
           },
           "limit": {
-            "context": 262144,
-            "output": 30000
+            "context": 524288,
+            "output": 100000,
           }
         },
         "deepseek-v4-flash-max": {
@@ -166,8 +166,8 @@
             }
           },
           "limit": {
-            "context": 262144,
-            "output": 30000
+            "context": 524288,
+            "output": 100000,
           }
         },
         "minimax-m2.5": {
@@ -456,8 +456,8 @@
             "top_p": 1.0,
           },
           "limit": {
-            "context": 262144,
-            "output": 30000
+            "context": 524288,
+            "output": 100000,
           }
         },
         "glm-4.7-awq": {
