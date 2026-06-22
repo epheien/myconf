@@ -142,7 +142,7 @@ function MyStatusLine()
     mode = mode_table[m] or m:upper()
   end
   local active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
-  local mod = vim.o.modified and ' [+]' or ''
+  local mod = vim.o.modified and '[+] ' or ''
   local gap = tail_glyph == '' and ' ' or ' '
   local buf_name = [[%{%v:lua.require'config.mystl'.stl_buf_name()%}]]
   if active then
