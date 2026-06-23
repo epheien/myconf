@@ -69,6 +69,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
     vim.opt_local.list = false
     vim.opt_local.number = false
     vim.opt_local.cursorline = true
+    vim.opt_local.modeline = false -- 禁用 modeline, 否则在终端 cat 到 modeline 的内容会触发设置 ft
     vim.api.nvim_create_autocmd('WinEnter', {
       buffer = event.buf,
       callback = function()
