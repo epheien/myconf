@@ -213,11 +213,16 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
-local filetypes = { 'AvanteInput', 'AvanteSelectedFiles', 'AvanteTodos' }
-local filetypes_mapping = {}
-for _, ft in ipairs(filetypes) do
-  filetypes_mapping[ft] = true
-end
+local disabled_filetypes = {
+  'AvanteInput',
+  'AvanteSelectedFiles',
+  'AvanteTodos',
+  'AgenticChat',
+  'AgenticInput',
+  'AgenticCode',
+  'AgenticFiles',
+  'AgenticDiagnostics',
+}
 
 local augroup = vim.api.nvim_create_augroup('mystl', {})
 vim.api.nvim_create_autocmd('OptionSet', {
@@ -225,7 +230,7 @@ vim.api.nvim_create_autocmd('OptionSet', {
   group = augroup,
   callback = function(event)
     local ft = vim.bo.filetype
-    if not filetypes_mapping[ft] then
+    if not vim.list_contains(disabled_filetypes, ft) then
       return
     end
     local opt = event.match
@@ -238,7 +243,7 @@ vim.api.nvim_create_autocmd('OptionSet', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = filetypes,
+  pattern = disabled_filetypes,
   callback = function()
     vim.opt_local.statusline = '─'
     vim.opt_local.fillchars:append({ stl = '─', stlnc = '─' })
