@@ -190,6 +190,39 @@
             "output": 100000,
           }
         },
+        "glm-5.2": {
+          "id": "glm-5.2",
+          // reasoning 只是告诉 opencode 这个模型支持推理能力，
+          // 用于生成默认 variants 和 UI 显示。对于 vllm，
+          // 实际推理行为由 chat_template_kwargs.thinking 控制，去掉不影响功能。
+          //"reasoning": true,
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+          },
+          "variants": {
+            "low": { "disabled": true },
+            "medium": { "disabled": true },
+            "high": { "disabled": true }, // 部署的时候默认就是 high 了
+            "max": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "max"
+              }
+            },
+            "nothink": {
+              "chat_template_kwargs": {
+                "enable_thinking": false,
+                "reasoning_effort": "high"
+              }
+            },
+          },
+          "limit": {
+            "context": 262144,
+            "output": 64000,
+          }
+        },
         "minimax-m2.5": {
           "id": "minimax-m2.5",
           "reasoning": true,
