@@ -155,6 +155,7 @@ fi
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 export TLDR_AUTO_UPDATE_DISABLED=1
+export PI_OFFLINE=1 # pi agent 离线模式
 
 unset LESS
 # 在vim里运行terminal的时候，会有这些多余的环境变量，统统干掉！
