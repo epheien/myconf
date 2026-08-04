@@ -145,3 +145,11 @@ end, {
     return { 'plugin', 'frontend' }
   end,
 })
+
+vim.api.nvim_create_user_command(
+  'Pi',
+  function(_opts) vim.cmd('Sidekick cli show name=pi focus=true') end,
+  {
+    nargs = 0,
+  }
+)
