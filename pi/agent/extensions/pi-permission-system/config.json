@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/gotgenes/pi-packages/main/packages/pi-permission-system/schemas/permissions.schema.json",
+  "debugLog": false,
+  "permissionReviewLog": false,
+  "yoloMode": false,
+  "doublePressToConfirm": true,
+  "permission": {
+    "*": "allow",
+    "path": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow"
+    },
+    "read": "allow",
+    "edit": "allow",
+    "write": "allow",
+    "bash": {
+      "*": "ask",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "git log *": "allow",
+      "git show *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "find *": "allow",
+      "ls *": "allow",
+      "cat *": "allow",
+      "cd *": "allow",
+      "grep *": "allow",
+      "wc *": "allow",
+      "rg *": "allow",
+      "echo *": "allow",
+      "sort *": "allow",
+      "xargs *": "allow",
+      "file *": "allow",
+      "zcat *": "allow",
+      "tr *": "allow",
+      "rm -rf *": "ask",
+      "sudo *": "ask",
+      "chmod *": "ask",
+      "chown *": "ask",
+      "mkfs *": "deny",
+      "dd if=* of=*": "deny",
+      "shutdown *": "ask",
+      "reboot *": "ask"
+    },
+    "mcp": {
+      "*": "ask"
+    },
+    "skill": {
+      "*": "allow"
+    },
+    "external_directory": {
+      "*": "ask",
+      "~/.cargo/registry/*": "allow",
+      "~/.cache/*": "allow"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+trust.json
+auth.json
+sessions/
+npm/
+git/
+powerline-footer/

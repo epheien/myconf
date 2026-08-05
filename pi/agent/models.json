@@ -1,0 +1,46 @@
+// vim:set ft=json5 sts=2 sw=2 et:
+{
+  "providers": {
+    "vllm": {
+      "baseUrl": "http://10.74.121.244:8000/v1",
+      "api": "openai-completions",
+      "apiKey": "vllm",
+      "compat": {
+        "thinkingFormat": "chat-template",
+        "chatTemplateKwargs": {
+          "enable_thinking": { "$var": "thinking.enabled" },
+          "reasoning_effort": { "$var": "thinking.effort" },
+        },
+      },
+      "models": [
+        {
+          "id": "deepseek-v4-flash",
+          "reasoning": true,
+          "contextWindow": 524288,
+          "maxTokens": 100000,
+          "thinkingLevelMap": {
+            "minimal": null,
+            "low": null,
+            "medium": null,
+            "high": "high",
+            "xhigh": null,
+            "max": "max",
+          },
+        },
+      ],
+    },
+    "vllm:8001": {
+      "baseUrl": "http://10.74.121.244:8001/v1",
+      "api": "openai-completions",
+      "apiKey": "vllm",
+      "models": [
+        {
+          "id": "qwen3.6-27b",
+          "reasoning": true,
+          "contextWindow": 262144,
+          "maxTokens": 30000,
+        },
+      ],
+    },
+  },
+}

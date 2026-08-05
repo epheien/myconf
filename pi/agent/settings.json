@@ -1,0 +1,26 @@
+{
+  "lastChangelogVersion": "0.83.0",
+  "theme": "dark",
+  "enableInstallTelemetry": false,
+  "defaultProvider": "vllm",
+  "defaultModel": "deepseek-v4-flash",
+  "defaultThinkingLevel": "max",
+  "hideThinkingBlock": true,
+  "doubleEscapeAction": "none",
+  "quietStartup": false,
+  "showLastPrompt": false,
+  "powerline": {
+    "welcome": false,
+    "separator": "dot",
+    "placement": "below"
+  },
+  "packages": [
+    "npm:pi-web-access",
+    "git:github.com/obra/superpowers",
+    "git:github.com/epheien/pi-show-diffs",
+    "git:github.com/epheien/pi-permission-system",
+    "git:github.com/epheien/pi-powerline-footer",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@gotgenes/pi-subagents"
+  ]
+}
