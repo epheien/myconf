@@ -43,6 +43,7 @@ return {
   config = function(_plug, opts)
     vim.api.nvim_set_hl(0, 'SidekickChat', { link = 'Normal' })
     require('sidekick').setup(opts)
+    require('config.sidekick') ---@diagnostic disable-line
 
     vim.keymap.set({ 'n', 'x' }, '<C-x>', function()
       require('sidekick.cli').prompt({
