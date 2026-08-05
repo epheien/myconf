@@ -9,8 +9,11 @@ local function scroll_to_bottom(buf)
 
   local line_count = vim.api.nvim_buf_line_count(buf)
 
+  -- 当前光标所在的窗口是 buf 的窗口时不强制滚动，避免打扰用户操作
+  local current_win = vim.api.nvim_get_current_win()
+
   for _, win in ipairs(vim.fn.win_findbuf(buf)) do
-    if vim.api.nvim_win_is_valid(win) then
+    if win ~= current_win and vim.api.nvim_win_is_valid(win) then
       pcall(vim.api.nvim_win_call, win, function()
         vim.api.nvim_win_set_cursor(win, {
           math.max(line_count, 1),
