@@ -13,6 +13,22 @@ return {
           -- 动态调整 split 宽度
           terminal.opts.split.width = math.floor(vim.o.columns * 0.4)
         end,
+        -- stylua: ignore
+        keys = {
+          buffers       = false,
+          files         = false,
+          hide_n        = false,
+          hide_ctrl_q   = false,
+          hide_ctrl_dot = false,
+          hide_ctrl_z   = false,
+          prompt        = false,
+          stopinsert    = false,
+          normal_cr     = false,
+          nav_left      = false,
+          nav_down      = false,
+          nav_up        = false,
+          nav_right     = false,
+        },
       },
       tools = {
         omp = {
