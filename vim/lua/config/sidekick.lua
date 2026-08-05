@@ -117,6 +117,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
   group = group,
   callback = function(ev)
     if is_direct_pi_terminal(ev.buf) then
+      vim.api.nvim_buf_set_var(ev.buf, 'buf_name', 'pi') -- 让 mystl 精简 statusline
       attach_pi_terminal(ev.buf)
     end
   end,
