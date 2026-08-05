@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
       end,
     })
     -- 忽略 opencode-plugin 首次打开
-    if vim.endswith(vim.b.term_title, ':opencode --port') then
+    if vim.endswith(vim.b.term_title or '', ':opencode --port') then
       return
     end
     vim.cmd.startinsert()
