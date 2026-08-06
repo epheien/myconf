@@ -16,12 +16,12 @@ return {
         -- stylua: ignore
         keys = {
           buffers       = false,
-          files         = false,
+          files         = { "<c-.>", "files"     , mode = "t", desc = "open file picker" },
           hide_n        = false,
           hide_ctrl_q   = false,
           hide_ctrl_dot = false,
-          hide_ctrl_z   = false,
-          prompt        = false,
+          hide_ctrl_z   = { "<c-z>", "blur"      , mode = "t", desc = "go back to the previous window without hiding the terminal" },
+          prompt        = { "<c-x>", "prompt"    , mode = "t", desc = "insert prompt or context" },
           stopinsert    = false,
           normal_cr     = false,
           nav_left      = false,
@@ -36,8 +36,9 @@ return {
         },
       },
       prompts = {
-        commit = '把当前添加到git暂存的修改提交，撰写合适的提交信息，其他文件不要管。@',
+        commit = '把当前添加到git暂存的修改提交，参考已有的提交信息的样式撰写合适的提交信息，其他文件不要管。@',
       },
+      picker = 'fzf-lua',
     },
   },
   config = function(_plug, opts)
