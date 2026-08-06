@@ -236,6 +236,8 @@ end, { remap = true })
 map('n', '<C-p>', function()
   if vim.g.termdbg_running == 1 then
     vim.cmd([[exec 'TSendCommand p' expand('<cword>')]])
+  elseif package.loaded['sidekick'] then
+    vim.cmd([[Sidekick cli focus]])
   elseif vim.g.loaded_opencode_plugin then
     local winid = require('opencode.config').provider.winid
     if vim.api.nvim_win_is_valid(winid) then
