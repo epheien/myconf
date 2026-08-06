@@ -4,6 +4,7 @@
   "permissionReviewLog": false,
   "yoloMode": false,
   "doublePressToConfirm": true,
+  "yoloModeShortcut": "ctrl+y",
   "permission": {
     "*": "allow",
     "path": {
