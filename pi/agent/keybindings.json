@@ -11,6 +11,7 @@
   "tui.input.submit": ["enter", "ctrl+s"],
   "tui.select.up": ["up", "ctrl+p"],
   "tui.select.down": ["down", "ctrl+n"],
+  "tui.editor.yank": [],
   "app.message.copy": [],
   "app.session.toggleNamedFilter": [],
   "app.session.togglePath": [],
