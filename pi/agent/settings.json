@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.0",
   "theme": "dark",
   "enableInstallTelemetry": false,
   "defaultProvider": "vllm",
@@ -8,6 +8,8 @@
   "hideThinkingBlock": true,
   "doubleEscapeAction": "none",
   "quietStartup": false,
+  "tuiMode": "regular",
+  "fullscreenScrollbar": "auto",
   "showLastPrompt": false,
   "powerline": {
     "welcome": false,
