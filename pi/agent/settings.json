@@ -11,7 +11,9 @@
   "showLastPrompt": false,
   "powerline": {
     "welcome": false,
-    "disabledSegments": ["git"],
+    "disabledSegments": [
+      "git"
+    ],
     "separator": "dot",
     "placement": "below"
   },
