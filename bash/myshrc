@@ -172,9 +172,9 @@ if [ -f "$HOME/myconf/bash/proxy.rc" ]; then
 fi
 
 # fuck 命令
-if command -v thefuck &>/dev/null; then
-    eval $(thefuck --alias)
-fi
+#if command -v thefuck &>/dev/null; then
+#    eval $(thefuck --alias)
+#fi
 
 # wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
 if [ -e ~/bin/z.lua ]; then

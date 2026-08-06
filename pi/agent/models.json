@@ -39,6 +39,7 @@
           "reasoning": true,
           "contextWindow": 262144,
           "maxTokens": 30000,
+          "input": ["text", "image"],
         },
       ],
     },
