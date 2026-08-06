@@ -42,6 +42,8 @@
       "chown *": "ask",
       "mkfs *": "deny",
       "dd if=* of=*": "deny",
+      "git push -f *": "deny",
+      "git push --force *": "deny",
       "shutdown *": "ask",
       "reboot *": "ask"
     },
