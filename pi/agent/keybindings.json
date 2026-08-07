@@ -19,5 +19,7 @@
   "app.model.cycleForward": [],
   "app.model.cycleBackward": [],
   "app.model.select": [],
+  "app.tools.expand": ["ctrl+t"],
+  "app.thinking.toggle": [],
   "app.message.followUp": []
 }
