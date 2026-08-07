@@ -14,7 +14,7 @@
       "y"
     ],
     "reject": [
-      "Escape",
+      "d",
       "r"
     ],
     "steer": [
@@ -28,22 +28,22 @@
       "A"
     ],
     "scrollUp": [
-      "up"
+      "k"
     ],
     "scrollDown": [
-      "down"
+      "j"
     ],
     "pageUp": [
-      "pageUp"
+      "ctrl+u"
     ],
     "pageDown": [
-      "pageDown"
+      "ctrl+d"
     ],
     "scrollTop": [
-      "home"
+      "g"
     ],
     "scrollBottom": [
-      "end"
+      "G"
     ],
     "nextHunk": [
       "n"
@@ -61,11 +61,11 @@
       "ctrl+f"
     ],
     "contextMore": [
-      "right",
+      "l",
       "]"
     ],
     "contextLess": [
-      "left",
+      "h",
       "["
     ]
   },
