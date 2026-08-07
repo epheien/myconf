@@ -16,7 +16,7 @@ return {
         -- stylua: ignore
         keys = {
           buffers       = false,
-          files         = { "<c-.>", "files"     , mode = "t", desc = "open file picker" },
+          files         = { "<c-q>", "files"     , mode = "t", desc = "open file picker" },
           hide_n        = false,
           hide_ctrl_q   = false,
           hide_ctrl_dot = false,
