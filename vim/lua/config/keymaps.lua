@@ -469,26 +469,30 @@ end, { expr = true })
 map('n', [[\l]], '<Cmd>LazyGit<CR>')
 
 map('n', '<ScrollWheelUp>', function()
-  if vim.g.enable_opencode_nvim then
+  local pos = vim.fn.getmousepos()
+  local winid = pos.winid
+  local bufnr = vim.api.nvim_win_get_buf(winid)
+  if vim.g.loaded_opencode_plugin and winid == require('opencode.config').provider.winid then
+    require('opencode').command('session.half.page.up')
+  elseif vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == 'sidekick_terminal' then
+    vim.api.nvim_chan_send(vim.bo[bufnr].channel, ('\27[<64;%d;%dM'):format(pos.wincol, pos.winrow))
+  else
     return '<ScrollWheelUp>'
   end
-  local winid = vim.fn.getmousepos().winid
-  if not vim.g.loaded_opencode_plugin or winid ~= require('opencode.config').provider.winid then
-    return '<ScrollWheelUp>'
-  end
-  require('opencode').command('session.half.page.up')
   return ''
 end, { expr = true, remap = false })
 
 map('n', '<ScrollWheelDown>', function()
-  if vim.g.enable_opencode_nvim then
+  local pos = vim.fn.getmousepos()
+  local winid = pos.winid
+  local bufnr = vim.api.nvim_win_get_buf(winid)
+  if vim.g.loaded_opencode_plugin and winid == require('opencode.config').provider.winid then
+    require('opencode').command('session.half.page.down')
+  elseif vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == 'sidekick_terminal' then
+    vim.api.nvim_chan_send(vim.bo[bufnr].channel, ('\27[<65;%d;%dM'):format(pos.wincol, pos.winrow))
+  else
     return '<ScrollWheelDown>'
   end
-  local winid = vim.fn.getmousepos().winid
-  if not vim.g.loaded_opencode_plugin or winid ~= require('opencode.config').provider.winid then
-    return '<ScrollWheelDown>'
-  end
-  require('opencode').command('session.half.page.down')
   return ''
 end, { expr = true, remap = false })
 
