@@ -1,6 +1,8 @@
 trust.json
 auth.json
+pi-debug.log
 sessions/
 npm/
 git/
 bash-history/
+logs/
