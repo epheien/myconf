@@ -26,7 +26,7 @@
     "git:github.com/epheien/pi-permission-system",
     "git:github.com/epheien/pi-powerline-footer",
     "git:github.com/epheien/pi-attachments",
-    "npm:@juicesharp/rpiv-todo",
-    "npm:@gotgenes/pi-subagents"
+    "git:github.com/epheien/pi-subagents",
+    "npm:@juicesharp/rpiv-todo"
   ]
 }
