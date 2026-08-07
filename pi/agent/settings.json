@@ -8,7 +8,7 @@
   "hideThinkingBlock": true,
   "doubleEscapeAction": "none",
   "quietStartup": false,
-  "tuiMode": "regular",
+  "tuiMode": "fullscreen",
   "fullscreenScrollbar": "auto",
   "showLastPrompt": false,
   "powerline": {
