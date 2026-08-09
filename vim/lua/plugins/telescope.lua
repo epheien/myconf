@@ -5,7 +5,7 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
     'debugloop/telescope-undo.nvim',
-    'ukyouz/telescope-gtags',
+    'epheien/telescope-gtags',
     'epheien/ai-prompts.nvim',
   },
   cmd = 'Telescope',
