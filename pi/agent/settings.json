@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.0",
+  "lastChangelogVersion": "0.84.1",
   "theme": "dark",
   "enableInstallTelemetry": false,
   "defaultProvider": "vllm",
@@ -27,6 +27,15 @@
     "git:github.com/epheien/pi-powerline-footer",
     "git:github.com/epheien/pi-attachments",
     "git:github.com/epheien/pi-subagents",
-    "npm:@juicesharp/rpiv-todo"
-  ]
+    "npm:@juicesharp/rpiv-todo",
+    "git:github.com/epheien/pi-autocomplete-overlay"
+  ],
+  "subagents": {
+    "abortAllOnInterrupt": true,
+    "agentOverrides": {
+      "reviewer": {
+        "thinking": "max"
+      }
+    }
+  }
 }
