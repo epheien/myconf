@@ -2,9 +2,18 @@
   "$schema": "https://raw.githubusercontent.com/gotgenes/pi-packages/main/packages/pi-permission-system/schemas/permissions.schema.json",
   "debugLog": false,
   "permissionReviewLog": false,
-  "yoloMode": false,
   "doublePressToConfirm": true,
-  "yoloModeShortcut": "ctrl+y",
+  "keybindings": {
+    "approveSession": ["Y", "s"],
+    "navUp": ["up", "k", "ctrl+p"],
+    "navDown": ["down", "j", "ctrl+n"],
+    "pageUp": ["ctrl+u"],
+    "pageDown": ["ctrl+d"],
+    "scrollTop": ["g"],
+    "scrollBottom": ["G"],
+    "toggleMode": ["ctrl+f", "tab"],
+    "yoloToggle": ["ctrl+y"]
+  },
   "permission": {
     "*": "allow",
     "path": {
@@ -14,8 +23,8 @@
       "*.env.example": "allow"
     },
     "read": "allow",
-    "edit": "allow",
-    "write": "allow",
+    "edit": "ask",
+    "write": "ask",
     "bash": {
       "*": "ask",
       "git status *": "allow",
@@ -73,5 +82,9 @@
       "~/.cargo/registry/*": "allow",
       "~/.cache/*": "allow"
     }
+  },
+  "subagentPermission": {
+    "write": "ask",
+    "edit": "ask"
   }
 }
