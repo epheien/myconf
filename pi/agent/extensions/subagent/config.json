@@ -1,0 +1,30 @@
+{
+  "fleetKeybindings": {
+    "pageUp": [
+      "ctrl+u"
+    ],
+    "pageDown": [
+      "ctrl+d"
+    ],
+    "scrollUp": [
+      ",",
+      "k"
+    ],
+    "scrollDown": [
+      "space",
+      "j"
+    ],
+    "selectUp": [
+      "ctrl+p"
+    ],
+    "selectDown": [
+      "ctrl+n"
+    ],
+    "selectFirst": [
+      "h"
+    ],
+    "selectLast": [
+      "l"
+    ]
+  }
+}

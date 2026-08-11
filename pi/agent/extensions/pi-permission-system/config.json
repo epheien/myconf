@@ -4,15 +4,39 @@
   "permissionReviewLog": false,
   "doublePressToConfirm": true,
   "keybindings": {
-    "approveSession": ["Y", "s"],
-    "navUp": ["up", "k", "ctrl+p"],
-    "navDown": ["down", "j", "ctrl+n"],
-    "pageUp": ["ctrl+u"],
-    "pageDown": ["ctrl+d"],
-    "scrollTop": ["g"],
-    "scrollBottom": ["G"],
-    "toggleMode": ["ctrl+f", "tab"],
-    "yoloToggle": ["ctrl+y"]
+    "approveSession": [
+      "Y",
+      "s"
+    ],
+    "navUp": [
+      "up",
+      "k",
+      "ctrl+p"
+    ],
+    "navDown": [
+      "down",
+      "j",
+      "ctrl+n"
+    ],
+    "pageUp": [
+      "ctrl+u"
+    ],
+    "pageDown": [
+      "ctrl+d"
+    ],
+    "scrollTop": [
+      "g"
+    ],
+    "scrollBottom": [
+      "G"
+    ],
+    "toggleMode": [
+      "ctrl+f",
+      "tab"
+    ],
+    "yoloToggle": [
+      "ctrl+y"
+    ]
   },
   "permission": {
     "*": "allow",
