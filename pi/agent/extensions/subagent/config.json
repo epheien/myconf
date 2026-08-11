@@ -1,4 +1,11 @@
 {
+  "artifactDir": "session",
+  "missions": {
+    "enabled": false
+  },
+  "scheduledRuns": {
+    "enabled": false
+  },
   "fleetKeybindings": {
     "pageUp": [
       "ctrl+u"
