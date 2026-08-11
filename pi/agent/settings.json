@@ -8,6 +8,8 @@
   "hideThinkingBlock": true,
   "doubleEscapeAction": "none",
   "quietStartup": false,
+  "outputPad": 0,
+  "editorPaddingX": 0,
   "tuiMode": "fullscreen",
   "fullscreenScrollbar": "auto",
   "showLastPrompt": false,
@@ -22,7 +24,6 @@
   "packages": [
     "npm:pi-web-access",
     "git:github.com/obra/superpowers",
-    "git:github.com/epheien/pi-show-diffs",
     "git:github.com/epheien/pi-permission-system",
     "git:github.com/epheien/pi-powerline-footer",
     "git:github.com/epheien/pi-attachments",
