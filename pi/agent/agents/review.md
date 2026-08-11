@@ -1,6 +1,6 @@
 ---
 name: review
-description: Review code changes (uncommitted | commit | branch | PR) and provide actionable feedback
+description: Review code changes (uncommitted | commit/HEAD revision | branch | PR) and provide actionable feedback
 tools: read, bash, grep, find, ls
 systemPromptMode: replace
 inheritProjectContext: true
@@ -23,10 +23,17 @@ Based on the task input, determine which type of review to perform:
 2. **Commit hash** (40-char SHA or short hash): Review that specific commit
    - Run: `git show <input>`
 
-3. **Branch name**: Compare current branch to the specified branch
-   - Run: `git diff <input>...HEAD`
+3. **`HEAD`-prefixed revision** (input starts with `HEAD`, e.g. `HEAD`, `HEAD~1`, `HEAD^`, `HEAD@{n}`, or a range like `HEAD~3..HEAD`): a git revision — **never treat it as a branch name**. Do not run `git diff <input>...HEAD` on it.
+   - Single-pointer form (`HEAD`, `HEAD~N`, `HEAD^`, `HEAD@{n}`): review that one commit.
+     - Run: `git show <input>` to see the commit (or `git diff <input>^ <input>` for its patch).
+   - Range form (any input containing `..`, e.g. `HEAD~N..HEAD`, `abc123..HEAD`, or `abc123..def456`): review the diff of that two-dot range; this does not require either side to start with `HEAD`.
+     - Run: `git diff <input>`.
 
-4. **PR URL or number** (contains "github.com" or "pull" or looks like a PR number): Review the pull request
+4. **Branch name**: Compare current branch to the specified branch
+   - Run: `git diff <input>...HEAD`
+   - Never apply this to an input containing `..` — those are diff ranges (#3), not branch names; never append `...HEAD` to them.
+
+5. **PR URL or number** (contains "github.com" or "pull" or looks like a PR number): Review the pull request
    - Run: `gh pr view <input>` to get PR context
    - Run: `gh pr diff <input>` to get the diff
 
