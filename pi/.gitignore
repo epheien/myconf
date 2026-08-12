@@ -7,3 +7,7 @@ git/
 bash-history/
 logs/
 missions/
+models-store.json
+mcp-cache.json
+mcp-onboarding.json
+run-history.jsonl
