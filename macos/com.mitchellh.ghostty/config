@@ -63,10 +63,9 @@ cursor-style = block
 adjust-cell-width = -1
 copy-on-select = clipboard
 
-custom-shader-animation = always
-custom-shader = shaders/cursor_warp.glsl
-custom-shader = ghostty-cursor-shaders/ripple_cursor.glsl
-#custom-shader = shaders/cursor_smear.glsl
+custom-shader-animation = true
+#custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders/kitty_cursor_trail.glsl
 
 window-height = 40
 window-width = 130

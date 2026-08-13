@@ -171,7 +171,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord){
 
     float baseProgress = iTime - iTimeCursorChange;
 
-    if (lineLength > minDist && baseProgress < DURATION - 0.001) {
+    if (iFocus > 0 && lineLength > minDist && baseProgress < DURATION - 0.001) {
         // defining corners of cursors
 
         // Y (Height) with TRAIL_THICKNESS
