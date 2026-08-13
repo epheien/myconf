@@ -11,6 +11,7 @@ fi
 
 if [ -n "$ZSH_VERSION" ]; then
     # XXX zsh shell
+    # git config --global oh-my-zsh.hide-dirty 1
     PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") '
     PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
     if [ -n "$SSH_CONNECTION" ]; then
