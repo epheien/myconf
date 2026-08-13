@@ -49,6 +49,8 @@
     "read": "allow",
     "edit": "ask",
     "write": "ask",
+    "replace": "ask",
+    "undo_last_replace": "ask",
     "bash": {
       "*": "ask",
       "git status *": "allow",
@@ -83,6 +85,7 @@
       "whoami *": "allow",
       "date *": "allow",
       "uptime *": "allow",
+      "sed -n '*p' *": "allow",
       "rm -rf *": "ask",
       "sudo *": "ask",
       "chmod *": "ask",

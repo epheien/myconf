@@ -29,7 +29,8 @@
     "git:github.com/epheien/pi-attachments",
     "git:github.com/epheien/pi-subagents",
     "npm:@juicesharp/rpiv-todo",
-    "git:github.com/epheien/pi-autocomplete-overlay"
+    "git:github.com/epheien/pi-autocomplete-overlay",
+    "npm:pi-hashline-edit"
   ],
   "subagents": {
     "abortAllOnInterrupt": true,
