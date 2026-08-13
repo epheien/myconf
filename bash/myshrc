@@ -5,7 +5,12 @@ if [ -n "$TMUX" ]; then
     : # .tmux.conf 负责设置, 这里不要修改 TERM
 elif [[ "$TERM" == "screen-256color" ]]; then
     : # ignore
-elif [ "$TERM" != "xterm-kitty" ]; then
+elif [[ "$TERM_PROGRAM" == "kitty" ]]; then
+    : # 终端模拟器设置的 TERM, 保持原样, 一般是 kitty.conf 负责设置
+elif [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    # 使用 TERM=xterm-ghostty, 但是 ssh 下会有兼容问题, 所以用 alias 解决
+    alias ssh='TERM=xterm-256color ssh'
+else
     export TERM=xterm-256color
 fi
 
@@ -60,6 +65,27 @@ if [ -n "$ZSH_VERSION" ]; then
         title()
         {
             kitten @ set-window-title "$@"
+        }
+    elif [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+        # 使用 Ghostty 原生标签标题覆盖，而不是 OSC。活动标签的标题也
+        # 是 macOS 窗口标题，这样不会被
+        # ssh、tmux、nvim 等程序发送的标题控制序列覆盖。
+        # 不带参数调用 title 可清除覆盖，恢复终端程序控制标题。
+        title()
+        {
+            osascript - "$*" >/dev/null <<'APPLESCRIPT'
+on run argv
+    tell application "/Applications/Ghostty.app"
+        set activeTerminal to focused terminal of selected tab of front window
+        perform action ("set_tab_title:" & item 1 of argv) on activeTerminal
+    end tell
+end run
+APPLESCRIPT
+        }
+    elif [[ -n "$TMUX" ]]; then
+        title()
+        {
+            tmux rename-window -- "$*"
         }
     fi
     # command not found handler
