@@ -57,7 +57,7 @@ history = 10000
 save_to_clipboard = true
 
 [window]
-decorations_theme_variant = "Dark"
+decorations_theme_variant = "Light"
 dynamic_title = true
 option_as_alt = "Both"
 resize_increments = true
