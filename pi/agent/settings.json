@@ -12,6 +12,7 @@
   "editorPaddingX": 0,
   "tuiMode": "fullscreen",
   "fullscreenScrollbar": "auto",
+  "showHardwareCursor": true,
   "showLastPrompt": false,
   "powerline": {
     "welcome": false,
