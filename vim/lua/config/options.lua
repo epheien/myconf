@@ -110,6 +110,7 @@ if
     :match_str(vim.env.TERM_PROGRAM or '')
 then
   vim.o.termguicolors = true
+  vim.env.COLORTERM = 'truecolor' -- 有些程序会检测这个环境变量, 例如 pi
 end
 
 -- 需要导出到子环境的环境变量
