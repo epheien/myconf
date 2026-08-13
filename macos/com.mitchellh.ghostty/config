@@ -70,6 +70,10 @@ custom-shader = ghostty-cursor-shaders/ripple_cursor.glsl
 
 window-height = 40
 window-width = 130
+window-padding-x = 0
+window-padding-y = 0
+# 由于 ghostty 的 step 计算不准确, 所以不使用这个功能
+window-step-resize = false
 quit-after-last-window-closed = true
 
 # left or right or true
