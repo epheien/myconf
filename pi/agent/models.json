@@ -8,7 +8,7 @@
       "compat": {
         "thinkingFormat": "chat-template",
         "chatTemplateKwargs": {
-          "enable_thinking": { "$var": "thinking.enabled" },
+          "thinking": { "$var": "thinking.enabled" },
           "reasoning_effort": { "$var": "thinking.effort" },
         },
       },
@@ -33,13 +33,40 @@
       "baseUrl": "http://10.74.121.244:8001/v1",
       "api": "openai-completions",
       "apiKey": "vllm",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "thinkingFormat": "chat-template",
+        "chatTemplateKwargs": {
+          "enable_thinking": { "$var": "thinking.enabled" },
+          "reasoning_effort": { "$var": "thinking.effort" },
+        },
+      },
       "models": [
         {
-          "id": "qwen3.6-27b",
+          "id": "qwen3.8-27b",
           "reasoning": true,
           "contextWindow": 262144,
           "maxTokens": 30000,
           "input": ["text", "image"],
+          // Qwen3.8-27B: thinking on by default; reasoning_effort via
+          // chat_template_kwargs (vLLM recipe): xhigh (default) / medium / low.
+          // Thinking mode sampling per https://huggingface.co/Qwen/Qwen3.8-27B
+          // (temperature=1.0, top_p=0.95, top_k=20).
+          "thinkingLevelMap": {
+            "minimal": null,
+            "low": "low",
+            "medium": "medium",
+            "high": null,  // no "high" effort; map to xhigh
+            "xhigh": "xhigh",
+            "max": null,
+          },
+          "samplingParams": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 20,
+            "presence_penalty": 0.0,
+            "repetition_penalty": 1.0,
+          },
         },
       ],
     },
