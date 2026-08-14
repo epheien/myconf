@@ -1,6 +1,6 @@
 {
   "workflow": "auto-summary",
-  "searxngBaseUrl": "http://192.168.3.222:8080",
+  "searxngBaseUrl": "http://10.74.121.222:8080",
   "provider": "searxng",
   "ssrf": {
     "allowRanges": ["192.168.0.0/16", "10.0.0.0/8"]
