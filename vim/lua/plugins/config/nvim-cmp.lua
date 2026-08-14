@@ -248,8 +248,8 @@ local opts = {
     name = 'fzy',
   },
   matching = {
-    --disallow_partial_fuzzy_matching = false, -- default: true
-    --disallow_symbol_nonprefix_matching = false, -- default: true
+    disallow_partial_fuzzy_matching = false, -- default: true
+    disallow_symbol_nonprefix_matching = false, -- default: true
   },
   snippet = {
     expand = function(args)
