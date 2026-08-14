@@ -468,13 +468,27 @@ end, { expr = true })
 
 map('n', [[\l]], '<Cmd>LazyGit<CR>')
 
+local function is_sidekick_fullscreen(bufnr)
+  local line_count = vim.api.nvim_buf_line_count(bufnr)
+  local lines = vim.api.nvim_buf_get_lines(bufnr, math.max(0, line_count - 2), line_count, false)
+  for _, line in ipairs(lines) do
+    if line:find(' F ', 1, true) then
+      return true
+    end
+  end
+  return false
+end
+
 map('n', '<ScrollWheelUp>', function()
   local pos = vim.fn.getmousepos()
   local winid = pos.winid
   local bufnr = vim.api.nvim_win_get_buf(winid)
   if vim.g.loaded_opencode_plugin and winid == require('opencode.config').provider.winid then
     require('opencode').command('session.half.page.up')
-  elseif vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == 'sidekick_terminal' then
+  elseif
+    vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == 'sidekick_terminal'
+    and is_sidekick_fullscreen(bufnr)
+  then
     vim.api.nvim_chan_send(vim.bo[bufnr].channel, ('\27[<64;%d;%dM'):format(pos.wincol, pos.winrow))
   else
     return '<ScrollWheelUp>'
@@ -488,7 +502,10 @@ map('n', '<ScrollWheelDown>', function()
   local bufnr = vim.api.nvim_win_get_buf(winid)
   if vim.g.loaded_opencode_plugin and winid == require('opencode.config').provider.winid then
     require('opencode').command('session.half.page.down')
-  elseif vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == 'sidekick_terminal' then
+  elseif
+    vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == 'sidekick_terminal'
+    and is_sidekick_fullscreen(bufnr)
+  then
     vim.api.nvim_chan_send(vim.bo[bufnr].channel, ('\27[<65;%d;%dM'):format(pos.wincol, pos.winrow))
   else
     return '<ScrollWheelDown>'
