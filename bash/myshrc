@@ -70,17 +70,93 @@ if [ -n "$ZSH_VERSION" ]; then
         # 使用 Ghostty 原生标签标题覆盖，而不是 OSC。活动标签的标题也
         # 是 macOS 窗口标题，这样不会被
         # ssh、tmux、nvim 等程序发送的标题控制序列覆盖。
+        # 通过当前 TTY 定位 terminal，避免多个窗口时误改前台窗口。
         # 不带参数调用 title 可清除覆盖，恢复终端程序控制标题。
         title()
         {
-            osascript - "$*" >/dev/null <<'APPLESCRIPT'
-on run argv
-    tell application "/Applications/Ghostty.app"
-        set activeTerminal to focused terminal of selected tab of front window
-        perform action ("set_tab_title:" & item 1 of argv) on activeTerminal
-    end tell
-end run
-APPLESCRIPT
+            local terminal_tty process_id process_path parent_id ghostty_pid
+            local -a process_ancestors
+
+            terminal_tty=$(command tty) || return
+            process_id=$$
+
+            # tmux pane 的进程树不包含客户端；只有一个连接到当前 session
+            # 的客户端时，改从客户端 PID/TTY 定位 Ghostty 实例。
+            if [[ -n "$TMUX" ]]; then
+                local session_id client_info
+                session_id=$(tmux display-message -p '#{session_id}') || return
+                client_info=$(tmux list-clients -t "$session_id" -F '#{client_pid} #{client_tty}') || return
+                if [[ -z "$client_info" || "$client_info" == *$'\n'* ]]; then
+                    print -u2 "title: 当前 tmux session 的客户端数量不是 1，无法确定 Ghostty 实例"
+                    return 1
+                fi
+                process_id=${client_info%% *}
+                terminal_tty=${client_info#* }
+            fi
+
+            # Ghostty 可以用 open -n 启动多个进程。沿当前 shell（或 tmux
+            # 客户端）的父进程链寻找所属实例，不能使用按 app 路径寻址的
+            # AppleScript，否则事件会被发给另一个 Ghostty 进程。
+            while (( process_id > 1 )); do
+                process_ancestors+=("$process_id")
+                process_path=$(command ps -p "$process_id" -o comm= 2>/dev/null) || break
+                if [[ "$process_path" == */Ghostty.app/Contents/MacOS/ghostty ]]; then
+                    ghostty_pid=$process_id
+                    break
+                fi
+                parent_id=$(command ps -p "$process_id" -o ppid= 2>/dev/null) || break
+                (( parent_id > 0 )) || break
+                process_id=$parent_id
+            done
+
+            if [[ -z "$ghostty_pid" ]]; then
+                print -u2 "title: 无法从当前进程树确定 Ghostty 实例"
+                return 1
+            fi
+
+            osascript -l JavaScript - "$ghostty_pid" "$terminal_tty" "$*" \
+                "${process_ancestors[@]}" >/dev/null <<'JXA'
+ObjC.import('ScriptingBridge');
+
+function run(argv) {
+    ObjC.bindFunction('objc_msgSend', ['bool', ['id', 'selector', 'id', 'id']]);
+
+    const ghosttyPID = Number(argv[0]);
+    const targetTTY = argv[1];
+    const targetTitle = argv[2];
+    const ancestorPIDs = new Set(argv.slice(3).map(Number));
+    const app = $.SBApplication.applicationWithProcessIdentifier(ghosttyPID);
+    const terminals = app.valueForKey('terminals');
+    const matches = [];
+
+    for (let i = 0; i < terminals.count; ++i) {
+        const terminal = terminals.objectAtIndex(i);
+        const tty = ObjC.unwrap(terminal.valueForKey('tty'));
+        const foregroundPID = Number(ObjC.unwrap(terminal.valueForKey('pid')));
+        if (tty === targetTTY || ancestorPIDs.has(foregroundPID)) {
+            matches.push(terminal);
+        }
+    }
+
+    if (matches.length !== 1) {
+        throw new Error(
+            `当前进程在 Ghostty ${ghosttyPID} 中匹配到 ${matches.length} 个 terminal: ${targetTTY}`
+        );
+    }
+
+    // Scripting Bridge 在运行时生成 performAction:on:，JXA 无法直接看到
+    // 这个方法；为 objc_msgSend 声明准确签名后再调用，避免 BOOL 返回值
+    // 被 NSInvocation/performSelector 当成 Objective-C 对象。
+    const selector = $.NSSelectorFromString('performAction:on:');
+    const result = $.objc_msgSend(
+        app,
+        selector,
+        $(`set_tab_title:${targetTitle}`),
+        matches[0]
+    );
+    if (!result) throw new Error('Ghostty 拒绝了 set_tab_title action');
+}
+JXA
         }
     elif [[ -n "$TMUX" ]]; then
         title()
