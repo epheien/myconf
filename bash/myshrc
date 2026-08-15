@@ -17,8 +17,13 @@ fi
 if [ -n "$ZSH_VERSION" ]; then
     # XXX zsh shell
     # git config --global oh-my-zsh.hide-dirty 1
+    __netns="$(ip netns identify $$ 2>/dev/null)"
     PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") '
-    PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    if [ -n "$__netns" ]; then
+        PROMPT="[${__netns}] $PROMPT"'%{$fg[cyan]%}%c%{$reset_color%}$(git_prompt_info)$ '
+    else
+        PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
+    fi
     if [ -n "$SSH_CONNECTION" ]; then
         PROMPT='%(?:%{$fg_bold[yellow]%}➜ :%{$fg_bold[red]%}➜ [$?]) %M %{$fg[blue]%}$(date "+%m-%d %H:%M:%S.%3N") '
         PROMPT="$PROMPT"'%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)$ '
