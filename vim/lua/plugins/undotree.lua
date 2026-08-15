@@ -16,6 +16,7 @@ return {
     local opts = {
       ui = {
         compact = true,
+        branch_symbols = true,
       },
     }
     require('atone').setup(opts)
