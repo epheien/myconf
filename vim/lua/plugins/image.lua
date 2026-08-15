@@ -1,8 +1,18 @@
 local function init()
+  local use_snack_image = false
   local plugins = {}
-  -- NOTE: 打开 markdown 的时候可能导致卡死, 例如 glrnvim 的 README.md
-  -- NOTE: tmux 环境下使用 image.nvim 问题多多, 主要是不能自动消失, 所以暂时禁用
-  if vim.fn.has('gui_running') ~= 1 then
+  if vim.fn.has('gui_running') == 1 then
+    return {}
+  end
+
+  if use_snack_image then
+    table.insert(plugins, {
+      'epheien/snacks-image.nvim',
+      dependencies = {
+        'epheien/snacks-base.nvim',
+      },
+    })
+  else
     table.insert(plugins, {
       '3rd/image.nvim',
       cmd = 'ImageRender',
@@ -17,6 +27,7 @@ local function init()
             markdown = {
               enabled = true,
               clear_in_insert_mode = false,
+              -- 禁用以避免卡顿/卡死
               download_remote_images = false,
               only_render_image_at_cursor = false,
               -- if true, images will be rendered in floating markdown windows
