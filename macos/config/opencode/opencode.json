@@ -33,6 +33,7 @@
       "cat *": "allow",
       "cd *": "allow",
       "grep *": "allow",
+      "zgrep *": "allow",
       "wc *": "allow",
       "rg *": "allow",
       "echo *": "allow",
