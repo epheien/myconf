@@ -20,8 +20,13 @@ local opts = {
     }
   },
 
+  -- 这个 image 的实现完爆 image.nvim 插件,
+  -- 但是 snacks 就是依托答辩, 选择魔改 image.nvim 实现
+  -- NOTE: tmux 的 `set -s extended-keys always` 会导致奇怪的问题, 考虑改为 on
+  image = {},
+
   notifier = {
-    --enabled = false,
+    enabled = false,
     timeout = 4000,
     width = { min = 20, max = 0.999 },
     date_format = '%T',
@@ -50,7 +55,7 @@ local opts = {
     },
   },
   picker = {
-    enabled = true,
+    enabled = false,
   },
 }
 
