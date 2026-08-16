@@ -20,6 +20,11 @@ return {
     anti_conceal = {
       enabled = false,
     },
+    win_options = {
+      concealcursor = {
+        rendered = 'nc',
+      },
+    },
     checkbox = {
       custom = {
         partial = {
