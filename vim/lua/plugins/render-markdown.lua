@@ -35,5 +35,7 @@ return {
         },
       },
     },
+    -- 表格不再渲染, 交给 markdown-table-wrap.nvim 负责
+    pipe_table = { enabled = false },
   },
 }
