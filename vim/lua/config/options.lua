@@ -83,7 +83,7 @@ vim.g.markdown_syntax_conceal = 1
 vim.o.foldlevel = 10000
 -- 允许光标移动到刚刚超过行尾字符之后的位置
 vim.o.virtualedit = 'onemore,block'
-vim.o.cc = '81,101'
+vim.o.cc = '101'
 vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,localoptions'
 vim.o.wildignorecase = true
 -- 设置为可空获得更好的显示效果, nvim 内置
