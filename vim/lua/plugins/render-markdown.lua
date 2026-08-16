@@ -1,5 +1,5 @@
 return {
-  'MeanderingProgrammer/render-markdown.nvim',
+  'epheien/render-markdown.nvim',
   ft = { 'markdown', 'Avante', 'codecompanion', 'opencode_output' },
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
   opts = {

@@ -1,5 +1,6 @@
 return {
   'Thiago4532/mdmath.nvim',
+  enabled = false,
   ft = { 'markdown' },
   dependencies = {
     'nvim-treesitter/nvim-treesitter',

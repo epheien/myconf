@@ -1,5 +1,5 @@
 local function init()
-  local use_snack_image = false
+  local use_snack_image = true
   local plugins = {}
   if vim.fn.has('gui_running') == 1 then
     return {}
@@ -8,8 +8,19 @@ local function init()
   if use_snack_image then
     table.insert(plugins, {
       'epheien/snacks-image.nvim',
+      ft = { 'markdown' },
       dependencies = {
         'epheien/snacks-base.nvim',
+      },
+      opts = {
+        image = {
+          doc = {
+            hide_in_insert = true,
+          },
+          convert = {
+            mermaid_backend = 'merman',
+          },
+        },
       },
     })
   else
