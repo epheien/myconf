@@ -6,6 +6,7 @@ local function init()
   end
 
   if use_snack_image then
+    vim.env.SNACKS_KITTY = "1"
     table.insert(plugins, {
       'epheien/snacks-image.nvim',
       ft = { 'markdown' },
