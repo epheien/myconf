@@ -22,10 +22,12 @@
       "j"
     ],
     "selectUp": [
-      "ctrl+p"
+      "ctrl+p",
+      "up"
     ],
     "selectDown": [
-      "ctrl+n"
+      "ctrl+n",
+      "down"
     ],
     "selectFirst": [
       "h"
