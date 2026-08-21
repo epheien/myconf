@@ -285,6 +285,10 @@ fi
 #fi
 
 # wget https://raw.githubusercontent.com/skywind3000/z.lua/refs/heads/master/z.lua -O ~/bin/z.lua
+# 不要验证数据库里的历史目录 (data_filter): 数据库里留存有 ~/Downloads、~/Desktop、
+# ~/Documents 等 macOS TCC 受保护目录的旧记录, 每次 --add 都会逐个 stat 验证,
+# 导致每次打开新终端都弹"是否允许访问文稿/下载/桌面"权限提示。
+export _ZL_NO_CHECK=1
 if [ -e ~/bin/z.lua ]; then
     eval "$(lua ~/bin/z.lua --init $(basename $SHELL))"
 fi
