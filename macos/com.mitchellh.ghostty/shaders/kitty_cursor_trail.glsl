@@ -191,7 +191,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         return;
     }
 
+#ifdef GHOSTTY_HAS_TIME_SINCE_CURSOR_CHANGE
+    float elapsedSinceChange = iTimeSinceCursorChange;
+#else
     float elapsedSinceChange = max(iTime - iTimeCursorChange, 0.0);
+#endif
     float delay = CURSOR_TRAIL_DELAY_MS / 1000.0;
     if (elapsedSinceChange < delay) {
         return;
