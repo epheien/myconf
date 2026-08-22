@@ -1,1 +1,11 @@
 set completion-ignore-case on
+
+## 以下设置让 bash 的补全行为模拟 zsh 的
+# Tab：显示列表，然后依次循环候选项
+"\C-i": menu-complete
+# Shift+Tab：反向循环候选项
+"\e[Z": menu-complete-backward
+# 第一次补全时立即显示所有候选项
+set show-all-if-ambiguous on
+# 第一次只显示公共前缀，下一次才开始选择具体候选项
+set menu-complete-display-prefix on
