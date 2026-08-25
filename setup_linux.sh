@@ -8,7 +8,7 @@ if [ "$(uname -s)" != Linux ]; then
     exit 1
 fi
 
-command -v realpath >/dev/null || { "realpath not found" ; exit 1; }
+command -v realpath >/dev/null || { echo "realpath not found" ; exit 1; }
 __file__=$(realpath "$0")
 __dir__=$(dirname "$__file__")
 
@@ -18,19 +18,36 @@ if [ "$(pwd)" != "$HOME/myconf" ]; then
     exit 1
 fi
 
-ln -s myconf/vim ../.vim
+# 幂等创建软链接: 是软链接则删除重建, 真实文件/目录则跳过
+link() {
+    local src="$1" dest="$2"
+    if [ -L "$dest" ]; then
+        rm -f "$dest"
+        ln -s "$src" "$dest"
+        echo "relink: $dest -> $src"
+    elif [ -e "$dest" ]; then
+        echo "skip: $dest exists and is not a symlink"
+    else
+        ln -s "$src" "$dest"
+        echo "link: $dest -> $src"
+    fi
+}
+
+link myconf/vim ../.vim
 mkdir -p ~/.config
-ln -s ../.vim ~/.config/nvim
+link ../.vim ~/.config/nvim
 
-ln -s myconf/tmux/tmux.conf ../.tmux.conf
+link myconf/tmux/tmux.conf ../.tmux.conf
 
-ln -s myconf/bash/inputrc ../.inputrc
-ln -s myconf/bash/myshrc ../.myshrc
+link myconf/bash/inputrc ../.inputrc
+link myconf/bash/myshrc ../.myshrc
 
-cat >> ~/.bashrc <<EOF
+if ! grep -qF "# load custom config" ~/.bashrc 2>/dev/null; then
+    cat >> ~/.bashrc <<'EOF'
 
 # load custom config
 if [ -f ~/.myshrc ]; then
     . ~/.myshrc
 fi
 EOF
+fi
