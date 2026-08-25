@@ -1,0 +1,25 @@
+{
+  "imports": [
+  ],
+  "mcpServers": {
+    "codegraph": {
+      "command": "codegraph",
+      "args": [
+        "serve",
+        "--mcp"
+      ],
+      "env": {
+        "CODEGRAPH_NO_UPDATE_CHECK": "1"
+      },
+      "disabled": false,
+      "directTools": true
+    },
+    "web-search-fast": {
+      "url": "http://10.74.121.222:8897/mcp",
+      "headers": {
+        "Authorization": "Bearer wsm_kkNzCwcZEnssqTmhs2RnQU2ntbMPHpF5MZgO1OlaU9I"
+      },
+      "directTools": true
+    }
+  }
+}

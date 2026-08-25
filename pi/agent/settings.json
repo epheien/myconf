@@ -31,7 +31,8 @@
     "git:github.com/epheien/pi-subagents",
     "npm:@juicesharp/rpiv-todo",
     "git:github.com/epheien/pi-autocomplete-overlay",
-    "npm:pi-hashline-edit"
+    "npm:pi-hashline-edit",
+    "npm:pi-mcp-adapter"
   ],
   "subagents": {
     "abortAllOnInterrupt": true,
