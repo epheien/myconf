@@ -224,6 +224,39 @@
             "output": 64000,
           }
         },
+        "glm-5.3-flash": {
+          "id": "glm-5.3-flash",
+          "temperature": true,
+          "options": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+          },
+          "variants": {
+            "low": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": { "disabled": true },
+            "high": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "high"
+              }
+            },
+            "max": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "max"
+              }
+            },
+          },
+          "limit": {
+            "context": 524288,
+            "output": 64000,
+          }
+        },
         "minimax-m2.5": {
           "id": "minimax-m2.5",
           "reasoning": true,
