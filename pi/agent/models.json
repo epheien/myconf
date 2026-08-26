@@ -5,22 +5,43 @@
       "baseUrl": "http://10.74.121.244:8000/v1",
       "api": "openai-completions",
       "apiKey": "vllm",
-      "compat": {
-        "thinkingFormat": "chat-template",
-        "chatTemplateKwargs": {
-          "thinking": { "$var": "thinking.enabled" },
-          "reasoning_effort": { "$var": "thinking.effort" },
-        },
-      },
       "models": [
         {
           "id": "deepseek-v4-flash",
           "reasoning": true,
           "contextWindow": 524288,
           "maxTokens": 100000,
+          "compat": {
+            "thinkingFormat": "chat-template",
+            "chatTemplateKwargs": {
+              "thinking": { "$var": "thinking.enabled" },
+              "reasoning_effort": { "$var": "thinking.effort" },
+            },
+          },
           "thinkingLevelMap": {
             "minimal": null,
             "low": null,
+            "medium": null,
+            "high": "high",
+            "xhigh": null,
+            "max": "max",
+          },
+        },
+        {
+          "id": "glm-5.3-flash",
+          "reasoning": true,
+          "contextWindow": 524288,
+          "maxTokens": 100000,
+          "compat": {
+            "thinkingFormat": "chat-template",
+            "chatTemplateKwargs": {
+              "reasoning_effort": { "$var": "thinking.effort" },
+            },
+          },
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": "low",
             "medium": null,
             "high": "high",
             "xhigh": null,
