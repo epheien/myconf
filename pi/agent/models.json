@@ -32,6 +32,7 @@
           "reasoning": true,
           "contextWindow": 524288,
           "maxTokens": 100000,
+          "input": ["text", "image"],
           "compat": {
             "thinkingFormat": "chat-template",
             "chatTemplateKwargs": {
