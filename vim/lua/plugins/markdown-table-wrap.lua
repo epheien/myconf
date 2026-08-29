@@ -3,6 +3,6 @@ return {
   ft = { 'markdown', 'Avante', 'codecompanion', 'opencode_output' },
   opts = {
     preview_mode = 'inline',
-    inline_wrap_scope = 'cursor',
+    inline_wrap_scope = 'never',
   },
 }
