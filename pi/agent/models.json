@@ -90,6 +90,31 @@
             "repetition_penalty": 1.0,
           },
         },
+        {
+          "id": "qwen3.8-flash-next",
+          "reasoning": true,
+          "contextWindow": 262144,
+          "maxTokens": 30000,
+          "input": ["text", "image"],
+          // Qwen3.8-Flash-Next: thinking on by default; reasoning_effort via
+          // chat_template_kwargs (vLLM recipe): xhigh (default) / medium / low.
+          "thinkingLevelMap": {
+            "minimal": null,
+            "low": "low",
+            "medium": "medium",
+            "high": null,  // no "high" effort; map to xhigh
+            "xhigh": "xhigh",
+            "max": null,
+          },
+          "samplingParams": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0,
+            "repetition_penalty": 1.0,
+          },
+        },
       ],
     },
   },

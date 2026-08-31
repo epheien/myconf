@@ -446,6 +446,65 @@
             "output": 30000,
           },
         },
+        "qwen3.8-flash-next": {
+          "id": "qwen3.8-flash-next",
+          "reasoning": true,
+          "temperature": true,
+          "modalities": {
+            "input": ["text", "image", "audio", "video", "pdf"],
+            "output": ["text"],
+          },
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0.0,
+            "presence_penalty": 0.0,
+            "repetition_penalty": 1.0,
+            "chat_template_kwargs": {
+              "enable_thinking": true,      // true 也是模型的默认值
+              "reasoning_effort": "xhigh",  // xhigh 也是模型的默认值
+            },
+          },
+          "variants": {
+            "low": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": { "disabled": true },
+            "max": { "disabled": true },
+            "xhigh": {
+              "chat_template_kwargs": {
+                "enable_thinking": true,
+                "reasoning_effort": "xhigh"
+              }
+            },
+            "nothink": {
+              "temperature": 0.7,
+              "top_p": 0.80,
+              "top_k": 20,
+              "min_p": 0.0,
+              "presence_penalty": 1.5,
+              "repetition_penalty": 1.0,
+              "chat_template_kwargs": {
+                "enable_thinking": false,
+                "reasoning_effort": "low"
+              }
+            },
+          },
+          "limit": {
+            "context": 262144,
+            "output": 30000,
+          },
+        },
         "qwen3.5-122b": {
           "id": "qwen3.5-122b",
           "reasoning": true,
@@ -718,6 +777,25 @@
         },
       }
     }
+  },
+  "mcp": {
+    // SearXNG 网络搜索 (mcp-searxng, npm 全局安装 v1.15.0)
+    "searxng": {
+      "type": "local",
+      "command": ["mcp-searxng"],
+      "enabled": false,
+      "environment": {
+        "SEARXNG_URL": "http://10.74.121.222:8080"
+      }
+    },
+    "web-search-fast": {
+      "type": "remote",
+      "url": "http://10.74.121.222:8897/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer wsm_kkNzCwcZEnssqTmhs2RnQU2ntbMPHpF5MZgO1OlaU9I"
+      }
+    },
   },
   "plugin": [
     //"oh-my-opencode",
