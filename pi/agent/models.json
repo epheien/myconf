@@ -55,14 +55,6 @@
       "baseUrl": "http://10.74.121.244:8001/v1",
       "api": "openai-completions",
       "apiKey": "vllm",
-      "compat": {
-        "supportsDeveloperRole": false,
-        "thinkingFormat": "chat-template",
-        "chatTemplateKwargs": {
-          "enable_thinking": { "$var": "thinking.enabled" },
-          "reasoning_effort": { "$var": "thinking.effort" },
-        },
-      },
       "models": [
         {
           "id": "qwen3.8-27b",
@@ -70,6 +62,14 @@
           "contextWindow": 262144,
           "maxTokens": 30000,
           "input": ["text", "image"],
+          "compat": {
+            "supportsDeveloperRole": false,
+            "thinkingFormat": "chat-template",
+            "chatTemplateKwargs": {
+              "enable_thinking": { "$var": "thinking.enabled" },
+              "reasoning_effort": { "$var": "thinking.effort" },
+            },
+          },
           // Qwen3.8-27B: thinking on by default; reasoning_effort via
           // chat_template_kwargs (vLLM recipe): xhigh (default) / medium / low.
           // Thinking mode sampling per https://huggingface.co/Qwen/Qwen3.8-27B
@@ -113,6 +113,28 @@
             "min_p": 0.0,
             "presence_penalty": 0.0,
             "repetition_penalty": 1.0,
+          },
+        },
+        {
+          "id": "glm-5.3-flash",
+          "reasoning": true,
+          "contextWindow": 450000,
+          "maxTokens": 100000,
+          "input": ["text", "image"],
+          "compat": {
+            "thinkingFormat": "chat-template",
+            "chatTemplateKwargs": {
+              "reasoning_effort": { "$var": "thinking.effort" },
+            },
+          },
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": "low",
+            "medium": null,
+            "high": "high",
+            "xhigh": null,
+            "max": "max",
           },
         },
       ],
