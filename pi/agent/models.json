@@ -34,6 +34,7 @@
           "maxTokens": 100000,
           "input": ["text", "image"],
           "compat": {
+            "supportsDeveloperRole": false,
             "thinkingFormat": "chat-template",
             "chatTemplateKwargs": {
               "reasoning_effort": { "$var": "thinking.effort" },
