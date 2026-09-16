@@ -28,6 +28,28 @@
           },
         },
         {
+          "id": "deepseek-v4.1-flash",
+          "reasoning": true,
+          "contextWindow": 1048576,
+          "maxTokens": 100000,
+          "input": ["text", "image"],
+          "compat": {
+            "thinkingFormat": "chat-template",
+            "chatTemplateKwargs": {
+              "thinking": { "$var": "thinking.enabled" },
+              "reasoning_effort": { "$var": "thinking.effort" },
+            },
+          },
+          "thinkingLevelMap": {
+            "minimal": null,
+            "low": null,
+            "medium": null,
+            "high": "high",
+            "xhigh": null,
+            "max": "max",
+          },
+        },
+        {
           "id": "glm-5.3-flash",
           "reasoning": true,
           "contextWindow": 524288,

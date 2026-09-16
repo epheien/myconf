@@ -3,7 +3,7 @@
   "theme": "dark",
   "enableInstallTelemetry": false,
   "defaultProvider": "vllm",
-  "defaultModel": "deepseek-v4-flash",
+  "defaultModel": "deepseek-v4.1-flash",
   "defaultThinkingLevel": "max",
   "hideThinkingBlock": true,
   "doubleEscapeAction": "none",
