@@ -169,7 +169,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord){
 
     vec4 newColor = vec4(fragColor);
 
+#ifdef GHOSTTY_HAS_TIME_SINCE_CURSOR_CHANGE
+    float baseProgress = iTimeSinceCursorChange;
+#else
     float baseProgress = iTime - iTimeCursorChange;
+#endif
 
     if (iFocus > 0 && lineLength > minDist && baseProgress < DURATION - 0.001) {
         // defining corners of cursors
