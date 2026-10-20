@@ -1,6 +1,5 @@
 {
-  "imports": [
-  ],
+  "imports": [],
   "mcpServers": {
     "codegraph": {
       "command": "codegraph",
@@ -13,7 +12,8 @@
       },
       "disabled": false,
       "directTools": true,
-      "exposure": "direct"
+      "exposure": "direct",
+      "enabled": false
     },
     "web-search-fast": {
       "url": "http://10.74.121.222:8897/mcp",
