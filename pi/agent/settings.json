@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.1",
+  "lastChangelogVersion": "1.3.0",
   "theme": "dark",
   "enableInstallTelemetry": false,
   "defaultProvider": "vllm",
@@ -32,7 +32,11 @@
     "npm:@juicesharp/rpiv-todo",
     "git:github.com/epheien/pi-autocomplete-overlay",
     "npm:pi-hashline-edit",
-    "npm:pi-mcp-adapter"
+    {
+      "source": "npm:pi-mcp-adapter",
+      "extensions": [],
+      "skills": []
+    }
   ],
   "subagents": {
     "abortAllOnInterrupt": true,

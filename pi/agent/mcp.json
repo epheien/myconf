@@ -12,14 +12,16 @@
         "CODEGRAPH_NO_UPDATE_CHECK": "1"
       },
       "disabled": false,
-      "directTools": true
+      "directTools": true,
+      "exposure": "direct"
     },
     "web-search-fast": {
       "url": "http://10.74.121.222:8897/mcp",
       "headers": {
         "Authorization": "Bearer wsm_kkNzCwcZEnssqTmhs2RnQU2ntbMPHpF5MZgO1OlaU9I"
       },
-      "directTools": true
+      "directTools": true,
+      "exposure": "direct"
     }
   }
 }
