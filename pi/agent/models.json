@@ -31,7 +31,7 @@
           "id": "deepseek-v4.1-flash",
           "reasoning": true,
           "contextWindow": 1048576,
-          "maxTokens": 100000,
+          "maxTokens": 262144,
           "input": ["text", "image"],
           "compat": {
             "thinkingFormat": "chat-template",
