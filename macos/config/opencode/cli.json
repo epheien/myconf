@@ -1,0 +1,34 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "gruvbox"
+  },
+  "keybinds": {
+    "leader": "ctrl+x",
+    "app.exit": "none",
+    "command.palette.show": "<leader>p",
+    "session.page.up": "pageup,ctrl+y",
+    "session.page.down": "pagedown,ctrl+d",
+    "session.first": "ctrl+g,home",
+    "session.last": "<leader>ctrl+g,end",
+    "session.background": "none",
+    "input.submit": "ctrl+s,return",
+    "input.newline": "shift+return,ctrl+return,alt+return,ctrl+j",
+    "input.move.up": "up,ctrl+p",
+    "input.move.down": "down,ctrl+n",
+    "prompt.history.previous": "up,ctrl+p",
+    "prompt.history.next": "down,ctrl+n"
+  },
+  "diffs": {
+    "wrap": "word"
+  },
+  "session": {
+    "sidebar": "hide",
+    "scrollbar": false,
+    "thinking": "hide"
+  },
+  "hints": {
+    "tips": false
+  },
+  "animations": true
+}
