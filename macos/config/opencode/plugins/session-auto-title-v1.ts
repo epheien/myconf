@@ -47,7 +47,19 @@ function extractTitle(text: string): string {
   return title || "New Session"
 }
 
-export const OpenCodeSessionTitle: Plugin = async (ctx) => {
+function majorVersion(version: string): number {
+  const match = version.match(/\d+/)
+  return match ? Number.parseInt(match[0], 10) : 0
+}
+
+const OpenCodeSessionTitle: Plugin = async (ctx) => {
+  // V1 calls server(); V2 calls setup() and never reaches this function.
+  // Keep a defensive guard in case a future host calls server() in V2.
+  const version = (ctx as { app?: { version?: string } }).app?.version
+  if (version && majorVersion(version) >= 2) {
+    return {}
+  }
+
   return {
     event: async ({ event }: { event: Event }) => {
       //log("event:", event.type)
@@ -92,4 +104,11 @@ export const OpenCodeSessionTitle: Plugin = async (ctx) => {
   }
 }
 
-export default OpenCodeSessionTitle
+// OpenCode 1.x calls server() on the default object.
+// OpenCode 2.x only reads the default object and calls setup(), which is a
+// no-op here, so the V1 implementation never runs under V2.
+export default {
+  id: "session-auto-title-v1",
+  setup() { },
+  server: OpenCodeSessionTitle,
+}

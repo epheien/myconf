@@ -1,4 +1,4 @@
-import { Plugin } from "@opencode/plugin"
+import type { Plugin } from "@opencode/plugin"
 
 // V2 uses the same default titles as V1:
 //   New session - 2026-01-01T00:00:00.000Z
@@ -26,9 +26,19 @@ function extractTitle(text: string): string {
   return title || "New Session"
 }
 
-export default Plugin.define({
-  id: "session-auto-title",
-  setup(ctx) {
+function majorVersion(version: string): number {
+  const match = version.match(/\d+/)
+  return match ? Number.parseInt(match[0], 10) : 0
+}
+
+const plugin = {
+  id: "session-auto-title-v2",
+  setup(ctx: Plugin.Context) {
+    // V2 only: OpenCode 1.x calls server() instead of setup().
+    if (majorVersion(ctx.app.version) < 2) {
+      return
+    }
+
     const controller = new AbortController()
 
     // The V1 plugin listened to message.part.updated and used the first text
@@ -56,15 +66,22 @@ export default Plugin.define({
             title: extractTitle(item.payload.text),
           })
         } catch (error) {
-          console.error("[session-auto-title] failed to update session title", error)
+          console.error("[session-auto-title-v2] failed to update session title", error)
         }
       }
     })().catch((error) => {
       if (!controller.signal.aborted) {
-        console.error("[session-auto-title] event subscription failed", error)
+        console.error("[session-auto-title-v2] event subscription failed", error)
       }
     })
 
     return () => controller.abort()
   },
-})
+  // OpenCode 1.x calls server() on the default object. The V2 implementation
+  // must stay inactive there, so return an empty hooks object.
+  async server() {
+    return {}
+  },
+}
+
+export default plugin
