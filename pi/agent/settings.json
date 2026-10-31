@@ -32,6 +32,7 @@
     "npm:@juicesharp/rpiv-todo",
     "git:github.com/epheien/pi-autocomplete-overlay",
     "npm:pi-hashline-edit",
+    "npm:pi-goal-x",
     {
       "source": "npm:pi-mcp-adapter",
       "extensions": [],
