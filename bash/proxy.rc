@@ -1,8 +1,9 @@
 # vim: set ft=sh:
 proxy() {
-    local HTTP_PROXY_ADDR="http://192.168.3.131:7890"
-    local HTTPS_PROXY_ADDR="http://192.168.3.131:7890"
-    local ALL_PROXY_ADDR="socks5://192.168.3.131:7890"
+    local HOST_PORT="127.0.0.1:7897"
+    local HTTP_PROXY_ADDR="http://$HOST_PORT"
+    local HTTPS_PROXY_ADDR="$HTTP_PROXY_ADDR"
+    local ALL_PROXY_ADDR="socks5://$HOST_PORT"
     local NO_PROXY_ADDR="localhost,127.0.0.1,::1"
 
     case "$1" in
