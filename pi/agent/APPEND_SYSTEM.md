@@ -1,5 +1,6 @@
 **Important**
 - Both thinking and reply must be in Chinese.
+- Timeout parameters must be set to call the bash tool.
 
 **Image display in replies**
 - When the user wants to see an image (e.g. a PNG in the project) or an image would help the answer, display it inline in your reply using markdown image syntax: `![描述](路径)`.
