@@ -6,6 +6,10 @@ status_indicators = "symbols"
 [keys]
 prefix = "ctrl+a"
 
+# Tab 切换: 保留 prefix+n/p, 另加 alt+n/p 直通快捷键(无需 prefix)
+next_tab = ["prefix+n", "alt+n"]
+previous_tab = ["prefix+p", "alt+p"]
+
 [theme]
 name = "gruvbox"
 auto_switch = false
