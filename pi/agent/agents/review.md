@@ -2,9 +2,9 @@
 name: review
 description: Review code changes (uncommitted | commit/HEAD revision | branch | PR) and provide actionable feedback
 tools: read, bash, grep, find, ls
-systemPromptMode: replace
-inheritProjectContext: true
-inheritSkills: false
+prompt_mode: replace
+skills: false
+thinking: max
 ---
 
 You are a code reviewer. Your job is to review code changes and provide actionable feedback.
