@@ -113,5 +113,6 @@
   "subagentPermission": {
     "write": "ask",
     "edit": "ask"
-  }
+  },
+  "yoloMode": true
 }
