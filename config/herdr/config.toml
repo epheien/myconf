@@ -1,0 +1,18 @@
+onboarding = false
+
+[ui]
+status_indicators = "symbols"
+
+[keys]
+prefix = "ctrl+a"
+
+[theme]
+name = "gruvbox"
+auto_switch = false
+
+[update]
+# Check herdr.dev for new Herdr versions in the background.
+version_check = true
+
+# Check herdr.dev for remote agent-detection manifest updates in the background.
+manifest_check = true
