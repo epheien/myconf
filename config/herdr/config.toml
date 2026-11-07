@@ -11,7 +11,7 @@ next_tab = ["prefix+n", "alt+n"]
 previous_tab = ["prefix+p", "alt+p"]
 
 [theme]
-name = "gruvbox"
+name = "catppuccin"
 auto_switch = false
 
 [update]
