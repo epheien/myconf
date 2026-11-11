@@ -1,0 +1,34 @@
+# codex 默认配置（myconf）
+# 由 codex/setup.sh 合并进 ${CODEX_HOME:-~/.codex}/config.toml
+# codex 自动写入的状态（projects、hooks.state 等）不受本文件影响
+# 模板只允许单行标量键值和 [table] 表头，不支持 [[array of tables]]
+# 不指定 model：新机器沿用 codex 的默认模型，已有的 model 不会被改动
+
+# 推理强度
+model_reasoning_effort = "xhigh"
+model_reasoning_summary = "detailed"
+
+# 更新检查交给包管理器
+check_for_update_on_startup = false
+
+# 审批走自动审查（原 guardian_subagent 已不是有效值）
+approvals_reviewer = "auto_review"
+
+[approval_policy.granular]
+sandbox_approval = true
+rules = true
+skill_approval = true
+request_permissions = true
+mcp_elicitations = true
+
+[analytics]
+enabled = false
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+
+[tui]
+show_tooltips = false
+
+[tui.keymap.composer]
+queue = []
