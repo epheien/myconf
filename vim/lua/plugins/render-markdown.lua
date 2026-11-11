@@ -44,8 +44,14 @@ return {
     'tadmccorkle/markdown.nvim',
     ft = { 'markdown', 'Avante', 'codecompanion', 'opencode_output' },
     opts = {
+      on_attach = function(bufnr)
+        if vim.bo[bufnr].filetype ~= 'markdown' then
+          vim.keymap.set('n', 'gx', '<Plug>(markdown_follow_link)', { buffer = bufnr })
+        end
+      end,
       mappings = {
-        link_follow = 'gx',
+        -- Markdown 的 gx 由 after/ftplugin/markdown.lua 处理。
+        link_follow = false,
         -- 释放 ds/cs 给 nvim-surround (markdown 里原本被抢占)
         inline_surround_delete = false,
         inline_surround_change = false,
