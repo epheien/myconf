@@ -32,15 +32,10 @@
     "git:github.com/epheien/pi-autocomplete-overlay",
     "npm:pi-hashline-edit",
     "npm:pi-goal-x",
-    {
-      "source": "npm:pi-mcp-adapter",
-      "extensions": [],
-      "skills": []
-    },
     "npm:@tintinweb/pi-subagents"
   ],
   "extensionChangelogVersions": {
-    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.43.0",
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.48.0",
     "{\"source\":\"git:github.com/epheien/pi-permission-system\",\"scope\":\"user\"}": "24.0.0",
     "{\"source\":\"git:github.com/epheien/pi-powerline-footer\",\"scope\":\"user\"}": "0.12.1",
     "{\"source\":\"npm:@tintinweb/pi-subagents\",\"scope\":\"user\"}": "0.23.1"
