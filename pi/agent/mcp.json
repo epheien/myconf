@@ -28,6 +28,9 @@
       "url": "http://10.9.0.222:3000/mcp",
       "description": "多引擎直爬搜索：search、fetchWebContent，以及独有的 fetchGithubReadme / fetchCsdnArticle / fetchJuejinArticle / fetchLinuxDoArticle。默认引擎 duckduckgo，无 API key。",
       "exposure": "direct",
+      "toolExposure": {
+        "fetchWebContent": "hidden"
+      },
       "timeout": 60
     }
   }
