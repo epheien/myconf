@@ -1,5 +1,6 @@
 trust.json
 auth.json
+mcp-auth.json
 pi-debug.log
 sessions/
 npm/
