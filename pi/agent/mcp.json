@@ -21,7 +21,14 @@
         "Authorization": "Bearer wsm_kkNzCwcZEnssqTmhs2RnQU2ntbMPHpF5MZgO1OlaU9I"
       },
       "directTools": true,
-      "exposure": "direct"
+      "exposure": "direct",
+      "enabled": false
+    },
+    "open-websearch": {
+      "url": "http://10.9.0.222:3000/mcp",
+      "description": "多引擎直爬搜索：search、fetchWebContent，以及独有的 fetchGithubReadme / fetchCsdnArticle / fetchJuejinArticle / fetchLinuxDoArticle。默认引擎 duckduckgo，无 API key。",
+      "exposure": "direct",
+      "timeout": 60
     }
   }
 }
