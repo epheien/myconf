@@ -26,6 +26,10 @@
 ;; 隐藏图形界面编辑区两侧的边栏。
 (fringe-mode 0)
 
+;; GUI 窗口初始大小
+(add-to-list 'default-frame-alist '(width . 120))
+(add-to-list 'default-frame-alist '(height . 40))
+
 ;; 回绕标识, 太丑了, 关掉!
 (global-visual-line-mode nil)
 
