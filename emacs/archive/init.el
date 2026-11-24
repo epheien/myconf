@@ -90,7 +90,7 @@
 (setq evil-want-C-u-scroll t)
 (setq evil-move-beyond-eol t)
 ;; 手动安装 evil:
-;;  git clone --depth 1 https://github.com/emacs-evil/evil.git
+;; git clone --depth 1 https://github.com/emacs-evil/evil.git ~/.emacs.d/evil
 (add-to-list 'load-path (expand-file-name "evil" user-emacs-directory))
 (require 'evil)
 (evil-mode 1)
