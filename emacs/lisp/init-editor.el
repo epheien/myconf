@@ -20,6 +20,18 @@
 ;; C-x C-x => M-x
 (global-set-key "\C-x\C-x" 'execute-extended-command)
 
+;; 在居中浮窗中显示 M-x、查找文件等 minibuffer 补全候选。
+(use-package vertico
+  :ensure t
+  :config
+  (vertico-mode 1))
+
+(use-package vertico-posframe
+  :ensure t
+  :after vertico
+  :config
+  (vertico-posframe-mode 1))
+
 ;; 禁用响铃
 (setq ring-bell-function 'ignore)
 

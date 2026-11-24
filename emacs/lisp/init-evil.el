@@ -21,6 +21,47 @@
 (global-undo-tree-mode 1)
 (evil-mode 1)
 
+(defun my-evil-ex-vertico-table ()
+  "从 Evil 取得光标处的命令或参数补全，保留其前面的 Ex 命令行。"
+  (pcase-let ((`(,beg ,end ,table . ,props)
+               (and (eobp) (ignore-errors (evil-ex-completion-at-point)))))
+    (setq-local minibuffer-completion-predicate (plist-get props :predicate)
+                minibuffer-completion-table
+                (when (and beg (= end (point)))
+                  (completion-table-subvert
+                   table (buffer-substring-no-properties (minibuffer-prompt-end) beg) "")))))
+
+(defun my-evil-ex-vertico-insert ()
+  "补全光标所在的命令或参数。"
+  (interactive)
+  (if (and (eobp) minibuffer-completion-table)
+      (progn (vertico--update) (vertico-insert))
+    (completion-at-point)))
+
+(defvar-keymap my-evil-ex-vertico-map
+  :parent evil-ex-completion-map
+  "TAB" #'my-evil-ex-vertico-insert "<tab>" #'my-evil-ex-vertico-insert
+  "RET" #'vertico-exit "<return>" #'vertico-exit
+  "<down>" #'vertico-next "<up>" #'vertico-previous
+  "C-n" #'vertico-next "C-p" #'vertico-previous
+  "M-n" #'next-history-element "M-p" #'previous-history-element)
+
+(defun my-evil-ex-vertico-setup ()
+  "为 Evil Ex 命令行启用 Vertico 浮窗。"
+  (when (and (bound-and-true-p vertico-mode)
+             (eq (current-local-map) evil-ex-completion-map))
+    ;; Evil 在空输入时会从历史中执行上条命令，先清除其灰色预填文本。
+    (when (memq #'evil-ex-remove-default pre-command-hook)
+      (delete-minibuffer-contents))
+    ;; 直接回车执行原文，包括缩写、行号和替换表达式。
+    (setq-local vertico-preselect 'prompt)
+    (my-evil-ex-vertico-table)
+    (vertico--setup)
+    (use-local-map my-evil-ex-vertico-map)
+    (add-hook 'post-command-hook #'my-evil-ex-vertico-table -10 t)))
+
+(add-hook 'minibuffer-setup-hook #'my-evil-ex-vertico-setup 90)
+
 ;; Emacs 31 不再创建 Evil 1.15 所用的缓冲区列表（Evil #1983）。
 (defvar evil-mode-buffers nil)
 
