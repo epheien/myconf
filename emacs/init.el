@@ -11,6 +11,20 @@
 ;; 一些固定的小插件 (undo-tree sdcv posframe ...)
 (add-to-list 'load-path (expand-file-name "bundle" user-emacs-directory))
 
+;; sdcv 词典
+(require 'sdcv)
+(setq sdcv-dictionary-data-dir (expand-file-name "~/.stardict/dic"))
+(setq sdcv-dictionary-simple-list
+      '(
+        "朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+        ))
+(setq sdcv-dictionary-complete-list
+      '(
+        "朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+        ))
+
 ;; init.el 可以是软链接，模块位于仓库中实际入口文件旁的 lisp/ 目录。
 (let* ((init-file (file-truename (or load-file-name user-init-file)))
        (module-dir (expand-file-name "lisp" (file-name-directory init-file))))
