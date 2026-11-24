@@ -34,7 +34,7 @@
 (global-visual-line-mode nil)
 
 ;; 关闭启动帮助画面
-;(setq inhibit-splash-screen t)
+(setq inhibit-splash-screen t)
 
 ;; info 帮助文档
 ;;  1. 复制 xxx.info 到 info 目录
