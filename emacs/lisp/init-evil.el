@@ -13,13 +13,16 @@
 ;; git clone --depth 1 https://github.com/emacs-evil/evil.git ~/.emacs.d/evil
 (add-to-list 'load-path (expand-file-name "evil" user-emacs-directory))
 (require 'evil)
+
+;; Evil 的 u 和 C-r 使用 bundle 中的 undo-tree，撤销历史只保存在内存中。
+(require 'undo-tree)
+(setopt evil-undo-system 'undo-tree
+        undo-tree-auto-save-history nil)
+(global-undo-tree-mode 1)
 (evil-mode 1)
 
 ;; Emacs 31 不再创建 Evil 1.15 所用的缓冲区列表（Evil #1983）。
 (defvar evil-mode-buffers nil)
-
-; 使用 Emacs 内置的撤销与重做
-;(setq evil-undo-system 'undo-redo)
 
 ;; 针对不同的major-mode做不同处理的C-j键位绑定
 (defun my-next-line()
