@@ -30,6 +30,14 @@
   :ensure t
   :after vertico
   :config
+  ;; Emacs 31 的终端子窗口共用这六个单线边框字符。
+  (when (featurep 'tty-child-frames)
+    (require 'disp-table)
+    (dolist (slot '((box-horizontal . ?─) (box-vertical . ?│)
+                    (box-down-right . ?┌) (box-down-left . ?┐)
+                    (box-up-right   . ?└) (box-up-left   . ?┘)))
+      (set-display-table-slot standard-display-table
+                              (car slot) (make-glyph-code (cdr slot)))))
   (vertico-posframe-mode 1))
 
 ;; 禁用响铃
