@@ -1,5 +1,11 @@
 ;;; init-editor.el --- 通用编辑、显示和滚动设置 -*- lexical-binding: t; -*-
 
+(use-package gruvbox-theme
+  :ensure t
+  :no-require t
+  :config
+  (load-theme 'gruvbox-dark-medium t))
+
 ;; it's still not 100% equivalent. The case when it's not same is when you quit
 ;; emacs, and emacs asks if you want to save some files. In that case, pressing
 ;; Esc doesn't cancel. This is the only case i know it's not same.
