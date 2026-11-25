@@ -42,6 +42,15 @@
         (complete-with-action action table string pred))))
   (advice-add 'evil-ex-completion-table :filter-return #'my-evil-ex-command-table))
 
+;; Doom 在 macOS 上默认等 2 个字符、400 毫秒；Ex 命令短，首字母就提示。
+(with-eval-after-load 'corfu
+  (defun my-evil-ex-corfu-setup ()
+    (when (and corfu-mode (bound-and-true-p evil-ex-original-buffer))
+      (require 'corfu-auto)
+      (setq-local corfu-auto-prefix 1
+                  corfu-auto-delay 0.05)))
+  (add-hook 'corfu-mode-hook #'my-evil-ex-corfu-setup))
+
 ;;;; 3. 窗口与保存
 
 ;; 默认: Doom 用 `C-w h/j/k/l' → 我: 直接 C-h/j/k/l（两者并存）
