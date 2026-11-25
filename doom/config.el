@@ -91,5 +91,7 @@
 (setq doom-leader-key "\\"
       doom-localleader-key "\\ m")
 
+(global-set-key "\C-x\C-x" 'execute-extended-command)
+
 ;; 加载 Evil 及其扩展的配置。
 (load! "lisp/evil")
