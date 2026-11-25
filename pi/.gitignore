@@ -12,3 +12,7 @@ models-store.json
 mcp-cache.json
 mcp-onboarding.json
 run-history.jsonl
+/agent/pi-web-access/
+/agent/pi-web-run/
+pi-web-session-index.json
+pi-web-session-state.json
