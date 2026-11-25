@@ -43,7 +43,11 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(with-eval-after-load 'doom-emacs
+  (setq-default display-line-numbers-type t)
+  (global-display-line-numbers-mode 1)
+  ;; Doom 新建的持久草稿可能直接沿用 fundamental-mode，跳过主模式钩子。
+  (add-hook 'doom-scratch-buffer-created-hook #'doom-enable-line-numbers-h))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
