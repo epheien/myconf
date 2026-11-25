@@ -17,3 +17,4 @@ run-history.jsonl
 pi-web-session-index.json
 pi-web-session-state.json
 herdr-agent-state.ts
+/web-search-cache/
