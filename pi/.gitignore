@@ -16,3 +16,4 @@ run-history.jsonl
 /agent/pi-web-run/
 pi-web-session-index.json
 pi-web-session-state.json
+herdr-agent-state.ts
