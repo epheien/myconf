@@ -40,15 +40,25 @@
       (if (eq action 'metadata)
           `(metadata (category . command) ,@(cdr (completion-metadata string table pred)))
         (complete-with-action action table string pred))))
-  (advice-add 'evil-ex-completion-table :filter-return #'my-evil-ex-command-table))
+  (advice-add 'evil-ex-completion-table :filter-return #'my-evil-ex-command-table)
 
-;; Doom 在 macOS 上默认等 2 个字符、400 毫秒；Ex 命令短，首字母就提示。
+  ;; C-u 清空整条输入，留在 : 提示符继续输入。
+  (map! :map evil-ex-completion-map "C-u" #'delete-minibuffer-contents))
+
+;; Doom 在 macOS 上默认等 2 个字符、400 毫秒；Ex 的空参数也需要候选。
 (with-eval-after-load 'corfu
+  ;; Doom 默认用 C-u 向上翻候选；在 Ex 弹窗里也用它清空命令行。
+  (defvar-keymap my-evil-ex-corfu-map :parent corfu-map)
+  (map! :map my-evil-ex-corfu-map "C-u" #'delete-minibuffer-contents)
+
   (defun my-evil-ex-corfu-setup ()
     (when (and corfu-mode (bound-and-true-p evil-ex-original-buffer))
       (require 'corfu-auto)
-      (setq-local corfu-auto-prefix 1
-                  corfu-auto-delay 0.05)))
+      ;; 空格立即列出参数（如 :b 的缓冲区），删空参数后也能重新筛选。
+      (setq-local corfu-auto-trigger " "
+                  corfu-auto-prefix 0
+                  corfu-auto-delay 0.05
+                  corfu-map my-evil-ex-corfu-map)))
   (add-hook 'corfu-mode-hook #'my-evil-ex-corfu-setup))
 
 ;;;; 3. 窗口与保存
