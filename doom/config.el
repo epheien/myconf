@@ -83,3 +83,6 @@
 
 ;; Give this configuration its own emacsclient endpoint.
 (setq server-name "doom")
+
+;; Receive wheel events from the terminal so they scroll the window.
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
