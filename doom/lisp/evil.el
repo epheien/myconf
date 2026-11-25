@@ -32,6 +32,16 @@
 (map! :n ";" #'evil-ex
       :v ";" #'evil-ex)
 
+;; 默认不区分 Ex 命令补全的类别；标为 command 后，: 和 M-x 共用模糊匹配。
+(with-eval-after-load 'evil-ex
+  (defun my-evil-ex-command-table (table)
+    "给 Ex 命令名补全表添加类别，保留 Evil 的排序规则。"
+    (lambda (string pred action)
+      (if (eq action 'metadata)
+          `(metadata (category . command) ,@(cdr (completion-metadata string table pred)))
+        (complete-with-action action table string pred))))
+  (advice-add 'evil-ex-completion-table :filter-return #'my-evil-ex-command-table))
+
 ;;;; 3. 窗口与保存
 
 ;; 默认: Doom 用 `C-w h/j/k/l' → 我: 直接 C-h/j/k/l（两者并存）

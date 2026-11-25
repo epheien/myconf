@@ -93,5 +93,12 @@
 
 (global-set-key "\C-x\C-x" 'execute-extended-command)
 
+;; 命令名允许跳过中间字母，例如 M-x dscfn 匹配 describe-function。
+(with-eval-after-load 'orderless
+  (orderless-define-completion-style my-command-orderless
+    (orderless-matching-styles (cons #'orderless-flex orderless-matching-styles)))
+  (setf (alist-get 'styles (alist-get 'command completion-category-overrides))
+        '(my-command-orderless)))
+
 ;; 加载 Evil 及其扩展的配置。
 (load! "lisp/evil")
