@@ -47,9 +47,18 @@
 
 ;; Doom 在 macOS 上默认等 2 个字符、400 毫秒；Ex 的空参数也需要候选。
 (with-eval-after-load 'corfu
+  (defun my-evil-ex-corfu-submit ()
+    "填入选中的候选并执行当前 Ex 命令。"
+    (interactive)
+    (corfu-insert)
+    (exit-minibuffer))
+
   ;; Doom 默认用 C-u 向上翻候选；在 Ex 弹窗里也用它清空命令行。
   (defvar-keymap my-evil-ex-corfu-map :parent corfu-map)
-  (map! :map my-evil-ex-corfu-map "C-u" #'delete-minibuffer-contents)
+  (map! :map my-evil-ex-corfu-map
+        "C-u"    #'delete-minibuffer-contents
+        "RET"    #'my-evil-ex-corfu-submit
+        [return] #'my-evil-ex-corfu-submit)
 
   (defun my-evil-ex-corfu-setup ()
     (when (and corfu-mode (bound-and-true-p evil-ex-original-buffer))
