@@ -86,3 +86,10 @@
 
 ;; Receive wheel events from the terminal so they scroll the window.
 (add-hook 'tty-setup-hook #'xterm-mouse-mode)
+
+;; 用反斜杠代替 SPC，模式专用命令沿用同一个前缀。
+(setq doom-leader-key "\\"
+      doom-localleader-key "\\ m")
+
+;; 加载 Evil 及其扩展的配置。
+(load! "lisp/evil")
